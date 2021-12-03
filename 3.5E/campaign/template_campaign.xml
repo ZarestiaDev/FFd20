@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="button_item_armor">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_item_armor" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.armor");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.armor");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.armor");
+						w.init({ sRecordType = "item", sListView = "armor" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_item_weapons">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_item_weapon" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.weapon");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.weapon");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.weapon");
+						w.init({ sRecordType = "item", sListView = "weapon" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_npc_letter">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_npc_byletter" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabyletter");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabyletter");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabyletter");
+						w.init({ sRecordType = "npc", sListView = "byletter" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_npc_cr">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_npc_bycr" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabycr");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabycr");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabycr");
+						w.init({ sRecordType = "npc", sListView = "bycr" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_npc_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_npc_bytype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.npcdatabytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.npcdatabytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.npcdatabytype");
+						w.init({ sRecordType = "npc", sListView = "bytype" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_specialability_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_specialability_bytype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.specialabilitiesbytype");
+						w.init({ sRecordType = "specialability", sListView = "bytype" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_feat_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_feat_bytype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.featsbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.featsbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.featsbytype");
+						w.init({ sRecordType = "feat", sListView = "bytype" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+
+	<template name="label_recordtype">
+		<stringcontrol>
+			<anchored to="name" position="belowleft" offset="0,7">
+				<right parent="" offset="-25" />
+			</anchored>
+			<font>reference-subtitle</font>
+			<readonly />
+			<script>
+				function onInit()
+					if getValue() == "" then
+						setVisible(false);
+					end
+				end
+			</script>
+		</stringcontrol>
+	</template>
+
+	<template name="frame_record_editor">
+		<genericcontrol name="contentframe">
+			<anchored>
+				<top parent="title" anchor="bottom" offset="15" />
+				<left offset="35" />
+				<right offset="-35" />
+				<bottom offset="-32" />
+			</anchored>
+			<frame name="groupbox" offset="20,17,20,17" />
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="frame_record_lower">
+		<genericcontrol>
+			<anchored>
+				<top anchor="bottom" offset="-50" />
+				<left offset="15" />
+				<right offset="-20" />
+				<bottom offset="-15" />
+			</anchored>
+			<frame name="groupbox" />
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="radio_record_npctype">
+		<buttongroup_radio>
+			<anchored to="controlframe" height="20">
+				<top offset="8" />
+				<left anchor="center" offset="-150" />
+			</anchored>
+			<parameters>
+				<optionwidth>100</optionwidth>
+				<labelsres>npc_label_typecreature|npc_label_typetrap|npc_label_typevehicle</labelsres>
+				<values>Creature|Trap|Vehicle</values>
+			</parameters>
+			<script>
+				function onValueChanged()
+					window.TypeChanged();
+				end
+			</script>
+		</buttongroup_radio>
+	</template>
+
+	<template name="number_npc_init">
+		<number_column>
+			<displaysign />
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionInit.performRoll(draginfo, rActor);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_column>
+	</template>
+	<template name="number_npc_save">
+		<basicnumber>
+			<displaysign />
+			<nodrop />
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionSave.performRoll(draginfo, rActor, self.target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x, y)
+					return action();
+				end
+			</script>
+		</basicnumber>
+	</template>
+	<template name="number_npc_ability">
+		<basicnumber>
+			<default>10</default>
+			<hideonvalue>0</hideonvalue>
+			<nodrop />
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionAbility.performRoll(draginfo, rActor, self.target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x, y)
+					return action();
+				end
+			</script>
+		</basicnumber>
+	</template>
+
+	<template name="cycler_ability">
+		<button_stringcycler>
+			<frame mergerule="replace" name="fielddark" offset="7,5,7,5" />
+			<stateframe mergerule="replace">
+				<hover name="fieldfocus" offset="7,5,7,5" />
+			</stateframe>
+			<parameters>
+				<defaultlabelres mergerule="replace">base</defaultlabelres>
+				<labelsres mergerule="replace">str|dex|con|int|wis|cha</labelsres>
+				<values mergerule="replace">strength|dexterity|constitution|intelligence|wisdom|charisma</values>
+			</parameters>
+		</button_stringcycler>
+	</template>
+
+	<template name="button_toggledetail">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<state icon="button_details" />
+			<state icon="button_details_down" />
+			<script>
+				function onValueChanged()
+					if window.toggleDetail then
+						window.toggleDetail();
+					end
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_enc_refreshcr">
+		<buttoncontrol>
+			<anchored width="23" height="23">
+				<bottom parent="cr" offset="2" />
+				<left parent="cr" anchor="right" offset="5"/>
+			</anchored>
+			<icon normal="button_enc_refreshcr" pressed="button_enc_refreshcr_down" />
+			<tooltip textres="enc_tooltip_refreshcr" />
+			<script>
+				function onButtonPress()
+					CombatManager2.calcBattleCR(window.getDatabaseNode());
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+	<template name="button_enc_refreshxp">
+		<buttoncontrol>
+			<anchored width="23" height="23">
+				<bottom parent="exp" offset="2" />
+				<left parent="exp" anchor="right" offset="5" />
+			</anchored>
+			<icon normal="button_enc_refreshxp" pressed="button_enc_refreshxp_down" />
+			<tooltip textres="enc_tooltip_refreshxp" />
+			<script>
+				function onButtonPress()
+					CombatManager2.calcBattleXP(window.getDatabaseNode());
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="list_editor">
+		<windowlist name="list">
+			<anchored>
+				<top parent="columnanchor" anchor="bottom" relation="relative" offset="22" />
+				<left />
+				<right />
+			</anchored>
+			<allowdelete />
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<noscroll />
+			<script>
+				function onInit()
+					registerMenuItem(Interface.getString("list_menu_createitem"), "insert", 5);
+				end
+				
+				function onMenuSelection(selection)
+					if selection == 5 then
+						self.addEntry(true);
+					end
+				end
+				
+				function onListChanged()
+					update();
+				end
+
+				function update()
+					local bEditMode = (window.list_iedit.getValue() == 1);
+					for _,w in pairs(getWindows()) do
+						w.idelete.setVisibility(bEditMode);
+					end
+				end
+				
+				function addEntry(bFocus)
+					return createWindow();
+				end
+			</script>
+		</windowlist>
+	</template>
+</root>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_inventory" merge="join">
+		<script file="campaign/scripts/char_inv.lua" />
+		<sheetdata>
+			<genericcontrol name="showonminisheet_header" insertbefore="carried_header">
+				<anchored to="rightanchor" width="12" height="10">
+					<top offset="5" />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<icon>char_quicklist</icon>
+				<tooltip textres="char_tooltip_itemshowmini" />
+			</genericcontrol>
+			
+			<frame_char name="armorpenaltyframe" insertbefore="encumbranceframe">
+				<bounds>15,-205,240,58</bounds>
+			</frame_char>
+			<label insertbefore="encumbranceframe">
+				<anchored to="armorpenaltyframe" position="insidetopleft" offset="15,24" />
+				<static textres="char_label_invarmor" />
+			</label>
+			<basicnumber name="armormaxstatbonus" source="encumbrance.armormaxstatbonus" insertbefore="encumbranceframe">
+				<anchored to="armorpenaltyframe" position="insidetopleft" offset="85,24" width="35" height="20" />
+			</basicnumber>
+			<label_fieldtop insertbefore="encumbranceframe">
+				<anchored to="armormaxstatbonus" offset="6,1" />
+				<static textres="char_label_invarmormaxability" />
+			</label_fieldtop>
+			<basicnumber name="armorcheckpenalty" source="encumbrance.armorcheckpenalty" insertbefore="encumbranceframe">
+				<anchored to="armormaxstatbonus" position="right" offset="15,0" width="35" />
+			</basicnumber>
+			<label_fieldtop insertbefore="encumbranceframe">
+				<anchored to="armorcheckpenalty" offset="6,1" />
+				<static textres="char_label_invarmorskillcheckpenalty" />
+			</label_fieldtop>
+			<basicnumber name="spellfailure" source="encumbrance.spellfailure" insertbefore="encumbranceframe">
+				<anchored to="armorcheckpenalty" position="right" offset="15,0" width="35" />
+				<hideonvalue>0</hideonvalue>
+			</basicnumber>
+			<label_fieldtop insertbefore="encumbranceframe">
+				<anchored to="spellfailure" offset="6,1"/>
+				<static textres="char_label_invarmorspellfailure" />
+			</label_fieldtop>
+			<buttonfield name="usearmormaxstatbonus" source="encumbrance.armormaxstatbonusactive" insertbefore="encumbranceframe">
+				<anchored to="armorpenaltyframe" position="insidetopleft" offset="67,28" width="12" height="12" />
+				<state icon="button_checkoff" tooltipres="char_tooltip_armormodoff" />
+				<state icon="button_checkon" tooltipres="char_tooltip_armormodon" />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					
+					function onValueChanged()
+						if getValue() == 1 then
+							window.armormaxstatbonus.setColor("FF000000");
+							window.armorcheckpenalty.setColor("FF000000");
+							window.spellfailure.setColor("FF000000");
+						else
+							window.armormaxstatbonus.setColor("7F000000");
+							window.armorcheckpenalty.setColor("7F000000");
+							window.spellfailure.setColor("7F000000");
+						end
+					end
+				</script>
+			</buttonfield>
+
+			<frame_char name="encumbranceframe">
+				<bounds>15,-147,240,142</bounds>
+			</frame_char>
+			<simplenumber name="encumbranceload" source="encumbrance.load">
+				<anchored offset="160,16" />
+				<readonly />
+			</simplenumber>
+			<label name="encumbrance_label">
+				<anchored offset="15,16" />
+			</label>
+			<simplenumber name="encumbrancelightload" source="encumbrance.lightload" insertbefore="coinframe">
+				<anchored to="encumbranceframe" position="insidetopleft" offset="20,62" width="55" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbrancelightload" />
+				<static textres="char_label_invenclt" />
+			</label_fieldtop>
+			<simplenumber name="encumbrancemediumload" source="encumbrance.mediumload" insertbefore="coinframe">
+				<anchored to="encumbrancelightload" position="right" offset="15,0" width="55" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbrancemediumload" />
+				<static textres="char_label_invencmed" />
+			</label_fieldtop>
+			<simplenumber name="encumbranceheavyload" source="encumbrance.heavyload" insertbefore="coinframe">
+				<anchored to="encumbrancemediumload" position="right" offset="15,0" width="55" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbranceheavyload" />
+				<static textres="char_label_invenchvy" />
+			</label_fieldtop>
+			<simplenumber name="encumbranceliftoverhead" source="encumbrance.liftoverhead" insertbefore="coinframe">
+				<anchored to="encumbrancelightload" position="below" offset="0,20" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbranceliftoverhead" />
+				<static textres="char_label_invencliftover" />
+			</label_fieldtop>
+			<simplenumber name="encumbranceliftoffground" source="encumbrance.liftoffground" insertbefore="coinframe">
+				<anchored to="encumbranceliftoverhead" position="right" offset="15,0" width="55" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbranceliftoffground" />
+				<static textres="char_label_invenclift" />
+			</label_fieldtop>
+			<simplenumber name="encumbrancepushordrag" source="encumbrance.pushordrag" insertbefore="coinframe">
+				<anchored to="encumbranceliftoffground" position="right" offset="15,0" width="55" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label_fieldtop>
+				<anchored to="encumbrancepushordrag" />
+				<static textres="char_label_invencdrag" />
+			</label_fieldtop>
+			<buttoncontrol name="button_encumbrance">
+				<anchored to="encumbrancepushordrag" width="20" height="20">
+					<bottom anchor="top" />
+					<left anchor="right" />
+				</anchored>
+				<state icon="button_details" pressed="button_details_down" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("charsheet_encumbrance", window.getDatabaseNode());
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_invitem" merge="join">
+		<sheetdata>
+			<button_checkbox name="showonminisheet" insertbefore="carried">
+				<anchored width="12" height="12">
+					<top offset="6" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<default>1</default>
+			</button_checkbox>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheet_encumbrance">
+		<frame>charsheethelper</frame>
+		<placement>
+			<size width="300" height="150" />
+		</placement>
+		<sizelimits>
+			<minimum width="300" height="150" />
+			<dynamic />
+		</sizelimits>
+		<nodelete />
+		<playercontrol />
+		<sheetdata>
+			<windowtitlebar_char name="title">
+				<prefix>char_encumbrance_title</prefix>
+			</windowtitlebar_char>
+			<anchor_title_charsheethelper name="contentanchor" />
+
+			<frame_char name="encadjframe">
+				<anchored to="contentanchor" height="60">
+					<top anchor="bottom" relation="relative" offset="0" />
+					<left />
+					<right />
+				</anchored>
+			</frame_char>
+			<basicnumber name="encstradj" source="encumbrance.stradj">
+				<anchored to="encadjframe" width="60" height="20">
+					<top offset="25" />
+					<right anchor="center" offset="-10" />
+				</anchored>
+			</basicnumber>
+			<label_fieldtop>
+				<anchored to="encstradj" />
+				<static textres="char_label_encstradj" />
+			</label_fieldtop>
+			<basicnumber name="enccarrymult" source="encumbrance.carrymult">
+				<anchored to="encadjframe" width="60" height="20">
+					<top offset="25" />
+					<left anchor="center" offset="10" />
+				</anchored>
+				<min>0</min>
+				<default>1</default>
+			</basicnumber>
+			<label_fieldtop>
+				<anchored to="enccarrymult" />
+				<static textres="char_label_enccarrymult" />
+			</label_fieldtop>
+
+			<close_charsheethelper />
+			<resize_charsheethelper />
+		</sheetdata>
+	</windowclass>
+</root>

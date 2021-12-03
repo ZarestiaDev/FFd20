@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Common -->
+	<string name="base">Base</string>
+	<string name="dash">-</string>
+	<string name="str">Str</string>
+	<string name="dex">Dex</string>
+	<string name="con">Con</string>
+	<string name="int">Int</string>
+	<string name="wis">Wis</string>
+	<string name="cha">Cha</string>
+	<string name="strength">Strength</string>
+	<string name="constitution">Constitution</string>
+	<string name="dexterity">Dexterity</string>
+	<string name="intelligence">Intelligence</string>
+	<string name="wisdom">Wisdom</string>
+	<string name="charisma">Charisma</string>
+	<string name="lvl">Lvl</string>
+	<string name="level">Level</string>
+	<string name="hp">HP</string>
+	<string name="hitpoints">Hit Points</string>
+	<string name="ac">AC</string>
+	<string name="armorclass">Armor Class</string>
+	<string name="acff">FF</string>
+	<string name="armorclassff">Flat-Footed AC</string>
+	<string name="actouch">Tch</string>
+	<string name="armorclasstouch">Touch AC</string>
+	<string name="cmd">CMD</string>
+	<string name="sr">SR</string>
+	<string name="spellresistance">Spell Resistance</string>
+	<string name="fort">Fort</string>
+	<string name="ref">Ref</string>
+	<string name="will">Will</string>
+	<string name="fortitude">Fortitude</string>
+	<string name="reflex">Reflex</string>
+	<string name="will_long">Will</string>
+	<string name="save">Save</string>
+	<string name="savingthrow">Saving Throw</string>
+	<string name="init">Init</string>
+	<string name="initiative">Initiative</string>
+	<string name="bab">BAB</string>
+	<string name="grp">Grp</string>
+	<string name="grapple">Grapple</string>
+	<string name="cmb">CMB</string>
+	<string name="cl">CL</string>
+	<string name="casterlevel">Caster Level</string>
+	<string name="clc">CLC</string>
+	<string name="casterlevelcheck">Caster Level Check</string>
+	<string name="evencl">Even CLs</string>
+	<string name="oddcl">Odd CLs</string>
+	<string name="dc">DC</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+	
+	<string name="menu_dieclear">Clear Dice</string>
+	<string name="menu_rest">Rest</string>
+	<string name="menu_restshort">Short Rest</string>
+	<string name="menu_restovernight">Overnight Rest</string>
+	<string name="message_restshort">Taking short rest.</string>
+	<string name="message_restovernight">Taking overnight rest.</string>
+	<string name="menu_init">Initiative</string>
+	<string name="menu_initall">Roll All Initiatives</string>
+	<string name="menu_initnpc">Roll NPC Initiatives</string>
+	<string name="menu_initpc">Roll PC Initiatives</string>
+	<string name="menu_initclear">Clear All Initiatives</string>
+
+	<string name="menu_resetspells">Reset Spells</string>
+	<string name="menu_addspellclass">Add Spell Class</string>
+	<string name="menu_deletespellclass">Delete Spell Class</string>
+	<string name="menu_addspell">Add Spell</string>
+	<string name="menu_deletespell">Delete Spell</string>
+	<string name="menu_addweapon">Add Weapon</string>
+	<string name="menu_deleteweapon">Delete Weapon</string>
+	<string name="menu_addspellaction">Add Spell Action</string>
+	<string name="menu_addspellcast">Add Cast</string>
+	<string name="menu_addspelldamage">Add Damage</string>
+	<string name="menu_addspellheal">Add Heal</string>
+	<string name="menu_addspelleffect">Add Effect</string>
+	<string name="menu_reparsespell">Reparse spell actions</string>
+	<string name="menu_deletespellaction">Delete Spell Action</string>
+	
+	<string name="message_rollbab">Base Attack</string>
+	
+	<!-- Desktop -->
+	<string name="help_tool_ct">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643207/</string>
+	<string name="help_tool_ps">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643222/</string>
+	<string name="help_tool_effects">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643237/</string>
+	<string name="help_tool_options">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643248/</string>
+	
+	<!-- Options -->
+	<string name="option_label_RMMT">Target: Remove on miss</string>
+	<string name="option_label_SHRR">Chat: Show results to client</string>
+	<string name="option_label_PSMN">Party: Show characters to clients</string>
+	<string name="option_label_INIT">Add: Auto NPC initiative</string>
+	<string name="option_label_ANPC">Chat: Anonymize NPC attacks</string>
+	<string name="option_val_multi">Multi</string>
+	<string name="option_val_pc">PC</string>
+	<string name="option_val_npc">NPC</string>
+	<string name="option_val_group">Group</string>
+	<string name="option_val_max">Max</string>
+	<string name="option_val_random">Random</string>
+	<string name="option_val_fumbleandcrit">Fumble and Crit</string>
+	<string name="option_val_fumble">Fumble</string>
+	<string name="option_val_crit">Crit</string>
+		
+	<string name="option_header_houserule">House Rules (GM)</string>
+	<string name="option_label_HRCC">Attack: Critical confirm</string>
+	<string name="option_label_HRIR">CT: Roll init each round</string>
+	<string name="option_label_HRNH">CT: NPC hit points</string>
+	<string name="option_label_HRST">CT: Auto stabilization rolls</string>
+	<string name="option_label_HRFC">Attack: Fumble/Crit Tables</string>
+
+	<!-- Languages -->
+	<string name="language_value_abyssal">Abyssal</string>
+	<string name="language_value_aklo">Aklo</string>
+	<string name="language_value_aquan">Aquan</string>
+	<string name="language_value_auran">Auran</string>
+	<string name="language_value_catfolk">Catfolk</string>
+	<string name="language_value_celestial">Celestial</string>
+	<string name="language_value_common">Common</string>
+	<string name="language_value_draconic">Draconic</string>
+	<string name="language_value_druidic">Druidic</string>
+	<string name="language_value_dwarven">Dwarven</string>
+	<string name="language_value_elven">Elven</string>
+	<string name="language_value_giant">Giant</string>
+	<string name="language_value_gnoll">Gnoll</string>
+	<string name="language_value_gnome">Gnome</string>
+	<string name="language_value_goblin">Goblin</string>
+	<string name="language_value_grippli">Grippli</string>
+	<string name="language_value_halfling">Halfling</string>
+	<string name="language_value_ignan">Ignan</string>
+	<string name="language_value_infernal">Infernal</string>
+	<string name="language_value_orc">Orc</string>
+	<string name="language_value_sylvan">Sylvan</string>
+	<string name="language_value_terran">Terran</string>
+	<string name="language_value_undercommon">Undercommon</string>
+	<string name="language_value_vanaran">Vanaran</string>
+	<string name="language_value_vishkanya">Vishkanya</string>
+	
+	<!-- Combat Tracker -->
+	<string name="ct_label_hptemp">Tmp</string>
+	<string name="ct_label_nonlethal">Sbd</string>
+	<string name="ct_label_wounds">Wnd</string>
+	<string name="ct_label_status">Status</string>
+	<string name="ct_label_immediate">Imm?</string>
+	<string name="ct_label_speed">Spd</string>
+	<string name="ct_label_attack">Atk</string>
+	<string name="ct_label_specialqualities">Special</string>
+
+	<string name="ct_tooltip_hptemp">Temporary Hit Points</string>
+	<string name="ct_tooltip_nonlethal">Nonlethal Wounds</string>
+	<string name="ct_tooltip_wounds">Wounds</string>
+	<string name="ct_tooltip_immediateon">Immediate/Swift Action Used</string>
+	<string name="ct_tooltip_immediateoff">Immediate/Swift Action Not Used</string>
+	<string name="ct_tooltip_size">Size</string>
+	<string name="ct_tooltip_reach">Reach</string>
+	
+	<string name="ct_message_rest">Party taking short rest.</string>
+	<string name="ct_message_restovernight">Party taking overnight rest.</string>
+	
+	<!-- Party Sheet -->
+	<string name="ps_emptylistother">Add PCs to main tab.</string>
+	<string name="ps_emptylistquest">Click button below to add a new quest entry.\nRight click and use menu to award XP.</string>
+	<string name="ps_emptylistenc">Drop completed encounter links here.\nRight click and use menu to award XP.</string>
+
+	<string name="ps_empty_skill">&#171; Skill &#187;</string>
+	<string name="ps_empty_class">&#171; Class &#187;</string>
+
+	<string name="ps_label_name">Name</string>
+	<string name="ps_label_class">Class</string>
+	<string name="ps_label_abilities">Abilities</string>
+	<string name="ps_label_dr">Special Defenses</string>
+
+	<string name="ps_label_groupability">Ability</string>
+	<string name="ps_default_groupability">Strength</string>
+	<string name="ps_default_groupsave">Fortitude</string>
+	<string name="ps_label_groupatk">Party Attack</string>
+
+	<string name="ps_label_senses">Senses</string>
+	<string name="ps_label_languages">Languages</string>
+	
+	<string name="ps_label_passive">Passive</string>
+	<string name="ps_label_spot">Spt</string>
+	<string name="ps_label_listen">Lst</string>
+	<string name="ps_label_search">Src</string>
+	<string name="ps_label_perception">Per</string>
+	<string name="ps_label_sensemotive">SM</string>
+	<string name="ps_label_knowledge">Knowledge</string>
+	<string name="ps_label_knowarcana">Arc</string>
+	<string name="ps_label_knowdungeoneering">Dun</string>
+	<string name="ps_label_knowlocal">Lcl</string>
+	<string name="ps_label_knownature">Nat</string>
+	<string name="ps_label_knowplanes">Pln</string>
+	<string name="ps_label_knowreligion">Rel</string>
+	<string name="ps_label_social">Social</string>
+	<string name="ps_label_bluff">Blf</string>
+	<string name="ps_label_diplomacy">Dpl</string>
+	<string name="ps_label_gatherinfo">GI</string>
+	<string name="ps_label_intimidate">Int</string>
+	<string name="ps_label_physical">Physical</string>
+	<string name="ps_label_acrobatics">Acr</string>
+	<string name="ps_label_climb">Cli</string>
+	<string name="ps_label_heal">Hea</string>
+	<string name="ps_label_jump">Jmp</string>
+	<string name="ps_label_survival">Sur</string>
+	<string name="ps_label_hide">Hid</string>
+	<string name="ps_label_movesilent">MS</string>
+	<string name="ps_label_stealth">Stl</string>
+
+	<string name="ps_label_groupskill">Skill Check</string>
+
+	<string name="ps_label_party">Party</string>
+	<string name="ps_label_partyentryxp">XP</string>
+	<string name="ps_label_encounters">Encounters</string>
+	<string name="ps_label_quests">Quests</string>
+	<string name="ps_label_xpawarded">Aw?</string>
+	<string name="ps_tooltip_xpawarded">Awarded?</string>
+	<string name="ps_label_xp">XP</string>
+	<string name="ps_label_xptype">Type</string>
+	<string name="ps_label_xpname">Name</string>
+	
+	<string name="ps_tooltip_showrollon">Show Roll Results</string>
+	<string name="ps_tooltip_showrolloff">Hide Roll Results</string>
+	
+	<string name="ps_label_award">Award</string>
+	<string name="ps_menu_awardxp">Award XP</string>
+	<string name="ps_message_xpaward">Awarded XP to the Party.</string>
+
+	<!-- Modifiers -->
+	<string name="modifier_category_attack">Attack</string>
+	<string name="modifier_label_ATT_TCH">Touch</string>
+	<string name="modifier_label_ATT_FF">Flat-Footed</string>
+	<string name="modifier_label_ATT_OPP">Opportunity</string>
+	<string name="modifier_label_DEF_PCOVER">Part. Cover</string>
+	<string name="modifier_label_DEF_COVER">Cover</string>
+	<string name="modifier_label_DEF_SCOVER">Sup. Cover</string>
+	<string name="modifier_label_DEF_CONC">Concealment</string>
+	<string name="modifier_label_DEF_TCONC">Total Conc.</string>
+	<string name="modifier_category_damage">Damage</string>
+	<string name="modifier_label_DMG_CRIT">Critical</string>
+	<string name="modifier_label_DMG_HALF">Half</string>
+	
+	<!-- Skills -->
+	<string name="skill_value_acrobatics">Acrobatics</string>
+	<string name="skill_value_climb">Climb</string>
+	<string name="skill_value_heal">Heal</string>
+	<string name="skill_value_jump">Jump</string>
+	<string name="skill_value_survival">Survival</string>
+	<string name="skill_value_hide">Hide</string>
+	<string name="skill_value_movesilent">Move Silently</string>
+	<string name="skill_value_stealth">Stealth</string>
+	<string name="skill_value_bluff">Bluff</string>
+	<string name="skill_value_craft">Craft</string>
+	<string name="skill_value_diplomacy">Diplomacy</string>
+	<string name="skill_value_gatherinfo">Gather Information</string>
+	<string name="skill_value_intimidate">Intimidate</string>
+	<string name="skill_value_knowledge">Knowledge</string>
+	<string name="skill_value_knowarcana">Arcana</string>
+	<string name="skill_value_knowdungeoneering">Dungeoneering</string>
+	<string name="skill_value_knowlocal">Local</string>
+	<string name="skill_value_knownature">Nature</string>
+	<string name="skill_value_knowplanes">Planes</string>
+	<string name="skill_value_knowreligion">Religion</string>
+	<string name="skill_value_listen">Listen</string>
+	<string name="skill_value_perception">Perception</string>
+	<string name="skill_value_perform">Perform</string>
+	<string name="skill_value_profession">Profession</string>
+	<string name="skill_value_search">Search</string>
+	<string name="skill_value_sensemotive">Sense Motive</string>
+	<string name="skill_value_spot">Spot</string>
+
+	<!-- Character - Mini -->
+	<string name="char_label_fullsheet">Full Sheet</string>
+	<string name="char_label_minisheet">Mini Sheet</string>
+	<string name="charmini_label_wounds">Wnd</string>
+	<string name="charmini_label_hptemp">Temp</string>
+	<string name="charmini_label_nonlethal">Subd</string>
+	<string name="charmini_label_dr">DR</string>
+	<string name="charmini_label_abilitybonus">Bonus</string>
+	<string name="charmini_label_abilitydamage">Dmg</string>
+	<string name="charmini_label_melee">Melee</string>
+	<string name="charmini_label_ranged">Rng</string>
+	<string name="charmini_label_speed">Spd</string>
+	<string name="charmini_label_speedspecial">Special Move</string>
+	<string name="charmini_label_weaponrange">Rng</string>
+	<string name="charmini_label_weaponammo">Ammo</string>
+	
+	<!-- Character - Main -->
+	<string name="char_label_classlevelsummary">CLASS &amp; LEVEL</string>
+
+	<string name="char_label_abilityscore">Score</string>
+	<string name="char_label_abilitybonus">Bonus</string>
+	<string name="char_label_abilitydamage">Dmg</string>
+	<string name="char_label_wounds">Wounds</string>
+	<string name="char_label_hptemp">Temp</string>
+	<string name="char_label_nonlethal">Subdual</string>
+	<string name="char_label_dr">Damage Reduction</string>
+	<string name="char_label_classes">Classes</string>
+	<string name="char_label_level">Total Level</string>
+	<string name="char_label_speed">Speed</string>
+	<string name="char_label_speedspecial">Special Movement</string>
+	<string name="char_label_melee">Melee</string>
+	<string name="char_label_ranged">Ranged</string>
+	
+	<string name="char_tooltip_wounds">Wounds</string>
+	<string name="char_tooltip_hptemp">Temporary HP</string>
+	<string name="char_tooltip_nonlethal">Nonlethal wounds</string>
+	<string name="char_tooltip_str">Strength score</string>
+	<string name="char_tooltip_dex">Dexterity score</string>
+	<string name="char_tooltip_con">Constitution score</string>
+	<string name="char_tooltip_int">Intelligence score</string>
+	<string name="char_tooltip_wis">Wisdom score</string>
+	<string name="char_tooltip_cha">Charisma score</string>
+	<string name="char_tooltip_strdamage">Strength damage</string>
+	<string name="char_tooltip_dexdamage">Dexterity damage</string>
+	<string name="char_tooltip_condamage">Constitution damage</string>
+	<string name="char_tooltip_intdamage">Intelligence damage</string>
+	<string name="char_tooltip_wisdamage">Wisdom damage</string>
+	<string name="char_tooltip_chadamage">Charisma damage</string>
+	<string name="char_tooltip_strbonus">Strength bonus</string>
+	<string name="char_tooltip_dexbonus">Dexterity bonus</string>
+	<string name="char_tooltip_conbonus">Constitution bonus</string>
+	<string name="char_tooltip_intbonus">Intelligence bonus</string>
+	<string name="char_tooltip_wisbonus">Wisdom bonus</string>
+	<string name="char_tooltip_chabonus">Charisma bonus</string>
+	<string name="char_tooltip_xp">XP</string>
+	<string name="char_tooltip_xpneeded">XP Needed</string>
+	<string name="char_tooltip_speed">Speed</string>
+	<string name="char_tooltip_atkmelee">Melee Attack</string>
+	<string name="char_tooltip_atkranged">Ranged Attack</string>
+
+	<string name="char_label_skillspot">Spot</string>
+	<string name="char_label_skilllisten">Listen</string>
+	<string name="char_label_skillsearch">Search</string>
+	<string name="char_label_skillperception">Percept.</string>
+	<string name="char_tooltip_skillcheck">Check</string>
+	
+	<string name="char_message_raceadd">Race '%s' added to '%s'.</string>
+	<string name="char_message_racialtraitadd">Trait '%s' added to '%s'.</string>
+	<string name="char_message_classadd">One level of class '%s' added to '%s'.</string>
+	<string name="char_message_classfeatureadd">Feature '%s' added to '%s'.</string>
+	<string name="char_message_classhpaddmax">Maximum hit points for first %s level added to '%s'.</string>
+	<string name="char_message_classhpaddavg">Average hit points for additional %s level added to '%s'.</string>
+	<string name="char_message_classbabadd">Attack bonus increased for '%s'.</string>
+	<string name="char_message_classskillranksadd">Skill ranks for class '%s' added to '%s'.</string>
+	<string name="char_message_classskillsadd">Class skills added to '%s'.</string>
+	<string name="char_message_skillbonusadd">%+d bonus added to '%s' skill for '%s'.</string>
+	<string name="char_message_savebonusadd">%+d bonus added to '%s' saving throw for '%s'.</string>
+	<string name="char_message_languageadd">Language '%s' added to '%s'.</string>
+	<string name="char_error_missingrecord">Unable to find record to match link dropped. Check to make sure the correct modules are open.</string>
+
+	<string name="char_title_selectabilityincrease">Select Ability Score</string>
+	<string name="char_message_selectabilityincrease">Choose ability from the list below to increase.</string>
+
+	<string name="char_title_selectfavoredclass">Select Favored Class</string>
+	<string name="char_message_selectfavoredclass">Choose a favored class from the list below.</string>
+	<string name="char_message_selectfavoredclasses">Choose %d favored classes from the list below.</string>
+
+	<string name="char_title_selectfavoredclassbonus">Select Favored Class Bonus</string>
+	<string name="char_message_selectfavoredclassbonus">Choose a favored class bonus from the list below.</string>
+	<string name="char_value_favoredclasshpbonus">+1 hit point</string>
+	<string name="char_value_favoredclassskillbonus">+1 skill rank</string>
+	<string name="char_message_favoredclasshpadd">Bonus hit point for favored class level added to '%s'.</string>
+	<string name="char_message_favoredclassskilladd">Bonus skill rank for favored class level added to '%s'.</string>
+	
+	<string name="char_title_selectspellclassincrease">Select Spell Class Increase</string>
+	<string name="char_message_selectspellclassincrease">Choose %d spell class(es) from the list below to increase.</string>
+
+	<string name="char_classes_title">Class &amp; Level</string>
+	<string name="char_label_totallevel">Total Level</string>
+	<string name="char_label_class">Class</string>
+	<string name="char_label_classlevel">Level</string>
+	<string name="char_label_classskillranks">Skill Ranks</string>
+	<string name="char_label_classskillrankstotal">Total</string>
+	<string name="char_label_classskillranksused">Used</string>
+	<string name="char_label_classfavored">Fav</string>
+	<string name="char_label_exp">XP</string>
+	<string name="char_label_expneeded">XP Needed</string>
+
+	<!-- Character - Combat -->
+	<string name="char_label_combatbase">Base</string>
+	<string name="char_label_combatability">Stat</string>
+	<string name="char_label_combatarmor">Armor</string>
+	<string name="char_label_combatsize">Size</string>
+	<string name="char_label_combatmisc">Misc</string>
+	<string name="char_label_combattotal">Total</string>
+
+	<string name="char_label_combatac">Armor Class</string>
+	<string name="char_label_combatacshield">Shield</string>
+	<string name="char_label_combatacnatural">Nat</string>
+	<string name="char_label_combatacdeflection">Def</string>
+	<string name="char_label_combatacdodge">Dodge</string>
+	<string name="char_label_combatsaveclass">Class</string>
+	<string name="char_label_combatatkbase">Base Attack Bonus</string>
+	<string name="char_tooltip_combatatkbase">Base Attack Bonus</string>
+	<string name="char_label_combatatkmelee">Melee</string>
+	<string name="char_label_combatatkranged">Ranged</string>
+	<string name="char_label_combatspeed">Speed</string>
+	
+	<string name="char_tooltip_cmdability2">CMD second ability</string>
+	<string name="char_tooltip_cmdbasemod">CMD base modifier</string>
+
+	<!-- Character - Skills -->
+	<string name="char_label_skillpointsspent">Points Spent</string>
+	<string name="char_tooltip_skilladdprofession">Add Profession Skill</string>
+	<string name="char_tooltip_skilladdperform">Add Perform Skill</string>
+	<string name="char_tooltip_skilladdknowledge">Add Knowledge Skill</string>
+	<string name="char_tooltip_skilladdcraft">Add Craft Skill</string>
+	<string name="char_tooltip_skilladd">Add Custom Skill</string>
+	<string name="char_tooltip_skillshowmini">Show on Mini</string>
+	<string name="char_tooltip_skillclass">Class skill</string>
+	<string name="char_label_skillname">Name</string>
+	<string name="char_label_skillranks">Ranks</string>
+	<string name="char_label_skillability">Stat</string>
+	<string name="char_label_skillmisc">Misc</string>
+	<string name="char_label_skilltotal">Total</string>
+
+	<string name="char_message_missingskilldesc">Unable to find skill record with the correct name.</string>
+
+	<!-- Character - Abilities -->
+	<string name="char_label_feats">Feats</string>
+	<string name="char_label_sa">Class Abilities</string>
+	<string name="char_label_proficiencies">Proficiency</string>
+	<string name="char_label_traits">Racial Traits</string>
+	
+	<!-- Character - Inventory -->
+	<string name="char_tooltip_itemshowmini">Show on mini sheet</string>
+	<string name="char_label_invarmor">Armor</string>
+	<string name="char_label_invarmormaxability">Max Stat</string>
+	<string name="char_label_invarmorskillcheckpenalty">Skill Chk</string>
+	<string name="char_label_invarmorspellfailure">Spell Fail</string>
+	<string name="char_label_totalweight">Total encumbrance</string>
+	<string name="char_label_invenclt">Light</string>
+	<string name="char_label_invencmed">Medium</string>
+	<string name="char_label_invenchvy">Heavy</string>
+	<string name="char_label_invencliftover">Lift over</string>
+	<string name="char_label_invenclift">Lift off</string>
+	<string name="char_label_invencdrag">Push/drag</string>
+	<string name="char_label_money">Treasure</string>
+	
+	<string name="char_tooltip_armormodoff">Armor modifiers disabled</string>
+	<string name="char_tooltip_armormodon">Armor modifiers enabled</string>
+	
+	<string name="char_encumbrance_title">Encumbrance</string>
+	<string name="char_label_encstradj">Str Adj</string>
+	<string name="char_label_enccarrymult">Carry Mult</string>
+	
+	<!-- Character - Notes -->
+	<string name="char_label_size">Size</string>
+	<string name="char_label_alignment">Alignment</string>
+	<string name="char_label_deity">Deity</string>
+
+	<!-- Character - Actions -->
+	<string name="char_label_weapons">Weapons</string>
+	<string name="char_label_weaponname">Name</string>
+	<string name="char_label_weapontype">M/R</string>
+	<string name="char_label_weaponnumatt">#att</string>
+	<string name="char_label_weaponattacks">Attacks</string>
+	<string name="char_label_weapondamage">Damage</string>
+	<string name="char_label_weaponrange">Range</string>
+	<string name="char_label_weaponammo">Ammo</string>
+	<string name="char_label_spells">Spells</string>
+	
+	<string name="char_label_weaponmelee1h">Melee One-Handed</string>
+	<string name="char_label_weaponmelee2h">Melee Two-Handed</string>
+	<string name="char_label_weaponmeleeoh">Melee Off-Hand</string>
+	<string name="char_label_weaponrangednone">Ranged No Stat</string>
+	<string name="char_label_weaponrangedbow">Ranged Bow</string>
+	<string name="char_label_weaponrangedsling">Ranged Sling</string>
+	<string name="char_label_weaponrangedthrown">Ranged Thrown</string>
+	<string name="char_label_weaponrangedthrownoh">Ranged Thrown OH</string>
+	
+	<string name="char_tooltip_actionedit">Edit Weapon and Spell Lists</string>
+	<string name="char_tooltip_actionaddspellclass">Add Spell Class</string>
+	<string name="char_tooltip_actionaddweapon">Add Weapon</string>
+	<string name="char_tooltip_weaponmaxability"></string>
+	<string name="char_tooltip_weapontypemelee">Melee</string>
+	<string name="char_tooltip_weapontyperanged">Ranged</string>
+	<string name="char_tooltip_weapontypecm">Combat Maneuver</string>
+	
+	<string name="char_spell_title_selectlevel">Select Level</string>
+	<string name="char_spell_message_selectlevel">Select level for spell (%s) in class (%s).</string>
+
+	<!-- Classes -->
+	<string name="class_label_classtype">Type</string>
+	<string name="class_label_classtype_base">Base</string>
+	<string name="class_label_classtype_prestige">Prestige</string>
+	<string name="class_label_classtype_npc">NPC</string>
+	<string name="class_label_hitdie">Hit Die</string>
+	<string name="class_label_bab">Base Attack</string>
+	<string name="class_label_bab_fast">Fast</string>
+	<string name="class_label_bab_medium">Medium</string>
+	<string name="class_label_bab_slow">Slow</string>
+	<string name="class_label_fort">Fort Save</string>
+	<string name="class_label_ref">Ref Save</string>
+	<string name="class_label_will">Will Save</string>
+	<string name="class_label_save_good">Good</string>
+	<string name="class_label_save_bad">Bad</string>
+	<string name="class_label_skillranks">Skill Ranks</string>
+	<string name="class_label_skillrankssuffix">+ Int Modifier (per level)</string>
+	<string name="class_header_classskills">CLASS SKILLS</string>
+	<string name="class_header_features">FEATURES</string>
+
+	<!-- Encounters -->
+	<string name="battle_label_cr">CR</string>
+	<string name="battle_tooltip_cr">Challenge Rating</string>
+	<string name="battle_label_xp">XP</string>
+	<string name="battle_tooltip_xp">Experience Points</string>
+	
+	<!-- Items -->
+	<string name="item_grouped_label_name">Name</string>
+	<string name="item_grouped_label_cost">Cost</string>
+	<string name="item_grouped_label_weight">Wt</string>
+	<string name="item_grouped_tooltip_weight">Weight</string>
+	<string name="item_grouped_label_ac">AC</string>
+	<string name="item_grouped_tooltip_ac">Base Armor Class</string>
+	<string name="item_grouped_label_maxstatbonus">Max Dex</string>
+	<string name="item_grouped_tooltip_maxstatbonus">Maximum Dexterity Bonus</string>
+	<string name="item_grouped_label_checkpenalty">Skill</string>
+	<string name="item_grouped_tooltip_checkpenalty">Skill Check Penalty</string>
+	<string name="item_grouped_label_spellfailure">Sp Fail</string>
+	<string name="item_grouped_tooltip_spellfailure">Spell Failure Chance</string>
+	<string name="item_grouped_label_speed30">Spd 30</string>
+	<string name="item_grouped_tooltip_speed30">Speed Adjustment for Base 30</string>
+	<string name="item_grouped_label_speed20">Spd 20</string>
+	<string name="item_grouped_tooltip_speed20">Speed Adjustment for Base 20</string>
+	<string name="item_grouped_label_damage">Damage</string>
+	<string name="item_grouped_label_critical">Crit</string>
+	<string name="item_grouped_label_range">Rng</string>
+	<string name="item_grouped_tooltip_range">Range Increment</string>
+	<string name="item_grouped_label_properties">Properties</string>
+	<string name="item_grouped_label_damagetype">Damage Type</string>
+	
+	<string name="item_label_type">Type</string>
+	<string name="item_label_subtype">Subtype</string>
+	<string name="item_label_damage">Damage</string>
+	<string name="item_label_dmgtype">Damage Type</string>
+	<string name="item_label_critical">Critical</string>
+	<string name="item_label_range">Range</string>
+	<string name="item_label_ac">AC Bonus</string>
+	<string name="item_label_maxstat">Max Dex</string>
+	<string name="item_label_scp">Check Penalty</string>
+	<string name="item_label_spellfail">Spell Fail (%)</string>
+	<string name="item_label_speed30">Speed (30')</string>
+	<string name="item_label_speed20">Speed (20')</string>
+	<string name="item_label_properties">Properties</string>
+	<string name="item_label_bonus">Bonus</string>
+	<string name="item_label_aura">Aura</string>
+	<string name="item_label_prereq">Craft Prereq</string>
+
+	<!-- NPCs -->
+	<string name="npc_grouped_label_name">Name</string>
+	<string name="npc_grouped_label_cr">CR</string>
+	<string name="npc_grouped_tooltip_cr">Challenge Rating</string>
+
+	<string name="npc_label_typecreature">Creature</string>
+	<string name="npc_label_typetrap">Trap/Haunt</string>
+	<string name="npc_label_typevehicle">Vehicle</string>
+
+	<string name="npc_label_type">Type</string>
+	<string name="npc_label_alignment">Alignment</string>
+	<string name="npc_label_cr">CR</string>
+	<string name="npc_label_senses">Senses</string>
+	<string name="npc_label_aura">Aura</string>
+	<string name="npc_header_defense">DEFENSE</string>
+	<string name="npc_label_hd">HD</string>
+	<string name="npc_label_saves">Saves</string>
+	<string name="npc_label_sq">SQ</string>
+	<string name="npc_header_offense">OFFENSE</string>
+	<string name="npc_label_speed">Speed</string>
+	<string name="npc_label_atk">Attack</string>
+	<string name="npc_label_fullatk">Full Attack</string>
+	<string name="npc_label_spacereach">Space/Reach</string>
+	<string name="npc_label_sa">SA</string>
+	<string name="npc_header_statistics">STATISTICS</string>
+	<string name="npc_label_abilities">Abilities</string>
+	<string name="npc_label_babgrp">BAB/Grp</string>
+	<string name="npc_label_babcm">BAB/CM</string>
+	<string name="npc_label_cm">CM</string>
+	<string name="npc_label_feats">Feats</string>
+	<string name="npc_label_skills">Skills</string>
+	<string name="npc_label_languages">Languages</string>
+	<string name="npc_label_advancement">Adv.</string>
+	<string name="npc_label_leveladj">Level Adj.</string>
+	<string name="npc_header_ecology">ECOLOGY</string>
+	<string name="npc_label_environment">Environment</string>
+	<string name="npc_label_organization">Organization</string>
+	<string name="npc_label_treasure">Treasure</string>
+	
+	<string name="npc_header_effects">EFFECTS</string>
+	<string name="npc_label_trigger">Trigger</string>
+	<string name="npc_label_reset">Reset</string>
+	<string name="npc_label_effect">Effect</string>
+	<string name="npc_label_effect2">Effect 2</string>
+	<string name="npc_label_destruction">Destruction</string>
+	
+	<string name="npc_label_squares">Squares</string>
+	<string name="npc_label_basesave">Base Save</string>
+	<string name="npc_label_cm">CM</string>
+	<string name="npc_header_desc">DESCRIPTION</string>
+	<string name="npc_label_propulsion">Propulsion</string>
+	<string name="npc_label_drivecheck">Driving Check</string>
+	<string name="npc_label_forwardface">Forward Face</string>
+	<string name="npc_label_drivedevice">Driving Dev.</string>
+	<string name="npc_label_drivespace">Driving Space</string>
+	<string name="npc_label_crew">Crew</string>
+	<string name="npc_label_decks">Decks</string>
+	<string name="npc_label_weapons">Weapons</string>
+	
+	<string name="npc_tooltip_spelledit">Edit Spell List</string>
+	<string name="npc_tooltip_spelladdclass">Add Spell Class</string>
+	
+	<!-- Encounters -->
+	<string name="enc_tooltip_refreshcr">Refresh CR</string>
+	<string name="enc_tooltip_refreshxp">Refresh XP</string>
+	<string name="enc_message_refreshxp_missingnpclink">[ERROR] Link for NPC '%s' is not working. Make sure the correct modules have been opened in the Library.</string>
+	<string name="enc_message_refreshxp_missingnpcxp">[ERROR] CR for NPC '%s' is not valid. Check the NPC record.</string>
+	
+	<!-- Quests -->
+	<string name="quest_label_type">Type</string>
+	<string name="quest_label_xp">XP</string>
+	
+	<string name="quest_label_typeminor">Minor</string>
+	<string name="quest_label_typemajor">Major</string>
+
+	<!-- Spells -->
+	<string name="spell_label_mode">Mode</string>
+	<string name="spell_label_modestd">Standard</string>
+	<string name="spell_label_modeprep">Preparation</string>
+	<string name="spell_label_modecombat">Combat</string>
+	<string name="spell_label_display">Display</string>
+	<string name="spell_label_displaystd">Summary</string>
+	<string name="spell_label_displayaction">Actions</string>
+	<string name="spellclass_emptyname">&#171; Class &#187;</string>
+	<string name="spelllevel_emptyname">&#171; Class Level &#187;</string>
+	<string name="spell_emptydesc">&#171; Short Description &#187;</string>
+	<string name="spell_label_pp">PP</string>
+	<string name="spell_label_cc">CC</string>
+	<string name="spell_tooltip_ppmax">Power Points Max</string>
+	<string name="spell_tooltip_ppused">Power Points Used</string>
+	<string name="spell_tooltip_cc">Concentration Check</string>
+	<string name="spell_label_basedc">Base DC</string>
+	<string name="spell_tooltip_basedc">Base Spell DC</string>
+	<string name="spell_label_ability">Stat</string>
+	<string name="spell_label_mod">Mod</string>
+	<string name="spell_label_misc">Misc</string>
+	<string name="spell_label_total">Total</string>
+	<string name="spell_label_baseability">Ability</string>
+	<string name="spell_label_sp">Spell Penetration</string>
+	<string name="spell_label_ccdetail">Conc. Check</string>
+	<string name="spell_tooltip_toggle">Click to edit / hide details</string>
+	
+	<string name="spell_tooltip_casterprep">Prepared spell caster (Wizard)</string>
+	<string name="spell_tooltip_casterspontaneous">Spontaneous spell caster (Sorcerer)</string>
+	<string name="spell_tooltip_casterpoints">Points spell caster (Psion)</string>
+	
+	<string name="spell_label_cast">Cast</string>
+	<string name="spell_tooltip_usepower">Use Power</string>
+	<string name="spell_tooltip_castspell">Cast Spell</string>
+	<string name="spell_label_atk">Atk</string>
+	<string name="spell_label_dmg">Dmg</string>
+	<string name="spell_label_heal">Heal</string>
+
+	<string name="spell_error_dropclassmissing">Unable to determine class for moved spell, please drop within a class.</string>
+	<string name="spell_error_dropclasslevelmissing">Unable to determine class or level for new spell, please drop within a class level.</string>
+	
+	<!-- Feats -->
+	<string name="feat_grouped_label_name">Name</string>
+	<string name="feat_grouped_label_prereq">Prerequisites</string>
+	<string name="feat_grouped_label_benefit">Benefits</string>
+	<string name="feat_empty_flavor">&#171; Flavor text &#187;</string>
+	<string name="feat_label_type">Type</string>
+	<string name="feat_label_prereq">Prerequisites</string>
+	<string name="feat_label_summary">Summary</string>
+	<string name="feat_label_benefit">Benefit</string>
+	<string name="feat_label_normal">Normal</string>
+	<string name="feat_label_special">Special</string>
+	
+	<!-- Races -->
+	<string name="race_header_traits">TRAITS</string>
+	
+	<!-- Skills -->
+	<string name="skill_label_ability">Ability</string>
+	<string name="skill_label_trainedonly">Trained Only</string>
+	<string name="skill_label_armorcheckpenalty">AC Pen. Mult.</string>
+	
+	<!-- Spells -->
+	<string name="spell_label_school">School</string>
+	<string name="spell_label_components">Components</string>
+	<string name="spell_label_casttime">Casting Time</string>
+	<string name="spell_label_range">Range</string>
+	<string name="spell_label_effecttarget">Effect/Target</string>
+	<string name="spell_label_duration">Duration</string>
+	<string name="spell_label_save">Saving Throw</string>
+	<string name="spell_label_sr">Spell Resist.</string>
+
+	<!-- Special Abilities -->
+	<string name="specialability_grouped_label_name">Name</string>
+	<string name="specialability_label_type">Type</string>
+	<string name="specialability_empty_type">Class Feature</string>
+		
+	<!-- Reference -->
+	<string name="ref_label_listname">Name</string>
+	<string name="ref_label_listcost">Cost</string>
+	<string name="ref_label_listdamage">Damage</string>
+	<string name="ref_label_listcritical">Critical</string>
+	<string name="ref_label_listrange">Range</string>
+	<string name="ref_label_listweight">Weight</string>
+	<string name="ref_label_listproperties">Prop.</string>
+	<string name="ref_label_listtype">Type</string>
+	<string name="ref_label_listarmorname">\rName</string>
+	<string name="ref_label_listarmorcost">\rCost</string>
+	<string name="ref_label_listarmorac">AC\rBonus</string>
+	<string name="ref_label_listarmormaxability">Max Dex\rBonus</string>
+	<string name="ref_label_listarmorscp">Skill\rPenalty</string>
+	<string name="ref_label_listarmorspellfail">Spell\rFail</string>
+	<string name="ref_label_listarmorspeed30">Speed\r(30')</string>
+	<string name="ref_label_listarmorspeed20">Speed\r(20')</string>
+	<string name="ref_label_listarmorweight">\rWeight</string>
+
+	<string name="ref_label_cost">Cost (gp)</string>
+	<string name="ref_label_weight">Weight</string>
+	<string name="ref_label_damage">Damage</string>
+	<string name="ref_label_dmgtype">Damage Type</string>
+	<string name="ref_label_critical">Critical</string>
+	<string name="ref_label_range">Range</string>
+	<string name="ref_label_properties">Properties</string>
+	<string name="ref_label_ac">AC Bonus</string>
+	<string name="ref_label_maxability">Max Dex</string>
+	<string name="ref_label_scp">Check Penalty</string>
+	<string name="ref_label_spellfail">Spell Fail (%)</string>
+	<string name="ref_label_speed30">Speed (30')</string>
+	<string name="ref_label_speed20">Speed (20')</string>
+	<string name="ref_label_properties">Properties</string>
+	
+	<!-- Editors -->
+	<string name="weapon_title">Weapon</string>
+	<string name="weapon_label_name">Name</string>
+	<string name="weapon_label_properties">Properties</string>
+	<string name="weapon_header_attack">ATTACK</string>
+	<string name="weapon_label_atkstat">Stat</string>
+	<string name="weapon_label_atkbonus">Bonus</string>
+	<string name="weapon_label_atkbonusper">Per Atk Bonus</string>
+	<string name="weapon_label_critrange">Crit</string>
+	<string name="weapon_header_damage">DAMAGE</string>
+	<string name="weapon_label_dmgdice">Dice</string>
+	<string name="weapon_label_dmgstat">Mult x Stat (Max)</string>
+	<string name="weapon_tooltip_dmgstatmult">Multiple of ability bonus</string>
+	<string name="weapon_tooltip_dmgstatmax">Maximum ability bonus to apply (before multiple)</string>
+	<string name="weapon_label_dmgbonus">Bonus</string>
+	<string name="weapon_label_dmgcritmult">Crit</string>
+	<string name="weapon_label_dmgtype">Type</string>
+
+	<string name="power_label_name">Name</string>
+	<string name="power_label_targeting">Targeting</string>
+	<string name="power_label_targetnormal">Targets</string>
+	<string name="power_label_targetself">Self</string>
+	<string name="power_label_metamagic">Metamagic</string>
+	<string name="power_label_metamagicempower">Empower</string>
+	<string name="power_label_metamagicmaximize">Maximize</string>
+	<string name="power_tooltip_targetself">Apply to Self</string>
+	<string name="power_tooltip_targetnormal">Apply to current targets</string>
+
+	<string name="power_tooltip_cast">CAST</string>
+	<string name="power_tooltip_save">SAVE</string>
+	<string name="power_tooltip_attack">ATK</string>
+	<string name="power_tooltip_damage">DMG</string>
+	<string name="power_tooltip_heal">HEAL</string>
+	<string name="power_tooltip_effect">EFFECT</string>
+
+	<string name="power_title_cast">Spell/Ability Use</string>
+	<string name="power_header_cast_attack">ATTACK</string>
+	<string name="power_label_atktypenone">None</string>
+	<string name="power_label_atktypemelee">Melee</string>
+	<string name="power_label_atktyperanged">Ranged</string>
+	<string name="power_label_atktypemtouch">M Touch</string>
+	<string name="power_label_atktypertouch">R Touch</string>
+	<string name="power_label_atktypegrapple">CMB</string>
+	<string name="power_header_cast_clc">CASTER LEVEL CHECK</string>
+	<string name="power_label_srnotallowed">SR Not Allowed?</string>
+	<string name="power_header_cast_save">SAVE</string>
+	<string name="power_label_savetypenone">None</string>
+	<string name="power_label_savetypefort">Fort</string>
+	<string name="power_label_savetyperef">Ref</string>
+	<string name="power_label_savetypewill">Will</string>
+	<string name="power_label_savedctype_ability">Class DC + </string>
+	<string name="power_label_savedctype_fixed">Fixed</string>
+	<string name="power_label_savedctype_casterlevel">CL / 2</string>
+	<string name="power_header_cast_onmiss">ON SAVE</string>
+	<string name="power_label_onmissdamage">Damage</string>
+	<string name="power_label_onmissdamage_half">Half on Success</string>
+	
+	<string name="power_title_damage">Spell/Ability Damage</string>
+	<string name="power_label_spelldmg">Spell Dmg?</string>
+	<string name="power_header_damage">DAMAGE</string>
+	<string name="power_tooltip_dicemax">Maximum caster level for dice multiple</string>
+	<string name="power_tooltip_statmult">Multiple of caster level or ability</string>
+	<string name="power_tooltip_statmax">Maximum caster level or ability for multiple</string>
+	<string name="power_label_dmgtype">Type</string>
+	<string name="power_label_dmg_dice">Dice</string>
+	<string name="power_label_dmg_dicemult">Dice Multiplier (Max)</string>
+	<string name="power_label_dmg_stat">Mult x Stat (Max)</string>
+	<string name="power_label_dmg_bonus">Bonus</string>
+
+	<string name="power_title_heal">Spell/Ability Heal</string>
+	<string name="power_header_heal">HEAL</string>
+	<string name="power_label_healtype">Type</string>
+	<string name="power_label_healtypenormal">HP</string>
+	<string name="power_label_healtypetemp">TEMP</string>
+	<string name="power_label_heal_dice">Dice</string>
+	<string name="power_label_heal_dicemult">Dice Multiplier (Max)</string>
+	<string name="power_label_heal_stat">Mult x Stat (Max)</string>
+	<string name="power_label_heal_bonus">Bonus</string>
+
+	<string name="power_title_effect">Spell/Ability Effect</string>
+	<string name="power_header_effect">DESCRIPTION / CONDITIONS / MODIFIERS</string>
+	<string name="power_header_effect_duration">DURATION</string>
+	<string name="power_header_effect_other">TARGETING / EXPENDITURE</string>
+	<string name="power_label_effect_apply">Expend?</string>
+	<string name="power_label_effect_applyall">Never</string>
+	<string name="power_label_effect_applyaction">On next action</string>
+	<string name="power_label_effect_applyroll">On next roll</string>
+	<string name="power_label_effect_applysingle">Once per modifier</string>
+	<string name="power_tooltip_durmult">Multiple of CL or ability</string>
+	<string name="power_label_effect_durdice">Dice</string>
+	<string name="power_label_effect_durdicemult">Dice Multiplier (Max)</string>
+	<string name="power_label_effect_durstat">Mult x Stat (Max)</string>
+	<string name="power_label_effect_durmod">Fixed</string>
+	<string name="power_label_effect_durunit">Units</string>
+
+	<string name="library_recordtype_empty_classfeature">&#171; New Class Feature &#187;</string>
+	<string name="library_recordtype_empty_racialtrait">&#171; New Racial Trait &#187;</string>
+	<string name="library_recordtype_empty_proficiency">&#171; New Proficiency &#187;</string>
+	
+	<string name="record_label_classfeature">Class Feature</string>
+	<string name="record_label_racialtrait">Racial Trait</string>
+	<string name="record_label_proficiency">Proficiency</string>
+</root>

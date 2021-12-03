@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="item" merge="join">
+		<sheetdata>
+			<subwindow_record name="main">
+				<script file="campaign/scripts/item_drop.lua" />
+			</subwindow_record>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="item_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/item_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="nonid_name_label">
+				<static textres="item_label_unidentified" />
+			</label_column>
+			<string_columnh name="nonid_name" />
+			
+			<label_column name="nonidentified_label">
+				<static textres="item_label_unidentifiednotes" />
+			</label_column>
+			<string_columnh name="nonidentified" />
+			
+			<line_column name="divider" />
+			
+			<label_column name="type_label">
+				<static textres="item_label_type" />
+			</label_column>
+			<string_columnh name="type">
+				<nohide />
+				<delaykeyupdate />
+				<script>
+					function onValueChanged()
+						window.update();
+					end
+				</script>
+			</string_columnh>
+
+			<label_column name="subtype_label">
+				<static textres="item_label_subtype" />
+			</label_column>
+			<string_columnh name="subtype">
+				<delaykeyupdate />
+			</string_columnh>
+
+			<line_column name="divider2" />
+
+			<label_column name="cost_label">
+				<static textres="item_label_cost" />
+			</label_column>
+			<string_columnh name="cost" />
+
+			<label_column name="weight_label">
+				<static textres="item_label_weight" />
+			</label_column>
+			<number_columnh name="weight" />
+
+			<line_column name="divider3" />
+
+			<label_column name="damage_label">
+				<static textres="item_label_damage" />
+			</label_column>
+			<string_columnh name="damage" />
+			
+			<label_column name="damagetype_label">
+				<static textres="item_label_dmgtype" />
+			</label_column>
+			<string_columnh name="damagetype" />
+			
+			<label_column name="critical_label">
+				<static textres="item_label_critical" />
+			</label_column>
+			<string_columnh name="critical" />
+			
+			<label_column name="range_label">
+				<static textres="item_label_range" />
+			</label_column>
+			<number_columnh name="range" />
+			
+			<label_column name="ac_label">
+				<static textres="item_label_ac" />
+			</label_column>
+			<number_columnh name="ac">
+				<delaykeyupdate />
+				<displaysign />
+			</number_columnh>
+			
+			<label_column name="maxstatbonus_label">
+				<static textres="item_label_maxstat" />
+			</label_column>
+			<number_columnh name="maxstatbonus">
+				<delaykeyupdate />
+				<displaysign />
+			</number_columnh>
+			
+			<label_column name="checkpenalty_label">
+				<static textres="item_label_scp" />
+			</label_column>
+			<number_columnh name="checkpenalty">
+				<delaykeyupdate />
+				<displaysign />
+			</number_columnh>
+			
+			<label_column name="spellfailure_label">
+				<static textres="item_label_spellfail" />
+			</label_column>
+			<number_columnh name="spellfailure">
+				<delaykeyupdate />
+			</number_columnh>
+			
+			<label_column name="speed30_label">
+				<static textres="item_label_speed30" />
+			</label_column>
+			<number_columnh name="speed30" />
+			
+			<label_column name="speed20_label">
+				<static textres="item_label_speed20" />
+			</label_column>
+			<number_columnh name="speed20" />
+
+			<label_column name="properties_label">
+				<static textres="item_label_properties" />
+			</label_column>
+			<string_columnh name="properties" />
+			
+			<line_column name="divider4" />
+
+			<label_column name="bonus_label">
+				<static textres="item_label_bonus" />
+			</label_column>
+			<number_columnh name="bonus">
+				<delaykeyupdate />
+			</number_columnh>
+
+			<label_column name="aura_label">
+				<static textres="item_label_aura" />
+			</label_column>
+			<string_columnh name="aura" />
+
+			<label_column name="cl_label">
+				<static textres="casterlevel" />
+			</label_column>
+			<number_columnh name="cl" />
+
+			<label_column name="prerequisites_label">
+				<static textres="item_label_prereq" />
+			</label_column>
+			<string_columnh name="prerequisites" />
+			
+			<line_column name="divider5" />
+
+			<ft_columnh name="description" />
+		</sheetdata>
+	</windowclass>
+</root>

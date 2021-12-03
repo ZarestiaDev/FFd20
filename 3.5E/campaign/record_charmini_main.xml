@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheetmini_main">
+		<minisheet />
+		<script file="campaign/scripts/char_main.lua" />
+		<sheetdata>
+			<!-- Health -->
+			<frame_char name="mini_hpframe">
+				<bounds>0,10,180,85</bounds>
+			</frame_char>
+			<number_dropadd name="hp" source="hp.total">
+				<anchored to="mini_hpframe" position="insidetopleft" offset="15,24" width="30" height="20" />
+				<description textres="hp" />
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="hp_label">
+				<anchored to="hp" />
+				<static textres="hp" />
+			</label_fieldtop>
+			<number_charwounds name="wounds" source="hp.wounds">
+				<anchored to="hp" position="right" offset="10,0" width="30" />
+				<description textres="char_tooltip_wounds" />
+			</number_charwounds>
+			<label_fieldtop name="wounds_label">
+				<anchored to="wounds" />
+				<static textres="charmini_label_wounds" />
+				<tooltip textres="char_tooltip_wounds" />
+			</label_fieldtop>
+			<number_dropadd name="hptemp" source="hp.temporary">
+				<anchored to="wounds" position="right" offset="10,0" width="30" />
+				<color>0000AA</color>
+				<hideonvalue>0</hideonvalue>
+				<description textres="char_tooltip_hptemp" />
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="hptemp_label">
+				<anchored to="hptemp" />
+				<static textres="charmini_label_hptemp" />
+				<tooltip textres="char_tooltip_hptemp" />
+			</label_fieldtop>
+			<number_dropadd name="nonlethal" source="hp.nonlethal">
+				<anchored to="hptemp" position="right" offset="10,0" width="30" />
+				<hideonvalue>0</hideonvalue>
+				<description textres="char_tooltip_nonlethal" />
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="nonlethal_label">
+				<anchored to="nonlethal" />
+				<static textres="charmini_label_nonlethal" />
+				<tooltip textres="char_tooltip_nonlethal" />
+			</label_fieldtop>
+			<label name="dr_label">
+				<anchored to="mini_hpframe" position="insidetopleft" offset="15,50" height="20" />
+				<static textres="charmini_label_dr" />
+			</label>
+			<stringu name="dr" source="defenses.damagereduction">
+				<anchored to="mini_hpframe" position="insidetopleft" offset="40,50" width="125" height="20" />
+				<readonly />
+			</stringu>
+
+			<!-- Defenses -->
+			<frame_char name="mini_armorframe">
+				<bounds>0,95,180,65</bounds>
+			</frame_char>
+			<number_chartotalac name="ac" source="ac.totals.general">
+				<anchored to="mini_armorframe" position="insidetopleft" offset="15,24" width="30" height="20" />
+			</number_chartotalac>
+			<label_fieldtop name="ac_label">
+				<anchored to="ac" />
+				<static textres="ac" />
+			</label_fieldtop>
+			<number_charflatfootedac name="flatfootedac" source="ac.totals.flatfooted">
+				<anchored to="ac" position="right" offset="10,0" width="30" />
+			</number_charflatfootedac>
+			<label_fieldtop name="flatfootedac_label">
+				<anchored to="flatfootedac" />
+				<static textres="acff" />
+			</label_fieldtop>
+			<number_chartouchac name="touchac" source="ac.totals.touch">
+				<anchored to="flatfootedac" position="right" offset="10,0" width="30" />
+			</number_chartouchac>
+			<label_fieldtop name="touchac_label">
+				<anchored to="touchac" />
+				<static textres="actouch" />
+			</label_fieldtop>
+			<number_charcmd name="cmd" source="ac.totals.cmd">
+				<anchored to="touchac" position="right" offset="10,0" width="30" />
+			</number_charcmd>
+			<label_fieldtop name="label_cmd">
+				<anchored to="cmd" />
+				<static textres="cmd" />
+			</label_fieldtop>
+
+			<frame_char name="mini_saves_frame">
+				<bounds>0,160,180,65</bounds>
+			</frame_char>
+			<number_charsr name="srfinal" source="defenses.sr.total">
+				<anchored to="mini_saves_frame" position="insidetopleft" offset="15,24" width="30" height="20" />
+			</number_charsr>
+			<label_fieldtop name="srfinal_label">
+				<anchored to="srfinal" />
+				<static textres="sr" />
+			</label_fieldtop>
+			<number_charsavefort name="fortitude" source="saves.fortitude.total">
+				<anchored to="srfinal" position="right" offset="10,0" width="30" />
+			</number_charsavefort>
+			<label_fieldtop name="fortitude_label">
+				<anchored to="fortitude" />
+				<static textres="fort" />
+			</label_fieldtop>
+			<number_charsaveref name="reflex" source="saves.reflex.total">
+				<anchored to="fortitude" position="right" offset="10,0" width="30" />
+			</number_charsaveref>
+			<label_fieldtop name="reflex_label">
+				<anchored to="reflex" />
+				<static textres="ref" />
+			</label_fieldtop>
+			<number_charsavewill name="will" source="saves.will.total">
+				<anchored to="reflex" position="right" offset="10,0" width="30" />
+			</number_charsavewill>
+			<label_fieldtop name="will_label">
+				<anchored to="will" />
+				<static textres="will" />
+			</label_fieldtop>
+
+			<!-- Abilities -->
+			<frame_char name="mini_abilityframe">
+				<bounds>180,10,235,215</bounds>
+			</frame_char>
+
+			<number_charminiabilityscore name="strength" source="abilities.strength.score">
+				<anchored to="mini_abilityframe" position="insidetopleft" offset="105,23" />
+				<description textres="char_tooltip_str" />
+			</number_charminiabilityscore>
+			<number_charminiabilityscore name="dexterity" source="abilities.dexterity.score">
+				<anchored to="strength" />
+				<description textres="char_tooltip_dex" />
+			</number_charminiabilityscore>
+			<number_charminiabilityscore name="constitution" source="abilities.constitution.score">
+				<anchored to="dexterity" />
+				<description textres="char_tooltip_con" />
+			</number_charminiabilityscore>
+			<number_charminiabilityscore name="intelligence" source="abilities.intelligence.score">
+				<anchored to="constitution" />
+				<description textres="char_tooltip_int" />
+			</number_charminiabilityscore>
+			<number_charminiabilityscore name="wisdom" source="abilities.wisdom.score">
+				<anchored to="intelligence" />
+				<description textres="char_tooltip_wis" />
+			</number_charminiabilityscore>
+			<number_charminiabilityscore name="charisma" source="abilities.charisma.score">
+				<anchored to="wisdom" />
+				<description textres="char_tooltip_cha" />
+			</number_charminiabilityscore>
+			
+			<string_charminiabilitylabel name="strength_label">
+				<anchored to="strength" />
+				<static textres="strength" />
+			</string_charminiabilitylabel>
+			<string_charminiabilitylabel name="dexterity_label">
+				<anchored to="dexterity" />
+				<static textres="dexterity" />
+			</string_charminiabilitylabel>
+			<string_charminiabilitylabel name="constitution_label">
+				<anchored to="constitution" />
+				<static textres="constitution" />
+			</string_charminiabilitylabel>
+			<string_charminiabilitylabel name="intelligence_label">
+				<anchored to="intelligence" />
+				<static textres="intelligence" />
+			</string_charminiabilitylabel>
+			<string_charminiabilitylabel name="wisdom_label">
+				<anchored to="wisdom" />
+				<static textres="wisdom" />
+			</string_charminiabilitylabel>
+			<string_charminiabilitylabel name="charisma_label">
+				<anchored to="charisma" />
+				<static textres="charisma" />
+			</string_charminiabilitylabel>
+			
+			<number_charminiabilitydamage name="strengthdamage" source="abilities.strength.damage">
+				<anchored to="strength" />
+				<target>strength</target>
+				<description textres="char_tooltip_strdamage" />
+			</number_charminiabilitydamage>
+			<number_charminiabilitydamage name="dexteritydamage" source="abilities.dexterity.damage">
+				<anchored to="dexterity" />
+				<target>dexterity</target>
+				<description textres="char_tooltip_dexdamage" />
+			</number_charminiabilitydamage>
+			<number_charminiabilitydamage name="constitutiondamage" source="abilities.constitution.damage">
+				<anchored to="constitution" />
+				<target>constitution</target>
+				<description textres="char_tooltip_condamage" />
+			</number_charminiabilitydamage>
+			<number_charminiabilitydamage name="intelligencedamage" source="abilities.intelligence.damage">
+				<anchored to="intelligence" />
+				<target>intelligence</target>
+				<description textres="char_tooltip_intdamage" />
+			</number_charminiabilitydamage>
+			<number_charminiabilitydamage name="wisdomdamage" source="abilities.wisdom.damage">
+				<anchored to="wisdom" />
+				<target>wisdom</target>
+				<description textres="char_tooltip_wisdamage" />
+			</number_charminiabilitydamage>
+			<number_charminiabilitydamage name="charismadamage" source="abilities.charisma.damage">
+				<anchored to="charisma" />
+				<target>charisma</target>
+				<description textres="char_tooltip_chadamage" />
+			</number_charminiabilitydamage>
+			
+			<number_charminiabilitybonus name="strengthbonus" source="abilities.strength.bonus">
+				<anchored to="strength" />
+				<target>strength</target>
+				<modifierfield>abilities.strength.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_strbonus" />
+			</number_charminiabilitybonus>
+			<number_charminiabilitybonus name="dexteritybonus" source="abilities.dexterity.bonus">
+				<anchored to="dexterity" />
+				<target>dexterity</target>
+				<modifierfield>abilities.dexterity.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_dexbonus" />
+			</number_charminiabilitybonus>
+			<number_charminiabilitybonus name="constitutionbonus" source="abilities.constitution.bonus">
+				<anchored to="constitution" />
+				<target>constitution</target>
+				<modifierfield>abilities.constitution.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_conbonus" />
+			</number_charminiabilitybonus>
+			<number_charminiabilitybonus name="intelligencebonus" source="abilities.intelligence.bonus">
+				<anchored to="intelligence" />
+				<target>intelligence</target>
+				<modifierfield>abilities.intelligence.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_intbonus" />
+			</number_charminiabilitybonus>
+			<number_charminiabilitybonus name="wisdombonus" source="abilities.wisdom.bonus">
+				<anchored to="wisdom" />
+				<target>wisdom</target>
+				<modifierfield>abilities.wisdom.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_wisbonus" />
+			</number_charminiabilitybonus>
+			<number_charminiabilitybonus name="charismabonus" source="abilities.charisma.bonus">
+				<anchored to="charisma" />
+				<target>charisma</target>
+				<modifierfield>abilities.charisma.bonusmodifier</modifierfield>
+				<description textres="char_tooltip_chabonus" />
+			</number_charminiabilitybonus>
+
+			<label_fieldtop name="abilitybonus_label">
+				<anchored to="strengthbonus" />
+				<static textres="charmini_label_abilitybonus" />
+			</label_fieldtop>
+			<label_fieldtop name="abilitydamage_label">
+				<anchored to="strengthdamage" />
+				<static textres="charmini_label_abilitydamage" />
+			</label_fieldtop>
+
+			<!-- Attacks -->
+			<frame_char name="mini_combatframe">
+				<bounds>0,225,225,65</bounds>
+			</frame_char>
+			<number_charinit name="initiative" source="initiative.total">
+				<anchored to="mini_combatframe" position="insidetopleft" offset="20,24" width="35" height="20" />
+			</number_charinit>
+			<label_fieldtop name="initiative_label">
+				<anchored to="initiative" />
+				<static textres="init" />
+			</label_fieldtop>
+			<number_charmeleetotal name="melee" source="attackbonus.melee.total">
+				<anchored to="initiative" position="right" offset="15,0" width="35" />
+			</number_charmeleetotal>
+			<label_fieldtop name="melee_label">
+				<anchored to="melee" />
+				<static textres="charmini_label_melee" />
+			</label_fieldtop>
+			<number_charrangedtotal name="ranged" source="attackbonus.ranged.total">
+				<anchored to="melee" position="right" offset="15,0" width="35" />
+			</number_charrangedtotal>
+			<label_fieldtop name="ranged_label">
+				<anchored to="ranged" />
+				<static textres="charmini_label_ranged" />
+			</label_fieldtop>
+			<number_chargrappletotal name="grapple" source="attackbonus.grapple.total">
+				<anchored to="ranged" position="right" offset="15,0" width="35" />
+			</number_chargrappletotal>
+			<label_fieldtop name="label_grapple">
+				<anchored to="grapple" />
+				<static textres="grp" />
+			</label_fieldtop>
+			
+			<!-- Speed -->
+			<frame_char name="mini_speedframe">
+				<bounds>225,225,-5,65</bounds>
+			</frame_char>
+			<number_charspeed name="speedfinal" source="speed.total">
+				<anchored to="mini_speedframe" position="insidetopleft" offset="15,24" width="35" height="20" />
+			</number_charspeed>
+			<label_fieldtop name="speedfinal_label">
+				<anchored to="speedfinal" />
+				<static textres="charmini_label_speed" />
+			</label_fieldtop>
+			<string_labeled name="speedspecial" source="speed.special">
+				<anchored to="mini_speedframe" position="insidetopleft" offset="55,24" width="120" height="20" />
+				<labelres>charmini_label_speedspecial</labelres>
+			</string_labeled>
+
+			<!-- Senses -->
+			<frame_char name="sensesframe">
+				<bounds>0,290,-5,60</bounds>
+			</frame_char>
+			<genericcontrol name="anchor_charmainskill">
+				<anchored to="sensesframe" position="insidetopleft" offset="5,24" width="0" height="20" />
+			</genericcontrol>
+			<button_charmainskill name="spot">
+				<skill>skill_value_spot</skill>
+			</button_charmainskill>
+			<label_charmainskill name="label_spot">
+				<anchored to="spot" />
+				<static textres="char_label_skillspot" />
+			</label_charmainskill>
+			<button_charmainskill name="listen">
+				<skill>skill_value_listen</skill>
+			</button_charmainskill>
+			<label_charmainskill name="label_listen">
+				<anchored to="listen" />
+				<static textres="char_label_skilllisten" />
+			</label_charmainskill>
+			<button_charmainskill name="search">
+				<skill>skill_value_search</skill>
+			</button_charmainskill>
+			<label_charmainskill name="label_search">
+				<anchored to="search" />
+				<static textres="char_label_skillsearch" />
+			</label_charmainskill>
+			<button_charmainskill name="perception">
+				<skill>skill_value_perception</skill>
+				<invisible />
+			</button_charmainskill>
+			<label_charmainskill name="label_perception">
+				<anchored to="perception" />
+				<static textres="char_label_skillperception" />
+				<invisible />
+			</label_charmainskill>
+			<string_labeled name="senses">
+				<anchored to="sensesframe" height="20">
+					<top offset="26" />
+					<left parent="anchor_charmainskill" anchor="right" relation="relative" offset="10" />
+					<right offset="-15" />
+				</anchored>
+				<labelres>char_label_senses</labelres>
+			</string_labeled>
+		</sheetdata>
+	</windowclass>
+</root>

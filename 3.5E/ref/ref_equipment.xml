@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Weapon -->
+	<windowclass name="referenceweapon">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_weapon_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_weapon_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_weapon_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceweapon</class>
+			</link_record_header>
+			<string_record_name_ref name="name" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_weapon_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. subtype.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column name="cost_label">
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column_left name="cost">
+				<readonly />
+			</string_column_left>
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+				<readonly />
+			</number_column_right>
+			
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_damage" />
+			</label_column>
+			<string_column name="damage">
+				<readonly />
+			</string_column>
+			
+			<label_column>
+				<static textres="ref_label_dmgtype" />
+			</label_column>
+			<string_column name="damagetype">
+				<readonly />
+			</string_column>
+			
+			<label_column name="critical_label">
+				<static textres="ref_label_critical" />
+			</label_column>
+			<string_columnh name="critical">
+				<readonly />
+			</string_columnh>
+			
+			<label_column name="range_label">
+				<static textres="ref_label_range" />
+			</label_column>
+			<number_columnh name="range">
+				<readonly />
+			</number_columnh>
+			
+			<label_column name="properties_label">
+				<static textres="ref_label_properties" />
+			</label_column>
+			<string_columnh name="properties">
+				<readonly />
+			</string_columnh>
+			
+			<line_column name="line_desc"/>
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+				<readonly />
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Armor -->
+	<windowclass name="referencearmor">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_armor_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_armor_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_armor_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referencearmor</class>
+			</link_record_header>
+			<string_record_name_ref name="name" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_armor_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. subtype.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column_left name="cost">
+				<readonly />
+			</string_column_left>
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+				<readonly />
+			</number_column_right>
+			
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_ac" />
+			</label_column>
+			<number_column name="ac">
+				<displaysign />
+				<readonly />
+			</number_column>
+			
+			<label_column name="maxstatbonus_label">
+				<static textres="ref_label_maxability" />
+			</label_column>
+			<number_columnh name="maxstatbonus">
+				<displaysign />
+				<readonly />
+			</number_columnh>
+			
+			<label_column name="checkpenalty_label">
+				<static textres="ref_label_scp" />
+			</label_column>
+			<number_columnh name="checkpenalty">
+				<displaysign />
+				<readonly />
+			</number_columnh>
+			
+			<label_column name="spellfailure_label">
+				<static textres="ref_label_spellfail" />
+			</label_column>
+			<number_columnh name="spellfailure">
+				<readonly />
+			</number_columnh>
+			
+			<label_column>
+				<static textres="ref_label_speed30" />
+			</label_column>
+			<number_column name="speed30">
+				<readonly />
+			</number_column>
+			
+			<label_column>
+				<static textres="ref_label_speed20" />
+			</label_column>
+			<number_column name="speed20">
+				<readonly />
+			</number_column>
+			
+			<label_column name="properties_label">
+				<static textres="ref_label_properties" />
+			</label_column>
+			<string_columnh name="properties">
+				<readonly />
+			</string_columnh>
+			
+			<line_column name="line_desc" />
+			
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+				<readonly />
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Equipment -->
+	<windowclass name="referenceequipment">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="250" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_equipment_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_equipment_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_equipment_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>referenceequipment</class>
+			</link_record_header>
+			<string_record_name_ref name="name" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_equipment_stats">
+		<script>
+			function onInit()
+				type_label.setValue("[" .. type.getValue() .. "; " .. subtype.getValue() .. "]");
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<hs name="type" />
+			<hs name="subtype" />
+			
+			<label_column name="type_label">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<line_column />
+			
+			<label_column>
+				<static textres="ref_label_cost" />
+			</label_column>
+			<string_column_left name="cost">
+				<readonly />
+			</string_column_left>
+			
+			<label_column_right>
+				<anchored to="cost" />
+				<static textres="ref_label_weight" />
+			</label_column_right>
+			<number_column_right name="weight">
+				<anchored to="cost" />
+				<readonly />
+			</number_column_right>
+			
+			<line_column name="line_desc" />
+
+			<ft_columnh name="description">
+				<separator>line_desc</separator>
+				<readonly />
+			</ft_columnh>
+		</sheetdata>
+	</windowclass>
+</root>

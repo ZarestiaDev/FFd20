@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="spelldesc">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="350" height="450" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script>
+			function onLockChanged()
+				if header.subwindow then
+					header.subwindow.update();
+				end
+				if content.subwindow then
+					content.subwindow.update();
+				end
+			end
+		</script>
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>spelldesc_header</class>
+			</sub_record_header>
+
+			<frame_record_content name="contentframe" />
+			<subwindow_record name="content">
+				<class>spelldesc_stats</class>
+				<activate />
+			</subwindow_record>
+			<scrollbar_record>
+				<target>content</target>
+			</scrollbar_record>
+			
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="spelldesc_header">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<link_record_header>
+				<class>spelldesc</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_spell" />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="spelldesc_stats">
+		<margins control="0,0,0,15" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				school.update(bReadOnly);
+				level.update(bReadOnly);
+				components.update(bReadOnly);
+				castingtime.update(bReadOnly);
+				range.update(bReadOnly);
+				effect.update(bReadOnly);
+				duration.update(bReadOnly);
+				save.update(bReadOnly);
+				sr.update(bReadOnly);
+				description.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column name="school_label">
+				<static textres="spell_label_school" />
+			</label_column>
+			<string_columnh name="school">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="level_label">
+				<static textres="level" />
+			</label_column>
+			<string_columnh name="level">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="components_label">
+				<static textres="spell_label_components" />
+			</label_column>
+			<string_columnh name="components" />
+
+			<label_column name="castingtime_label">
+				<static textres="spell_label_casttime" />
+			</label_column>
+			<string_columnh name="castingtime" />
+
+			<label_column name="range_label">
+				<static textres="spell_label_range" />
+			</label_column>
+			<string_columnh name="range" />
+
+			<label_column name="effect_label">
+				<static textres="spell_label_effecttarget" />
+			</label_column>
+			<string_columnh name="effect" />
+
+			<label_column name="duration_label">
+				<static textres="spell_label_duration" />
+			</label_column>
+			<string_columnh name="duration" />
+
+			<label_column name="save_label">
+				<static textres="spell_label_save" />
+			</label_column>
+			<string_columnh name="save" />
+
+			<label_column name="sr_label">
+				<static textres="spell_label_sr" />
+			</label_column>
+			<string_columnh name="sr" />
+
+			<ft_columnh name="description" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="linkedspell">
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>0,0,20,20</bounds>
+			</linkfield>
+
+			<string_list_link name="linkedname">
+				<anchored>
+					<top parent="link" />
+					<left parent="link" anchor="right" offset="8" />
+					<right offset="-7" />
+				</anchored>
+			</string_list_link>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="spelldesc2">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="450" height="450" />
+		</placement>
+		<sizelimits>
+			<minimum width="350" height="450" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>spelldesc2_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>spelldesc2_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="spelldesc2_header">
+		<margins control="0,0,0,7" />
+		<sheetdata>
+			<link_record_header>
+				<class>spelldesc2</class>
+			</link_record_header>
+			<string_record_name_ref name="name" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="spelldesc2_stats">
+		<margins control="0,0,0,15" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column>
+				<static textres="spell_label_school" />
+			</label_column>
+			<string_column name="school" />
+
+			<label_column>
+				<static textres="level" />
+			</label_column>
+			<string_column name="level" />
+			
+			<label_column>
+				<static textres="spell_label_components" />
+			</label_column>
+			<string_column name="components" />
+
+			<label_column>
+				<static textres="spell_label_casttime" />
+			</label_column>
+			<string_column name="castingtime" />
+
+			<label_column>
+				<static textres="spell_label_range" />
+			</label_column>
+			<string_column name="range" />
+
+			<label_column>
+				<static textres="spell_label_effecttarget" />
+			</label_column>
+			<string_column name="effect" />
+
+			<label_column>
+				<static textres="spell_label_duration" />
+			</label_column>
+			<string_column name="duration" />
+
+			<label_column>
+				<static textres="spell_label_save" />
+			</label_column>
+			<string_column name="save" />
+
+			<label_column>
+				<static textres="spell_label_sr" />
+			</label_column>
+			<string_column name="sr" />
+
+			<string_column_full name="description" />
+			
+			<windowlist name="linkedspells">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="15" />
+					<left offset="5" />
+					<right offset="-5" />
+				</anchored>
+				<datasource>.linkedspells</datasource>
+				<class>linkedspell</class>
+				<noscroll />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+</root>

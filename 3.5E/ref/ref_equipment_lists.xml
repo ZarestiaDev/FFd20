@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Weapon table -->
+	<windowclass name="reference_weapontablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,120,20</bounds>
+			</string_list_link>
+
+			<genericcontrol name="reftableanchor">
+				<bounds>150,2,0,0</bounds>
+			</genericcontrol>
+			<string_reftable name="cost">
+				<center />
+			</string_reftable>
+			<string_reftable name="damage">
+				<center />
+			</string_reftable>
+			<string_reftable name="critical">
+				<center />
+			</string_reftable>
+			<string_reftable name="range">
+				<center />
+			</string_reftable>
+			<string_reftable name="weight">
+				<center />
+			</string_reftable>
+			<string_reftable name="properties" />
+			<string_reftable name="damagetype">
+				<anchored width="150" />
+			</string_reftable>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_weapontablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.weapons</datasource>
+				<class>reference_weapontablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_weapontablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="750" height="650" />
+		</placement>
+		<sizelimits>
+			<minimum width="750" height="650" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<header_reftablegroup />
+			<label_reftable name="headername">
+				<anchored width="120" />
+				<static textres="ref_label_listname" />
+			</label_reftable>
+			<label_reftable name="headercost">
+				<static textres="ref_label_listcost" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerdamage">
+				<static textres="ref_label_listdamage" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headercritical">
+				<static textres="ref_label_listcritical" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerrange">
+				<static textres="ref_label_listrange" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerweight">
+				<static textres="ref_label_listweight" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerprops">
+				<static textres="ref_label_listproperties" />
+			</label_reftable>
+			<label_reftable name="headerdmgtype">
+				<anchored width="150" />
+				<static textres="ref_label_listtype" />
+			</label_reftable>
+
+			<list_reftablegroup name="grouplist">
+				<class>reference_weapontablegroup</class>
+				<datasource>.groups</datasource>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter" />
+			<button_reftable_expand />
+			<button_reftable_collapse />
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Armor table -->
+	<windowclass name="reference_armortablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,120,20</bounds>
+			</string_list_link>
+
+			<genericcontrol name="reftableanchor">
+				<bounds>150,2,0,0</bounds>
+			</genericcontrol>
+			<string_reftable name="cost">
+				<center />
+			</string_reftable>
+			<string_reftable name="ac">
+				<center />
+			</string_reftable>
+			<string_reftable name="maxstatbonus">
+				<center />
+			</string_reftable>
+			<string_reftable name="checkpenalty">
+				<center />
+			</string_reftable>
+			<string_reftable name="spellfailure">
+				<center />
+			</string_reftable>
+			<string_reftable name="speed30">
+				<center />
+			</string_reftable>
+			<string_reftable name="speed20">
+				<center />
+			</string_reftable>
+			<string_reftable name="weight">
+				<center />
+			</string_reftable>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_armortablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.armor</datasource>
+				<class>reference_armortablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_armortablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="700" height="650" />
+		</placement>
+		<sizelimits>
+			<minimum width="700" height="650" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<header_reftablegroup />
+			<label_reftable name="headername">
+				<anchored width="120" />
+				<static textres="ref_label_listarmorname" />
+			</label_reftable>
+			<label_reftable name="headercost">
+				<static textres="ref_label_listarmorcost" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerac">
+				<static textres="ref_label_listarmorac" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headermaxstat">
+				<static textres="ref_label_listarmormaxability" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headercheckpenalty">
+				<static textres="ref_label_listarmorscp" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerspellfailure">
+				<static textres="ref_label_listarmorspellfail" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerspeed30">
+				<static textres="ref_label_listarmorspeed30" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerspeed20">
+				<static textres="ref_label_listarmorspeed20" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerweight">
+				<static textres="ref_label_listarmorweight" />
+				<center />
+			</label_reftable>
+			
+			<list_reftablegroup name="grouplist">
+				<class>reference_armortablegroup</class>
+				<datasource>.groups</datasource>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter" />
+			<button_reftable_expand />
+			<button_reftable_collapse />
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Equipment table -->
+	<windowclass name="reference_equipmenttablelistitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+			<string_list_link name="name">
+				<bounds>30,2,140,20</bounds>
+			</string_list_link>
+
+			<genericcontrol name="reftableanchor">
+				<bounds>170,2,0,0</bounds>
+			</genericcontrol>
+			<string_reftable name="cost">
+				<center />
+			</string_reftable>
+			<string_reftable name="weight">
+				<center />
+			</string_reftable>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_equipmenttablegroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description" />
+			<string_groupsubdesc name="subdescription" />
+
+			<list_reftablegroupitems name="list">
+				<datasource>.equipment</datasource>
+				<class>reference_equipmenttablelistitem</class>
+			</list_reftablegroupitems>
+
+			<ft_reftablefooter name="footer" />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_equipmenttablelist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="350" height="650" />
+		</placement>
+		<sizelimits>
+			<minimum width="350" height="650" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<header_reftablegroup />
+			<label_reftable name="headername">
+				<anchored width="140" />
+				<static textres="ref_label_listname" />
+			</label_reftable>
+			<label_reftable name="headercost">
+				<static textres="ref_label_listcost" />
+				<center />
+			</label_reftable>
+			<label_reftable name="headerweight">
+				<static textres="ref_label_listweight" />
+				<center />
+			</label_reftable>
+			
+			<list_reftablegroup name="grouplist">
+				<class>reference_equipmenttablegroup</class>
+				<datasource>.groups</datasource>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter" />
+			<button_reftable_expand />
+			<button_reftable_collapse />
+
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+</root>

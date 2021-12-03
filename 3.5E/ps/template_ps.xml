@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="hnx">
+		<numberfield>
+			<bounds>0,0,0,0</bounds>
+			<invisible />
+			<script file="common/scripts/number_crosslink.lua" />
+		</numberfield>
+	</template>
+	
+	<template name="anchor_partysheet_main_header">
+		<genericcontrol name="headeranchor">
+			<anchored height="45">
+				<top  />
+				<left offset="10" />
+				<right offset="-20" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="anchor_partysheet_main_footer">
+		<genericcontrol name="footeranchor">
+			<anchored height="20">
+				<bottom offset="-25" />
+				<left offset="5" />
+				<right offset="-5" />
+			</anchored>
+			<gmvisibleonly />
+		</genericcontrol>
+	</template>
+	<template name="list_psmain_helper">
+		<windowlist>
+			<script file="ps/scripts/ps_list.lua" />
+		</windowlist>
+	</template>
+	<template name="list_psmain">
+		<list_psmain_helper name="list">
+			<anchored to="headeranchor">
+				<top anchor="bottom" />
+				<left />
+				<right />
+				<bottom parent="" offset="-65" />
+			</anchored>
+			<frame name="groupbox" offset="10,10,20,10" />
+			<datasource>.partyinformation</datasource>
+			<class>ps_mainitem</class>
+			<sortby><control>name</control></sortby>
+			<allowdelete />
+			<empty font="list-empty-ps" textres="ps_emptylist" />
+		</list_psmain_helper>
+	</template>
+
+	<template name="anchor_partysheet_xp_header">
+		<genericcontrol name="headeranchor">
+			<anchored height="30">
+				<top  />
+				<left offset="10" />
+				<right offset="-20" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="list_psxp_party">
+		<windowlist name="list">
+			<anchored to="headeranchor">
+				<top anchor="bottom" />
+				<left />
+				<right />
+				<bottom parent="" anchor="center" offset="-20" />
+			</anchored>
+			<frame name="groupbox" offset="5,10,15,10" />
+			<datasource>.partyinformation</datasource>
+			<class>ps_xp_partyentry</class>
+			<sortby><control>name</control></sortby>
+			<columns width="350" fillwidth="true" />
+			<empty font="list-empty-ps" gmtextres="ps_emptylistother" />
+		</windowlist>
+	</template>
+	<template name="list_psxp_encounters">
+		<windowlist name="encounters">
+			<anchored>
+				<top parent="" anchor="center" offset="35" />
+				<left parent="headeranchor" offset="5" />
+				<right parent="" anchor="center" offset="-10" />
+				<bottom parent="" offset="-65" />
+			</anchored>
+			<frame name="groupbox" offset="10,10,15,10" />
+			<footer>footer_narrow</footer>
+			<datasource>.encounters</datasource>
+			<class>ps_xp_encounterentry</class>
+			<useallmodules />
+			<allowcreate />
+			<allowdelete />
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<filter control="encfilter" />
+			<filteron control="name" />
+			<empty font="list-empty-ps" textres="ps_emptylistenc" />
+			<script file="ps/scripts/ps_xp_enclist.lua" />
+		</windowlist>
+	</template>
+	<template name="list_psxp_quests">
+		<windowlist name="quests">
+			<anchored>
+				<top parent="" anchor="center" offset="35" />
+				<left parent="" anchor="center" offset="15" />
+				<right parent="headeranchor" />
+				<bottom parent="" offset="-65" />
+			</anchored>
+			<frame name="groupbox" offset="10,10,15,10" />
+			<footer>footer_narrow</footer>
+			<datasource>.quests</datasource>
+			<class>ps_xp_questentry</class>
+			<useallmodules />
+			<allowcreate />
+			<allowdelete />
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<filter control="questfilter" />
+			<filteron control="name" />
+			<empty font="list-empty-ps" textres="ps_emptylistquest" />
+			<script file="ps/scripts/ps_xp_questlist.lua" />
+		</windowlist>
+	</template>
+
+	<template name="anchor_partysheet_skills_header">
+		<genericcontrol name="headeranchor">
+			<anchored height="45">
+				<top  />
+				<left offset="10" />
+				<right offset="-20" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="anchor_partysheet_skills_footer">
+		<genericcontrol name="footeranchor">
+			<anchored height="20">
+				<bottom offset="-25" />
+				<left offset="5" />
+				<right offset="-5" />
+			</anchored>
+			<gmvisibleonly />
+		</genericcontrol>
+	</template>
+	<template name="list_psskills">
+		<windowlist name="list">
+			<anchored to="headeranchor">
+				<top anchor="bottom" />
+				<left />
+				<right />
+				<bottom parent="" offset="-65" />
+			</anchored>
+			<frame name="groupbox" offset="10,10,20,10" />
+			<datasource>.partyinformation</datasource>
+			<class>ps_skillsitem</class>
+			<sortby><control>name</control></sortby>
+			<allowdelete />
+			<empty font="list-empty-ps" textres="ps_emptylistother" />
+		</windowlist>
+	</template>
+
+	<template name="string_ps">
+		<stringu>
+			<anchored height="20" />
+			<readonly />
+			<nodrag />
+			<nolinkwidget />
+			<script file="common/scripts/string_crosslink.lua" />
+		</stringu>
+	</template>
+	<template name="number_ps">
+		<simplenumber>
+			<anchored height="20" />
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<readonly />
+		</simplenumber>
+	</template>
+	<template name="number_ps_linked">
+		<number_ps>
+			<nodrag />
+			<nolinkwidget />
+			<script file="common/scripts/number_crosslink.lua" />
+		</number_ps>
+	</template>
+	<template name="number_ps_ability">
+		<number_ps_linked>
+			<anchored width="25" height="20">
+				<top parent="" offset="10" />
+				<left anchor="right" offset="8" />
+			</anchored>
+		</number_ps_linked>
+	</template>
+	<template name="number_ps_abilitycheck">
+		<number_ps_linked>
+			<anchored width="25" height="20">
+				<top anchor="bottom" offset="1" />
+				<left />
+			</anchored>
+			<gmrollable2 />
+			<displaysign />
+			<script>
+				function onInit()
+					super.onInit();
+					if not Session.IsHost then
+						setEnabled(false);
+					end
+				end
+				
+				function action(draginfo)
+					if not Session.IsHost then
+						return false;
+					end
+					local rActor = ActorManager.resolveActor(window.link.getTargetDatabaseNode());
+					ActionAbility.performPartySheetRoll(draginfo, rActor, self.target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_ps_linked>
+	</template>
+	<template name="number_ps_defense">
+		<number_ps_linked>
+			<anchored width="25" height="20">
+				<top />
+				<left anchor="right" offset="8" />
+			</anchored>
+		</number_ps_linked>
+	</template>
+	<template name="number_ps_save">
+		<number_ps_linked>
+			<anchored width="25" height="20">
+				<top />
+				<left anchor="right" offset="8" />
+			</anchored>
+			<gmrollable2 />
+			<displaysign />
+			<script>
+				function onInit()
+					super.onInit();
+					if not Session.IsHost then
+						setEnabled(false);
+					end
+				end
+				
+				function action(draginfo)
+					if not Session.IsHost then
+						return false;
+					end
+					local rActor = ActorManager.resolveActor(window.link.getTargetDatabaseNode());
+					ActionSave.performPartySheetRoll(draginfo, rActor, target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>
+		</number_ps_linked>
+	</template>
+	<template name="label_ps_skill">
+		<label>
+			<anchored to="skillanchor" width="22">
+				<top />
+				<left anchor="right" relation="relative" offset="8" />
+			</anchored>
+			<center />
+		</label>
+	</template>
+	<template name="number_ps_skill">
+		<number_ps_linked>
+			<anchored to="skillanchor" width="22" height="20">
+				<top />
+				<left anchor="right" relation="relative" offset="8" />
+			</anchored>
+			<gmrollable2 />
+			<script>
+				function onInit()
+					super.onInit();
+					if not Session.IsHost then
+						setEnabled(false);
+					end
+				end
+				
+				function action(draginfo)
+					if not Session.IsHost then
+						return false;
+					end
+					
+					if skill then
+						local rActor = ActorManager.resolveActor(window.link.getTargetDatabaseNode());
+						local nValue;
+						
+						local sSkill = skill[1];
+						local sSkillLookup = sSkill;
+						local sSubSkill = nil;
+						if subskill then
+							sSubSkill = subskill[1];
+							sSkill = sSkill .. " (" .. sSubSkill .. ")";
+						end
+						
+						nValue = CharManager.getSkillValue(rActor, sSkillLookup, sSubSkill);
+
+						ActionSkill.performPartySheetRoll(draginfo, rActor, sSkill, nValue);
+						return true;
+					end
+					
+					return false;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>
+		</number_ps_linked>
+	</template>
+
+	<template name="portrait_base">
+		<genericcontrol>
+			<icon>charlist_base</icon>
+			<script>
+				function onClickDown()
+					if Session.IsHost then
+						return true;
+					end
+				end
+				
+				function onClickRelease()
+					if Session.IsHost then
+						window.link.activate();
+						return true;
+					end
+				end
+			</script>
+		</genericcontrol>
+	</template>
+	<template name="portrait">
+		<genericcontrol>
+			<disabled />
+			<script>
+				function onInit()
+					update();
+				end
+				
+				function update()
+					local _,sCharNode = window.link.getValue();
+					local sCharNodeName = sCharNode:match("%.([%w-]+)$");
+					if sCharNodeName then
+						setIcon("portrait_" .. sCharNodeName .. "_charlist");
+					else
+						setIcon();
+					end
+				end
+			</script>
+		</genericcontrol>
+	</template>
+</root>

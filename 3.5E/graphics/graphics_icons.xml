@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Common -->
+	<icon name="question" file="graphics/icons/question.png" />
+	<icon name="star" file="graphics/icons/star.png" />
+	<icon name="expand" file="graphics/icons/expand.png" />
+	<icon name="expand_down" file="graphics/icons/expand_down.png" />
+	<icon name="actions" file="graphics/icons/actions.png" />
+	<icon name="actions_down" file="graphics/icons/actions_down.png" />
+	
+	<icon name="button_star" file="graphics/buttons/button_star.png" />
+	<icon name="button_star_down" file="graphics/buttons/button_star_down.png" />
+	<icon name="button_weapon" file="graphics/buttons/button_weapon.png" />
+	<icon name="button_weapon_down" file="graphics/buttons/button_weapon_down.png" />
+	<icon name="button_skillcr" file="graphics/buttons/button_skillcr.png" />
+	<icon name="button_skillcr_down" file="graphics/buttons/button_skillcr_down.png" />
+	<icon name="button_skillkn" file="graphics/buttons/button_skillkn.png" />
+	<icon name="button_skillkn_down" file="graphics/buttons/button_skillkn_down.png" />
+	<icon name="button_skillpe" file="graphics/buttons/button_skillpe.png" />
+	<icon name="button_skillpe_down" file="graphics/buttons/button_skillpe_down.png" />
+	<icon name="button_skillpr" file="graphics/buttons/button_skillpr.png" />
+	<icon name="button_skillpr_down" file="graphics/buttons/button_skillpr_down.png" />
+	
+	<!-- Sidebar -->
+	<icon name="button_classes" file="graphics/sidebar/button_classes.png" />
+	<icon name="button_classes_down" file="graphics/sidebar/button_classes_down.png" />
+	<icon name="button_feats" file="graphics/sidebar/button_feats.png" />
+	<icon name="button_feats_down" file="graphics/sidebar/button_feats_down.png" />
+	<icon name="button_races" file="graphics/sidebar/button_races.png" />
+	<icon name="button_races_down" file="graphics/sidebar/button_races_down.png" />
+	<icon name="button_skills" file="graphics/sidebar/button_skills.png" />
+	<icon name="button_skills_down" file="graphics/sidebar/button_skills_down.png" />
+	<icon name="button_spells" file="graphics/sidebar/button_spells.png" />
+	<icon name="button_spells_down" file="graphics/sidebar/button_spells_down.png" />
+	<icon name="button_specialabilities" file="graphics/sidebar/button_specialabilities.png" />
+	<icon name="button_specialabilities_down" file="graphics/sidebar/button_specialabilities_down.png" />
+
+	<!-- Buttons -->
+	<icon name="button_minisheet" file="graphics/buttons/button_minisheet.png" />
+	<icon name="button_minisheet_down" file="graphics/buttons/button_minisheet_down.png" />
+	<icon name="button_fullsheet" file="graphics/buttons/button_fullsheet.png" />
+	<icon name="button_fullsheet_down" file="graphics/buttons/button_fullsheet_down.png" />
+
+	<!-- Rolls -->
+	<icon name="roll_attack" file="graphics/icons/roll_attack.png" />
+	<icon name="roll_attack_miss" file="graphics/icons/roll_attack_miss.png" />
+	<icon name="roll_attack_hit" file="graphics/icons/roll_attack_hit.png" />
+	<icon name="roll_attack_crit" file="graphics/icons/roll_attack_crit.png" />
+	<icon name="roll_damage" file="graphics/icons/roll_damage.png" />
+	<icon name="roll_heal" file="graphics/icons/roll_heal.png" />
+
+	<!-- Encounters -->
+	<icon name="button_enc_refreshcr" file="graphics/buttons/button_ctnextround.png" />
+	<icon name="button_enc_refreshcr_down" file="graphics/buttons/button_ctnextround_down.png" />
+	<icon name="button_enc_refreshxp" file="graphics/buttons/button_ctnextround.png" />
+	<icon name="button_enc_refreshxp_down" file="graphics/buttons/button_ctnextround_down.png" />
+	
+	<!-- Spells -->
+	<icon name="caster_prep" file="graphics/icons/caster_prep.png" />
+	<icon name="caster_points" file="graphics/icons/caster_points.png" />
+	<icon name="caster_spontaneous" file="graphics/icons/caster_spontaneous.png" />
+	<icon name="spell_cast" file="graphics/icons/spell_cast.png" />
+	<icon name="spell_damage" file="graphics/icons/spell_damage.png" />
+	<icon name="spell_heal" file="graphics/icons/spell_heal.png" />
+	<icon name="spell_effect" file="graphics/icons/spell_effect.png" />
+
+	<!-- Character Sheet -->
+	<icon name="char_weapon" file="graphics/icons/char_weapon.png" />
+	<icon name="char_weapon_melee" file="graphics/icons/char_weapon_melee.png" />
+	<icon name="char_weapon_ranged" file="graphics/icons/char_weapon_ranged.png" />
+	<icon name="char_weapon_cm" file="graphics/icons/char_weapon_cm.png" />
+	<icon name="char_quicklist" file="graphics/icons/char_quicklist.png" />
+	<icon name="char_armorcheck" file="graphics/icons/char_armorcheck.png" />
+	<icon name="char_coin" file="graphics/icons/char_coin.png" />
+</root>

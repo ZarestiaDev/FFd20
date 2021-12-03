@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<distance>
+		<base>5</base>
+		<diagmult>1.5</diagmult>
+		<suffix>'</suffix>
+	</distance>
+	
+	<!-- Add sunrod and daylight spell -->
+	<lightingsettings>
+		<preset key="candle" nameres="lighting_candle" color="FFFFFCC3" bright="0" dim="1" animtype="flicker" animspeed="100" />
+		<preset key="lamp" nameres="lighting_lamp" color="FFFFF3E1" bright="3" dim="6" animtype="flicker" animspeed="25" />
+		<preset key="torch" nameres="lighting_torch" color="FFFFF3E1" bright="4" dim="8" animtype="flicker" animspeed="25" />
+		<preset key="lantern" nameres="lighting_lantern" color="FFF9FEFF" bright="6" dim="12" />
+		<preset key="sunrod" nameres="lighting_sunrod" color="FFFFF7E6" bright="6" dim="12" />
+		<preset key="spell_darkness" nameres="lighting_spell_darkness" color="FF000000" bright="4" dim="4" inverse="true" />
+		<preset key="spell_daylight" nameres="lighting_spell_daylight" color="FFFFF7E6" bright="12" dim="24" />
+		<preset key="spell_light" nameres="lighting_spell_light" color="FFFFF3E1" bright="4" dim="8" />
+	</lightingsettings>
+	<!-- d20 low-light vision not supported; plus limited to 3 special vision types -->
+
+	<die name="dF" merge="delete" />
+	<die name="rF" merge="delete" />
+	<die name="gF" merge="delete" />
+	<die name="bF" merge="delete" />
+	<die name="pF" merge="delete" />
+</root>

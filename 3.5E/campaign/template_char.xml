@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="windowtitlebar_char">
+		<windowtitlebar>
+			<bounds merge="replace">0,10,-1,40</bounds>
+			<field>name</field>
+			<font>subwindowtitle</font>
+			<script>
+				function setValue(sTitle)
+					if widgetTitle then
+						if prefix then
+							sTitle = Interface.getString(prefix[1]) .. " - " .. sTitle;
+						end
+						widgetTitle.setText(sTitle);
+						updatePosition();
+					end
+				end
+			</script>
+		</windowtitlebar>
+	</template>
+	<template name="anchor_title_charsheethelper">
+		<genericcontrol>
+			<anchored height="0">
+				<top parent="title" anchor="bottom" offset="0" />
+				<left parent="" anchor="left" offset="15" />
+				<right parent="" anchor="right" offset="-15" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="close_charsheethelper">
+		<close>
+			<anchored>
+				<top offset="0" />
+				<right offset="-8" />
+			</anchored>
+		</close>
+	</template>
+	<template name="resize_charsheethelper">
+		<resize>
+			<anchored>
+				<right offset="-10" />
+				<bottom offset="-10" />
+			</anchored>
+		</resize>
+	</template>
+
+	<template name="stringc_charclasslevel">
+		<stringc_labeled>
+			<anchored height="20" />
+			<font>sheettext</font>
+			<lineoffset default="on" mergerule="replace">1</lineoffset>
+			<readonly />
+			<script>
+				function onInit()
+					super.onInit();
+					update();
+					DB.addHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", update);
+				end
+				
+				function onClose()
+					DB.removeHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", update);
+				end
+				
+				function update()
+					setValue(CharManager.getClassLevelSummary(window.getDatabaseNode(), true));
+				end
+
+				function onClickDown(button, x, y)
+					return true;
+				end
+
+				function onClickRelease(button, x, y)
+					Interface.openWindow("charsheet_classes", window.getDatabaseNode());
+				end
+			</script>
+		</stringc_labeled>
+	</template>
+	<template name="button_charclasslevel">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<state icon="button_details" pressed="button_details_down" />
+			<script>
+				function onButtonPress()
+					Interface.openWindow("charsheet_classes", window.getDatabaseNode());
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="button_charfull">
+		<windowreferencecontrol>
+			<icon normal="button_fullsheet" pressed="button_fullsheet_down" />
+			<class>charsheet</class>
+			<tooltip textres="char_label_fullsheet" />
+			<description field="name" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then
+						local tabindex = window.tabs.getIndex();
+						if tabindex == 1 then
+							w.tabs.activateTab(1);
+						elseif tabindex == 2 then
+							w.tabs.activateTab(4);
+						elseif tabindex == 3 then
+							w.tabs.activateTab(5);
+						elseif tabindex == 4 then
+							w.tabs.activateTab(7);
+						end
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+	<template name="button_charmini">
+		<windowreferencecontrol>
+			<icon normal="button_minisheet" pressed="button_minisheet_down" />
+			<class>charsheetmini</class>
+			<tooltip textres="char_label_minisheet" />
+			<description field="name" />
+			<script>
+				function onClickRelease(button, x, y)
+					local w = activate();
+					if w then
+						local tabindex = window.tabs.getIndex();
+						if tabindex == 1 or tabindex == 2 or tabindex == 6 then
+							w.tabs.activateTab(1);
+						elseif tabindex == 3 or tabindex == 4 then
+							w.tabs.activateTab(2);
+						elseif tabindex == 5 then
+							w.tabs.activateTab(3);
+						elseif tabindex == 7 then
+							w.tabs.activateTab(4);
+						end
+					end
+					return true;
+				end
+			</script>
+		</windowreferencecontrol>
+	</template>
+	
+	<template name="string_charclasslevelsummary">
+		<simplestringc>
+			<lineoffset default="on" mergerule="resetandadd">1</lineoffset>
+			<readonly />
+			<script file="campaign/scripts/char_classlevelsummary.lua" />
+		</simplestringc>
+	</template>
+
+	<template name="numberc_linked">
+		<simplenumberc>
+			<readonly />
+			<source mergerule="resetandadd" />
+			<script file="common/scripts/number_linked.lua" />
+		</simplenumberc>
+	</template>
+	<template name="number_chartotal">
+		<number_modifier>
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<showemptywidget />
+		</number_modifier>
+	</template>
+	<template name="number_chartotalwithability">
+		<number_chartotal>
+			<ability mergerule="resetandadd" />
+			<script file="campaign/scripts/char_totalwithability.lua" />
+		</number_chartotal>
+	</template>
+	<template name="number_chartotalnomod">
+		<number_linked>
+			<frame name="fieldlight" offset="7,5,7,5" />
+		</number_linked>
+	</template>
+	<template name="number_chartotalwithabilitynomod">
+		<number_chartotalnomod>
+			<ability mergerule="resetandadd" />
+			<script file="campaign/scripts/char_totalwithability.lua" />
+		</number_chartotalnomod>
+	</template>
+
+	<template name="number_charabilityscore">
+		<basicnumber>
+			<anchored position="belowleft" offset="0,10" width="32" height="22" />
+			<default>10</default>
+		</basicnumber>
+	</template>
+	<template name="number_charminiabilityscore">
+		<basicnumber>
+			<anchored position="belowleft" offset="0,9" width="32" height="20" />
+			<default>10</default>
+		</basicnumber>
+	</template>
+	<template name="string_charabilitylabel">
+		<label>
+			<anchored position="lefthigh" width="120" height="24" />
+			<static />
+		</label>
+	</template>
+	<template name="string_charminiabilitylabel">
+		<label>
+			<anchored position="lefthigh" width="85" height="20" />
+			<static />
+		</label>
+	</template>
+	<template name="number_charabilitydamage">
+		<basicnumber>
+			<anchored position="right" offset="65,0" width="30" />
+			<hideonvalue value="0" />
+			<script>
+				function onValueChanged()
+					local nTarget = DB.getValue(window.getDatabaseNode(), "abilities." .. target[1] .. ".score", 0);
+					if getValue() &gt; nTarget then
+						setValue(nTarget);
+					end
+				end
+			</script>
+		</basicnumber>
+	</template>
+	<template name="number_charminiabilitydamage">
+		<number_charabilitydamage>
+			<anchored position="right" offset="55,0" width="30" />
+		</number_charabilitydamage>
+	</template>
+	<template name="number_charabilitybonus">
+		<number_chartotal>
+			<anchored position="right" offset="25,0" width="30" />
+			<hideonvalue value="0" />
+			<rollable />
+			<displaysign />
+			<modifiersize>mini</modifiersize>
+			<script>
+				function onSourceUpdate()
+					local nodeWin = window.getDatabaseNode();
+					local nCurrentScore = DB.getValue(nodeWin, "abilities." .. target[1] .. ".score", 10);
+					
+					if DataCommon.isPFRPG() then
+						local nBonus = math.floor((nCurrentScore - 10) / 2) + getModifier();
+						
+						local nDamage = DB.getValue(nodeWin, "abilities." .. target[1] .. ".damage", 0);
+						if nDamage &gt; 0 then
+							nBonus = nBonus - math.floor(nDamage / 2);
+						elseif nDamage &lt; 0 then
+							nBonus = nBonus - math.ceil(nDamage / 2);
+						end
+
+						setValue(nBonus);
+					else
+						nCurrentScore = nCurrentScore - DB.getValue(nodeWin, "abilities." .. target[1] .. ".damage", 0);
+						setValue(math.floor((nCurrentScore - 10) / 2) + getModifier());
+					end
+				end
+
+				function onInit()
+					addSource("abilities." .. target[1] .. ".score");
+					addSource("abilities." .. target[1] .. ".damage");
+
+					super.onInit();
+				end
+
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionAbility.performRoll(draginfo, rActor, self.target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_chartotal>
+	</template>
+	<template name="number_charminiabilitybonus">
+		<number_charabilitybonus>
+			<anchored position="right" offset="15,0" width="30" />
+		</number_charabilitybonus>
+	</template>
+	<template name="number_charwounds">
+		<number_dropadd>
+			<hideonvalue value="0" />
+			<script>
+				function onInit()
+					if super.onInit then
+						super.onInit();
+					end
+
+					OptionsManager.registerCallback("WNDC", onValueChanged);
+					onValueChanged();
+				end
+
+				function onClose()
+					OptionsManager.unregisterCallback("WNDC", onValueChanged);
+				end
+
+				function onDrop(x, y, draginfo)
+					if draginfo.getType() == "number" then
+						local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+						ActionDamage.applyDamage(nil, rActor, false, "number", draginfo.getDescription(), draginfo.getNumberData());
+					end
+
+					return true;
+				end
+
+				function onValueChanged()
+					window.onHealthChanged();
+				end
+			</script>
+		</number_dropadd>
+	</template>
+	
+	<template name="button_charmainskill">
+		<button_roll>
+			<anchored to="anchor_charmainskill">
+				<left anchor="right" relation="relative" offset="15" />
+				<top />
+			</anchored>
+			<script>
+				local sSkill;
+				
+				function onInit()
+					sSkill = Interface.getString(skill[1]);
+					
+					if sSkill then
+						setTooltipText(sSkill .. " " .. Interface.getString("char_tooltip_skillcheck"));
+					end
+				end
+				
+				function action(draginfo)
+					if sSkill then
+						local nodeChar = window.getDatabaseNode();
+						local rActor = ActorManager.resolveActor(nodeChar);
+						local nValue = CharManager.getSkillValue(rActor, sSkill);
+						ActionSkill.performRoll(draginfo, rActor, sSkill, nValue);
+					end
+				end
+				
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+	</template>
+	<template name="label_charmainskill">
+		<stringcontrol>
+			<anchored position="aboveleft" offset="-10,0" width="40" />
+			<font>sheetlabelmini</font>
+			<center />
+		</stringcontrol>
+	</template>
+	
+	<template name="number_charinit">
+		<number_chartotalwithability>
+			<rollable />
+			<displaysign />
+			<modifiersize>mini</modifiersize>
+			<modifierfield>initiative.temporary</modifierfield>
+			<source><name>initiative.misc</name><op>+</op></source>
+			<ability><source>initiative.ability</source><default>dexterity</default></ability>
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionInit.performRoll(draginfo, rActor);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+					
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>
+		</number_chartotalwithability>
+	</template>
+	<template name="number_charattacktotal">
+		<number_chartotalwithability>
+			<rollable />
+			<displaysign />
+			<modifiersize>mini</modifiersize>
+			<script>
+				function action(draginfo)
+					local sText = Interface.getString(self.description[1].textres[1]);
+					local rActor, rAttack = CharManager.getBaseAttackRollStructures(sText, window.getDatabaseNode());
+					
+					ActionAttack.performRoll(draginfo, rActor, rAttack);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_chartotalwithability>
+	</template>
+	<template name="number_charmeleetotal">
+		<number_charattacktotal>
+			<description><textres>char_tooltip_atkmelee</textres></description>
+			<modifierfield>attackbonus.melee.temporary</modifierfield>
+			<source><name>attackbonus.base</name><op>+</op></source>
+			<source><name>attackbonus.melee.size</name><op>+</op></source>
+			<source><name>attackbonus.melee.misc</name><op>+</op></source>
+			<ability><source>attackbonus.melee.ability</source><default>strength</default></ability>
+		</number_charattacktotal>
+	</template>
+	<template name="number_charrangedtotal">
+		<number_charattacktotal>
+			<description><textres>char_tooltip_atkranged</textres></description>
+			<modifierfield>attackbonus.ranged.temporary</modifierfield>
+			<source><name>attackbonus.base</name><op>+</op></source>
+			<source><name>attackbonus.ranged.size</name><op>+</op></source>
+			<source><name>attackbonus.ranged.misc</name><op>+</op></source>
+			<ability><source>attackbonus.ranged.ability</source><default>dexterity</default></ability>
+		</number_charattacktotal>
+	</template>
+	<template name="number_chargrappletotal">
+		<number_chartotalwithability>
+			<rollable />
+			<displaysign />
+			<modifiersize>mini</modifiersize>
+			<description><text>Grapple</text></description>
+			<modifierfield>attackbonus.grapple.temporary</modifierfield>
+			<source><name>attackbonus.base</name><op>+</op></source>
+			<source><name>attackbonus.grapple.size</name><op>+</op></source>
+			<source><name>attackbonus.grapple.misc</name><op>+</op></source>
+			<ability><source>attackbonus.grapple.ability</source><default>strength</default></ability>
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					local rAttack = CharManager.getGrappleRollStructures(rActor, "");
+					ActionAttack.performGrappleRoll(draginfo, rActor, rAttack);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_chartotalwithability>
+	</template>
+
+	<template name="number_chartotalac">
+		<number_chartotalwithability>
+			<description textres="ac" />
+			<modifiersize>mini</modifiersize>
+			<modifierfield>ac.sources.temporary</modifierfield>
+			<source><name>ac.sources.armor</name><op>+</op></source>
+			<source><name>ac.sources.shield</name><op>+</op></source>
+			<source><name>ac.sources.size</name><op>+</op></source>
+			<source><name>ac.sources.naturalarmor</name><op>+</op></source>
+			<source><name>ac.sources.deflection</name><op>+</op></source>
+			<source><name>ac.sources.dodge</name><op>+</op></source>
+			<source><name>ac.sources.misc</name><op>+</op></source>
+			<source><name>encumbrance.armormaxstatbonus</name></source>
+			<source><name>encumbrance.armormaxstatbonusactive</name></source>
+			<ability><source>ac.sources.ability</source><default>dexterity</default></ability>
+			<ability><source>ac.sources.ability2</source></ability>
+			<script>
+				function onSourceUpdate()
+					local nMaxMod = -1;
+					local bMaxActive = sources["encumbrance.armormaxstatbonusactive"].getValue();
+					if bMaxActive &gt; 0 then
+						nMaxMod = sources["encumbrance.armormaxstatbonus"].getValue();
+					end
+
+					local nAbility = getAbilityBonus(nMaxMod);
+					
+					setValue(10 + calculateSources() + nAbility);
+				end
+			</script>
+		</number_chartotalwithability>
+	</template>
+	<template name="number_charflatfootedac">
+		<number_chartotalwithabilitynomod>
+			<description textres="armorclassff" />
+			<source><name>ac.sources.armor</name><op>+</op></source>
+			<source><name>ac.sources.shield</name><op>+</op></source>
+			<source><name>ac.sources.size</name><op>+</op></source>
+			<source><name>ac.sources.naturalarmor</name><op>+</op></source>
+			<source><name>ac.sources.deflection</name><op>+</op></source>
+			<source><name>ac.sources.ffmisc</name><op>+</op></source>
+			<source><name>ac.sources.temporary</name><op>+</op></source>
+			<ability><source>ac.sources.ability</source><default>dexterity</default></ability>
+			<ability><source>ac.sources.ability2</source></ability>
+			<script>
+				function onSourceUpdate()
+					local nAbility = getAbilityBonus();
+					if nAbility &gt; 0 then
+						nAbility = 0;
+					end
+					
+					setValue(10 + calculateSources() + nAbility);
+				end
+			</script>
+		</number_chartotalwithabilitynomod>
+	</template>
+	<template name="number_chartouchac">
+		<number_chartotalwithabilitynomod>
+			<description textres="armorclasstouch" />
+			<source><name>ac.sources.size</name><op>+</op></source>
+			<source><name>ac.sources.deflection</name><op>+</op></source>
+			<source><name>ac.sources.dodge</name><op>+</op></source>
+			<source><name>ac.sources.touchmisc</name><op>+</op></source>
+			<source><name>ac.sources.temporary</name><op>+</op></source>
+			<source><name>encumbrance.armormaxstatbonus</name></source>
+			<source><name>encumbrance.armormaxstatbonusactive</name></source>
+			<ability><source>ac.sources.ability</source><default>dexterity</default></ability>
+			<ability><source>ac.sources.ability2</source></ability>
+			<script>
+				function onSourceUpdate()
+					local nMaxMod = -1;
+					local bMaxActive = sources["encumbrance.armormaxstatbonusactive"].getValue();
+					if bMaxActive &gt; 0 then
+						nMaxMod = sources["encumbrance.armormaxstatbonus"].getValue();
+					end
+
+					local nAbility = getAbilityBonus(nMaxMod);
+
+					setValue(10 + calculateSources() + nAbility);
+				end
+			</script>
+		</number_chartotalwithabilitynomod>
+	</template>
+	<template name="number_charcmd">
+		<number_chartotalwithabilitynomod>
+			<description textres="cmd" />
+			<source><name>ac.sources.size</name><op>-</op></source>
+			<source><name>ac.sources.deflection</name><op>+</op></source>
+			<source><name>ac.sources.dodge</name><op>+</op></source>
+			<source><name>ac.sources.cmdmisc</name><op>+</op></source>
+			<source><name>ac.sources.temporary</name><op>+</op></source>
+			<ability><source>ac.sources.ability</source><default>dexterity</default></ability>
+			<ability><source>ac.sources.ability2</source></ability>
+			<ability><source>ac.sources.cmdbase</source><default>bab</default></ability>
+			<ability><source>ac.sources.cmdability</source><default>strength</default></ability>
+			<script>
+				function onSourceUpdate()
+					local nAbility = getAbilityBonus();
+					
+					setValue(10 + calculateSources() + nAbility);
+				end
+			</script>
+		</number_chartotalwithabilitynomod>
+	</template>
+	
+	<template name="number_charsr">
+		<number_chartotal>
+			<modifiersize>mini</modifiersize>
+			<description textres="spellresistance" />
+			<modifierfield>defenses.sr.temporary</modifierfield>
+			<source><name>defenses.sr.base</name><op>+</op></source>
+			<source><name>defenses.sr.misc</name><op>+</op></source>
+		</number_chartotal>
+	</template>
+
+	<template name="number_charspeed">
+		<number_chartotal>
+			<modifierfield>speed.temporary</modifierfield>
+			<modifiersize>mini</modifiersize>
+			<description textres="char_tooltip_speed" />
+			<source><name>speed.base</name><op>+</op></source>
+			<source><name>speed.armor</name><op>+</op></source>
+			<source><name>speed.misc</name><op>+</op></source>
+		</number_chartotal>
+	</template>
+
+	<template name="cycler_charability">
+		<cycler_ability>
+			<script>
+				function onValueChanged()
+					if window.isInitialized() then
+						local sValue = getStringValue();
+						if sValue == "" and baseability then
+							sValue = baseability[1];
+						end
+						
+						local sCharRelative = "";
+						if abilityrelative then
+							sCharRelative = abilityrelative[1];
+						end
+						
+						if fieldabilitymod and window[fieldabilitymod[1]] then
+							window[fieldabilitymod[1]].updateAbility(sCharRelative, sValue);
+						end
+					end
+				end
+			</script>
+		</cycler_ability>
+	</template>
+	<template name="number_charabilitymod">
+		<simplenumber>
+			<readonly />
+			<displaysign />
+			<disabled />
+			<script>
+				local sLocalAbility = "";
+				local nodeLocal = nil;
+				local nodeCreature = nil;
+				
+				function updateAbility(sCharRelative, sAbility)
+					if sLocalAbility == sAbility then
+						return;
+					end
+					if nodeLocal then
+						nodeLocal.onUpdate = function () end;
+						nodeLocal = nil;
+						nodeCreature = nil;
+					end
+					
+					if sAbility ~= "" then
+						local nodeSpellClass = window.getDatabaseNode();
+						nodeCreature = nodeSpellClass.getChild(sCharRelative);
+						local nodeParent = nodeCreature.getParent();
+						
+						if ActorManager.isPC(nodeCreature) then
+							if StringManager.contains(DataCommon.abilities, sAbility) then
+								nodeLocal = nodeCreature.getChild("abilities." .. sAbility .. ".bonus");
+							elseif sAbility == "bab" then
+								nodeLocal = nodeCreature.getChild("attackbonus.base");
+							elseif sAbility == "level" then
+								nodeLocal = nodeCreature.getChild("level");
+							end
+						else
+							if StringManager.contains(DataCommon.abilities, sAbility) then
+								nodeLocal = nodeCreature.getChild(sAbility);
+							elseif sAbility == "bab" then
+								nodeLocal = nodeCreature.getChild("babgrp");
+							elseif sAbility == "level" then
+								nodeLocal = nodeCreature.getChild("hd");
+							end
+						end
+						
+						if nodeLocal then
+							nodeLocal.onUpdate = updateValue;
+							sLocalAbility = sAbility;
+						end
+					end
+
+					updateValue();
+				end
+				
+				function updateValue()
+					if nodeLocal then
+						local nodeParent = nodeCreature.getParent();
+						
+						if nodeParent.getName() == "charsheet" then
+							setValue(nodeLocal.getValue());
+						elseif nodeParent.getName() == "npc" then
+							local rActor = ActorManager.resolveActor(nodeCreature);
+							local nValue = ActorManager35E.getAbilityBonus(rActor, sLocalAbility);
+							setValue(nValue);
+						end
+					else
+						setValue(0);
+					end
+				end
+			</script>
+		</simplenumber>
+	</template>
+
+	<template name="number_charcombatmod">
+		<basicnumber>
+			<anchored position="right" offset="8,0" width="28" />
+			<displaysign />
+		</basicnumber>
+	</template>
+	<template name="number_charcombatmod_static">
+		<simplenumber>
+			<anchored position="below" offset="0,8" height="20" />
+			<displaysign />
+			<nodrag />
+			<readonly />
+		</simplenumber>
+	</template>
+	<template name="string_charcombatmod_blank">
+		<stringcontrol>
+			<anchored position="below" offset="0,8" height="20" />
+			<disabled />
+			<static>-</static>
+			<center />
+		</stringcontrol>
+	</template>
+	<template name="cycler_charcombatability">
+		<cycler_charability>
+			<anchored position="righthigh" offset="8,0" height="20" width="32" /> 
+		</cycler_charability>
+	</template>
+	<template name="number_charcombatabilitymod">
+		<number_charabilitymod>
+			<anchored position="right" offset="4,0" width="28" /> 
+		</number_charabilitymod>
+	</template>
+	<template name="number_charcombatabilitymod_static">
+		<numberc_linked>
+			<anchored position="below" offset="0,8" height="20" />
+			<ability mergerule="resetandadd" />
+			<script file="campaign/scripts/char_totalwithability.lua" />
+			<displaysign />
+			<nodrag />
+			<ability><source>ac.sources.ability</source><default>dexterity</default></ability>
+			<ability><source>ac.sources.ability2</source></ability>
+		</numberc_linked>
+	</template>
+
+	<template name="number_charsave">
+		<number_chartotalwithability>
+			<rollable />
+			<displaysign />
+			<modifiersize>mini</modifiersize>
+			<script>
+				function onInit()
+					addSourceWithOp("saves." .. target[1] .. ".base", "+");
+					addSourceWithOp("saves." .. target[1] .. ".misc", "+");
+				
+					super.onInit();
+				end
+
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionSave.performRoll(draginfo, rActor, target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_chartotalwithability>
+	</template>
+	<template name="number_charsavefort">
+		<number_charsave>
+			<modifierfield>saves.fortitude.temporary</modifierfield>
+			<target>fortitude</target>
+			<ability><source>saves.fortitude.ability</source><default>constitution</default></ability>
+		</number_charsave>
+	</template>
+	<template name="number_charsaveref">
+		<number_charsave>
+			<modifierfield>saves.reflex.temporary</modifierfield>
+			<target>reflex</target>
+			<ability><source>saves.reflex.ability</source><default>dexterity</default></ability>
+		</number_charsave>
+	</template>
+	<template name="number_charsavewill">
+		<number_charsave>
+			<modifierfield>saves.will.temporary</modifierfield>
+			<target>will</target>
+			<ability><source>saves.will.ability</source><default>wisdom</default></ability>
+		</number_charsave>
+	</template>
+
+	<template name="list_charskill">
+		<windowlist>
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<datasource>.skilllist</datasource>
+			<class>char_skill</class>
+			<sortby>
+				<control>label</control>
+				<control>sublabel</control>
+			</sortby>
+			<script file="campaign/scripts/char_skilllist.lua" />
+		</windowlist>
+	</template>
+	<template name="number_charskillfield">
+		<basicnumber>
+			<delaykeyupdate />
+			<hideonvalue>0</hideonvalue>
+			<nodrag />
+			<displaysign />
+		</basicnumber>
+	</template>
+	<template name="number_charskillranks">
+		<basicnumber>
+			<delaykeyupdate />
+			<hideonvalue>0</hideonvalue>
+			<nodrag />
+			<min>0</min>
+			<script>
+				function onWheel(notches)
+					if not Input.isControlPressed() then
+						return false;
+					end
+
+					if not Input.isShiftPressed() then
+						setValue(getValue() + notches);
+					else
+						setValue(getValue() + (notches * 0.5));
+					end
+					
+					return true;
+				end
+
+				function onValueChanged()
+					CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
+				end
+			</script>
+		</basicnumber>
+	</template>
+	<template name="cycler_charskillability">
+		<button_stringcycler>
+			<parameters>
+				<labelsres>str|dex|con|int|wis|cha</labelsres>
+				<values>strength|dexterity|constitution|intelligence|wisdom|charisma</values>
+			</parameters>
+		</button_stringcycler>
+	</template>
+	<template name="number_charskillfield_static">
+		<simplenumber>
+			<hideonvalue>0</hideonvalue>
+			<nodrag />
+			<displaysign />
+			<disabled />
+		</simplenumber>
+	</template>
+	<template name="number_charskilltotal">
+		<number_linked>
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<displaysign />
+			<rollable />
+			<hideonvalue>0</hideonvalue>
+			<source><name>stat</name><op>+</op></source>
+			<source><name>state</name><op>+</op></source>
+			<source><name>...encumbrance.armormaxstatbonusactive</name></source>
+			<source><name>...encumbrance.armorcheckpenalty</name><op>+</op></source>
+			<source><name>ranks</name><op>+</op></source>
+			<source><name>misc</name><op>+</op></source>
+			<script>
+				function onSourceValue(source, sourcename)
+					if sourcename == "ranks" then
+						return math.floor(source.getValue());
+					elseif sourcename == "...encumbrance.armorcheckpenalty" then
+						local bMaxActive = sources["...encumbrance.armormaxstatbonusactive"].getValue();
+						if bMaxActive &gt; 0 then
+							return math.min(DB.getValue(window.getDatabaseNode(), "armorcheckmultiplier", 0) * source.getValue(), 0);
+						end
+						return 0;
+					elseif sourcename == "state" then
+						if DataCommon.isPFRPG() then
+							local nodeWin = window.getDatabaseNode();
+							if DB.getValue(nodeWin, "state", 0) == 1 then
+								local nRanks = DB.getValue(nodeWin, "ranks", 0);
+								if nRanks > 0 then
+									return 3;
+								end
+							end
+						end
+						return 0;
+					end
+
+					return super.onSourceValue(source, sourcename);
+				end
+
+				function action(draginfo)
+					local nodeWin = window.getDatabaseNode();
+					if nodeWin then
+						local rActor = ActorManager.resolveActor(nodeWin.getChild("..."));
+						ActionSkill.performPCRoll(draginfo, rActor, nodeWin);
+					end
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)	
+					return action();
+				end
+			</script>
+		</number_linked>
+	</template>
+
+	<template name="list_charabilities">
+		<list_text>
+			<anchored>
+				<top offset="35" />
+				<left offset="15" />
+				<right offset="-15" />
+				<bottom offset="-15" />
+			</anchored>
+			<sortby><control>name</control></sortby>
+			<newfocus>name</newfocus>
+			<script>
+				function onDrop(x, y, draginfo)
+					return window.handleDrop(draginfo, getDatabaseNode());
+				end
+			</script>
+		</list_text>
+	</template>
+
+	<template name="list_charinv">
+		<windowlist>
+			<child></child>
+			<child><backcolor>1A40301E</backcolor></child>
+			<datasource>.inventorylist</datasource>
+			<class>char_invitem</class>
+			<allowdelete />
+			<script file="campaign/scripts/char_invlist.lua" />
+		</windowlist>
+	</template>
+
+	<template name="list_charweapon">
+		<windowlist>
+			<datasource>.weaponlist</datasource>
+			<sortby><control>name</control></sortby>
+			<script file="campaign/scripts/char_weaponlist.lua" />
+		</windowlist>
+	</template>
+	<template name="state_charweapontype">
+		<buttonfield>
+			<anchored width="25" height="25" />
+			<state icon="char_weapon_melee" tooltipres="char_tooltip_weapontypemelee" />
+			<state icon="char_weapon_ranged" tooltipres="char_tooltip_weapontyperanged" />
+			<script>
+				function onInit()
+					if DataCommon.isPFRPG() then
+						setStateIcons(2, "char_weapon_cm");
+						setStateTooltipText(2, Interface.getString("char_tooltip_weapontypecm"));
+					end
+				end
+			</script>
+		</buttonfield>
+	</template>
+	<template name="number_charweaponattacktotal">
+		<number_linked>
+			<displaysign />
+			<source><name>type</name></source>
+			<source><string /><name>attackstat</name></source>
+			<source><name>bonus</name><op>+</op></source>
+			<source><name>...attackbonus.base</name></source>
+			<source><name>...attackbonus.melee.ability</name></source>
+			<source><name>...attackbonus.melee.size</name></source>
+			<source><name>...attackbonus.melee.misc</name></source>
+			<source><name>...attackbonus.melee.temporary</name></source>
+			<source><name>...attackbonus.ranged.ability</name></source>
+			<source><name>...attackbonus.ranged.size</name></source>
+			<source><name>...attackbonus.ranged.misc</name></source>
+			<source><name>...attackbonus.ranged.temporary</name></source>
+			<source><name>...abilities.strength.bonus</name></source>
+			<source><name>...abilities.dexterity.bonus</name></source>
+			<source><name>...abilities.constitution.bonus</name></source>
+			<source><name>...abilities.intelligence.bonus</name></source>
+			<source><name>...abilities.wisdom.bonus</name></source>
+			<source><name>...abilities.charisma.bonus</name></source>
+			<script file="campaign/scripts/char_weaponattack.lua" />
+		</number_linked>
+	</template>
+
+	<template name="number_charweaponfullattack">
+		<basicnumber>
+			<frame merge="delete" />
+			<icons>
+				<container>attackicons</container>
+				<icon>field_rollable</icon>
+				<offsetx>0</offsetx>
+				<offsety>0</offsety>
+			</icons>
+			<attackfields>
+				<attack1>attack1</attack1>
+				<attack2>attack2</attack2>
+				<attack3>attack3</attack3>
+				<attack4>attack4</attack4>
+			</attackfields>
+			<namefield>name</namefield>
+			<default>1</default>
+			<min>1</min>
+			<max>4</max>
+			<script file="campaign/scripts/char_weaponfullattack.lua" />
+		</basicnumber>
+	</template>
+	<template name="number_charweaponattackmod">
+		<simplenumber>
+			<stateframe>
+				<keyedit name="fieldfocus" offset="5,5,5,5" />
+				<hover name="fieldfocus" offset="5,5,5,5" />
+				<drophilight name="fieldfocus" offset="5,5,5,5" />
+			</stateframe>
+			<displaysign />
+		</simplenumber>
+	</template>
+	<template name="state_charammocounter">
+		<buttongroup_counter>
+			<sourcefields>
+				<maximum>maxammo</maximum>
+				<current>ammo</current>
+			</sourcefields>
+		</buttongroup_counter>
+	</template>
+</root>

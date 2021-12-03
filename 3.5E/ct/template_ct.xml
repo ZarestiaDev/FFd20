@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="button_ct_menu">
+		<buttoncontrol name="button_menu">
+			<bounds>26,11,40,20</bounds>
+			<icon normal="button_menu" pressed="button_menu_down" />
+			<tooltip textres="ct_tooltip_menu" />
+			<script file="ct/scripts/ct_menu.lua" />
+		</buttoncontrol>
+	</template>
+	<template name="label_ct_host_rounds">
+		<label_ct>
+			<bounds>-158,-43,50,20</bounds>
+			<static textres="ct_label_round" />
+		</label_ct>
+	</template>
+	<template name="number_ct_host_rounds">
+		<simplenumber name="round">
+			<bounds>-108,-43,40,20</bounds>
+			<frame name="ct_groupbox" offset="5,5,5,5" />
+		</simplenumber>
+	</template>
+
+	<template name="number_ct_init">
+		<number_ct>
+			<displaysign />
+			<script>
+				function action(draginfo)
+					local node = window.getDatabaseNode();
+					local rActor = ActorManager.resolveActor(node);
+					ActionInit.performRoll(draginfo, rActor, CombatManager.isCTHidden(node));
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_ct>
+	</template>
+	<template name="number_ct_save">
+		<number_ct>
+			<displaysign />
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					ActionSave.performRoll(draginfo, rActor, target[1]);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_ct>
+	</template>
+	<template name="number_ct_grapple">
+		<number_ct>
+			<displaysign />
+			<script>
+				function action(draginfo)
+					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
+					local rAction;
+					if ActorManager.isPC(rActor) then
+						rAction = CharManager.getGrappleRollStructures(rActor, "");
+					else
+						rAction = {};
+						rAction.label = "";
+						rAction.modifier = getValue();
+						rAction.stat = "strength";
+					end
+					ActionAttack.performGrappleRoll(draginfo, rActor, rAction);
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					return action(draginfo);
+				end
+
+				function onDoubleClick(x,y)
+					return action();
+				end
+			</script>
+		</number_ct>
+	</template>
+	
+	<template name="base_clientct_health">
+		<genericcontrol name="healthbase">
+			<anchored to="rightanchor" width="150" height="20">
+				<top />
+				<right anchor="left" relation="relative" offset="-10" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="string_clientct_status">
+		<simplestring name="status">
+			<anchored to="healthbase" position="over" />
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<center />
+			<static />
+			<invisible />
+		</simplestring>
+	</template>
+	<template name="number_clientct_wounds">
+		<number_ct_static name="wounds">
+			<anchored to="healthbase" width="30" height="20">
+				<top />
+				<right />
+			</anchored>
+			<script>
+				function onValueChanged()
+					window.onHealthChanged();
+				end
+			</script>
+		</number_ct_static>
+	</template>
+	<template name="number_clientct_nonlethal">
+		<number_ct_static name="nonlethal">
+			<anchored to="wounds" width="30" height="20">
+				<top />
+				<right anchor="left" offset="-10" />
+			</anchored>
+			<script>
+				function onValueChanged()
+					window.onHealthChanged();
+				end
+			</script>
+		</number_ct_static>
+	</template>
+	<template name="number_clientct_hptemp">
+		<number_ct_static name="hptemp">
+			<anchored to="nonlethal" width="30" height="20">
+				<top />
+				<right anchor="left" offset="-10" />
+			</anchored>
+			<color>0000AA</color>
+			<script>
+				function onValueChanged()
+					window.onHealthChanged();
+				end
+			</script>
+		</number_ct_static>
+	</template>
+	<template name="number_clientct_hp">
+		<number_ct_static name="hp">
+			<anchored to="hptemp" width="30" height="20">
+				<top />
+				<right anchor="left" offset="-10" />
+			</anchored>
+			<script>
+				function onValueChanged()
+					window.onHealthChanged();
+				end
+			</script>
+		</number_ct_static>
+	</template>
+</root>

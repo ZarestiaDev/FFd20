@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<template name="list_spellitem">
+		<windowlist>
+			<noscroll />
+			<datasource>.spells</datasource>
+			<sortby><field>name</field></sortby>
+			<script file="campaign/scripts/list_spell.lua" />
+		</windowlist>
+	</template>
+	<template name="list_spelllevel">
+		<windowlist>
+			<datasource>.levels</datasource>
+			<noscroll />
+			<script file="campaign/scripts/list_spelllevel.lua" />
+		</windowlist>
+	</template>
+	<template name="list_spellclass">
+		<windowlist>
+			<datasource>.spellset</datasource>
+			<script file="campaign/scripts/list_spellclass.lua" />
+		</windowlist>
+	</template>
+
+	<template name="button_spellaction_mini">
+		<button_roll>
+			<bounds>1,1,20,20</bounds>
+			<script>
+				function action(draginfo)
+					SpellManager.onSpellAction(draginfo, window.getDatabaseNode());
+				end
+				
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+	</template>
+	<template name="button_cc">
+		<button_roll>
+			<tooltip textres="spell_tooltip_cc" />
+			<script>
+				function action(draginfo)
+					local nodeSpellClass = window.getDatabaseNode();
+					local rActor = ActorManager.resolveActor(nodeSpellClass.getChild("..."));
+					GameSystem.performConcentrationCheck(draginfo, rActor, nodeSpellClass);
+				end
+				
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+	</template>
+	
+	<template name="button_spellaction">
+		<button_roll>
+			<script>
+				function action(draginfo)
+					local sSubRoll = nil;
+					if subroll then
+						sSubRoll = subroll[1];
+					end
+					
+					SpellManager.onSpellAction(draginfo, window.getDatabaseNode(), sSubRoll);
+				end
+
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+	</template>
+	<template name="string_spellactionview">
+		<simplestringc>
+			<anchored height="20" />
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<center />
+			<nodrag />
+			<readonly />
+			<cursor hover="hand" />
+			<script>
+				function action(draginfo)
+					local sSubRoll = nil;
+					if subroll then
+						sSubRoll = subroll[1];
+					end
+					
+					SpellManager.onSpellAction(draginfo, window.getDatabaseNode(), sSubRoll);
+				end
+
+				function onDoubleClick(x, y)
+					action();
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</simplestringc>
+	</template>
+	<template name="button_poweractioneditor">
+		<buttoncontrol>
+			<anchored width="20" height="20">
+				<top />
+				<right parent="" offset="-5" />
+			</anchored>
+			<state icon="button_details" pressed="button_details_down" />
+			<script>
+				function onButtonPress()
+					local w = Interface.openWindow(editor[1], window.getDatabaseNode());
+					w.main.subwindow.name.setValue(DB.getValue(window.getDatabaseNode(), "...name", ""));
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+
+	<template name="number_spelldc">
+		<number_linked>
+			<anchored width="25" height="20" />
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<font>sheetnumber</font>
+			<readonly />
+			<source>
+				<name>dc.misc</name>
+				<op>+</op>
+			</source>
+			<source>
+				<name>dc.abilitymod</name>
+				<op>+</op>
+			</source>
+			<script>
+				function onSourceUpdate()
+					setValue(10 + calculateSources());
+				end
+			</script>
+		</number_linked>
+	</template>
+	<template name="number_spell">
+		<basicnumber>
+			<anchored width="25" height="20" />
+		</basicnumber>
+	</template>
+	<template name="number_spellsavailable">
+		<number_spell>
+			<anchored to="availablelevel" width="15">
+				<top />
+				<left anchor="right" relation="relative" offset="10" />
+			</anchored>
+			<script>
+				function onValueChanged()
+					window.onSpellCounterUpdate();
+				end
+			</script>
+		</number_spell>
+	</template>
+	<template name="number_spellsavailable_mini">
+		<numberfield>
+			<bounds>0,0,0,0</bounds>
+			<invisible />
+			<script>
+				function onValueChanged()
+					window.onSpellCounterUpdate();
+				end
+			</script>
+		</numberfield>
+	</template>
+	
+	<template name="string_spelllevellabel_mini">
+		<label>
+			<frame name="rowshade" />
+			<center />
+			<empty textres="spelllevel_emptyname" />
+			<script>
+				function onClickDown(button, x, y)
+					window.spells.setVisible(not window.spells.isVisible());
+				end
+			</script>
+		</label>
+	</template>
+	<template name="string_spell">
+		<basicstring>
+			<script>
+				function onEnter()
+					if window.windowlist and window.windowlist.onEnter then
+						return window.windowlist.onEnter();
+					end
+				end
+			</script>
+		</basicstring>
+	</template>
+	
+	<template name="icon_usepower">
+		<buttoncontrol>
+			<anchored width="10" height="10" />
+			<icon normal="spell_cast" />
+			<tooltip textres="spell_tooltip_usepower" />
+			<script>
+				function onButtonPress()
+					window.usePower();
+				end
+			</script>
+		</buttoncontrol>
+	</template>
+	<template name="counter_spell">
+		<genericcontrol>
+			<anchored width="10" height="20" />
+			<stateicons>
+				<on>button_checkon</on>
+				<off>button_checkoff</off>
+			</stateicons>
+			<script file="campaign/scripts/counter_spell.lua" />
+		</genericcontrol>
+	</template>
+	
+	<template name="dice_spell_action">
+		<basicdice>
+			<script>
+				function onInit()
+					super.onInit();
+					registerMenuItem(Interface.getString("menu_dieclear"), "erase", 4);
+				end
+				
+				function onMenuSelection(selection)
+					if selection == 4 then
+						reset();
+					end
+				end
+			</script>
+		</basicdice>
+	</template>
+</root>

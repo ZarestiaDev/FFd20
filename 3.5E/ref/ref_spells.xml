@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="reference_spellitem">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				spellnode = link.getTargetDatabaseNode();
+				if spellnode then
+					shortdescription.setValue(DB.getValue(spellnode, "shortdescription", ""));
+				end
+			end
+		</script>
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						draginfo.setType("spelldescwithlevel");
+						draginfo.setIcon("button_link");
+						draginfo.setNumberData(DB.getValue(window.getDatabaseNode(), "level", 0));
+						draginfo.setShortcutData(getValue());
+						draginfo.setDescription(DB.getValue(getTargetDatabaseNode(), "name", ""));
+						
+						local base = draginfo.createBaseData("shortcut");
+						base.setShortcutData(getValue());
+						
+						return true;
+					end
+				</script>
+			</linkfield>
+
+			<stringc_list_link name="name">
+				<bounds>30,2,140,20</bounds>
+			</stringc_list_link>
+			<stringcontrol name="shortdescription">
+				<bounds>235,2,-1,20</bounds>
+				<font>reference-r</font>
+				<static />
+			</stringcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_spellgroup">
+		<script file="ref/scripts/ref_listgroup.lua" />
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description">
+				<target>spelllist</target>
+			</string_groupdesc>
+
+			<list_reftablegroupitems name="spelllist">
+				<datasource>.spells</datasource>
+				<class>reference_spellitem</class>
+			</list_reftablegroupitems>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Class spell lists -->
+	<windowclass name="reference_classspelllist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="750" height="450" />
+		</placement>
+		<sizelimits>
+			<minimum width="750" height="450" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<list_reftablegroup name="grouplist">
+				<datasource>.groups</datasource>
+				<class>reference_spellgroup</class>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<target>grouplist,spelllist</target>
+			</filter_reftable>
+			<button_reftable_expand>
+				<target>grouplist,spelllist</target>
+			</button_reftable_expand>
+			<button_reftable_collapse>
+				<target>grouplist,spelllist</target>
+			</button_reftable_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Spells by school -->
+	<windowclass name="reference_spellschoolitem">
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe">
+				<frame name="headerblack" />
+			</frame_groupdesc>
+			<string_groupdesc name="description" />
+
+			<windowlist name="list">
+				<anchored>
+					<top parent="topanchor" anchor="bottom" relation="relative" />
+					<left />
+					<right />
+				</anchored>
+				<noscroll />
+				<datasource>.groups</datasource>
+				<class>reference_spellgroup</class>
+				<readonly />
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_schoolspelllist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="750" height="450" />
+		</placement>
+		<sizelimits>
+			<minimum width="750" height="450" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<list_reftablegroup name="grouplist">
+				<datasource>.schools</datasource>
+				<class>reference_spellschoolitem</class>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<target>grouplist,list,spelllist</target>
+			</filter_reftable>
+			<button_reftable_expand>
+				<target>grouplist,list,spelllist</target>
+			</button_reftable_expand>
+			<button_reftable_collapse>
+				<target>grouplist,list,spelllist</target>
+			</button_reftable_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+
+	<!-- Domain spells -->
+	<windowclass name="reference_spelldomainitem">
+		<script>
+			function onInit()
+				spellnode = link.getTargetDatabaseNode();
+				if spellnode then
+					shortdescription.setValue(DB.getValue(spellnode, "shortdescription", ""));
+				end
+			end
+		</script>
+		<sheetdata>
+			<linkfield name="link">
+				<bounds>5,2,20,20</bounds>
+			</linkfield>
+
+			<stringc_list_link name="name">
+				<bounds>30,2,200,20</bounds>
+			</stringc_list_link>
+
+			<number name="level">
+				<bounds>235,2,20,20</bounds>
+				<font>reference-r</font>
+				<readonly />
+			</number>
+			<stringcontrol name="shortdescription">
+				<bounds>265,2,-1,20</bounds>
+				<font>reference-r</font>
+				<static />
+			</stringcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_domain">
+		<sheetdata>
+			<anchor_column name="topanchor" />
+			
+			<frame_groupdesc name="descframe" />
+			<string_groupdesc name="description">
+				<target>domainspells</target>
+			</string_groupdesc>
+
+			<stringfield name="grantedpower">
+				<anchored>
+					<top parent="topanchor" anchor="bottom" relation="relative" />
+					<left offset="15" />
+				</anchored>
+				<font>reference-i</font>
+				<multilinespacing>20</multilinespacing>
+				<static />
+			</stringfield>
+			
+			<list_reftablegroupitems name="domainspells">
+				<datasource>.spells</datasource>
+				<class>reference_spelldomainitem</class>
+				<sortby>
+					<control>level</control>
+					<control>name</control>
+				</sortby>
+				<script file="ref/scripts/ref_list_spell.lua" />
+			</list_reftablegroupitems>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="reference_domainlist">
+		<frame>referencelist</frame>
+		<placement>
+			<size width="750" height="450" />
+		</placement>
+		<sizelimits>
+			<minimum width="750" height="450" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="description" />
+		<nodelete />
+		<sheetdata>
+			<windowtitlebar name="reftitle">
+				<field>description</field>
+			</windowtitlebar>
+			<anchor_reftitle name="contentanchor" />
+
+			<list_reftablegroup name="grouplist">
+				<datasource>.domains</datasource>
+				<class>reference_domain</class>
+			</list_reftablegroup>
+			<scrollbar_reftablegroup />
+			
+			<filter_reftable name="filter">
+				<target>grouplist,domainspells</target>
+			</filter_reftable>
+			<button_reftable_expand>
+				<target>grouplist,domainspells</target>
+			</button_reftable_expand>
+			<button_reftable_collapse>
+				<target>grouplist,domainspells</target>
+			</button_reftable_collapse>
+			
+			<resize_referencelist />
+			<close_referencelist />
+		</sheetdata>
+	</windowclass>
+</root>

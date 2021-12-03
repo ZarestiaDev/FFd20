@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="battle_header">
+		<margins control="0,0,0,2" />
+		<script>
+			function onInit()
+				update();
+				
+				if DataCommon.isPFRPG() then
+					if cr.getValue() == 0 and exp.getValue() == 0 then
+						if DB.getChildCount(getDatabaseNode(), "npclist") &gt; 0 then
+							button_refreshcr.onButtonPress();
+						end
+					end
+				end
+			end
+			
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				
+				name.setReadOnly(bReadOnly);
+				cr.setReadOnly(bReadOnly);
+				exp.setReadOnly(bReadOnly);
+				
+				local bPFMode = DataCommon.isPFRPG();
+				button_refreshcr.setVisible(bPFMode and not bReadOnly);
+				button_refreshxp.setVisible(bPFMode and not bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<link_record_header>
+				<class>battle</class>
+			</link_record_header>
+			
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_battle" />
+			</string_record_name>
+
+			<frame_record name="detailframe">
+				<anchored height="45">
+					<top parent="name" anchor="bottom" offset="10" />
+					<left />
+					<right />
+				</anchored>
+				<frame offset="0,0,0,5" />
+			</frame_record>
+			<label name="cr_label">
+				<anchored to="detailframe" position="insidetopleft" offset="15,15" height="20" />
+				<static textres="battle_label_cr" />
+				<tooltip textres="battle_tooltip_cr" />
+			</label>
+			<basicnumber name="cr" source="level">
+				<anchored to="cr_label" position="righthigh" offset="10,0" width="30" height="20" />
+				<tabtarget next="exp" prev="name" />
+				<description textres="battle_tooltip_cr" />
+			</basicnumber>
+			<button_enc_refreshcr name="button_refreshcr" />
+
+			<basicnumber name="exp">
+				<anchored to="detailframe" position="insidetopright" offset="40,15" width="70" height="20" />
+				<tabtarget next="npcs" prev="level" />
+				<description textres="battle_tooltip_xp" />
+			</basicnumber>
+			<label>
+				<anchored to="exp" position="lefthigh" offset="10,0" />
+				<static textres="battle_label_xp" />
+				<tooltip textres="battle_label_xp" />
+			</label>
+			<button_enc_refreshxp name="button_refreshxp" />
+		</sheetdata>
+	</windowclass>
+</root>

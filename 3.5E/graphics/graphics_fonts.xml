@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<font name="subwindowtitle">
+		<ttf file="graphics/fonts/AlegreyaSansSC-Bold.ttf" name="Alegreya Sans SC" size="20" />
+		<color value="#000000" />
+		<shadow offset="1,1" color="#808080" />
+	</font>
+	<font name="reference-subtitle">
+		<ttf file="graphics/fonts/Noto_Sans/NotoSans-Bold.ttf" name="Noto Sans Bold" size="16" />
+		<color value="000000" />
+	</font>
+
+	<!-- Languages -->
+	<font name="Dwarven">
+		<ttf file="graphics/fonts/Dwarven.ttf" name="D&amp;D Dwarvish Bold" size="20" />
+		<color value="#000000" />
+	</font>
+	<font name="Elven">
+		<ttf file="graphics/fonts/Elven.ttf" name="D&amp;DElven" size="20" />
+		<color value="#000000" />
+	</font>
+	<font name="Infernal">
+		<ttf file="graphics/fonts/Infernal.ttf" name="D&amp;D Abyssal Barazhad" size="20" />
+		<color value="#000000" />
+	</font>
+	<font name="Celestial">
+		<ttf file="graphics/fonts/Celestial.ttf" name="Supernal" size="24" />
+		<color value="#000000" />
+	</font>
+	<font name="Draconic">
+		<ttf file="graphics/fonts/Draconic.ttf" name="Draconic 4" size="24" />
+		<color value="#000000" />
+	</font>
+</root>

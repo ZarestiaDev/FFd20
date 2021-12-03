@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charmini_weapon">
+		<margins control="0,0,0,5" />
+		<script file="campaign/scripts/charmini_weapon.lua" />
+		<sheetdata>
+			<button_char_inv_carried name="carried">
+				<bounds>0,0,0,0</bounds>
+				<readonly />
+				<script file="common/scripts/button_crosslink.lua" />
+			</button_char_inv_carried>
+			<hn name="critatkrange" />
+			<hn name="critdmgmult" />
+
+			<state_charweapontype name="type">
+				<anchored position="insidetopright" offset="187,3" />
+				<readonly />
+			</state_charweapontype>
+
+			<genericcontrol name="attackicons">
+				<anchored position="insidetopright" offset="152,5" width="30" height="20" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+			</genericcontrol>
+			<number_charweaponfullattack name="attacks">
+				<anchored to="attackicons" position="over" />
+				<readonly />
+			</number_charweaponfullattack>
+			<number_charweaponattacktotal name="attack1">
+				<anchored position="insidetopright" offset="117,5" width="30" height="20" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<modifier>0</modifier>
+				<name>Attack 1</name>
+				<source><name>attack1modifier</name><op>+</op></source>
+			</number_charweaponattacktotal>
+			
+			<simplestringc name="damageview">
+				<anchored position="insidetopright" offset="5,5" width="105" height="20" />
+				<multilinespacing>20</multilinespacing>
+				<frame name="fielddark" offset="7,5,7,5" />
+				<stateframe>
+					<hover name="rowshade" offset="7,5,7,5" />
+				</stateframe>
+				<cursor hover="hand" />
+				<readonly />
+				<script>
+					function onDoubleClick(x,y)
+						return window.onDamageAction();
+					end			
+					function onDragStart(button, x, y, draginfo)
+						return window.onDamageAction(draginfo);
+					end
+				</script>
+			</simplestringc>
+
+			<stringu name="name">
+				<anchored position="insidetopleft" offset="5,5" height="20">
+					<right parent="type" anchor="left" offset="0" />
+				</anchored>
+				<readonly />
+			</stringu>
+			
+			<label name="label_range">
+				<anchored to="name" position="belowleft" offset="10,5" />
+				<static textres="charmini_label_weaponrange" />
+			</label>
+			<simplenumber name="rangeincrement">
+				<anchored to="label_range" position="righthigh" offset="5,0" width="35" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<label name="label_ammo">
+				<anchored to="rangeincrement" position="righthigh" offset="10,0" />
+				<static textres="charmini_label_weaponammo" />
+			</label>
+			<simplenumber name="maxammo">
+				<anchored to="label_ammo" position="righthigh" offset="5,0" width="35" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+			</simplenumber>
+			<state_charammocounter name="ammocounter">
+				<anchored to="maxammo" position="righthigh" offset="5,0" />
+				<script>
+					function onValueChanged()
+						window.windowlist.applyFilter();
+					end
+				</script>
+			</state_charammocounter>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheetmini_actions">
+		<margins control="0,0,0,5" />
+		<minisheet />
+		<script file="campaign/scripts/char_actions.lua" />
+		<sheetdata>
+			<genericcontrol name="frame_weapon">
+				<bounds>18,10,-18,24</bounds>
+				<frame name="groupbox2" offset="6,6,6,6" />
+				<disabled />
+			</genericcontrol>
+			<label name="label_weapon">
+				<anchored to="frame_weapon" position="insidetop" />
+				<center />
+				<static textres="char_label_weapons" />
+			</label>
+			<list_charweapon name="weaponlist">
+				<anchored>
+					<top offset="40" />
+					<left offset="10" />
+					<right offset="-10" />
+				</anchored>
+				<class>charmini_weapon</class>
+				<noscroll />
+				<minisheet />
+			</list_charweapon>
+			
+			<genericcontrol name="divider">
+				<anchored to="weaponlist" position="below" offset="0,5" height="3" />
+				<frame name="separatorline" />
+				<disabled />
+			</genericcontrol>
+
+			<label name="spellclasslist_label">
+				<anchored>
+					<top parent="divider" anchor="bottom" offset="5" />
+					<left />
+					<right />
+				</anchored>
+				<center />
+				<static textres="char_label_spells" />
+			</label>
+
+			<list_spellclass name="spellclasslist">
+				<anchored>
+					<top parent="spellclasslist_label" anchor="bottom" offset="5" />
+					<left offset="10" />
+					<right offset="-10" />
+				</anchored>
+				<class>spell_class_mini</class>
+				<noscroll />
+				<readonly />
+				<minisheet />
+			</list_spellclass>
+			
+			<button_expand name="expand">
+				<anchored to="spellclasslist" position="aboveleft" offset="15,10" width="12" height="12" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_expand>
+			<button_collapse name="collapse">
+				<anchored to="expand" position="righthigh" offset="10,0" width="12" height="12" />
+				<target>spellclasslist,levels,spells</target>
+				<togglelevel>2</togglelevel>
+			</button_collapse>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="chat" merge="join">
+		<sheetdata>
+			<basicchatwindow name="chat">
+				<droptypes>
+					<type merge="add">fullattack</type>
+					<type merge="add">attack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">save</type>
+					<type merge="add">ability</type>
+					<type merge="add">skill</type>
+				</droptypes>
+			</basicchatwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="modifierstack" merge="join">
+		<sheetdata>
+			<genericcontrol name="base">
+				<acceptdrop>
+					<type merge="add">fullattack</type>
+					<type merge="add">attack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">save</type>
+					<type merge="add">ability</type>
+					<type merge="add">skill</type>
+				</acceptdrop>
+			</genericcontrol>
+			<numbercontrol name="modifier">
+				<droptypes>
+					<type merge="add">fullattack</type>
+					<type merge="add">attack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">save</type>
+					<type merge="add">ability</type>
+					<type merge="add">skill</type>
+				</droptypes>
+			</numbercontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="dicetower" merge="join">
+		<sheetdata>
+			<genericcontrol name="base">
+				<droptypes>
+					<type merge="add">attack</type>
+					<type merge="add">fullattack</type>
+					<type merge="add">damage</type>
+					<type merge="add">init</type>
+					<type merge="add">save</type>
+					<type merge="add">ability</type>
+					<type merge="add">skill</type>
+				</droptypes>
+			</genericcontrol>
+		</sheetdata>
+	</windowclass>
+</root>
+

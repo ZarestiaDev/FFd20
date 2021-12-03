@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referenceskill">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script>
+			function onLockChanged()
+				if header.subwindow then
+					header.subwindow.update();
+				end
+				if content.subwindow then
+					content.subwindow.update();
+				end
+			end
+		</script>
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_skill_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_skill_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_skill_header">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<link_record_header>
+				<class>referenceskill</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_skill" />
+			</string_record_name>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_skill_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				if bReadOnly then
+					local aLabel = {};
+					table.insert(aLabel, ability.getValue());
+					if trained.getValue() ~= 0 then
+						table.insert(aLabel, "Trained only");
+					end
+					if armorcheckpenalty.getValue() ~= 0 then
+						table.insert(aLabel, "Armor check penalty");
+					end
+					type_label.setValue("[" .. table.concat(aLabel, "; ") .. "]");
+					type_label.setVisible(true);
+					
+					ability.update(bReadOnly, true);
+					trained.update(bReadOnly, true);
+					armorcheckpenalty.update(bReadOnly, true);
+				else
+					type_label.setVisible(false);
+					
+					ability.update(bReadOnly);
+					trained.update(bReadOnly);
+					armorcheckpenalty.update(bReadOnly);
+				end
+				text.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label name="type_label">
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left />
+					<right />
+				</anchored>
+				<font>reference-b-large</font>
+			</label>
+
+			<label_column name="ability_label">
+				<static textres="skill_label_ability" />
+			</label_column>
+			<string_columnh name="ability">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="trained_label">
+				<static textres="skill_label_trainedonly" />
+			</label_column>
+			<button_checkbox_columnh name="trained" />
+			
+			<label_column name="armorcheckpenalty_label">
+				<static textres="skill_label_armorcheckpenalty" />
+			</label_column>
+			<number_columnh name="armorcheckpenalty" />
+			
+			<ft_columnh name="text" />
+		</sheetdata>
+	</windowclass>
+</root>

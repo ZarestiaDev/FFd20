@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="quest_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				
+				type.setReadOnly(bReadOnly);
+				level.setReadOnly(bReadOnly);
+				xp.setReadOnly(bReadOnly);
+				description.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_label">
+				<static textres="quest_label_type" />
+			</label_column>
+			<button_stringcycler name="type">
+				<anchored width="50">
+					<left offset="97" />
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+				</anchored>
+				<font>reference-r</font>
+				<parameters>
+					<defaultlabelres>quest_label_typeminor</defaultlabelres>
+					<labelsres>quest_label_typemajor</labelsres>
+					<values>Major</values>
+				</parameters>		
+			</button_stringcycler>
+
+			<label_column name="level_label">
+				<static textres="level" />
+			</label_column>
+			<number_column name="level" />
+
+			<label_column name="xp_label">
+				<static textres="quest_label_xp" />
+			</label_column>
+			<number_column name="xp">
+				<anchored width="65" />
+			</number_column>
+			
+			<ft_columnh name="description" />
+		</sheetdata>
+	</windowclass>
+</root>

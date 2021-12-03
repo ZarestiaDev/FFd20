@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charmini_skill">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/charmini_skill.lua" />
+		<sheetdata>
+			<hn name="showonminisheet">
+				<default>1</default>
+				<script>
+					function onValueChanged()
+						window.updateStatus();
+					end
+				</script>
+			</hn>
+			<hs name="label">
+				<script>
+					function onValueChanged()
+						window.updateName();
+					end
+				</script>
+			</hs>
+			<hs name="sublabel">
+				<script>
+					function onValueChanged()
+						window.updateName();
+					end
+				</script>
+			</hs>
+			<hn name="stat">
+				<script>
+					function update(statname)
+						setValue(DB.getValue(window.getDatabaseNode(), "...abilities." .. statname .. ".bonus", 0));
+					end
+				</script>
+			</hn>
+			<hs name="statname">
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</hs>
+			
+			<number_charskilltotal name="total">
+				<bounds>-35,2,30,20</bounds>
+			</number_charskilltotal>
+			<simplestringc name="name">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="5" />
+					<right offset="-45" />
+				</anchored>
+				<lineoffset default="on" mergerule="resetandadd">1</lineoffset>
+				<readonly />
+			</simplestringc>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_ability_feat">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkcontrol name="shortcut">
+				<bounds>-22,2,20,20</bounds>
+				<class>referencefeat</class>
+				<description field="name" />
+				<readonly />
+			</linkcontrol>
+			<string_textlistitem name="name">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="5" />
+					<right offset="-25" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_ability_class">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkcontrol name="shortcut">
+				<bounds>-22,2,20,20</bounds>
+				<class>referenceclassability</class>
+				<description field="name" />
+				<readonly />
+			</linkcontrol>
+			<string_textlistitem name="name">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="5" />
+					<right offset="-25" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charmini_ability_race">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<linkcontrol name="shortcut">
+				<bounds>-22,2,20,20</bounds>
+				<class>referenceracialtrait</class>
+				<description field="name" />
+				<readonly />
+			</linkcontrol>
+			<string_textlistitem name="name">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="5" />
+					<right offset="-25" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<readonly />
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheetmini_abilities">
+		<sheetdata>
+			<frame_char name="mini_skillframe">
+				<anchored>
+					<top offset="10" />
+					<left />
+					<right anchor="center" />
+					<bottom offset="-15" />
+				</anchored>
+			</frame_char>
+			<windowlist name="skills">
+				<anchored to="mini_skillframe" position="over" offset="-10,-15">
+					<right offset="-20" />
+				</anchored>
+				<datasource>.skilllist</datasource>
+				<class>charmini_skill</class>
+				<sortby><control>name</control></sortby>
+				<script file="campaign/scripts/charmini_skilllist.lua" />
+			</windowlist>
+			<scrollbar>
+				<anchored to="skills" />
+				<target>skills</target>
+			</scrollbar>
+
+			<frame_char name="mini_featframe">
+				<anchored>
+					<top offset="10" />
+					<left anchor="center" />
+					<right offset="-5" />
+					<bottom anchor="center" />
+				</anchored>
+			</frame_char>
+			<list_text name="feat_list">
+				<anchored to="mini_featframe" position="over" offset="-10,-15">
+					<right offset="-20" />
+				</anchored>
+				<datasource>.featlist</datasource>
+				<class>charmini_ability_feat</class>
+				<readonly />
+			</list_text>
+			<scrollbar>
+				<anchored to="feat_list" />
+				<target>feat_list</target>
+			</scrollbar>
+
+			<frame_char name="mini_saframe">
+				<anchored>
+					<top anchor="center" />
+					<left anchor="center" />
+					<right offset="-5" />
+					<bottom offset="-15" />
+				</anchored>
+			</frame_char>
+			<list_text name="specialabilitylist">
+				<anchored to="mini_saframe" position="over" offset="-10,-15">
+					<right offset="-20" />
+				</anchored>
+				<datasource>.specialabilitylist</datasource>
+				<class>charmini_ability_class</class>
+				<readonly />
+			</list_text>
+			<scrollbar>
+				<anchored to="specialabilitylist" />
+				<target>specialabilitylist</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+</root>

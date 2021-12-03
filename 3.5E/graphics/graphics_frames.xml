@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Character sheet -->
+	<framedef name="charsheethelper">
+		<bitmap file="graphics/frames/charsheet.png" />
+		<offset>25,40,25,25</offset>
+		<insideoffset>0,0,7,7</insideoffset>
+	</framedef>
+	<framedef name="acicon">
+		<bitmap file="graphics/frames/acicon.png" />
+		<topleft rect="0,0,40,44" />
+	</framedef>
+
+	<!-- Utility -->
+	<framedef name="groupbox2">
+		<bitmap file="graphics/frames/groupbox2.png" />
+		<offset>15,15,16,16</offset>
+	</framedef>
+	<framedef name="groupbox3">
+		<bitmap file="graphics/frames/groupbox3.png" />
+		<offset>18,18,17,17</offset>
+	</framedef>
+	<framedef name="slottedmodifier">
+		<bitmap file="graphics/frames/slottedmodifier.png" />
+		<topleft rect="0,0,37,12" />
+		<top rect="37,0,160,12" />
+		<topright rect="212,0,12,12" />
+		<left rect="0,12,37,187" />
+		<middle rect="37,12,160,187" />
+		<right rect="212,12,12,187" />
+		<bottomleft rect="0,199,37,12" />
+		<bottom rect="37,199,160,12" />
+		<bottomright rect="212,199,12,12" />
+	</framedef>
+	<framedef name="slottedbonus">
+		<bitmap file="graphics/frames/slottedbonus.png" />
+		<topleft rect="0,0,68,12" />
+		<top rect="68,0,128,12" />
+		<topright rect="212,0,12,12" />
+		<left rect="0,12,68,187" />
+		<middle rect="68,12,128,187" />
+		<right rect="212,12,12,187" />
+		<bottomleft rect="0,199,68,12" />
+		<bottom rect="68,199,128,12" />
+		<bottomright rect="212,199,12,12" />
+	</framedef>
+
+	<!-- Die Cup (Local mode) -->
+	<framedef name="collector">
+		<bitmap file="graphics/frames/collector.png" />
+		<offset>7,7,3,3</offset>
+	</framedef>
+
+	<!-- Override CoreRPG ruleset graphics -->
+
+</root>

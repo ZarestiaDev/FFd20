@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charmini_inventoryitem">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<hidden_record_isidentified name="isidentified"><class>item</class><ignorehost /></hidden_record_isidentified>
+			<hn name="showonminisheet">
+				<script>
+					function onValueChanged()
+						window.windowlist.applyFilter();
+					end
+				</script>
+			</hn>
+
+			<number_charinv name="count">
+				<bounds>5,2,20,20</bounds>
+			</number_charinv>
+			<string_charinvname name="name">
+				<bounds>35,2,-27,20</bounds>
+				<readonly />
+			</string_charinvname>
+			<string_charinvname name="nonid_name">
+				<bounds>35,2,-27,20</bounds>
+				<empty textres="item_unidentified" />
+				<readonly />
+				<invisible />
+			</string_charinvname>
+			<linkcontrol name="shortcut">
+				<bounds>-22,2,20,20</bounds>
+				<class>item</class>
+				<readonly />
+			</linkcontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheetmini_inventory">
+		<sheetdata>
+			<frame_char name="mini_coinframe">
+				<bounds>0,10,-5,65</bounds>
+			</frame_char>
+			<number_dropadd name="coinamount1" source="coins.slot1.amount">
+				<anchored to="mini_coinframe" width="50" height="20">
+					<top offset="30" />
+					<right anchor="center" offset="-65" />
+				</anchored>
+			</number_dropadd>
+			<genericcontrol>
+				<anchored to="coinamount1" position="above" offset="0,0" height="20" />
+				<icon>char_coin</icon>
+				<iconcolor>FFFFFF</iconcolor>
+			</genericcontrol>
+			<number_dropadd name="coinamount2" source="coins.slot2.amount">
+				<anchored to="mini_coinframe" width="50" height="20">
+					<top offset="30" />
+					<right anchor="center" offset="-5" />
+				</anchored>
+			</number_dropadd>
+			<genericcontrol>
+				<anchored to="coinamount2" position="above" offset="0,0" height="20" />
+				<icon>char_coin</icon>
+				<iconcolor>FFDF4B</iconcolor>
+			</genericcontrol>
+			<number_dropadd name="coinamount3" source="coins.slot3.amount">
+				<anchored to="mini_coinframe" width="50" height="20">
+					<top offset="30" />
+					<left anchor="center" offset="5" />
+				</anchored>
+			</number_dropadd>
+			<genericcontrol>
+				<anchored to="coinamount3" position="above" offset="0,0" height="20" />
+				<icon>char_coin</icon>
+				<iconcolor>E3E3E3</iconcolor>
+			</genericcontrol>
+			<number_dropadd name="coinamount4" source="coins.slot4.amount">
+				<anchored to="mini_coinframe" width="50" height="20">
+					<top offset="30" />
+					<left anchor="center" offset="65" />
+				</anchored>
+			</number_dropadd>
+			<genericcontrol>
+				<anchored to="coinamount4" position="above" offset="0,0" height="20" />
+				<icon>char_coin</icon>
+				<iconcolor>DDA15B</iconcolor>
+			</genericcontrol>
+
+			<frame_char name="mini_inventoryframe">
+				<bounds>0,75,-5,-15</bounds>
+			</frame_char>
+			<windowlist name="inventorylist">
+				<anchored to="mini_inventoryframe" position="over" offset="-12,-10" />
+				<child></child>
+				<child><backcolor>1A40301E</backcolor></child>
+				<datasource>.inventorylist</datasource>
+				<class>charmini_inventoryitem</class>
+				<script file="campaign\scripts\charmini_invlist.lua" />
+			</windowlist>
+			<scrollbar>
+				<anchored to="inventorylist" />
+				<target>inventorylist</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+</root>

@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_actions">
+		<script file="campaign/scripts/char_actions.lua" />
+		<sheetdata>
+			<frame_char name="actionframe">
+				<bounds>15,0,-29,-2</bounds>
+			</frame_char>
+			
+			<subwindow name="actions">
+				<anchored to="actionframe" position="over" offset="-8,-10">
+					<bottom offset="-50" />
+				</anchored>
+				<activate />
+				<class>char_actions_details</class>
+			</subwindow>
+			<scrollbar>
+				<anchored to="actions" position="right" offset="-2,-4" width="20">
+					<bottom offset="20" />
+				</anchored>
+				<target>actions</target>
+			</scrollbar>
+
+			<button_expand name="expand">
+				<anchored to="actionframe" position="insidebottomleft" offset="25,15" width="20" height="20" />
+				<target>actions,spellclasslist,levels,spells</target>
+				<togglelevel>3</togglelevel>
+			</button_expand>
+			<button_collapse name="collapse">
+				<anchored to="actionframe" position="insidebottomleft" offset="55,15" width="20" height="20" />
+				<target>actions,spellclasslist,levels,spells</target>
+				<togglelevel>3</togglelevel>
+			</button_collapse>
+
+			<label name="label_mode">
+				<anchored to="actionframe" position="insidebottomleft" offset="90,15" />
+				<static textres="spell_label_mode" />
+			</label>
+			<button_stringcycler name="spellmode">
+				<anchored to="label_mode" position="righthigh" offset="10,0" width="80" />
+				<parameters>
+					<labelsres>spell_label_modeprep|spell_label_modecombat</labelsres>
+					<values>preparation|combat</values>
+					<defaultlabelres>spell_label_modestd</defaultlabelres>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onModeChanged();
+					end
+				</script>
+			</button_stringcycler>
+			
+			<label name="label_display">
+				<anchored to="actionframe" position="insidebottomleft" offset="250,15" />
+				<static textres="spell_label_display" />
+			</label>
+			<button_stringcycler name="spelldisplaymode">
+				<anchored to="label_display" position="righthigh" offset="10,0" width="80" />
+				<parameters>
+					<labelsres>spell_label_displayaction</labelsres>
+					<values>action</values>
+					<defaultlabelres>spell_label_displaystd</defaultlabelres>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onDisplayChanged();
+					end
+				</script>
+			</button_stringcycler>
+			
+			<button_iedit name="actions_iedit">
+				<anchored to="actionframe" position="insidebottomright" offset="15,15" />
+				<tooltip textres="char_tooltip_actionedit" />
+				<script>
+					function onValueChanged()
+						local bEditMode = (getValue() == 1);
+						
+						window.label_mode.setVisible(not bEditMode);
+						window.spellmode.setVisible(not bEditMode);
+						window.label_display.setVisible(not bEditMode);
+						window.spelldisplaymode.setVisible(not bEditMode);
+						if bEditMode then
+							DB.setValue(window.getDatabaseNode(), "spellmode", "string", "standard");
+							DB.setValue(window.getDatabaseNode(), "spelldisplaymode", "string", "");
+						end
+						window.actions.subwindow.update();
+					end
+				</script>
+			</button_iedit>
+			<buttoncontrol name="spellclass_iadd">
+				<anchored to="actions_iedit" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_star" pressed="button_star_down" />
+				<tooltip textres="char_tooltip_actionaddspellclass" />
+				<script>
+					function onButtonPress()
+						window.actions.subwindow.addSpellClass();
+					end
+				</script>
+			</buttoncontrol>
+			<buttoncontrol name="weapon_iadd">
+				<anchored to="spellclass_iadd" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_weapon" pressed="button_weapon_down" />
+				<tooltip textres="char_tooltip_actionaddweapon" />
+				<script>
+					function onButtonPress()
+						window.actions.subwindow.addWeapon();
+					end
+				</script>
+			</buttoncontrol>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_actions_details">
+		<script file="campaign/scripts/char_actions_details.lua" />
+		<sheetdata>
+			<genericcontrol name="dropcatcher">
+				<anchored position="over" />
+				<script>
+					function onDrop(x, y, draginfo)
+						return CharManager.onActionDrop(draginfo, window.getDatabaseNode());
+					end
+				</script>
+			</genericcontrol>
+			
+			<genericcontrol name="icon_weapon">
+				<anchored position="insidetopleft" offset="10,10" width="20" height="20" />
+				<icon>char_weapon</icon>
+			</genericcontrol>
+			<label name="label_weapon">
+				<anchored>
+					<top offset="10" />
+					<left parent="icon_weapon" anchor="right" offset="10" />
+					<right offset="-8" />
+				</anchored>
+				<static textres="char_label_weapons" />
+			</label>
+
+			<genericcontrol>
+				<bounds>6,6,-6,32</bounds>
+				<frame name="groupbox2" offset="6,6,6,6" />
+				<disabled />
+			</genericcontrol>
+
+			<label>
+				<anchored position="insidetopleft" offset="10,45" />
+				<center />
+				<static textres="char_label_weaponname" />
+			</label>
+			<label>
+				<anchored position="insidetopright" offset="326,45" width="29" />
+				<center />
+				<static textres="char_label_weapontype" />
+			</label>
+			<label>
+				<anchored position="insidetopright" offset="293,45" width="30" />
+				<center />
+				<static textres="char_label_weaponnumatt" />
+			</label>
+			<label>
+				<anchored position="insidetopright" offset="158,45" width="130"/>
+				<center />
+				<static textres="char_label_weaponattacks" />
+			</label>
+			<label>
+				<anchored position="insidetopright" offset="51,45" width="100" />
+				<center />
+				<static textres="char_label_weapondamage" />
+			</label>
+			
+			<list_charweapon name="weaponlist">
+				<anchored>
+					<top offset="60" />
+					<left />
+					<right />
+				</anchored>
+				<class>char_weapon</class>
+				<noscroll />
+			</list_charweapon>
+
+			<list_spellclass name="spellclasslist">
+				<anchored>
+					<top parent="weaponlist" anchor="bottom" offset="5" />
+					<left />
+					<right />
+				</anchored>
+				<class>spell_class</class>
+				<noscroll />
+			</list_spellclass>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_weapon">
+		<margins control="0,0,0,5" />
+		<script file="campaign/scripts/char_weapon.lua" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top offset="5" />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<linkfield name="shortcut">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</linkfield>
+			<button_idelete name="idelete">
+				<anchored to="rightanchor">
+					<top />
+					<right anchor="left" offset="-5" />
+				</anchored>
+			</button_idelete>
+			<buttoncontrol name="activatedetail">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-3" />
+				</anchored>
+				<state icon="button_details" pressed="button_details_down" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("char_weapon_editor", window.getDatabaseNode());
+					end
+				</script>
+			</buttoncontrol>
+
+			<simplestringc name="damageview">
+				<anchored to="rightanchor" width="100">
+					<top />
+					<right anchor="left" relation="relative" offset="-3" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<frame name="fielddark" offset="7,5,7,5" />
+				<stateframe>
+					<hover name="rowshade" offset="7,5,7,5" />
+				</stateframe>
+				<cursor hover="hand" />
+				<readonly />
+				<script>
+					function onDoubleClick(x,y)
+						return window.onDamageAction();
+					end			
+					function onDragStart(button, x, y, draginfo)
+						return window.onDamageAction(draginfo);
+					end
+				</script>
+			</simplestringc>
+
+			<genericcontrol name="attackframe">
+				<anchored width="130" height="20">
+					<top offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-7" />
+				</anchored>
+				<frame name="slottedmodifier" offset="5,5,5,6" />
+			</genericcontrol>
+			<number_charweaponattacktotal name="attack1">
+				<anchored to="attackframe" position="insidetopleft" offset="3,0" width="27" height="20" />
+				<modifier>0</modifier>
+				<name>Attack 1</name>
+				<source><name>attack1modifier</name><op>+</op></source>
+			</number_charweaponattacktotal>
+			<number_charweaponattacktotal name="attack2">
+				<anchored to="attack1" position="right" offset="5,0" width="27" />
+				<modifier>-5</modifier>
+				<name>Attack 2</name>
+				<source><name>attack2modifier</name><op>+</op></source>
+			</number_charweaponattacktotal>
+			<number_charweaponattacktotal name="attack3">
+				<anchored to="attack2" position="right" offset="5,0" width="27" />
+				<modifier>-10</modifier>
+				<name>Attack 3</name>
+				<source><name>attack3modifier</name><op>+</op></source>
+			</number_charweaponattacktotal>
+			<number_charweaponattacktotal name="attack4">
+				<anchored to="attack3" position="right" offset="5,0" width="27" />
+				<modifier>-15</modifier>
+				<name>Attack 4</name>
+				<source><name>attack4modifier</name><op>+</op></source>
+			</number_charweaponattacktotal>
+			<genericcontrol name="attackicons">
+				<anchored width="30" height="20">
+					<top offset="5" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<frame name="fielddark" offset="5,5,5,5" />
+			</genericcontrol>
+			<number_charweaponfullattack name="attacks">
+				<anchored to="attackicons" position="over" />
+			</number_charweaponfullattack>
+
+			<state_charweapontype name="type">
+				<anchored>
+					<top offset="3" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-3" />
+				</anchored>
+			</state_charweapontype>
+
+			<genericcontrol name="leftanchor">
+				<anchored width="0" height="0">
+					<top offset="5" />
+					<left />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<button_char_inv_carried name="carried">
+				<anchored to="leftanchor" width="20" height="20">
+					<top offset="5" />
+					<left anchor="right" relation="relative" offset="0" />
+				</anchored>
+				<script file="common/scripts/button_crosslink.lua" />
+			</button_char_inv_carried>
+			
+			<stringu name="name">
+				<anchored height="20">
+					<top offset="5" />
+					<left parent="leftanchor" anchor="right" relation="relative" offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="0" />
+				</anchored>
+			</stringu>
+
+			<!-- Ranged specific fields -->
+			<label name="label_range">
+				<anchored width="70">
+					<top parent="name" anchor="bottom" relation="relative" offset="5" />
+					<left offset="15" />
+				</anchored>
+				<static textres="char_label_weaponrange" />
+			</label>
+			<basicnumber name="rangeincrement">
+				<anchored to="label_range" position="righthigh" offset="-6,0" width="30" height="20" />
+				<hideonvalue>0</hideonvalue>
+				<min>0</min>
+			</basicnumber>
+
+			<label name="label_ammo">
+				<anchored width="50">
+					<top parent="label_range" />
+					<left offset="130" />
+				</anchored>
+				<static textres="char_label_weaponammo" />
+			</label>
+			<basicnumber name="maxammo">
+				<anchored to="label_ammo" position="righthigh" width="30" height="20" />
+				<min>0</min>
+				<max>100</max>
+			</basicnumber>
+			<state_charammocounter name="ammocounter">
+				<anchored to="maxammo" position="righthigh" offset="3,0" />
+			</state_charammocounter>
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="char_weapon_editor">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<minimum width="400" height="350" />
+			<dynamic />
+		</sizelimits>
+		<nodelete />
+		<playercontrol />
+		<tooltip control="name" />
+		<sheetdata>
+			<windowtitlebar name="title">
+				<resource>weapon_title</resource>
+			</windowtitlebar>
+			
+			<frame_record_editor name="contentframe" />
+
+			<subwindow_record name="main">
+				<class>char_weapon_editor_main</class>
+				<activate />
+			</subwindow_record>
+			<scrollbar_record>
+				<target>main</target>
+			</scrollbar_record>
+
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="char_weapon_editor_main">
+		<script>
+			function onDrop(x, y, draginfo)
+				local sDragType = draginfo.getType();
+				
+				if sDragType == "dice" then
+					local w = list.addEntry(true);
+					for _, vDie in ipairs(draginfo.getDieList()) do
+						w.dice.addDie(vDie.type);
+					end
+					return true;
+				elseif sDragType == "number" then
+					local w = list.addEntry(true);
+					w.bonus.setValue(draginfo.getNumberData());
+					return true;
+				end
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+
+			<label_column>
+				<static textres="weapon_label_name" />
+			</label_column>
+			<string_column name="name" />
+			
+			<label_column>
+				<static textres="weapon_label_properties" />
+			</label_column>
+			<string_column name="properties" />
+			
+			<!-- Attack -->
+			<header_column name="header_attack">
+				<static textres="weapon_header_attack" />
+				<center />
+			</header_column>
+			
+			<cycler_ability name="attackstat">
+				<anchored width="40" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="22" />
+					<left offset="5" />
+				</anchored>
+			</cycler_ability>
+			<label_fieldtop>
+				<anchored to="attackstat" />
+				<static textres="weapon_label_atkstat" />
+			</label_fieldtop>
+			<label name="label_atkplus">
+				<anchored to="attackstat" position="righthigh" offset="5,0" width="10" />
+				<static>+</static>
+				<center />
+			</label>
+			<basicnumber name="bonus">
+				<anchored to="label_atkplus" position="righthigh" offset="5,0" width="30" height="20" />
+				<hideonvalue>0</hideonvalue>
+			</basicnumber>
+			<label_fieldtop>
+				<anchored to="bonus" />
+				<static textres="weapon_label_atkbonus" />
+			</label_fieldtop>
+			<label name="label_atkplus2">
+				<anchored to="bonus" position="righthigh" offset="5,0" width="10" />
+				<static>+</static>
+				<center />
+			</label>
+			<genericcontrol name="attackmodframe">
+				<anchored to="label_atkplus2" position="righthigh" offset="2,0" width="130" height="20" />
+				<frame name="slottedmodifier" offset="5,5,5,6" />
+			</genericcontrol>
+			<number_charweaponattackmod name="attack1modifier">
+				<anchored to="attackmodframe" position="insidetopleft" offset="3,0" width="27" height="20" />
+			</number_charweaponattackmod>
+			<number_charweaponattackmod name="attack2modifier">
+				<anchored to="attack1modifier" position="right" offset="5,0" width="27" />
+			</number_charweaponattackmod>
+			<number_charweaponattackmod name="attack3modifier">
+				<anchored to="attack2modifier" position="right" offset="5,0" width="27" />
+			</number_charweaponattackmod>
+			<number_charweaponattackmod name="attack4modifier">
+				<anchored to="attack3modifier" position="right" offset="5,0" width="27" />
+			</number_charweaponattackmod>
+			<label_fieldtop>
+				<anchored to="attackmodframe" />
+				<static textres="weapon_label_atkbonusper" />
+			</label_fieldtop>
+			
+			<basicnumber name="critatkrange">
+				<anchored height="20" width="25">
+					<top parent="attackstat" />
+					<right offset="-10" />
+				</anchored>
+				<default>20</default>
+				<min>2</min>
+				<max>20</max>
+			</basicnumber>
+			<label_fieldtop>
+				<anchored to="critatkrange" />
+				<static textres="weapon_label_critrange" />
+			</label_fieldtop>
+
+			<!-- Damage -->
+			<header_column name="header_damage">
+				<static textres="weapon_header_damage" />
+				<center />
+			</header_column>
+			<button_iedit name="list_iedit">
+				<anchored to="header_damage" position="insidetopright" offset="-5,0" />
+				<target>list</target>
+			</button_iedit>
+			<button_iadd name="list_iadd">
+				<anchored to="list_iedit" position="lefthigh" offset="5,0" />
+				<target>list</target>
+			</button_iadd>
+
+			<list_editor name="list">
+				<datasource>.damagelist</datasource>
+				<class>char_weapon_damage_entry</class>
+				<script>
+					function addEntry(bFocus)
+						local n = getWindowCount();
+						
+						local w = createWindow();
+						if w then
+							if n == 0 then
+								if DB.getValue(window.getDatabaseNode(), "type", 0) ~= 1 then
+									w.stat.setStringValue("strength");
+								end
+								w.critmult.setValue(2);
+							end
+						
+							if bFocus then
+								w.type.setFocus();
+							end
+						end
+						
+						return w;
+					end
+				</script>
+			</list_editor>
+			
+			<label_fieldtop>
+				<anchored to="list" position="aboveleft" offset="5,1" width="60" />
+				<static textres="weapon_label_dmgdice" />
+			</label_fieldtop>
+			<label_fieldtop>
+				<anchored to="list" position="aboveleft" offset="83,1" width="110" />
+				<static textres="weapon_label_dmgstat" />
+			</label_fieldtop>
+			<label_fieldtop>
+				<anchored to="list" position="aboveleft" offset="207,1" width="30" />
+				<static textres="weapon_label_dmgbonus" />
+			</label_fieldtop>
+			<label_fieldtop>
+				<anchored to="list" position="aboveright" offset="15,1" width="30" />
+				<static textres="weapon_label_dmgcritmult" />
+			</label_fieldtop>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_weapon_damage_entry">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top offset="5" />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored to="rightanchor">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</button_idelete>
+
+			<basicdice name="dice">
+				<anchored position="insidetopleft" offset="5,5" width="60" height="20" />
+			</basicdice>
+			<label name="label_plus">
+				<anchored to="dice" position="righthigh" offset="5,0" width="10" />
+				<static>+</static>
+			</label>
+			<basicnumber name="statmult">
+				<anchored to="label_plus" position="righthigh" offset="3,0" width="20" height="20" />
+				<default>1</default>
+				<min>0.5</min>
+				<wheel>0.5</wheel>
+				<hideonvalue>1</hideonvalue>
+				<tooltip textres="weapon_tooltip_dmgstatmult" />
+			</basicnumber>
+			<label name="label_statmultx">
+				<anchored to="statmult" position="righthigh" offset="5,0" width="10" />
+				<static>x</static>
+				<center />
+			</label>
+			<cycler_ability name="stat">
+				<anchored to="label_statmultx" position="righthigh" offset="5,0" width="30" height="20" />
+				<parameters>
+					<defaultlabelres>dash</defaultlabelres>
+				</parameters>
+			</cycler_ability>
+			<label name="statmaxparen">
+				<anchored to="stat" position="righthigh" offset="5,0" />
+				<static>(</static>
+			</label>
+			<basicnumber name="statmax">
+				<anchored to="statmaxparen" position="righthigh" offset="5,0" width="15" height="20" />
+				<hideonvalue>0</hideonvalue>
+				<min>0</min>
+				<tooltip textres="weapon_tooltip_dmgstatmax" />
+			</basicnumber>
+			<label name="statmaxparen2">
+				<anchored to="statmax" position="righthigh" offset="5,0"  />
+				<static>)</static>
+			</label>
+			<label name="label_plus2">
+				<anchored to="statmaxparen2" position="righthigh" offset="2,0" width="10" />
+				<static>+</static>
+			</label>
+			<basicnumber name="bonus">
+				<anchored to="label_plus2" position="righthigh" offset="2,0" width="30" height="20" />
+				<hideonvalue>0</hideonvalue>
+			</basicnumber>
+			
+			<basicnumber name="critmult">
+				<anchored to="rightanchor" width="15" height="20">
+					<top />
+					<right anchor="left" relation="current" offset="-20" />
+				</anchored>
+				<default>1</default>
+			</basicnumber>
+			<label name="label_critmultx">
+				<anchored to="rightanchor" width="10">
+					<top />
+					<right anchor="left" relation="current" offset="-5" />
+				</anchored>
+				<static>x</static>
+				<center />
+			</label>
+			
+			<label name="label_type">
+				<anchored position="insidetopleft" offset="20,25" />
+				<static textres="weapon_label_dmgtype" />
+			</label>
+			<stringu name="type">
+				<anchored to="label_type" position="righthigh" offset="10,0">
+					<right parent="" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringu>
+		</sheetdata>
+	</windowclass>
+</root>

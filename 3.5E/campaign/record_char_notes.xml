@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_notes">
+		<sheetdata>
+			<frame_char name="detailframe">
+				<bounds>15,0,-29,45</bounds>
+			</frame_char>
+			<string_labeled name="gender">
+				<anchored to="detailframe" position="insidetopleft" offset="15,10" width="50" height="20" />
+				<labelres>char_label_gender</labelres>
+			</string_labeled>
+			<string_labeled name="age">
+				<anchored to="gender" position="right" offset="5,0" width="50" />
+				<labelres>char_label_age</labelres>
+			</string_labeled>
+			<string_labeled name="height">
+				<anchored to="age" position="right" offset="5,0" width="50" />
+				<labelres>char_label_height</labelres>
+			</string_labeled>
+			<string_labeled name="weight">
+				<anchored to="height" position="right" offset="5,0" width="50" />
+				<labelres>char_label_weight</labelres>
+			</string_labeled>
+			<string_labeled name="size">
+				<anchored to="weight" position="right" offset="5,0" width="60" />
+				<labelres>char_label_size</labelres>
+			</string_labeled>
+			<string_labeled name="alignment">
+				<anchored to="size" position="right" offset="5,0" width="80" />
+				<labelres>char_label_alignment</labelres>
+			</string_labeled>
+			<string_labeled name="deity">
+				<anchored to="alignment" position="right" offset="5,0" width="80" />
+				<labelres>char_label_deity</labelres>
+			</string_labeled>
+
+			<frame_char name="appearanceframe">
+				<bounds>15,45,-189,190</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="appearanceframe" />
+				<static textres="char_label_appearance" />
+			</label_frametop>
+			<stringu name="appearance">
+				<anchored to="appearanceframe">
+					<top offset="30" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringu>
+			<scrollbar>
+				<anchored to="appearance" />
+				<target>appearance</target>
+			</scrollbar>
+
+			<frame_char name="languageframe">
+				<bounds>-189,45,160,190</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="languageframe" />
+				<static textres="char_label_languages" />
+			</label_frametop>
+			<list_language name="languages">
+				<anchored to="languageframe">
+					<top offset="35" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+			</list_language>
+			<scrollbar>
+				<anchored to="languages" />
+				<target>languages</target>
+			</scrollbar>
+			<button_iedit name="languages_iedit">
+				<anchored to="languages" position="aboveright" offset="5,5" />
+				<target>languages</target>
+			</button_iedit>
+			<button_iadd name="languages_iadd">
+				<anchored to="languages" position="aboveleft" offset="10,5" />
+				<target>languages</target>
+			</button_iadd>
+
+			<frame_char name="notesframe">
+				<bounds>15,235,-29,-2</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="notesframe" />
+				<static textres="char_label_notes" />
+			</label_frametop>
+			<stringu name="notes">
+				<anchored to="notesframe">
+					<top offset="30" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringu>
+			<scrollbar>
+				<anchored to="notes" />
+				<target>notes</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+</root>

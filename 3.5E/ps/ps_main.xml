@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ps_main">
+		<script file="ps/scripts/ps_main.lua" />
+		<sheetdata>
+			<anchor_partysheet_main_header />
+			
+			<label name="namelabel">
+				<anchored to="headeranchor" position="insidetopleft" offset="55,0" width="180" />
+				<static textres="ps_label_name" />
+				<center />
+			</label>
+			<label name="classlabel">
+				<anchored to="headeranchor" position="insidetopleft" offset="55,17" width="180" />
+				<static textres="ps_label_class" />
+				<center />
+			</label>			
+			<label name="hplabel">
+				<anchored to="headeranchor" position="insidetopleft" offset="235,0" width="30" />
+				<static textres="hp" />
+				<center />
+			</label>
+			<label name="abilitieslabel">
+				<anchored to="headeranchor" position="insidetopleft" offset="265,0" width="190" />
+				<static textres="ps_label_abilities" />
+				<center />
+			</label>
+			<label name="strlabel">
+				<anchored to="abilitieslabel" position="belowleft" offset="0,-3" width="25" />
+				<static textres="str" />
+				<center />
+			</label>
+			<label name="dexlabel">
+				<anchored to="strlabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="dex" />
+				<center />
+			</label>
+			<label name="conlabel">
+				<anchored to="dexlabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="con" />
+				<center />
+			</label>
+			<label name="intlabel">
+				<anchored to="conlabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="int" />
+				<center />
+			</label>
+			<label name="wislabel">
+				<anchored to="intlabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="wis" />
+				<center />
+			</label>
+			<label name="chalabel">
+				<anchored to="wislabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="cha" />
+				<center />
+			</label>
+			<label name="aclabel">
+				<anchored to="abilitieslabel" position="righthigh" offset="15,0" width="25" />
+				<static textres="ac" />
+				<center />
+			</label>
+			<label name="ffaclabel">
+				<anchored to="aclabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="acff" />
+				<center />
+			</label>
+			<label name="taclabel">
+				<anchored to="ffaclabel" position="righthigh" offset="8,0" width="25" />
+				<static textres="actouch" />
+				<center />
+			</label>
+			<label name="cmdlabel">
+				<anchored to="taclabel" position="righthigh" offset="7,0" width="27" />
+				<static textres="cmd" />
+				<center />
+			</label>
+			<label name="fortitudelabel">
+				<anchored to="cmdlabel" position="righthigh" offset="15,0" width="25" />
+				<center />
+				<static textres="fort" />
+			</label>
+			<label name="reflexlabel">
+				<anchored to="fortitudelabel" position="righthigh" offset="8,0" width="25" />
+				<center />
+				<static textres="ref" />
+			</label>
+			<label name="willlabel">
+				<anchored to="reflexlabel" position="righthigh" offset="8,0" width="25" />
+				<center />
+				<static textres="will" />
+			</label>
+			<label name="drlabel">
+				<anchored to="aclabel" position="belowleft" offset="0,-3">
+					<right parent="reflexlabel" />
+				</anchored>
+				<static textres="ps_label_dr" />
+				<center />
+			</label>
+			<label name="srlabel">
+				<anchored to="drlabel" position="righthigh" offset="5,0" width="30" />
+				<static textres="sr" />
+				<center />
+			</label>
+
+			<button_iedit name="list_iedit">
+				<anchored to="headeranchor" position="insidebottomright" offset="10,10" />
+				<target>list</target>
+				<gmvisibleonly />
+			</button_iedit>
+			
+			<list_psmain />
+			<scrollbar_list />
+
+			<anchor_partysheet_main_footer />
+			
+			<genericcontrol name="leftanchor">
+				<anchored to="footeranchor" position="insidetopleft" width="0" height="20" />
+				<gmvisibleonly />
+			</genericcontrol>
+			
+			<buttonfield name="hiderollresults">
+				<anchored to="leftanchor" height="20" width="20">
+					<top />
+					<left anchor="right" relation="relative" offset="15" />
+				</anchored>
+				<frame name="fielddark" offset="10,8,10,6" />
+				<state icon="visibilityon" tooltipres="ps_tooltip_showrollon" />
+				<state icon="visibilityoff" tooltipres="ps_tooltip_showrolloff" />
+				<gmvisibleonly />
+			</buttonfield>
+
+			<genericcontrol name="abilitydcframe">
+				<anchored to="leftanchor" height="20" width="240">
+					<top />
+					<left anchor="right" relation="relative" offset="15" />
+				</anchored>
+				<frame name="groupbox" offset="10,10,10,10" />
+				<gmvisibleonly />
+			</genericcontrol>			
+			<button_roll name="abilityroll">
+				<anchored to="abilitydcframe" position="insidetopleft" offset="5,0" />
+				<script file="ps/scripts/ps_roll_ability.lua" />
+				<gmvisibleonly />
+			</button_roll>
+			<label name="abilitylabel">
+				<anchored to="abilityroll" position="righthigh" offset="5,0" />
+				<static textres="ps_label_groupability" />
+				<gmvisibleonly />
+			</label>
+			<combobox name="abilityselected">
+				<anchored to="abilitylabel" position="righthigh" offset="10,0" width="90" height="20" />
+				<default textres="ps_default_groupability" />
+				<gmvisibleonly />
+				<script>
+					function onInit()
+						super.onInit();
+						addItems(DataCommon.psabilitydata);
+					end
+				</script>
+			</combobox>
+			<label name="abilitydclabel">
+				<anchored to="abilityselected" position="righthigh" offset="10,0" />
+				<static textres="dc" />
+				<gmvisibleonly />
+			</label>
+			<basicnumber name="abilitydc">
+				<anchored to="abilitydclabel" position="righthigh" offset="10,0" width="30" height="20" />
+				<gmvisibleonly />
+			</basicnumber>			
+			
+			<genericcontrol name="partysaveframe">
+				<anchored to="abilitydcframe" position="righthigh" offset="15,0" height="20" width="215" />
+				<frame name="groupbox" offset="10,10,10,10" />
+				<gmvisibleonly />
+			</genericcontrol>				
+			<button_roll name="saveroll">
+				<anchored to="partysaveframe" position="insidetopleft" offset="5,0" />
+				<script file="ps/scripts/ps_roll_save.lua" />
+				<gmvisibleonly />
+			</button_roll>
+			<label name="savelabel">
+				<anchored to="saveroll" position="righthigh" offset="5,0" />
+				<static textres="save" />
+				<gmvisibleonly />
+			</label>
+			<combobox name="saveselected">
+				<anchored to="savelabel" position="righthigh" offset="10,0" width="75" height="20" />
+				<default textres="ps_default_groupsave" />
+				<gmvisibleonly />
+				<script>
+					function onInit()
+						super.onInit();
+						addItems(DataCommon.pssavedata);
+					end
+				</script>
+			</combobox>
+			<label name="savedclabel">
+				<anchored to="saveselected" position="righthigh" offset="10,0" />
+				<static textres="dc" />
+				<gmvisibleonly />
+			</label>
+			<basicnumber name="savedc">
+				<anchored to="savedclabel" position="righthigh" offset="10,0" width="30" height="20" />
+				<gmvisibleonly />
+			</basicnumber>			
+
+			<genericcontrol name="partyatkframe">
+				<anchored to="partysaveframe" position="righthigh" offset="15,0" height="20" width="150" />
+				<frame name="groupbox" offset="10,10,10,10" />
+				<gmvisibleonly />
+			</genericcontrol>							
+			<button_roll name="partyatkroll">
+				<anchored to="partyatkframe" position="insidetopleft" offset="5,0" />
+				<script file="ps/scripts/ps_roll_atk.lua" />
+				<gmvisibleonly />
+			</button_roll>
+			<label name="partyatklabel">
+				<anchored to="partyatkroll" position="righthigh" offset="5,0" />
+				<static textres="ps_label_groupatk" />
+				<gmvisibleonly />
+			</label>	
+			<basicnumber name="bonus">
+				<anchored to="partyatklabel" position="righthigh" offset="10,0" width="30" height="20" />
+				<displaysign />
+				<gmvisibleonly />
+			</basicnumber>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ps_mainitem">
+		<margins control="0,0,0,10" />
+		<frame>partysheetentry</frame>
+		<script>
+			function onInit()
+				cmd.setVisible(DataCommon.isPFRPG());
+			end
+		</script>
+		<sheetdata>
+			<htoken name="token" />
+			<hlink name="link">
+				<script>
+					function onValueChanged()
+						window.portrait.update();
+					end
+				</script>
+			</hlink>
+			<hnx name="hptotal" />
+			<hnx name="hptemp" />
+			<hnx name="wounds" />
+			<hnx name="nonlethal" />
+		
+			<portrait_base>
+				<bounds>10,10,40,40</bounds>
+			</portrait_base>
+			<portrait name="portrait">
+				<bounds>10,10,40,40</bounds>
+			</portrait>
+			
+			<string_ps name="name">
+				<anchored position="insidetopleft" offset="55,10" width="180" />
+				<empty textres="library_recordtype_empty_charsheet" />
+			</string_ps>
+			<string_ps name="class">
+				<anchored position="insidetopleft" offset="55,30" width="145" />
+				<tooltip textres="ps_label_class" />
+			</string_ps>
+			<number_ps_linked name="level">
+				<anchored position="insidetopleft" offset="205,30" width="30" />
+				<tooltip textres="level" />
+			</number_ps_linked>			
+			
+			<progressbar_health_d20 name="hpbar">
+				<anchored position="insidetopleft" offset="245,10" width="10" height="40" />
+			</progressbar_health_d20>
+
+			<number_ps_ability name="strength">
+				<anchored to="hpbar">
+					<left offset="10" />
+				</anchored>
+			</number_ps_ability>			
+			<number_ps_ability name="dexterity">
+				<anchored to="strength" />
+			</number_ps_ability>			
+			<number_ps_ability name="constitution">
+				<anchored to="dexterity" />
+			</number_ps_ability>			
+			<number_ps_ability name="intelligence">
+				<anchored to="constitution" />
+			</number_ps_ability>			
+			<number_ps_ability name="wisdom">
+				<anchored to="intelligence" />
+			</number_ps_ability>		
+			<number_ps_ability name="charisma">
+				<anchored to="wisdom" />
+			</number_ps_ability>	
+			<number_ps_abilitycheck name="strcheck">
+				<anchored to="strength" />
+				<target>strength</target>
+			</number_ps_abilitycheck>
+			<number_ps_abilitycheck name="dexcheck">
+				<anchored to="dexterity" />
+				<target>dexterity</target>
+			</number_ps_abilitycheck>
+			<number_ps_abilitycheck name="concheck">
+				<anchored to="constitution" />
+				<target>constitution</target>
+			</number_ps_abilitycheck>
+			<number_ps_abilitycheck name="intcheck">
+				<anchored to="intelligence" />
+				<target>intelligence</target>
+			</number_ps_abilitycheck>
+			<number_ps_abilitycheck name="wischeck">
+				<anchored to="wisdom" />
+				<target>wisdom</target>
+			</number_ps_abilitycheck>
+			<number_ps_abilitycheck name="chacheck">
+				<anchored to="charisma" />
+				<target>charisma</target>
+			</number_ps_abilitycheck>			
+			
+			<number_ps_defense name="ac">
+				<anchored to="charisma">
+					<left offset="15" />
+				</anchored>
+			</number_ps_defense>				
+			<number_ps_defense name="flatfootedac">
+				<anchored to="ac" />
+			</number_ps_defense>			
+			<number_ps_defense name="touchac">
+				<anchored to="flatfootedac" />
+			</number_ps_defense>			
+			<number_ps_defense name="cmd">
+				<anchored to="touchac" />
+			</number_ps_defense>
+			
+			<number_ps_save name="fortitude">
+				<anchored to="cmd">
+					<left offset="15" />
+				</anchored>
+				<target>fortitude</target>
+			</number_ps_save>
+			<number_ps_save name="reflex">
+				<anchored to="fortitude" />
+				<target>reflex</target>
+			</number_ps_save>
+			<number_ps_save name="will">
+				<anchored to="reflex" />
+				<target>will</target>
+			</number_ps_save>
+			
+			<string_ps name="dr">
+				<anchored height="20">
+					<left parent="ac" />
+					<bottom parent="chacheck" />
+					<right parent="reflex" />
+				</anchored>
+				<tooltip textres="ps_label_dr" />
+			</string_ps>
+			<number_ps_linked name="sr">
+				<anchored height="20">
+					<left parent="will" />
+					<bottom parent="chacheck" />
+					<right parent="will" />
+				</anchored>
+			</number_ps_linked>
+			
+			<button_idelete name="idelete">
+				<anchored position="insidetopright" offset="10,10" />
+			</button_idelete>
+		</sheetdata>
+	</windowclass>
+</root>

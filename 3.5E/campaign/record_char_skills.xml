@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_skills">
+		<sheetdata>
+			<frame_char name="skillpointframe">
+				<bounds>15,0,-29,50</bounds>
+			</frame_char>
+			<label name="spent_label">
+				<anchored to="skillpointframe" position="insidetopleft" offset="15,15" />
+				<static textres="char_label_skillpointsspent" />
+			</label>
+			<simplenumber name="spentskillpoints" source="skillpoints.spent">
+				<anchored to="spent_label" position="righthigh" offset="10,0" width="32" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+			</simplenumber>
+			<button_iedit name="skills_iedit">
+				<anchored to="skillpointframe" position="insidetopright" offset="25,15" />
+				<target>skills</target>
+				<script>
+					function onValueChanged()
+						local bEdit = (getValue() == 1);
+						
+						window.skills.update();
+					end
+				</script>
+			</button_iedit>
+			<buttoncontrol name="skills_iadd_profession">
+				<anchored to="skills_iedit" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_skillpr" pressed="button_skillpr_down" />
+				<tooltip textres="char_tooltip_skilladdprofession" />
+				<script>
+					function onButtonPress()
+						window.skills.addNewInstance(Interface.getString("skill_value_profession"));
+					end
+				</script>
+			</buttoncontrol>
+			<buttoncontrol name="skills_iadd_perform">
+				<anchored to="skills_iadd_profession" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_skillpe" pressed="button_skillpe_down" />
+				<tooltip textres="char_tooltip_skilladdperform" />
+				<script>
+					function onButtonPress()
+						window.skills.addNewInstance(Interface.getString("skill_value_perform"));
+					end
+				</script>
+			</buttoncontrol>
+			<buttoncontrol name="skills_iadd_knowledge">
+				<anchored to="skills_iadd_perform" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_skillkn" pressed="button_skillkn_down" />
+				<tooltip textres="char_tooltip_skilladdknowledge" />
+				<script>
+					function onButtonPress()
+						window.skills.addNewInstance(Interface.getString("skill_value_knowledge"));
+					end
+				</script>
+			</buttoncontrol>
+			<buttoncontrol name="skills_iadd_craft">
+				<anchored to="skills_iadd_knowledge" position="lefthigh" offset="5,0" width="20" height="20" />
+				<icon normal="button_skillcr" pressed="button_skillcr_down" />
+				<tooltip textres="char_tooltip_skilladdcraft" />
+				<script>
+					function onButtonPress()
+						window.skills.addNewInstance(Interface.getString("skill_value_craft"));
+					end
+				</script>
+			</buttoncontrol>
+			<button_iadd name="skills_iadd">
+				<anchored to="skills_iadd_craft" position="lefthigh" offset="5,0" width="20" height="20" />
+				<target>skills</target>
+				<tooltip textres="char_tooltip_skilladd" />
+			</button_iadd>
+
+			<frame_char name="skillframe">
+				<bounds>15,50,-30,-3</bounds>
+			</frame_char>
+
+			<genericcontrol>
+				<anchored to="skillframe" position="insidetopleft" offset="17,15" width="10" height="10" />
+				<icon>char_quicklist</icon>
+				<tooltip textres="char_tooltip_skillshowmini" />
+			</genericcontrol>
+			<genericcontrol>
+				<anchored to="skillframe" position="insidetopleft" offset="33,15" width="10" height="10" />
+				<icon>char_encumbrance</icon>
+				<tooltip textres="char_tooltip_skillclass" />
+			</genericcontrol>
+			<label>
+				<anchored to="skillframe" position="insidetopleft" offset="85,10" />
+				<static textres="char_label_skillname" />
+			</label>
+
+			<genericcontrol name="rightanchor">
+				<anchored to="skillframe" width="0" height="0">
+					<top offset="10" />
+					<right offset="-25" />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<genericcontrol name="idelete_header">
+				<anchored to="rightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<disabled />
+				<invisible />
+			</genericcontrol>
+			<label>
+				<anchored to="rightanchor" width="44">
+					<top />
+					<right anchor="left" relation="relative" offset="-27" />
+				</anchored>
+				<static textres="char_label_skilltotal" />
+				<center />
+			</label>
+			<label>
+				<anchored to="rightanchor" width="32">
+					<top />
+					<right anchor="left" relation="relative" offset="-15" />
+				</anchored>
+				<static textres="char_label_skillmisc" />
+				<center />
+			</label>
+			<label>
+				<anchored to="rightanchor" width="77">
+					<top />
+					<right anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<center />
+				<static textres="char_label_skillability" />
+			</label>
+			<label>
+				<anchored to="rightanchor" width="42">
+					<top />
+					<right anchor="left" relation="relative" offset="0" />
+				</anchored>
+				<center />
+				<static textres="char_label_skillranks" />
+			</label>
+
+			<list_charskill name="skills">
+				<anchored to="skillframe">
+					<top offset="30" />
+					<left offset="10" />
+					<right offset="-25" />
+					<bottom offset="-15" />
+				</anchored>
+			</list_charskill>
+			<scrollbar>
+				<anchored to="skills" />
+				<target>skills</target>
+			</scrollbar>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_skill">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/char_skill.lua" />
+		<sheetdata>
+			<hn name="armorcheckmultiplier">
+				<script>
+					function onValueChanged()
+						window.onCheckPenaltyChange();
+					end
+				</script>
+			</hn>
+
+			<button_checkbox name="showonminisheet">
+				<bounds>6,8,12,12</bounds>
+				<default>1</default>
+			</button_checkbox>
+			<button_checkbox name="state">
+				<bounds>22,8,12,12</bounds>
+				<script>
+					function onValueChanged()
+						CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
+					end
+				</script>
+			</button_checkbox>
+			
+			<genericcontrol name="rightanchor">
+				<anchored width="0" height="0">
+					<top />
+					<right />
+				</anchored>
+				<invisible />
+			</genericcontrol>
+			<button_idelete name="idelete">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+			</button_idelete>
+			<genericcontrol name="idelete_spacer">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<disabled />
+				<invisible />
+			</genericcontrol>
+			<buttoncontrol name="shortcut">
+				<anchored width="20" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-2" />
+				</anchored>
+				<icon normal="button_link" pressed="button_link_down" />
+				<script file="campaign/scripts/char_skilllink.lua" />
+			</buttoncontrol>
+			<number_charskilltotal name="total">
+				<anchored width="44" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</number_charskilltotal>
+			<number_charskillfield name="misc">
+				<anchored width="32" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-15" />
+				</anchored>
+				<tabtarget prev="ranks" />
+			</number_charskillfield>
+			<number_charskillfield_static name="stat">
+				<anchored width="32" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script>
+					function update(statname)
+						setValue(DB.getValue(window.getDatabaseNode(), "...abilities." .. statname .. ".bonus", 0));
+					end
+				</script>
+			</number_charskillfield_static>
+			<cycler_charskillability name="statname">
+				<anchored width="40" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						window.onStatUpdate();
+					end
+				</script>
+			</cycler_charskillability>
+			<number_charskillranks name="ranks">
+				<anchored width="32" height="20">
+					<top offset="2" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<tabtarget next="misc" prev="sublabel" />
+			</number_charskillranks>
+			<genericcontrol name="armorwidget">
+				<anchored width="8" height="9">
+					<top offset="7" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</genericcontrol>
+
+			<stringu name="label">
+				<anchored height="20">
+					<top offset="2" />
+					<left offset="40" />
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<tabtarget next="sublabel" />
+				<script>
+					function onEnter()
+						window.windowlist.addEntry(true);
+						return true;
+					end
+				</script>
+			</stringu>
+			<stringu name="sublabel">
+				<anchored to="label" height="20">
+					<top anchor="bottom" />
+					<left />
+					<right />
+				</anchored>
+				<invisible />
+				<tabtarget next="ranks" prev="label" />
+				<script>
+					function onEnter()
+						window.windowlist.addNewInstance(window.label.getValue());
+						return true;
+					end
+				</script>
+			</stringu>
+		</sheetdata>
+	</windowclass>
+</root>
