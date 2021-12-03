@@ -237,11 +237,6 @@
 	<windowclass name="ps_mainitem">
 		<margins control="0,0,0,10" />
 		<frame>partysheetentry</frame>
-		<script>
-			function onInit()
-				cmd.setVisible(DataCommon.isPFRPG());
-			end
-		</script>
 		<sheetdata>
 			<htoken name="token" />
 			<hlink name="link">

@@ -240,22 +240,17 @@
 				function onSourceUpdate()
 					local nodeWin = window.getDatabaseNode();
 					local nCurrentScore = DB.getValue(nodeWin, "abilities." .. target[1] .. ".score", 10);
-					
-					if DataCommon.isPFRPG() then
-						local nBonus = math.floor((nCurrentScore - 10) / 2) + getModifier();
+
+					local nBonus = math.floor((nCurrentScore - 10) / 2) + getModifier();
 						
-						local nDamage = DB.getValue(nodeWin, "abilities." .. target[1] .. ".damage", 0);
-						if nDamage &gt; 0 then
-							nBonus = nBonus - math.floor(nDamage / 2);
-						elseif nDamage &lt; 0 then
-							nBonus = nBonus - math.ceil(nDamage / 2);
-						end
+					local nDamage = DB.getValue(nodeWin, "abilities." .. target[1] .. ".damage", 0);
+					if nDamage &gt; 0 then
+						nBonus = nBonus - math.floor(nDamage / 2);
+					elseif nDamage &lt; 0 then
+						nBonus = nBonus - math.ceil(nDamage / 2);
+					end
 
 						setValue(nBonus);
-					else
-						nCurrentScore = nCurrentScore - DB.getValue(nodeWin, "abilities." .. target[1] .. ".damage", 0);
-						setValue(math.floor((nCurrentScore - 10) / 2) + getModifier());
-					end
 				end
 
 				function onInit()
@@ -864,13 +859,11 @@
 						end
 						return 0;
 					elseif sourcename == "state" then
-						if DataCommon.isPFRPG() then
-							local nodeWin = window.getDatabaseNode();
-							if DB.getValue(nodeWin, "state", 0) == 1 then
-								local nRanks = DB.getValue(nodeWin, "ranks", 0);
-								if nRanks > 0 then
-									return 3;
-								end
+						local nodeWin = window.getDatabaseNode();
+						if DB.getValue(nodeWin, "state", 0) == 1 then
+							local nRanks = DB.getValue(nodeWin, "ranks", 0);
+							if nRanks > 0 then
+								return 3;
 							end
 						end
 						return 0;
@@ -942,10 +935,8 @@
 			<state icon="char_weapon_ranged" tooltipres="char_tooltip_weapontyperanged" />
 			<script>
 				function onInit()
-					if DataCommon.isPFRPG() then
-						setStateIcons(2, "char_weapon_cm");
-						setStateTooltipText(2, Interface.getString("char_tooltip_weapontypecm"));
-					end
+					setStateIcons(2, "char_weapon_cm");
+					setStateTooltipText(2, Interface.getString("char_tooltip_weapontypecm"));
 				end
 			</script>
 		</buttonfield>

@@ -248,15 +248,8 @@ function applyOngoingDamageAdjustment(nodeActor, nodeEffect, rEffectComp)
 		table.insert(aResults, "[FHEAL] Fast Heal");
 
 	elseif rEffectComp.type == "REGEN" then
-		local bPFMode = DataCommon.isPFRPG();
-		if bPFMode then
-			if DB.getValue(nodeActor, "wounds", 0) == 0 and DB.getValue(nodeActor, "nonlethal", 0) == 0 then
-				return;
-			end
-		else
-			if DB.getValue(nodeActor, "nonlethal", 0) == 0 then
-				return;
-			end
+		if DB.getValue(nodeActor, "wounds", 0) == 0 and DB.getValue(nodeActor, "nonlethal", 0) == 0 then
+			return;
 		end
 		
 		table.insert(aResults, "[REGEN] Regeneration");

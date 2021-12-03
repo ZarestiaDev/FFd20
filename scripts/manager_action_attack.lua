@@ -161,12 +161,8 @@ function getGrappleRoll(rActor, rAction)
 	rRoll.sType = "grapple";
 	rRoll.aDice = { "d20" };
 	rRoll.nMod = rAction.modifier or 0;
-	
-	if DataCommon.isPFRPG() then
-		rRoll.sDesc = "[CMB]";
-	else
-		rRoll.sDesc = "[GRAPPLE]";
-	end
+	rRoll.sDesc = "[CMB]";
+
 	if rAction.label and rAction.label ~= "" then
 		rRoll.sDesc = rRoll.sDesc .. " " .. rAction.label;
 	end
@@ -295,12 +291,6 @@ function modAttack(rSource, rTarget, rRoll)
 		if EffectManager35E.hasEffect(rSource, "Blinded") then
 			bEffects = true;
 			table.insert(aAddDesc, "[BLINDED]");
-		end
-		if not DataCommon.isPFRPG() then
-			if EffectManager35E.hasEffect(rSource, "Incorporeal") and sAttackType == "M" and not string.match(string.lower(rRoll.sDesc), "incorporeal touch") then
-				bEffects = true;
-				table.insert(aAddDesc, "[INCORPOREAL]");
-			end
 		end
 		if EffectManager35E.hasEffectCondition(rSource, "Dazzled") then
 			bEffects = true;
@@ -589,20 +579,7 @@ function onAttack(rSource, rTarget, rRoll)
 end
 
 function onGrapple(rSource, rTarget, rRoll)
-	if DataCommon.isPFRPG() then
-		onAttack(rSource, rTarget, rRoll);
-	else
-		local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
-		
-		if rTarget then
-			rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
-		end
-		
-		if not rSource then
-			rMessage.sender = nil;
-		end
-		Comm.deliverChatMessage(rMessage);
-	end
+	onAttack(rSource, rTarget, rRoll);
 end
 
 function onMissChance(rSource, rTarget, rRoll)

@@ -12,11 +12,9 @@
 			function onInit()
 				update();
 				
-				if DataCommon.isPFRPG() then
-					if cr.getValue() == 0 and exp.getValue() == 0 then
-						if DB.getChildCount(getDatabaseNode(), "npclist") &gt; 0 then
-							button_refreshcr.onButtonPress();
-						end
+				if cr.getValue() == 0 and exp.getValue() == 0 then
+					if DB.getChildCount(getDatabaseNode(), "npclist") &gt; 0 then
+						button_refreshcr.onButtonPress();
 					end
 				end
 			end
@@ -28,9 +26,8 @@
 				cr.setReadOnly(bReadOnly);
 				exp.setReadOnly(bReadOnly);
 				
-				local bPFMode = DataCommon.isPFRPG();
-				button_refreshcr.setVisible(bPFMode and not bReadOnly);
-				button_refreshxp.setVisible(bPFMode and not bReadOnly);
+				button_refreshcr.setVisible(not bReadOnly);
+				button_refreshxp.setVisible(not bReadOnly);
 			end
 		</script>
 		<sheetdata>

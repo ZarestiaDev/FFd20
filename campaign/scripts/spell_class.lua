@@ -205,8 +205,6 @@ function updateSpellView()
 	local nPP = DB.getValue(nodeSpellClass, "points", 0);
 	local nPPUsed = DB.getValue(nodeSpellClass, "pointsused", 0);
 	
-	local bPFMode = DataCommon.isPFRPG();
-	
 	for kLevel, vLevel in pairs(levels.getWindows()) do
 		bLevelShow = false;
 
@@ -221,7 +219,7 @@ function updateSpellView()
 		nTotalPrepared = DB.getValue(nodeLevel, "totalprepared", 0);
 		nMaxPrepared = DB.getValue(nodeLevel, "maxprepared", 0);
 
-		if bPFMode and nodeLevel and nodeLevel.getName() == "level0" then
+		if nodeLevel and nodeLevel.getName() == "level0" then
 			for _,vSpell in pairs(vLevel.spells.getWindows()) do
 				nodeSpell = vSpell.getDatabaseNode();
 				nSpells = nSpells + 1;
@@ -344,7 +342,7 @@ function updateSpellView()
 		if not minisheet then
 			-- Set level statistics label
 			local sStats = "";
-			if bPFMode and nodeLevel and nodeLevel.getName() == "level0" then
+			if nodeLevel and nodeLevel.getName() == "level0" then
 				if sCasterType == "" then
 					sStats = "Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
 				end

@@ -68,8 +68,6 @@ end
 function addNPC(sClass, nodeNPC, sName)
 	local nodeEntry, nodeLastMatch = CombatManager.addNPCHelper(nodeNPC, sName);
 
-	local bPFMode = DataCommon.isPFRPG();
-
 	-- HP
 	local sOptHRNH = OptionsManager.getOption("HRNH");
 	local nHP = DB.getValue(nodeNPC, "hp", 0);
@@ -85,7 +83,7 @@ function addNPC(sClass, nodeNPC, sName)
 	local sAC = DB.getValue(nodeNPC, "ac", "10");
 	DB.setValue(nodeEntry, "ac_final", "number", tonumber(string.match(sAC, "^(%d+)")) or 10);
 	DB.setValue(nodeEntry, "ac_touch", "number", tonumber(string.match(sAC, "touch (%d+)")) or 10);
-	local sFlatFooted = string.match(sAC, "flat[%-–]footed (%d+)");
+	local sFlatFooted = string.match(sAC, "flat[%-ï¿½]footed (%d+)");
 	if not sFlatFooted then
 		sFlatFooted = string.match(sAC, "flatfooted (%d+)");
 	end
@@ -177,65 +175,41 @@ function addNPC(sClass, nodeNPC, sName)
 	local bImmuneNonlethal = false;
 	local bImmuneCritical = false;
 	local bImmunePrecision = false;
-	if bPFMode then
-		local bElemental = false;
-		if StringManager.contains(aTypes, "construct") then
-			table.insert(aEffects, "Construct traits");
-			bImmuneNonlethal = true;
-		elseif StringManager.contains(aTypes, "elemental") then
-			bElemental = true;
-		elseif StringManager.contains(aTypes, "ooze") then
-			table.insert(aEffects, "Ooze traits");
-			bImmuneCritical = true;
-			bImmunePrecision = true;
-		elseif StringManager.contains(aTypes, "undead") then
-			table.insert(aEffects, "Undead traits");
-			bImmuneNonlethal = true;
-		end
+	local bElemental = false;
+	
+	if StringManager.contains(aTypes, "construct") then
+		table.insert(aEffects, "Construct traits");
+		bImmuneNonlethal = true;
+	elseif StringManager.contains(aTypes, "elemental") then
+		bElemental = true;
+	elseif StringManager.contains(aTypes, "ooze") then
+		table.insert(aEffects, "Ooze traits");
+		bImmuneCritical = true;
+		bImmunePrecision = true;
+	elseif StringManager.contains(aTypes, "undead") then
+		table.insert(aEffects, "Undead traits");
+		bImmuneNonlethal = true;
+	end
 		
-		if StringManager.contains(aSubTypes, "aeon") then
-			table.insert(aEffects, "Aeon traits");
-			bImmuneCritical = true;
-		end
-		if StringManager.contains(aSubTypes, "elemental") then
-			bElemental = true;
-		end
-		if StringManager.contains(aSubTypes, "incorporeal") then
-			bImmunePrecision = true;
-		end
-		if StringManager.contains(aSubTypes, "swarm") then
-			table.insert(aEffects, "Swarm traits");
-			bImmuneCritical = true;
-		end
+	if StringManager.contains(aSubTypes, "aeon") then
+		table.insert(aEffects, "Aeon traits");
+		bImmuneCritical = true;
+	end
+	if StringManager.contains(aSubTypes, "elemental") then
+		bElemental = true;
+	end
+	if StringManager.contains(aSubTypes, "incorporeal") then
+		bImmunePrecision = true;
+	end
+	if StringManager.contains(aSubTypes, "swarm") then
+		table.insert(aEffects, "Swarm traits");
+		bImmuneCritical = true;
+	end
 		
-		if bElemental then
-			table.insert(aEffects, "Elemental traits");
-			bImmuneCritical = true;
-			bImmunePrecision = true;
-		end
-	else
-		if StringManager.contains(aTypes, "construct") then
-			table.insert(aEffects, "Construct traits");
-			bImmuneNonlethal = true;
-			bImmuneCritical = true;
-		elseif StringManager.contains(aTypes, "elemental") then
-			table.insert(aEffects, "Elemental traits");
-			bImmuneCritical = true;
-		elseif StringManager.contains(aTypes, "ooze") then
-			table.insert(aEffects, "Ooze traits");
-			bImmuneCritical = true;
-		elseif StringManager.contains(aTypes, "plant") then
-			table.insert(aEffects, "Plant traits");
-			bImmuneCritical = true;
-		elseif StringManager.contains(aTypes, "undead") then
-			table.insert(aEffects, "Undead traits");
-			bImmuneNonlethal = true;
-			bImmuneCritical = true;
-		end
-		if StringManager.contains(aSubTypes, "swarm") then
-			table.insert(aEffects, "Swarm traits");
-			bImmuneCritical = true;
-		end
+	if bElemental then
+		table.insert(aEffects, "Elemental traits");
+		bImmuneCritical = true;
+		bImmunePrecision = true;
 	end
 	if bImmuneNonlethal then
 		table.insert(aEffects, "IMMUNE: nonlethal");
@@ -642,7 +616,7 @@ function parseAttackLine(rActor, sLine)
 	local sOptANPC = OptionsManager.getOption("ANPC");
 
 	-- PARSE 'OR'/'AND' PHRASES
-	sLine = sLine:gsub("–", "-");
+	sLine = sLine:gsub("ï¿½", "-");
 	local aPhrasesOR, aSkipOR = ActionDamage.decodeAndOrClauses(sLine);
 
 	-- PARSE EACH ATTACK
@@ -1084,45 +1058,37 @@ function getXPFromCR(nCR)
 end
 
 function calcBattleXP(nodeBattle)
-	local bPFMode = DataCommon.isPFRPG();
-	
-	if bPFMode then
-		local sTargetNPCList = LibraryData.getCustomData("battle", "npclist") or "npclist";
+	local sTargetNPCList = LibraryData.getCustomData("battle", "npclist") or "npclist";
 
-		local nXP = 0;
-		for _, vNPCItem in pairs(DB.getChildren(nodeBattle, sTargetNPCList)) do
-			local sClass, sRecord = DB.getValue(vNPCItem, "link", "", "");
-			if sRecord ~= "" then
-				local nodeNPC = DB.findNode(sRecord);
-				if nodeNPC then
-					local nXPNPC = getXPFromCR(DB.getValue(nodeNPC, "cr", 0));
-					if nXPNPC >= 0 then
-						nXP = nXP + (DB.getValue(vNPCItem, "count", 0) * nXPNPC);
-					else
-						local sMsg = string.format(Interface.getString("enc_message_refreshxp_missingnpcxp"), DB.getValue(vNPCItem, "name", ""));
-						ChatManager.SystemMessage(sMsg);
-					end
+	local nXP = 0;
+	for _, vNPCItem in pairs(DB.getChildren(nodeBattle, sTargetNPCList)) do
+		local sClass, sRecord = DB.getValue(vNPCItem, "link", "", "");
+		if sRecord ~= "" then
+			local nodeNPC = DB.findNode(sRecord);
+			if nodeNPC then
+				local nXPNPC = getXPFromCR(DB.getValue(nodeNPC, "cr", 0));
+				if nXPNPC >= 0 then
+					nXP = nXP + (DB.getValue(vNPCItem, "count", 0) * nXPNPC);
 				else
-					local sMsg = string.format(Interface.getString("enc_message_refreshxp_missingnpclink"), DB.getValue(vNPCItem, "name", ""));
+					local sMsg = string.format(Interface.getString("enc_message_refreshxp_missingnpcxp"), DB.getValue(vNPCItem, "name", ""));
 					ChatManager.SystemMessage(sMsg);
 				end
+			else
+				local sMsg = string.format(Interface.getString("enc_message_refreshxp_missingnpclink"), DB.getValue(vNPCItem, "name", ""));
+				ChatManager.SystemMessage(sMsg);
 			end
 		end
-		
-		DB.setValue(nodeBattle, "exp", "number", nXP);
 	end
+		
+	DB.setValue(nodeBattle, "exp", "number", nXP);
 end
 	
 function calcBattleCR(nodeBattle)
-	local bPFMode = DataCommon.isPFRPG();
-	
-	if bPFMode then
-		calcBattleXP(nodeBattle);
+	calcBattleXP(nodeBattle);
 
-		local nXP = DB.getValue(nodeBattle, "exp", 0);
-		local nCR = getCRFromXP(nXP);
-		DB.setValue(nodeBattle, "level", "number", nCR);
-	end
+	local nXP = DB.getValue(nodeBattle, "exp", 0);
+	local nCR = getCRFromXP(nXP);
+	DB.setValue(nodeBattle, "level", "number", nCR);
 end
 
 --

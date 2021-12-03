@@ -23,13 +23,8 @@ function onInit()
 	registerMenuItem(Interface.getString("list_menu_deleteitem"), "delete", 6);
 	registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 6, 7);
 	
-	-- Handle PFRPG specific changes
-	local bPFMode = DataCommon.isPFRPG();
-	if bPFMode then
-		label_grapple.setValue(Interface.getString("cmb"));
-	else
-		label_grapple.setValue(Interface.getString("grp"));
-	end
+
+	label_grapple.setValue(Interface.getString("cmb"));
 end
 
 function updateDisplay()
@@ -187,11 +182,7 @@ function linkPCFields()
 		nonlethal.setLink(nodeChar.createChild("hp.nonlethal", "number"));
 		wounds.setLink(nodeChar.createChild("hp.wounds", "number"));
 
-		if DataCommon.isPFRPG() then
-			type.addSource(DB.getPath(nodeChar, "alignment"), true);
-		else
-			alignment.setLink(nodeChar.createChild("alignment", "string"));
-		end
+		type.addSource(DB.getPath(nodeChar, "alignment"), true);
 		type.addSource(DB.getPath(nodeChar, "size"), true);
 		type.addSource(DB.getPath(nodeChar, "race"));
 		
@@ -276,8 +267,6 @@ function setDefensiveVisible()
 		v = true;
 	end
 	
-	local bPFMode = DataCommon.isPFRPG();
-	
 	defensiveicon.setVisible(v);
 
 	ac_final.setVisible(v);
@@ -287,8 +276,8 @@ function setDefensiveVisible()
 	ac_flatfooted.setVisible(v);
 	ac_ff_label.setVisible(v);
 	
-	cmd.setVisible(v and bPFMode);
-	cmd_label.setVisible(v and bPFMode);
+	cmd.setVisible(v);
+	cmd_label.setVisible(v);
 
 	fortitudesave.setVisible(v);
 	fortitudelabel.setVisible(v);

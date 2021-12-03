@@ -4,7 +4,6 @@
 --
 
 function onInit()
-	cmdlabel.setVisible(DataCommon.isPFRPG());
 
 	OptionsManager.registerCallback("REVL", update);
 	

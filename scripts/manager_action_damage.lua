@@ -198,8 +198,7 @@ function onDamageRoll(rSource, rRoll)
 				end
 			end
 		end
-		local bPFMode = DataCommon.isPFRPG();
-		if bPFMode and bLethal then
+		if bLethal then
 			table.insert(aDamageTypes, "nonlethal");
 		end
 		rRoll.clauses = { { dmgtype = table.concat(aDamageTypes, ","), dice = {}, modifier = 1, nTotal = 1 } };
@@ -885,7 +884,6 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	local bVulnerable = false;
 	local bResist = false;
 	local aWords;
-	local bPFMode = DataCommon.isPFRPG();
 	
 	-- GET THE DAMAGE ADJUSTMENT EFFECTS
 	local aImmune = EffectManager35E.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource);
@@ -901,69 +899,12 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	local bTargetIncorporeal = EffectManager35E.hasEffect(rTarget, "Incorporeal");
 	if bTargetIncorporeal and not bSourceIncorporeal then
 		bApplyIncorporeal = true;
-		if bPFMode then
-			aImmune["critical"] = true;
-		end
+		aImmune["critical"] = true;
 	end
 	
 	-- IF IMMUNE ALL, THEN JUST HANDLE IT NOW
 	if aImmune["all"] then
 		return (0 - nDamage), 0, false, true;
-	end
-	
-	-- HANDLE REGENERATION
-	if not bPFMode then
-		local aRegen = EffectManager35E.getEffectsBonusByType(rTarget, "REGEN", false, {});
-		local nRegen = 0;
-		for _, _ in pairs(aRegen) do
-			nRegen = nRegen + 1;
-		end
-		if nRegen > 0 then
-			local aRemap = {};
-			for k,v in pairs(rDamageOutput.aDamageTypes) do
-				local bCheckRegen = true;
-				
-				local aSrcDmgClauseTypes = {};
-				local aTemp = StringManager.split(k, ",", true);
-				for i = 1, #aTemp do
-					if aTemp[i] == "nonlethal" then
-						bCheckRegen = false;
-						break;
-					elseif aTemp[i] ~= "untyped" and aTemp[i] ~= "" then
-						table.insert(aSrcDmgClauseTypes, aTemp[i]);
-					end
-				end
-
-				if bCheckRegen then
-					local bMatchAND, nMatchAND, bMatchDMG, aClausesOR;
-					local bApplyRegen;
-					for _,vRegen in pairs(aRegen) do
-						bApplyRegen = true;
-						
-						local sRegen = table.concat(vRegen.remainder, " ");
-						
-						aClausesOR = decodeAndOrClauses(sRegen);
-						if matchAndOrClauses(aClausesOR, aSrcDmgClauseTypes) then
-							bApplyRegen = false;
-						end
-						
-						if bApplyRegen then
-							local kNew = table.concat(aSrcDmgClauseTypes, ",");
-							if kNew ~= "" then
-								kNew = kNew .. ",nonlethal";
-							else
-								kNew = "nonlethal";
-							end
-							aRemap[k] = kNew;
-						end
-					end
-				end
-			end
-			for k,v in pairs(aRemap) do
-				rDamageOutput.aDamageTypes[v] = rDamageOutput.aDamageTypes[k];
-				rDamageOutput.aDamageTypes[k] = nil;
-			end
-		end
 	end
 	
 	-- ITERATE THROUGH EACH DAMAGE TYPE ENTRY
@@ -1096,13 +1037,8 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 				end
 			end
 			if bApplyIncorporeal2 then
-				if bIgnoreDamage then
-					nLocalDamageAdjust = -v;
-					bResist = true;
-				elseif bPFMode then
-					nLocalDamageAdjust = nLocalDamageAdjust - math.ceil((v + nLocalDamageAdjust) / 2);
-					bResist = true;
-				end
+				nLocalDamageAdjust = nLocalDamageAdjust - math.ceil((v + nLocalDamageAdjust) / 2);
+				bResist = true;
 			end
 		end
 		
@@ -1203,14 +1139,9 @@ function decodeDamageText(nDamage, sDamageDesc)
 		rDamageOutput.nVal = nDamage;
 
 	elseif string.match(sDamageDesc, "%[REGEN") then
-		local bPFMode = DataCommon.isPFRPG();
-		if bPFMode then
-			rDamageOutput.sType = "heal";
-			rDamageOutput.sTypeOutput = "Regeneration";
-		else
-			rDamageOutput.sType = "regen";
-			rDamageOutput.sTypeOutput = "Regeneration";
-		end
+		rDamageOutput.sType = "heal";
+		rDamageOutput.sTypeOutput = "Regeneration";
+
 		rDamageOutput.sVal = string.format("%01d", nDamage);
 		rDamageOutput.nVal = nDamage;
 
@@ -1279,7 +1210,6 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	local nTempHP = 0;
 	local nNonLethal = 0;
 	local nWounds = 0;
-	local bPFMode = DataCommon.isPFRPG();
 
 	local bRemoveTarget = false;
 	
@@ -1322,9 +1252,6 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 			-- CALCULATE HEAL AMOUNTS
 			local nNonlethalHealAmount = math.min(nHealAmount, nNonlethal);
 			nNonlethal = nNonlethal - nNonlethalHealAmount;
-			if (not bPFMode) and (rDamageOutput.sType == "fheal") then
-				nHealAmount = nHealAmount - nNonlethalHealAmount;
-			end
 
 			local nOriginalWounds = nWounds;
 			
@@ -1441,7 +1368,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 
 		-- Apply remaining damage
 		if nNonlethalDmgAmount > 0 then
-			if bPFMode and (nNonlethal + nNonlethalDmgAmount > nTotalHP) then
+			if (nNonlethal + nNonlethalDmgAmount > nTotalHP) then
 				local aRegen = EffectManager35E.getEffectsByType(rTarget, "REGEN");
 				if #aRegen == 0 then
 					local nOver = nNonlethal + nNonlethalDmgAmount - nTotalHP;
@@ -1456,41 +1383,38 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		end
 		if nAdjustedDamage > 0 then
 			nWounds = math.max(nWounds + nAdjustedDamage, 0);
-			
-			-- For Pathfinder, disable regeneration next round on correct damage type
-			if bPFMode then
-				local nodeTargetCT = ActorManager.getCTNode(rTarget);
-				if nodeTargetCT then
-					-- Calculate which damage types actually did damage
-					local aTempDamageTypes = {};
-					local aActualDamageTypes = {};
-					for k,v in pairs(rDamageOutput.aDamageTypes) do
-						if v > 0 then
-							table.insert(aTempDamageTypes, k);
-						end
+
+			local nodeTargetCT = ActorManager.getCTNode(rTarget);
+			if nodeTargetCT then
+				-- Calculate which damage types actually did damage
+				local aTempDamageTypes = {};
+				local aActualDamageTypes = {};
+				for k,v in pairs(rDamageOutput.aDamageTypes) do
+					if v > 0 then
+						table.insert(aTempDamageTypes, k);
 					end
-					local aActualDamageTypes = StringManager.split(table.concat(aTempDamageTypes, ","), ",", true);
+				end
+				local aActualDamageTypes = StringManager.split(table.concat(aTempDamageTypes, ","), ",", true);
 					
-					-- Check target's effects for regeneration effects that match
-					for _,v in pairs(DB.getChildren(nodeTargetCT, "effects")) do
-						local nActive = DB.getValue(v, "isactive", 0);
-						if (nActive == 1) then
-							local bMatch = false;
-							local sLabel = DB.getValue(v, "label", "");
-							local aEffectComps = EffectManager.parseEffect(sLabel);
-							for i = 1, #aEffectComps do
-								local rEffectComp = EffectManager35E.parseEffectComp(aEffectComps[i]);
-								if rEffectComp.type == "REGEN" then
-									local sRegen = table.concat(rEffectComp.remainder, " ");
-									aClausesOR = decodeAndOrClauses(sRegen);
-									if matchAndOrClauses(aClausesOR, aActualDamageTypes) then
-										bMatch = true;
-									end
+				-- Check target's effects for regeneration effects that match
+				for _,v in pairs(DB.getChildren(nodeTargetCT, "effects")) do
+					local nActive = DB.getValue(v, "isactive", 0);
+					if (nActive == 1) then
+						local bMatch = false;
+						local sLabel = DB.getValue(v, "label", "");
+						local aEffectComps = EffectManager.parseEffect(sLabel);
+						for i = 1, #aEffectComps do
+							local rEffectComp = EffectManager35E.parseEffectComp(aEffectComps[i]);
+							if rEffectComp.type == "REGEN" then
+								local sRegen = table.concat(rEffectComp.remainder, " ");
+								aClausesOR = decodeAndOrClauses(sRegen);
+								if matchAndOrClauses(aClausesOR, aActualDamageTypes) then
+									bMatch = true;
 								end
-								
-								if bMatch then
-									table.insert(rDamageOutput.tRegenEffectsToDisable, v);
-								end
+							end
+							
+							if bMatch then
+								table.insert(rDamageOutput.tRegenEffectsToDisable, v);
 							end
 						end
 					end

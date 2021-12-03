@@ -638,9 +638,7 @@ function convertParcel11()
 end
 
 function convertSystem11()
-	if DB.getValue("options.SYSTEM", "") == "pf" then
-		DB.convertCampaign("PFRPG");
-	end
+	DB.convertCampaign("PFRPG");
 	DB.deleteNode("options.SYSTEM");
 end
 
@@ -918,7 +916,7 @@ function convertCT()
 			local sAC = nodeAC.getValue();
 			DB.setValue(nodeEntry, "ac_final", "number", tonumber(string.match(sAC, "^(%d+)")) or 10);
 			DB.setValue(nodeEntry, "ac_touch", "number", tonumber(string.match(sAC, "touch (%d+)")) or 10);
-			local sFlatFooted = string.match(sAC, "flat[%-–]footed (%d+)");
+			local sFlatFooted = string.match(sAC, "flat[%-ï¿½]footed (%d+)");
 			if not sFlatFooted then
 				sFlatFooted = string.match(sAC, "flatfooted (%d+)");
 			end

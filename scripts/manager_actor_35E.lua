@@ -138,7 +138,7 @@ function getAbilityEffectsBonus(rActor, sAbility)
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
-		if DataCommon.isPFRPG() and EffectManager35E.hasEffectCondition(rActor, "Grappled") then
+		if EffectManager35E.hasEffectCondition(rActor, "Grappled") then
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
@@ -162,16 +162,7 @@ function getAbilityEffectsBonus(rActor, sAbility)
 
 	local nAbilityMod = 0;
 	local nAbilityScore = getAbilityScore(rActor, sAbility);
-	if nAbilityScore > 0 and not DataCommon.isPFRPG() then
-		local nAbilityDamage = getAbilityDamage(rActor, sAbility);
-		
-		local nCurrentBonus = math.floor((nAbilityScore - nAbilityDamage - 10) / 2);
-		local nAffectedBonus = math.floor((nAbilityScore - nAbilityDamage + nEffectMod - 10) / 2);
-		
-		nAbilityMod = nAffectedBonus - nCurrentBonus;
-	else
-		nAbilityMod = nEffectBonusMod;
-	end
+	nAbilityMod = nEffectBonusMod;
 
 	return nAbilityMod, nAbilityEffects;
 end
@@ -319,13 +310,12 @@ function getAbilityBonus(rActor, sAbility)
 			nStatVal = nStatVal + DB.getValue(nodeActor, "abilities." .. sStat .. ".bonusmodifier", 0);
 			
 			local nAbilityDamage = DB.getValue(nodeActor, "abilities." .. sStat .. ".damage", 0);
-			if DataCommon.isPFRPG() then
-				if nAbilityDamage >= 0 then
-					nAbilityDamage = math.floor(nAbilityDamage / 2) * 2;
-				else
-					nAbilityDamage = math.ceil(nAbilityDamage / 2) * 2;
-				end
+			if nAbilityDamage >= 0 then
+				nAbilityDamage = math.floor(nAbilityDamage / 2) * 2;
+			else
+				nAbilityDamage = math.ceil(nAbilityDamage / 2) * 2;
 			end
+			
 			nStatScore = nStatScore - nAbilityDamage;
 		end
 		nStatVal = nStatVal + math.floor((nStatScore - 10) / 2);
@@ -595,8 +585,6 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		local nBonusStat = 0;
 		local nBonusSituational = 0;
 		
-		local bPFMode = DataCommon.isPFRPG();
-		
 		-- BUILD ATTACK FILTER 
 		local aAttackFilter = {};
 		if sAttackType == "M" then
@@ -644,17 +632,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		if EffectManager35E.hasEffect(rDefender, "Pinned") then
 			bCombatAdvantage = true;
-			if bPFMode then
-				nBonusSituational = nBonusSituational - 4;
-			else
-				if not EffectManager35E.hasEffect(rAttacker, "Grappled") then
-					nBonusSituational = nBonusSituational - 4;
-				end
-			end
-		elseif not bPFMode and EffectManager35E.hasEffect(rDefender, "Grappled") then
-			if not EffectManager35E.hasEffect(rAttacker, "Grappled") then
-				bCombatAdvantage = true;
-			end
+			nBonusSituational = nBonusSituational - 4;
 		end
 		if EffectManager35E.hasEffect(rDefender, "Helpless") or 
 				EffectManager35E.hasEffect(rDefender, "Paralyzed") or 
@@ -833,19 +811,6 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 			end
 		end
 		
-		-- CHECK INCORPOREALITY
-		if not bPFMode then
-			local bIncorporealAttack = false;
-			if string.match(sAttack, "%[INCORPOREAL%]") then
-				bIncorporealAttack = true;
-			end
-			local bIncorporealDefender = EffectManager35E.hasEffect(rDefender, "Incorporeal", rAttacker);
-
-			if bIncorporealDefender and not bIncorporealAttack then
-				nMissChance = 50;
-			end
-		end
-		
 		-- ADD IN EFFECT MODIFIERS
 		nDefenseEffectMod = nBonusAC + nBonusStat + nBonusSituational;
 	
@@ -889,12 +854,8 @@ function isAlignment(rActor, sAlignCheck)
 	local nActorLawChaosAxis = 2;
 	local nActorGoodEvilAxis = 2;
 	local sNodeType, nodeActor = ActorManager.getTypeAndNode(rActor);
-	local sField;
-	if (sNodeType == "pc") or not DataCommon.isPFRPG() then
-		sField = "alignment";
-	else
-		sField = "type";
-	end
+	local sField = "type";
+
 	local aActorSplit = StringManager.split(DB.getValue(nodeActor, sField, ""):lower(), " \n", true);
 	for _,v in ipairs(aActorSplit) do
 		if nActorLawChaosAxis == 2 and DataCommon.alignment_lawchaos[v] then

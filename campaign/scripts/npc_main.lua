@@ -28,39 +28,22 @@ function update()
 	end
 	divider.setVisible(bSection1);
 
-	-- Update labels based on system being played and NPC type
-	local bPFMode = DataCommon.isPFRPG();
+	-- Update labels based on NPC type
 	local sType = DB.getValue(nodeRecord, "npctype", "");
 	if babgrp_label then
 		if sType == "Vehicle" then
 			babgrp_label.setValue(Interface.getString("npc_label_cm"));
-			if bPFMode then
-				updateControl("babgrp", bReadOnly);
-			else
-				updateControl("babgrp", bReadOnly, true);
-			end
+			updateControl("babgrp", bReadOnly);
 		else
-			if bPFMode then
-				babgrp_label.setValue(Interface.getString("npc_label_babcm"));
-			else
-				babgrp_label.setValue(Interface.getString("npc_label_babgrp"));
-			end
+			babgrp_label.setValue(Interface.getString("npc_label_babcm"));
 		end
 	end
 
 	updateControl("type", bReadOnly);
-	if bPFMode then
-		updateControl("alignment", bReadOnly, true);
-	else
-		updateControl("alignment", bReadOnly);
-	end
-	if bPFMode then
-		updateControl("senses", bReadOnly);
-		updateControl("aura", bReadOnly);
-	else
-		updateControl("senses", bReadOnly, true);
-		updateControl("aura", bReadOnly, true);
-	end
+
+	updateControl("alignment", bReadOnly, true);
+	updateControl("senses", bReadOnly);
+	updateControl("aura", bReadOnly);
 	
 	updateControl("ac", bReadOnly);
 	updateControl("hd", bReadOnly);

@@ -23,36 +23,4 @@ function onInit()
 	meleestat.onValueChanged();
 	rangedstat.onValueChanged();
 	grapplestat.onValueChanged();
-
-	onSystemChanged();
-end
-
-function onSystemChanged()
-	local bPFMode = DataCommon.isPFRPG();
-	
-	line_cmd.setVisible(bPFMode);
-	
-	cmd.setVisible(bPFMode);
-	label_cmd.setVisible(bPFMode);
-	cmdacarmor.setVisible(bPFMode);
-	cmdacshield.setVisible(bPFMode);
-	cmdacstatmod.setVisible(bPFMode);
-	cmdacsize.setVisible(bPFMode);
-	cmdacnatural.setVisible(bPFMode);
-	cmdacdeflection.setVisible(bPFMode);
-	cmdacdodge.setVisible(bPFMode);
-	cmdmisc.setVisible(bPFMode);
-	
-	cmdstat.setVisible(bPFMode);
-	cmdstatmod.setVisible(bPFMode);
-	cmdbase.setVisible(bPFMode);
-	cmdbasemod.setVisible(bPFMode);
-	
-	if bPFMode then
-		acframe.setStaticBounds(15,0,480,210);
-		label_grapple.setValue(Interface.getString("cmb"));
-	else
-		acframe.setStaticBounds(15,0,480,140);
-		label_grapple.setValue(Interface.getString("grapple"));
-	end
 end

@@ -419,7 +419,7 @@ function addToWeaponDB(nodeItem)
 	local nThresholdIndex = 1;
 	local nMultIndex = 1;
 	for kCrit, sCrit in ipairs(aCrit) do
-		local sCritThreshold = string.match(sCrit, "(%d+)[%-–]20");
+		local sCritThreshold = string.match(sCrit, "(%d+)[%-ï¿½]20");
 		if sCritThreshold then
 			aCritThreshold[nThresholdIndex] = tonumber(sCritThreshold) or 20;
 			nThresholdIndex = nThresholdIndex + 1;
@@ -933,7 +933,7 @@ function getSkillValue(rActor, sSkill, sSubSkill)
 			
 			nValue = math.floor(nRanks) + nAbility + nMisc;
 
-			if DataCommon.isPFRPG() and (nRanks > 0) then
+			if (nRanks > 0) then
 				local nState = DB.getValue(nodeSkill, "state", 0);
 				if nState == 1 then
 					nValue = nValue + 3;
@@ -1023,17 +1023,11 @@ end
 
 function updateSkillPoints(nodeChar)
 	local nSpentTotal = 0;
-
-	local bPFMode = DataCommon.isPFRPG();
 	
 	local nSpent;
 	for _,vNode in pairs(DB.getChildren(nodeChar, "skilllist")) do
 		nSpent = DB.getValue(vNode, "ranks", 0);
-		if nSpent > 0 then
-			if not bPFMode and DB.getValue(vNode, "state", 0) == 0 then
-				nSpent = nSpent * 2;
-			end
-			
+		if nSpent > 0 then			
 			nSpentTotal = nSpentTotal + nSpent;
 		end
 	end
@@ -1411,22 +1405,14 @@ function handleRacialSize(nodeChar, nodeTrait, sTraitType)
 	end
 	
 	local sSkill;
-	if DataCommon.isPFRPG() then
-		sSkill = "Stealth";
-	else
-		sSkill = "Hide";
-	end
+	sSkill = "Stealth";
 	
 	DB.setValue(nodeChar, "size", "string", StringManager.capitalize(sTraitType));
 	if sSize == "small" then
 		DB.setValue(nodeChar, "ac.sources.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 1);
-		if DataCommon.isPFRPG() then
-			DB.setValue(nodeChar, "attackbonus.grapple.size", "number", -1);
-		else
-			DB.setValue(nodeChar, "attackbonus.grapple.size", "number", -4);
-		end
+		DB.setValue(nodeChar, "attackbonus.grapple.size", "number", -1);
 		addSkillBonus(nodeChar, sSkill, 4);
 	elseif sSize == "medium" then
 		DB.setValue(nodeChar, "ac.sources.size", "number", 0);
@@ -1667,60 +1653,58 @@ function addClass(nodeChar, sClass, sRecord)
 
 	addClassSpellLevel(nodeChar, sClassName);
 
-	if DataCommon.isPFRPG() then
-		if nTotalLevel == 1 then
-			local aClasses = {};
+	if nTotalLevel == 1 then
+		local aClasses = {};
 			
-			local sRootMapping = LibraryData.getRootMapping("class");
-			local bCloseCampaign = false;
-			local wCampaign = Interface.findWindow("masterindex", sRootMapping);
-			if not wCampaign then
-				wCampaign = Interface.openWindow("masterindex", sRootMapping);
-				bCloseCampaign = true;
-			end
+		local sRootMapping = LibraryData.getRootMapping("class");
+		local bCloseCampaign = false;
+		local wCampaign = Interface.findWindow("masterindex", sRootMapping);
+		if not wCampaign then
+			wCampaign = Interface.openWindow("masterindex", sRootMapping);
+			bCloseCampaign = true;
+		end
 			
-			if wCampaign then
-				local aMappings = LibraryData.getMappings("class");
-				for _,vMapping in ipairs(aMappings) do
-					for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
-						local sClassType = DB.getValue(vClass, "classtype");
-						if not sClassType then
-							local sClassLookup = StringManager.strip(DB.getValue(vClass, "name", ""):lower());
-							if DataCommon.classdata[sClassLookup] then
-								bPrestige = DataCommon.classdata[sClassLookup].bPrestige;
-							end
-						end
-						if (sClassType or "") ~= "prestige" then
-							table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
+		if wCampaign then
+			local aMappings = LibraryData.getMappings("class");
+			for _,vMapping in ipairs(aMappings) do
+				for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
+					local sClassType = DB.getValue(vClass, "classtype");
+					if not sClassType then
+						local sClassLookup = StringManager.strip(DB.getValue(vClass, "name", ""):lower());
+						if DataCommon.classdata[sClassLookup] then
+							bPrestige = DataCommon.classdata[sClassLookup].bPrestige;
 						end
 					end
+					if (sClassType or "") ~= "prestige" then
+						table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
+					end
 				end
+			end
 
-				if bCloseCampaign then
-					wCampaign.close();
-				end
+			if bCloseCampaign then
+				wCampaign.close();
 			end
-			
-			table.sort(aClasses, function(a,b) return a.text < b.text end);
-			
-			local nFavoredClass = 1;
-			if hasTrait(nodeChar, TRAIT_MULTITALENTED) then
-				nFavoredClass = nFavoredClass + 1;
-			end
-			
-			local wSelect = Interface.openWindow("select_dialog", "");
-			local sTitle = Interface.getString("char_title_selectfavoredclass");
-			local sMessage;
-			if nFavoredClass > 1 then
-				sMessage = string.format(Interface.getString("char_message_selectfavoredclasses"), nFavoredClass);
-			else
-				sMessage = Interface.getString("char_message_selectfavoredclass");
-			end
-			local rFavoredClassSelect = { nodeChar = nodeChar, sCurrentClass = sClassName, aClassesOffered = aClasses };
-			wSelect.requestSelection(sTitle, sMessage, aClasses, CharManager.onFavoredClassSelect, rFavoredClassSelect, nFavoredClass);
-		else
-			checkFavoredClassBonus(nodeChar, sClassName);
 		end
+			
+		table.sort(aClasses, function(a,b) return a.text < b.text end);
+			
+		local nFavoredClass = 1;
+		if hasTrait(nodeChar, TRAIT_MULTITALENTED) then
+			nFavoredClass = nFavoredClass + 1;
+		end
+			
+		local wSelect = Interface.openWindow("select_dialog", "");
+		local sTitle = Interface.getString("char_title_selectfavoredclass");
+		local sMessage;
+		if nFavoredClass > 1 then
+			sMessage = string.format(Interface.getString("char_message_selectfavoredclasses"), nFavoredClass);
+		else
+			sMessage = Interface.getString("char_message_selectfavoredclass");
+		end
+		local rFavoredClassSelect = { nodeChar = nodeChar, sCurrentClass = sClassName, aClassesOffered = aClasses };
+		wSelect.requestSelection(sTitle, sMessage, aClasses, CharManager.onFavoredClassSelect, rFavoredClassSelect, nFavoredClass);
+	else
+		checkFavoredClassBonus(nodeChar, sClassName);
 	end
 end
 
@@ -1816,7 +1800,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sFort) then
 		local nAddSave = 0;
 		if sFort == CLASS_SAVE_GOOD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 2 == 1 then
 					nAddSave = 1;
 				end
@@ -1828,7 +1812,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 				end
 			end
 		elseif sFort == CLASS_SAVE_BAD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 3 == 2 then
 					nAddSave = 1;
 				end
@@ -1846,7 +1830,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sRef) then
 		local nAddSave = 0;
 		if sRef == CLASS_SAVE_GOOD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 2 == 1 then
 					nAddSave = 1;
 				end
@@ -1858,7 +1842,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 				end
 			end
 		elseif sRef == CLASS_SAVE_BAD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 3 == 2 then
 					nAddSave = 1;
 				end
@@ -1876,7 +1860,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sWill) then
 		local nAddSave = 0;
 		if sWill == CLASS_SAVE_GOOD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 2 == 1 then
 					nAddSave = 1;
 				end
@@ -1888,7 +1872,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 				end
 			end
 		elseif sWill == CLASS_SAVE_BAD then
-			if bPrestige and DataCommon.isPFRPG() then
+			if bPrestige then
 				if nLevel % 3 == 2 then
 					nAddSave = 1;
 				end
@@ -1909,15 +1893,8 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 		local nSkillAbilityScore = DB.getValue(nodeChar, "abilities.intelligence.score", 10);
 		local nAbilitySkillPoints = math.floor((nSkillAbilityScore - 10) / 2);
 		local nBonusSkillPoints = 0;
-		if DataCommon.isPFRPG() then
-			if hasTrait(nodeChar, "Skilled") then
-				nBonusSkillPoints = nBonusSkillPoints + 1;
-			end
-		else
-			if nTotalLevel == 1 then
-				nSkillPoints = nSkillPoints * 4;
-				nAbilitySkillPoints = nAbilitySkillPoints * 4;
-			end
+		if hasTrait(nodeChar, "Skilled") then
+			nBonusSkillPoints = nBonusSkillPoints + 1;
 		end
 		
 		DB.setValue(nodeClass, "skillranks", "number", DB.getValue(nodeClass, "skillranks", 0) + nSkillPoints + nAbilitySkillPoints + nBonusSkillPoints);
@@ -2469,9 +2446,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 2);
 			nNewSpellLevel = 2;
 		elseif nCL == 4 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 0);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 1);
 			addClassSpellLevelSlot(nodeSpellClass, 2);
 		elseif nCL == 5 then
@@ -2481,9 +2455,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 2);
 			addClassSpellLevelSlot(nodeSpellClass, 3);
 		elseif nCL == 7 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 0);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 1);
 			addClassSpellLevelSlot(nodeSpellClass, 4);
 			nNewSpellLevel = 4;
@@ -2498,9 +2469,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 4);
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 		elseif nCL == 11 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 1);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 3);
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 			nNewSpellLevel = 6;
@@ -2508,9 +2476,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 		elseif nCL == 13 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 2);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 4);
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 			nNewSpellLevel = 7;
@@ -2518,9 +2483,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 		elseif nCL == 15 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 3);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 			nNewSpellLevel = 8;
@@ -2528,9 +2490,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 		elseif nCL == 17 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 4);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 			addClassSpellLevelSlot(nodeSpellClass, 9);
 			nNewSpellLevel = 9;
@@ -2538,16 +2497,13 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 			addClassSpellLevelSlot(nodeSpellClass, 9);
 		elseif nCL == 19 then
-			if not DataCommon.isPFRPG() and (sClassName ~= CLASS_NAME_WIZARD) then
-				addClassSpellLevelSlot(nodeSpellClass, 5);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 7);
 			addClassSpellLevelSlot(nodeSpellClass, 9);
 		elseif nCL == 20 then
 			addClassSpellLevelSlot(nodeSpellClass, 8);
 			addClassSpellLevelSlot(nodeSpellClass, 9);
 		end
-	elseif DataCommon.isPFRPG() and StringManager.contains({ CLASS_NAME_ALCHEMIST, CLASS_NAME_BARD, CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER }, sClassName) then
+	elseif StringManager.contains({ CLASS_NAME_ALCHEMIST, CLASS_NAME_BARD, CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER }, sClassName) then
 		if nCL == 1 then
 			if StringManager.contains({ CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER }, sClassName) then
 				addClassSpellLevelSlot(nodeSpellClass, 0);
@@ -2608,74 +2564,12 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 		elseif nCL == 20 then
 			addClassSpellLevelSlot(nodeSpellClass, 6);
 		end
-	elseif not DataCommon.isPFRPG() and StringManager.contains({ CLASS_NAME_BARD }, sClassName) then
-		if nCL == 1 then
-			addClassSpellLevelSlot(nodeSpellClass, 0, 2);
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			nNewSpellLevel = 1;
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 7 then
-			nNewSpellLevel = 3;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 10 then
-			nNewSpellLevel = 4;
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 13 then
-			nNewSpellLevel = 5;
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			nNewSpellLevel = 6;
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 18 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 20 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		end
 	elseif StringManager.contains({ CLASS_NAME_ORACLE, CLASS_NAME_SORCERER }, sClassName) then
 		if nCL == 1 then
-			if DataCommon.isPFRPG() then
-				addClassSpellLevelSlot(nodeSpellClass, 0);
-			else
-				addClassSpellLevelSlot(nodeSpellClass, 0, 5);
-			end
+			addClassSpellLevelSlot(nodeSpellClass, 0);
 			addClassSpellLevelSlot(nodeSpellClass, 1, 3);
 			nNewSpellLevel = 1;
 		elseif nCL == 2 then
-			if not DataCommon.isPFRPG() then
-				addClassSpellLevelSlot(nodeSpellClass, 0);
-			end
 			addClassSpellLevelSlot(nodeSpellClass, 1);
 		elseif nCL == 3 then
 			addClassSpellLevelSlot(nodeSpellClass, 1);
@@ -2822,57 +2716,6 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 		elseif nCL == 20 then
 			-- No gain
-		end
-	elseif not DataCommon.isPFRPG() and sClassName == CLASS_NAME_ASSASSIN then
-		if nCL == 1 then
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 2;
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			nNewSpellLevel = 3;
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			nNewSpellLevel = 4;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		end
-	elseif not DataCommon.isPFRPG() and sClassName == CLASS_NAME_BLACKGUARD then
-		if nCL == 1 then
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			nNewSpellLevel = 2;
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 5 then
-			nNewSpellLevel = 3;
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 4;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
 		end
 	elseif sClassName == CLASS_FEATURE_DOMAIN_SPELLS then
 		if nCL % 2 == 1 then
