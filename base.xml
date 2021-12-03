@@ -52,7 +52,6 @@
 	<includefile source="campaign/template_spell.xml" />
 
 	<includefile source="campaign/record_spell_entry.xml" />
-	<includefile source="campaign/record_spell_mini.xml" />
 	<includefile source="campaign/record_spell_roll.xml" />
 
 	<includefile source="campaign/record_char.xml" />
@@ -63,10 +62,6 @@
 	<includefile source="campaign/record_char_inventory.xml" />
 	<includefile source="campaign/record_char_notes.xml" />
 	<includefile source="campaign/record_char_actions.xml" />
-	<includefile source="campaign/record_charmini_main.xml" />
-	<includefile source="campaign/record_charmini_abilities.xml" />
-	<includefile source="campaign/record_charmini_inventory.xml" />
-	<includefile source="campaign/record_charmini_actions.xml" />
 	<script name="CharManager" file="campaign/scripts/manager_char.lua" />
 
 	<includefile source="campaign/record_npc.xml" />

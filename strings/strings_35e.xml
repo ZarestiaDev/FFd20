@@ -274,22 +274,6 @@
 	<string name="skill_value_search">Search</string>
 	<string name="skill_value_sensemotive">Sense Motive</string>
 	<string name="skill_value_spot">Spot</string>
-
-	<!-- Character - Mini -->
-	<string name="char_label_fullsheet">Full Sheet</string>
-	<string name="char_label_minisheet">Mini Sheet</string>
-	<string name="charmini_label_wounds">Wnd</string>
-	<string name="charmini_label_hptemp">Temp</string>
-	<string name="charmini_label_nonlethal">Subd</string>
-	<string name="charmini_label_dr">DR</string>
-	<string name="charmini_label_abilitybonus">Bonus</string>
-	<string name="charmini_label_abilitydamage">Dmg</string>
-	<string name="charmini_label_melee">Melee</string>
-	<string name="charmini_label_ranged">Rng</string>
-	<string name="charmini_label_speed">Spd</string>
-	<string name="charmini_label_speedspecial">Special Move</string>
-	<string name="charmini_label_weaponrange">Rng</string>
-	<string name="charmini_label_weaponammo">Ammo</string>
 	
 	<!-- Character - Main -->
 	<string name="char_label_classlevelsummary">CLASS &amp; LEVEL</string>
@@ -413,7 +397,6 @@
 	<string name="char_tooltip_skilladdknowledge">Add Knowledge Skill</string>
 	<string name="char_tooltip_skilladdcraft">Add Craft Skill</string>
 	<string name="char_tooltip_skilladd">Add Custom Skill</string>
-	<string name="char_tooltip_skillshowmini">Show on Mini</string>
 	<string name="char_tooltip_skillclass">Class skill</string>
 	<string name="char_label_skillname">Name</string>
 	<string name="char_label_skillranks">Ranks</string>
@@ -430,7 +413,6 @@
 	<string name="char_label_traits">Racial Traits</string>
 	
 	<!-- Character - Inventory -->
-	<string name="char_tooltip_itemshowmini">Show on mini sheet</string>
 	<string name="char_label_invarmor">Armor</string>
 	<string name="char_label_invarmormaxability">Max Stat</string>
 	<string name="char_label_invarmorskillcheckpenalty">Skill Chk</string>

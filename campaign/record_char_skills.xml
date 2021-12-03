@@ -83,11 +83,6 @@
 			</frame_char>
 
 			<genericcontrol>
-				<anchored to="skillframe" position="insidetopleft" offset="17,15" width="10" height="10" />
-				<icon>char_quicklist</icon>
-				<tooltip textres="char_tooltip_skillshowmini" />
-			</genericcontrol>
-			<genericcontrol>
 				<anchored to="skillframe" position="insidetopleft" offset="33,15" width="10" height="10" />
 				<icon>char_encumbrance</icon>
 				<tooltip textres="char_tooltip_skillclass" />
@@ -171,19 +166,6 @@
 					end
 				</script>
 			</hn>
-
-			<button_checkbox name="showonminisheet">
-				<bounds>6,8,12,12</bounds>
-				<default>1</default>
-			</button_checkbox>
-			<button_checkbox name="state">
-				<bounds>22,8,12,12</bounds>
-				<script>
-					function onValueChanged()
-						CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
-					end
-				</script>
-			</button_checkbox>
 			
 			<genericcontrol name="rightanchor">
 				<anchored width="0" height="0">

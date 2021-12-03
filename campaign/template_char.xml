@@ -93,59 +93,6 @@
 			</script>
 		</buttoncontrol>
 	</template>
-
-	<template name="button_charfull">
-		<windowreferencecontrol>
-			<icon normal="button_fullsheet" pressed="button_fullsheet_down" />
-			<class>charsheet</class>
-			<tooltip textres="char_label_fullsheet" />
-			<description field="name" />
-			<script>
-				function onClickRelease(button, x, y)
-					local w = activate();
-					if w then
-						local tabindex = window.tabs.getIndex();
-						if tabindex == 1 then
-							w.tabs.activateTab(1);
-						elseif tabindex == 2 then
-							w.tabs.activateTab(4);
-						elseif tabindex == 3 then
-							w.tabs.activateTab(5);
-						elseif tabindex == 4 then
-							w.tabs.activateTab(7);
-						end
-					end
-					return true;
-				end
-			</script>
-		</windowreferencecontrol>
-	</template>
-	<template name="button_charmini">
-		<windowreferencecontrol>
-			<icon normal="button_minisheet" pressed="button_minisheet_down" />
-			<class>charsheetmini</class>
-			<tooltip textres="char_label_minisheet" />
-			<description field="name" />
-			<script>
-				function onClickRelease(button, x, y)
-					local w = activate();
-					if w then
-						local tabindex = window.tabs.getIndex();
-						if tabindex == 1 or tabindex == 2 or tabindex == 6 then
-							w.tabs.activateTab(1);
-						elseif tabindex == 3 or tabindex == 4 then
-							w.tabs.activateTab(2);
-						elseif tabindex == 5 then
-							w.tabs.activateTab(3);
-						elseif tabindex == 7 then
-							w.tabs.activateTab(4);
-						end
-					end
-					return true;
-				end
-			</script>
-		</windowreferencecontrol>
-	</template>
 	
 	<template name="string_charclasslevelsummary">
 		<simplestringc>
@@ -192,21 +139,9 @@
 			<default>10</default>
 		</basicnumber>
 	</template>
-	<template name="number_charminiabilityscore">
-		<basicnumber>
-			<anchored position="belowleft" offset="0,9" width="32" height="20" />
-			<default>10</default>
-		</basicnumber>
-	</template>
 	<template name="string_charabilitylabel">
 		<label>
 			<anchored position="lefthigh" width="120" height="24" />
-			<static />
-		</label>
-	</template>
-	<template name="string_charminiabilitylabel">
-		<label>
-			<anchored position="lefthigh" width="85" height="20" />
 			<static />
 		</label>
 	</template>
@@ -223,11 +158,6 @@
 				end
 			</script>
 		</basicnumber>
-	</template>
-	<template name="number_charminiabilitydamage">
-		<number_charabilitydamage>
-			<anchored position="right" offset="55,0" width="30" />
-		</number_charabilitydamage>
 	</template>
 	<template name="number_charabilitybonus">
 		<number_chartotal>
@@ -275,11 +205,6 @@
 				end
 			</script>
 		</number_chartotal>
-	</template>
-	<template name="number_charminiabilitybonus">
-		<number_charabilitybonus>
-			<anchored position="right" offset="15,0" width="30" />
-		</number_charabilitybonus>
 	</template>
 	<template name="number_charwounds">
 		<number_dropadd>

@@ -22,10 +22,6 @@ function onInit()
 end
 
 function update(bEditMode)
-	if minisheet then
-		return;
-	end
-	
 	for _,w in ipairs(spells.getWindows()) do
 		w.update(bEditMode);
 	end

@@ -15,10 +15,6 @@ function onInit()
 end
 
 function update(bEditMode)
-	if minisheet then
-		return;
-	end
-	
 	idelete.setVisibility(bEditMode);
 	for _,w in ipairs(levels.getWindows()) do
 		w.update(bEditMode);
@@ -53,17 +49,11 @@ function onStatUpdate()
 	
 	for kLevel, vLevel in pairs(levels.getWindows()) do
 		for kSpell, vSpell in pairs(vLevel.spells.getWindows()) do
-			if vSpell.minisheet then
-				for kAction, vAction in pairs(vSpell.header.subwindow.actions.getWindows()) do
-					vAction.updateViews();
-				end
-			else
-				for kAction, vAction in pairs(vSpell.actions.getWindows()) do
-					vAction.updateViews();
-				end
-				for kAction, vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
-					vAction.updateViews();
-				end
+			for kAction, vAction in pairs(vSpell.actions.getWindows()) do
+				vAction.updateViews();
+			end
+			for kAction, vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
+				vAction.updateViews();
 			end
 		end
 	end
@@ -98,10 +88,6 @@ function updateControl(sControl, bShow)
 end
 
 function toggleDetail()
-	if minisheet then
-		return;
-	end
-	
 	local status = (activatedetail.getValue() == 1);
 
 	frame_levels.setVisible(status);
@@ -149,10 +135,6 @@ function isInitialized()
 end
 
 function getSheetMode()
-	if minisheet then
-		return "combat";
-	end
-	
 	return DB.getValue(getDatabaseNode(), "...spellmode", "standard");
 end
 
@@ -169,10 +151,6 @@ function onCasterTypeChanged()
 end
 
 function onDisplayChanged()
-	if minisheet then
-		return;
-	end
-	
 	for _,vLevel in pairs(levels.getWindows()) do
 		for _,vSpell in pairs(vLevel.spells.getWindows()) do
 			vSpell.onDisplayChanged();
@@ -339,25 +317,23 @@ function updateSpellView()
 		bClassShow = bClassShow or bLevelShow;
 		vLevel.setFilter(bLevelShow);
 
-		if not minisheet then
-			-- Set level statistics label
-			local sStats = "";
-			if nodeLevel and nodeLevel.getName() == "level0" then
-				if sCasterType == "" then
-					sStats = "Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
-				end
-			elseif (sCasterType ~= "points") and (nAvailable > 0) and (nSpells > 0) then
-				if (sCasterType == "spontaneous") then
-					sStats = "Cast:  " .. nTotalCast .. " / " .. nAvailable;
-				else
-					sStats = "Cast:  " .. nTotalCast .. " / " .. nTotalPrepared;
-					if nTotalPrepared < nAvailable then
-						sStats = sStats .. "    Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
-					end
+		-- Set level statistics label
+		local sStats = "";
+		if nodeLevel and nodeLevel.getName() == "level0" then
+			if sCasterType == "" then
+				sStats = "Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
+			end
+		elseif (sCasterType ~= "points") and (nAvailable > 0) and (nSpells > 0) then
+			if (sCasterType == "spontaneous") then
+				sStats = "Cast:  " .. nTotalCast .. " / " .. nAvailable;
+			else
+				sStats = "Cast:  " .. nTotalCast .. " / " .. nTotalPrepared;
+				if nTotalPrepared < nAvailable then
+					sStats = sStats .. "    Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
 				end
 			end
-			vLevel.stats.setValue(sStats);
 		end
+		vLevel.stats.setValue(sStats);
 	end
 	
 	if sSheetMode == "combat" then

@@ -8,16 +8,7 @@
 <root>
 	<windowclass name="charsheet_inventory" merge="join">
 		<script file="campaign/scripts/char_inv.lua" />
-		<sheetdata>
-			<genericcontrol name="showonminisheet_header" insertbefore="carried_header">
-				<anchored to="rightanchor" width="12" height="10">
-					<top offset="5" />
-					<right anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<icon>char_quicklist</icon>
-				<tooltip textres="char_tooltip_itemshowmini" />
-			</genericcontrol>
-			
+		<sheetdata>			
 			<frame_char name="armorpenaltyframe" insertbefore="encumbranceframe">
 				<bounds>15,-205,240,58</bounds>
 			</frame_char>
@@ -146,18 +137,6 @@
 					end
 				</script>
 			</buttoncontrol>
-		</sheetdata>
-	</windowclass>
-
-	<windowclass name="char_invitem" merge="join">
-		<sheetdata>
-			<button_checkbox name="showonminisheet" insertbefore="carried">
-				<anchored width="12" height="12">
-					<top offset="6" />
-					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<default>1</default>
-			</button_checkbox>
 		</sheetdata>
 	</windowclass>
 

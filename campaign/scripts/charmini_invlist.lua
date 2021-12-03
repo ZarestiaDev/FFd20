@@ -21,10 +21,6 @@ function onSortCompare(w1, w2)
 	end
 end
 
-function onFilter(w)
-	return (w.showonminisheet.getValue() ~= 0);
-end
-
 function addEntry(bFocus)
 	return createWindow();
 end

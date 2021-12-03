@@ -21,21 +21,15 @@ function onChildAdded()
 end
 
 function onModeChanged()
-	if not minisheet then
-		local bPrepMode = (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "preparation");
-		for _,w in ipairs(getWindows()) do
-			w.carried.setVisible(bPrepMode);
-		end
+	local bPrepMode = (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "preparation");
+	for _,w in ipairs(getWindows()) do
+		w.carried.setVisible(bPrepMode);
 	end
 	
 	applyFilter();
 end
 
 function update()
-	if minisheet then
-		return;
-	end
-
 	local bEditMode = window.getEditMode();
 	for _,w in pairs(getWindows()) do
 		w.idelete.setVisibility(bEditMode);
@@ -55,14 +49,8 @@ function onDrop(x, y, draginfo)
 end
 
 function onFilter(w)
-	if minisheet then
-		if (w.carried.getValue() < 2) then
-			return false;
-		end
-	else
-		if (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "combat") and (w.carried.getValue() < 2) then
-			return false;
-		end
+	if (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "combat") and (w.carried.getValue() < 2) then
+		return false;
 	end
 	
 	return true;

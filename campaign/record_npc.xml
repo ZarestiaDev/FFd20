@@ -577,18 +577,6 @@
 				<togglelevel>2</togglelevel>
 				<invisible />
 			</button_collapse>
-			<button_expand name="expand_mini">
-				<anchored position="insidetopleft" offset="5,2" width="20" height="20" />
-				<target>spellclasslist_mini,levels,spells</target>
-				<togglelevel>2</togglelevel>
-				<invisible />
-			</button_expand>
-			<button_collapse name="collapse_mini">
-				<anchored position="insidetopleft" offset="35,2" width="20" height="20" />
-				<target>spellclasslist_mini,levels,spells</target>
-				<togglelevel>2</togglelevel>
-				<invisible />
-			</button_collapse>
 			<label name="label_mode">
 				<anchored position="insidetopleft" offset="75,2" height="20" />
 				<static textres="spell_label_mode" />
@@ -654,26 +642,6 @@
 						if selection == 5 then
 							window.addSpellClass();
 						elseif selection == 8 then
-							SpellManager.resetSpells(window.getDatabaseNode());
-						end
-					end
-				</script>
-			</list_spellclass>
-			<list_spellclass name="spellclasslist_mini">
-				<anchored position="insidetop" offset="0,30" />
-				<class>spell_class_mini</class>
-				<npc />
-				<minisheet />
-				<readonly />
-				<invisible />
-				<script>
-					function onInit()
-						super.onInit();
-						registerMenuItem(Interface.getString("menu_resetspells"), "lockvisibilityon", 8);
-					end
-					
-					function onMenuSelection(selection)
-						if selection == 8 then
 							SpellManager.resetSpells(window.getDatabaseNode());
 						end
 					end

@@ -113,7 +113,6 @@ end
 
 function onCharItemAdd(nodeItem)
 	DB.setValue(nodeItem, "carried", "number", 1);
-	DB.setValue(nodeItem, "showonminisheet", "number", 1);
 
 	if DB.getValue(nodeItem, "type", "") == "Goods and Services" then
 		local sSubType = DB.getValue(nodeItem, "subtype", "");
@@ -1144,7 +1143,6 @@ function getSkillNode(nodeChar, sSkill, sSpecialty)
 			
 			DB.setValue(nodeSkill, "label", "string", sSkill);
 			DB.setValue(nodeSkill, "statname", "string", t.stat or "");
-			DB.setValue(nodeSkill, "showonminisheet", "number", 1);
 			
 			if t.sublabeling and sSpecialty then
 				DB.setValue(nodeSkill, "sublabel", "string", sSpecialty);

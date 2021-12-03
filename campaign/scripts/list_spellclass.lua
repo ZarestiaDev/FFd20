@@ -9,16 +9,10 @@ function onInit()
 end
 
 function onListChanged()
-	if not minisheet then
-		update();
-	end
+	update();
 end
 
 function update()
-	if minisheet then
-		return;
-	end
-	
 	if bInit then
 		local bEditMode = window.getEditMode();
 		for _,w in ipairs(getWindows()) do

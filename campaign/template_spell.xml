@@ -28,25 +28,6 @@
 		</windowlist>
 	</template>
 
-	<template name="button_spellaction_mini">
-		<button_roll>
-			<bounds>1,1,20,20</bounds>
-			<script>
-				function action(draginfo)
-					SpellManager.onSpellAction(draginfo, window.getDatabaseNode());
-				end
-				
-				function onButtonPress()
-					action();
-				end
-				
-				function onDragStart(button, x, y, draginfo)
-					action(draginfo);
-					return true;
-				end
-			</script>
-		</button_roll>
-	</template>
 	<template name="button_cc">
 		<button_roll>
 			<tooltip textres="spell_tooltip_cc" />
@@ -177,30 +158,7 @@
 			</script>
 		</number_spell>
 	</template>
-	<template name="number_spellsavailable_mini">
-		<numberfield>
-			<bounds>0,0,0,0</bounds>
-			<invisible />
-			<script>
-				function onValueChanged()
-					window.onSpellCounterUpdate();
-				end
-			</script>
-		</numberfield>
-	</template>
 	
-	<template name="string_spelllevellabel_mini">
-		<label>
-			<frame name="rowshade" />
-			<center />
-			<empty textres="spelllevel_emptyname" />
-			<script>
-				function onClickDown(button, x, y)
-					window.spells.setVisible(not window.spells.isVisible());
-				end
-			</script>
-		</label>
-	</template>
 	<template name="string_spell">
 		<basicstring>
 			<script>

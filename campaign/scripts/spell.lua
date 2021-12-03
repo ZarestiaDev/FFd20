@@ -39,18 +39,10 @@ function onInit()
 end
 
 function update(bEditMode)
-	if minisheet then
-		return;
-	end
-	
 	idelete.setVisibility(bEditMode);
 end
 
 function onDisplayChanged()
-	if minisheet then
-		return;
-	end
-	
 	sDisplayMode = DB.getValue(getDatabaseNode(), ".......spelldisplaymode", "");
 
 	if sDisplayMode == "action" then
@@ -59,16 +51,6 @@ function onDisplayChanged()
 	else
 		header.subwindow.shortdescription.setVisible(true);
 		header.subwindow.actionsmini.setVisible(false);
-	end
-end
-
-function onHover(bOver)
-	if minisheet then
-		if bOver then
-			setFrame("rowshade");
-		else
-			setFrame(nil);
-		end
 	end
 end
 

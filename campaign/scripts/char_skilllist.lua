@@ -109,9 +109,6 @@ function constructDefaultSkills()
 					else
 						w.statname.setStringValue("");
 					end
-					if t.trainedonly then
-						w.showonminisheet.setValue(0);
-					end
 					matches = { w };
 				end
 			end

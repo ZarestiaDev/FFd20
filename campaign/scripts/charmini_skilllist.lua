@@ -20,7 +20,3 @@ function onStatUpdate()
 		w.onStatUpdate();
 	end
 end
-
-function onFilter(w)
-	return (DB.getValue(w.getDatabaseNode(), "showonminisheet", 0) ~= 0);
-end

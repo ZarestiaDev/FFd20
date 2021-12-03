@@ -4,32 +4,20 @@
 --
 
 function onDisplayChanged()
-	if not minisheet then
-		for _,v in pairs(actions.subwindow.spellclasslist.getWindows()) do
-			v.onDisplayChanged();
-		end
+	for _,v in pairs(actions.subwindow.spellclasslist.getWindows()) do
+		v.onDisplayChanged();
 	end
 end
 
 function onModeChanged()
-	if minisheet then
-		weaponlist.onModeChanged();
-	else
-		actions.subwindow.weaponlist.onModeChanged();
-	end
+	actions.subwindow.weaponlist.onModeChanged();
 	
 	updateSpellCounters();
 end
 
 function updateSpellCounters()
-	if minisheet then
-		for _,v in pairs(spellclasslist.getWindows()) do
+	for _,v in pairs(actions.subwindow.spellclasslist.getWindows()) do
 			v.onSpellCounterUpdate();
-		end
-	else
-		for _,v in pairs(actions.subwindow.spellclasslist.getWindows()) do
-			v.onSpellCounterUpdate();
-		end
 	end
 end
 
