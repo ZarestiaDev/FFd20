@@ -1667,12 +1667,6 @@ function addClass(nodeChar, sClass, sRecord)
 			for _,vMapping in ipairs(aMappings) do
 				for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
 					local sClassType = DB.getValue(vClass, "classtype");
-					if not sClassType then
-						local sClassLookup = StringManager.strip(DB.getValue(vClass, "name", ""):lower());
-						if DataCommon.classdata[sClassLookup] then
-							bPrestige = DataCommon.classdata[sClassLookup].bPrestige;
-						end
-					end
 					if (sClassType or "") ~= "prestige" then
 						table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
 					end
@@ -1717,33 +1711,6 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	local sWill = StringManager.trim(DB.getValue(nodeSource, "will", "")):lower();
 	local nSkillPoints = DB.getValue(nodeSource, "skillranks", 0);
 	local sClassSkills = DB.getValue(nodeSource, "classskills", "");
-	
-	if DataCommon.classdata[sClassLookup] then
-		if not sClassType then
-			bPrestige = DataCommon.classdata[sClassLookup].bPrestige;
-		end
-		if not sHD:match("^%d?d%d+") then
-			sHD = DataCommon.classdata[sClassLookup].hd;
-		end
-		if not StringManager.contains({ "fast", "medium", "slow" }, sBAB) then
-			sBAB = DataCommon.classdata[sClassLookup].bab;
-		end
-		if not StringManager.contains({ "good", "bad" }, sFort) then
-			sFort = DataCommon.classdata[sClassLookup].fort;
-		end
-		if not StringManager.contains({ "good", "bad" }, sRef) then
-			sRef = DataCommon.classdata[sClassLookup].ref;
-		end
-		if not StringManager.contains({ "good", "bad" }, sWill) then
-			sWill = DataCommon.classdata[sClassLookup].will;
-		end
-		if nSkillPoints <= 0 then
-			nSkillPoints = DataCommon.classdata[sClassLookup].skillranks;
-		end
-		if sClassSkills == "" then
-			sClassSkills = DataCommon.classdata[sClassLookup].skills;
-		end
-	end
 	local bPrestige = (sClassType == "prestige");
 	
 	-- Hit points
