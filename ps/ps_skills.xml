@@ -31,7 +31,7 @@
 			<label name="passivelabel">
 				<anchored>
 					<top parent="headeranchor" />
-					<left parent="spotlabel" />
+					<left parent="perceptionlabel" />
 					<right parent="smlabel" />
 				</anchored>
 				<static textres="ps_label_passive" />
@@ -294,7 +294,7 @@
 			
 			<string_ps name="senses">
 				<anchored height="20">
-					<left parent="spot" />
+					<left parent="perception" />
 					<right parent="religion" />
 					<top offset="30" />
 				</anchored>
