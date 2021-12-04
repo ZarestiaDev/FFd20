@@ -166,6 +166,14 @@
 					end
 				</script>
 			</hn>
+			<button_checkbox name="state">
+				<bounds>22,8,12,12</bounds>
+				<script>
+					function onValueChanged()
+						CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
+					end
+				</script>
+			</button_checkbox>
 			
 			<genericcontrol name="rightanchor">
 				<anchored width="0" height="0">
