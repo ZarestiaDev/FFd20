@@ -378,9 +378,16 @@ rangetypes = {
 energytypes = {
 	"acid",  		-- ENERGY DAMAGE TYPES
 	"cold",
+	"earth",
 	"electricity",
 	"fire",
+	"holy",
+	"ice",
+	"lightning",
+	"shadow",
 	"sonic",
+	"water",
+	"wind",
 	"force",  		-- OTHER SPELL DAMAGE TYPES
 	"positive",
 	"negative"
@@ -389,9 +396,16 @@ energytypes = {
 immunetypes = {
 	"acid",  		-- ENERGY DAMAGE TYPES
 	"cold",
+	"earth",
 	"electricity",
 	"fire",
+	"holy",
+	"ice",
+	"lightning",
+	"shadow",
 	"sonic",
+	"water",
+	"wind",
 	"nonlethal",	-- SPECIAL DAMAGE TYPES
 	"critical",
 	"poison",		-- OTHER IMMUNITY TYPES
@@ -408,9 +422,16 @@ immunetypes = {
 dmgtypes = {
 	"acid",  		-- ENERGY DAMAGE TYPES
 	"cold",
+	"earth",
 	"electricity",
 	"fire",
+	"holy",
+	"ice",
+	"lightning",
+	"shadow",
 	"sonic",
+	"water",
+	"wind",
 	"force",  		-- OTHER SPELL DAMAGE TYPES
 	"positive",
 	"negative",
@@ -435,9 +456,16 @@ dmgtypes = {
 basicdmgtypes = {
 	"acid",  		-- ENERGY DAMAGE TYPES
 	"cold",
+	"earth",
 	"electricity",
 	"fire",
+	"holy",
+	"ice",
+	"lightning",
+	"shadow",
 	"sonic",
+	"water",
+	"wind",
 	"force",  		-- OTHER SPELL DAMAGE TYPES
 	"positive",
 	"negative",
