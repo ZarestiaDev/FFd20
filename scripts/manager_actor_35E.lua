@@ -821,10 +821,6 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		elseif bConceal then
 			nMissChance = 20;
 		end
-		
-		if bIncorporealAttack then
-			nMissChance = 50;
-		end
 	end
 	
 	-- Return the final defense value

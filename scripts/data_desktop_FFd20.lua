@@ -7,11 +7,13 @@ function onInit()
 	ModifierManager.addModWindowPresets(_tModifierWindowPresets);
 	ModifierManager.addKeyExclusionSets(_tModifierExclusionSets);
 
+	--[[
 	for k,v in pairs(_tDataModuleSets) do
 		for _,v2 in ipairs(v) do
 			Desktop.addDataModuleSet(k, v2);
 		end
 	end
+	]]--
 end
 
 -- Shown in Modifiers window
