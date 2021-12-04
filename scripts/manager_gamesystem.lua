@@ -43,8 +43,8 @@ targetactions = {
 	"spellsave"
 };
 
-currencies = { "PP", "GP", "SP", "CP" };
-currencyDefault = "GP";
+currencies = { "Cactuar", "Goldie", "Silvie", "Single" };
+currencyDefault = "Goldie";
 
 tokenLightDefaults = {
 	["candle"] = {

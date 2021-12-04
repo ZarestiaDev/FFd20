@@ -648,6 +648,10 @@ skilldata = {
 	["Disguise"] = {
 			stat = "charisma"
 		},
+	["Drive"] = {
+			stat = "dexterity",
+			trainedonly = 1
+		},
 	["Escape Artist"] = {
 			stat = "dexterity",
 			armorcheckmultiplier = 1
@@ -675,18 +679,28 @@ skilldata = {
 			stat = "intelligence",
 			trainedonly = 1
 		},
+	["Navigate"] = {
+			stat = "intelligence"
+		},
 	["Perception"] = {
 			stat = "wisdom"
-		},	
+		},
 	["Perform"] = {
 			sublabeling = true,
 			stat = "charisma",
+			trainedonly = 1
+		},
+	["Pilot"] = {
+			stat = "dexterity",
 			trainedonly = 1
 		},
 	["Profession"] = {
 			sublabeling = true,
 			stat = "wisdom",
 			trainedonly = 1
+		},
+	["Repair"] = {
+			stat = "intelligence"
 		},
 	["Ride"] = {
 			stat = "dexterity",
@@ -721,7 +735,7 @@ skilldata = {
 }
 
 -- Coin labels
-currency = { "PP", "GP", "SP", "CP" };
+currency = { "Cactuar", "Goldie", "Silvie", "Single" };
 
 -- Party sheet drop down list data
 psabilitydata = {
@@ -741,20 +755,41 @@ pssavedata = {
 
 psskilldata = {
 	"Acrobatics",
+	"Appraise",
 	"Bluff",
 	"Diplomacy",
+	"Disable Device",
+	"Disguise",
+	"Drive",
+	"Escape Artist",
+	"Fly",
+	"Handle Animal",
 	"Heal",
 	"Intimidate",
 	"Knowledge (Arcana)",
 	"Knowledge (Dungeoneering)",
+	"Knowledge (Engineering)",
+	"Knowledge (Geography)",
+	"Knowledge (History)",
 	"Knowledge (Local)",
 	"Knowledge (Nature)",
+	"Knowledge (Nobility)",
 	"Knowledge (Planes)",
 	"Knowledge (Religion)",
+	"Knowledge (Technology)",
+	"Linguistics",
+	"Navigate",
 	"Perception",
+	"Pilot",
+	"Repair",
+	"Ride",
 	"Sense Motive",
+	"Sleight of Hand",
+	"Spellcraft",
 	"Stealth",
-	"Survival"
+	"Survival",
+	"Swim",
+	"Use Magic Device"
 };
 
 -- PC/NPC Class properties
