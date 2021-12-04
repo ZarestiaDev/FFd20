@@ -186,9 +186,6 @@
 	<string name="ps_label_languages">Languages</string>
 	
 	<string name="ps_label_passive">Passive</string>
-	<string name="ps_label_spot">Spt</string>
-	<string name="ps_label_listen">Lst</string>
-	<string name="ps_label_search">Src</string>
 	<string name="ps_label_perception">Per</string>
 	<string name="ps_label_sensemotive">SM</string>
 	<string name="ps_label_knowledge">Knowledge</string>
@@ -201,16 +198,11 @@
 	<string name="ps_label_social">Social</string>
 	<string name="ps_label_bluff">Blf</string>
 	<string name="ps_label_diplomacy">Dpl</string>
-	<string name="ps_label_gatherinfo">GI</string>
 	<string name="ps_label_intimidate">Int</string>
 	<string name="ps_label_physical">Physical</string>
 	<string name="ps_label_acrobatics">Acr</string>
-	<string name="ps_label_climb">Cli</string>
 	<string name="ps_label_heal">Hea</string>
-	<string name="ps_label_jump">Jmp</string>
 	<string name="ps_label_survival">Sur</string>
-	<string name="ps_label_hide">Hid</string>
-	<string name="ps_label_movesilent">MS</string>
 	<string name="ps_label_stealth">Stl</string>
 
 	<string name="ps_label_groupskill">Skill Check</string>
@@ -248,17 +240,12 @@
 	
 	<!-- Skills -->
 	<string name="skill_value_acrobatics">Acrobatics</string>
-	<string name="skill_value_climb">Climb</string>
 	<string name="skill_value_heal">Heal</string>
-	<string name="skill_value_jump">Jump</string>
 	<string name="skill_value_survival">Survival</string>
-	<string name="skill_value_hide">Hide</string>
-	<string name="skill_value_movesilent">Move Silently</string>
 	<string name="skill_value_stealth">Stealth</string>
 	<string name="skill_value_bluff">Bluff</string>
 	<string name="skill_value_craft">Craft</string>
 	<string name="skill_value_diplomacy">Diplomacy</string>
-	<string name="skill_value_gatherinfo">Gather Information</string>
 	<string name="skill_value_intimidate">Intimidate</string>
 	<string name="skill_value_knowledge">Knowledge</string>
 	<string name="skill_value_knowarcana">Arcana</string>
@@ -267,13 +254,10 @@
 	<string name="skill_value_knownature">Nature</string>
 	<string name="skill_value_knowplanes">Planes</string>
 	<string name="skill_value_knowreligion">Religion</string>
-	<string name="skill_value_listen">Listen</string>
 	<string name="skill_value_perception">Perception</string>
 	<string name="skill_value_perform">Perform</string>
 	<string name="skill_value_profession">Profession</string>
-	<string name="skill_value_search">Search</string>
 	<string name="skill_value_sensemotive">Sense Motive</string>
-	<string name="skill_value_spot">Spot</string>
 	
 	<!-- Character - Main -->
 	<string name="char_label_classlevelsummary">CLASS &amp; LEVEL</string>
@@ -319,9 +303,6 @@
 	<string name="char_tooltip_atkmelee">Melee Attack</string>
 	<string name="char_tooltip_atkranged">Ranged Attack</string>
 
-	<string name="char_label_skillspot">Spot</string>
-	<string name="char_label_skilllisten">Listen</string>
-	<string name="char_label_skillsearch">Search</string>
 	<string name="char_label_skillperception">Percept.</string>
 	<string name="char_tooltip_skillcheck">Check</string>
 	

@@ -64,13 +64,7 @@ function linkPCSkills(nodeSkills)
 	for _,v in pairs(nodeSkills.getChildren()) do
 		local sLabel = DB.getValue(v, "label", ""):lower();
 
-		if sLabel == "spot" then
-			linkPCSkill(v, nodePS, "spot");
-		elseif sLabel == "listen" then
-			linkPCSkill(v, nodePS, "listen");
-		elseif sLabel == "search" then
-			linkPCSkill(v, nodePS, "search");
-		elseif sLabel == "perception" then
+		if sLabel == "perception" then
 			linkPCSkill(v, nodePS, "perception");
 		elseif sLabel == "sense motive" then
 			linkPCSkill(v, nodePS, "sensemotive");
@@ -112,26 +106,16 @@ function linkPCSkills(nodeSkills)
 			linkPCSkill(v, nodePS, "bluff");
 		elseif sLabel == "diplomacy" then
 			linkPCSkill(v, nodePS, "diplomacy");
-		elseif sLabel == "gather information" then
-			linkPCSkill(v, nodePS, "gatherinfo");
 		elseif sLabel == "intimidate" then
 			linkPCSkill(v, nodePS, "intimidate");
 		
 		elseif sLabel == "acrobatics" then
 			linkPCSkill(v, nodePS, "acrobatics");
-		elseif sLabel == "climb" then
-			linkPCSkill(v, nodePS, "climb");
 		elseif sLabel == "heal" then
 			linkPCSkill(v, nodePS, "heal");
-		elseif sLabel == "jump" then
-			linkPCSkill(v, nodePS, "jump");
 		elseif sLabel == "survival" then
 			linkPCSkill(v, nodePS, "survival");
 		
-		elseif sLabel == "hide" then
-			linkPCSkill(v, nodePS, "hide");
-		elseif sLabel == "move silently" then
-			linkPCSkill(v, nodePS, "movesilent");
 		elseif sLabel == "stealth" then
 			linkPCSkill(v, nodePS, "stealth");
 		end

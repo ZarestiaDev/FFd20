@@ -20,18 +20,6 @@
 			<genericcontrol name="skillanchor">
 				<anchored to="headeranchor" position="insidetopleft" offset="163,17" width="0" height="20" />
 			</genericcontrol>
-			<label_ps_skill name="spotlabel">
-				<static textres="ps_label_spot" />
-				<tooltip textres="skill_value_spot" />
-			</label_ps_skill>
-			<label_ps_skill name="listenlabel">
-				<static textres="ps_label_listen" />
-				<tooltip textres="skill_value_listen" />
-			</label_ps_skill>
-			<label_ps_skill name="searchlabel">
-				<static textres="ps_label_search" />
-				<tooltip textres="skill_value_search" />
-			</label_ps_skill>
 			<label_ps_skill name="perceptionlabel">
 				<static textres="ps_label_perception" />
 				<tooltip textres="skill_value_perception" />
@@ -98,10 +86,6 @@
 				<static textres="ps_label_diplomacy" />
 				<tooltip textres="skill_value_diplomacy" />
 			</label_ps_skill>
-			<label_ps_skill name="gatherinfolabel">
-				<static textres="ps_label_gatherinfo" />
-				<tooltip textres="skill_value_gatherinfo" />
-			</label_ps_skill>
 			<label_ps_skill name="intimidatelabel">
 				<static textres="ps_label_intimidate" />
 				<tooltip textres="skill_value_intimidate" />
@@ -123,32 +107,13 @@
 				<static textres="ps_label_acrobatics" />
 				<tooltip textres="skill_value_acrobatics" />
 			</label_ps_skill>
-			<label_ps_skill name="climblabel">
-				<static textres="ps_label_climb" />
-				<tooltip textres="skill_value_climb" />
-			</label_ps_skill>
 			<label_ps_skill name="heallabel">
 				<static textres="ps_label_heal" />
 				<tooltip textres="skill_value_heal" />
 			</label_ps_skill>
-			<label_ps_skill name="jumplabel">
-				<static textres="ps_label_jump" />
-				<tooltip textres="skill_value_jump" />
-			</label_ps_skill>
 			<label_ps_skill name="survivallabel">
 				<static textres="ps_label_survival" />
 				<tooltip textres="skill_value_survival" />
-			</label_ps_skill>
-			<label_ps_skill name="hidelabel">
-				<anchored>
-					<left offset="15" />
-				</anchored>
-				<static textres="ps_label_hide" />
-				<tooltip textres="skill_value_hide" />
-			</label_ps_skill>
-			<label_ps_skill name="movesilentlabel">
-				<static textres="ps_label_movesilent" />
-				<tooltip textres="skill_value_movesilent" />
 			</label_ps_skill>
 			<label_ps_skill name="stealthlabel">
 				<anchored>
@@ -260,15 +225,6 @@
 					<left anchor="right" offset="-3" />
 				</anchored>
 			</genericcontrol>
-			<number_ps_skill name="spot">
-				<skill>Spot</skill>
-			</number_ps_skill>
-			<number_ps_skill name="listen">
-				<skill>Listen</skill>
-			</number_ps_skill>
-			<number_ps_skill name="search">
-				<skill>Search</skill>
-			</number_ps_skill>
 			<number_ps_skill name="perception">
 				<skill>Perception</skill>
 			</number_ps_skill>
@@ -313,9 +269,6 @@
 			<number_ps_skill name="diplomacy">
 				<skill>Diplomacy</skill>
 			</number_ps_skill>
-			<number_ps_skill name="gatherinfo">
-				<skill>Gather Information</skill>
-			</number_ps_skill>
 			<number_ps_skill name="intimidate">
 				<skill>Intimidate</skill>
 			</number_ps_skill>
@@ -326,26 +279,11 @@
 				</anchored>
 				<skill>Acrobatics</skill>
 			</number_ps_skill>
-			<number_ps_skill name="climb">
-				<skill>Climb</skill>
-			</number_ps_skill>
 			<number_ps_skill name="heal">
 				<skill>Heal</skill>
 			</number_ps_skill>
-			<number_ps_skill name="jump">
-				<skill>Jump</skill>
-			</number_ps_skill>
 			<number_ps_skill name="survival">
 				<skill>Survival</skill>
-			</number_ps_skill>
-			<number_ps_skill name="hide">
-				<anchored>
-					<left offset="15" />
-				</anchored>
-				<skill>Hide</skill>
-			</number_ps_skill>
-			<number_ps_skill name="movesilent">
-				<skill>Move Silently</skill>
 			</number_ps_skill>
 			<number_ps_skill name="stealth">
 				<anchored>

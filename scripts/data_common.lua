@@ -633,10 +633,6 @@ skilldata = {
 	["Bluff"] = {
 			stat = "charisma"
 		},
-	["Climb"] = {
-			stat = "strength",
-			armorcheckmultiplier = 1
-		},
 	["Craft"] = {
 			sublabeling = true,
 			stat = "intelligence"
@@ -746,7 +742,6 @@ pssavedata = {
 psskilldata = {
 	"Acrobatics",
 	"Bluff",
-	"Climb",
 	"Diplomacy",
 	"Heal",
 	"Intimidate",
