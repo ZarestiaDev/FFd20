@@ -26,20 +26,6 @@
 	<icon name="button_skillpe_down" file="graphics/buttons/button_skillpe_down.png" />
 	<icon name="button_skillpr" file="graphics/buttons/button_skillpr.png" />
 	<icon name="button_skillpr_down" file="graphics/buttons/button_skillpr_down.png" />
-	
-	<!-- Sidebar -->
-	<icon name="button_classes" file="graphics/sidebar/button_classes.png" />
-	<icon name="button_classes_down" file="graphics/sidebar/button_classes_down.png" />
-	<icon name="button_feats" file="graphics/sidebar/button_feats.png" />
-	<icon name="button_feats_down" file="graphics/sidebar/button_feats_down.png" />
-	<icon name="button_races" file="graphics/sidebar/button_races.png" />
-	<icon name="button_races_down" file="graphics/sidebar/button_races_down.png" />
-	<icon name="button_skills" file="graphics/sidebar/button_skills.png" />
-	<icon name="button_skills_down" file="graphics/sidebar/button_skills_down.png" />
-	<icon name="button_spells" file="graphics/sidebar/button_spells.png" />
-	<icon name="button_spells_down" file="graphics/sidebar/button_spells_down.png" />
-	<icon name="button_specialabilities" file="graphics/sidebar/button_specialabilities.png" />
-	<icon name="button_specialabilities_down" file="graphics/sidebar/button_specialabilities_down.png" />
 
 	<!-- Rolls -->
 	<icon name="roll_attack" file="graphics/icons/roll_attack.png" />
@@ -69,7 +55,6 @@
 	<icon name="char_weapon_melee" file="graphics/icons/char_weapon_melee.png" />
 	<icon name="char_weapon_ranged" file="graphics/icons/char_weapon_ranged.png" />
 	<icon name="char_weapon_cm" file="graphics/icons/char_weapon_cm.png" />
-	<icon name="char_quicklist" file="graphics/icons/char_quicklist.png" />
 	<icon name="char_armorcheck" file="graphics/icons/char_armorcheck.png" />
 	<icon name="char_coin" file="graphics/icons/char_coin.png" />
 </root>
