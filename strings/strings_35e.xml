@@ -115,33 +115,6 @@
 	<string name="option_label_HRNH">CT: NPC hit points</string>
 	<string name="option_label_HRST">CT: Auto stabilization rolls</string>
 	<string name="option_label_HRFC">Attack: Fumble/Crit Tables</string>
-
-	<!-- Languages -->
-	<string name="language_value_abyssal">Abyssal</string>
-	<string name="language_value_aklo">Aklo</string>
-	<string name="language_value_aquan">Aquan</string>
-	<string name="language_value_auran">Auran</string>
-	<string name="language_value_catfolk">Catfolk</string>
-	<string name="language_value_celestial">Celestial</string>
-	<string name="language_value_common">Common</string>
-	<string name="language_value_draconic">Draconic</string>
-	<string name="language_value_druidic">Druidic</string>
-	<string name="language_value_dwarven">Dwarven</string>
-	<string name="language_value_elven">Elven</string>
-	<string name="language_value_giant">Giant</string>
-	<string name="language_value_gnoll">Gnoll</string>
-	<string name="language_value_gnome">Gnome</string>
-	<string name="language_value_goblin">Goblin</string>
-	<string name="language_value_grippli">Grippli</string>
-	<string name="language_value_halfling">Halfling</string>
-	<string name="language_value_ignan">Ignan</string>
-	<string name="language_value_infernal">Infernal</string>
-	<string name="language_value_orc">Orc</string>
-	<string name="language_value_sylvan">Sylvan</string>
-	<string name="language_value_terran">Terran</string>
-	<string name="language_value_undercommon">Undercommon</string>
-	<string name="language_value_vanaran">Vanaran</string>
-	<string name="language_value_vishkanya">Vishkanya</string>
 	
 	<!-- Combat Tracker -->
 	<string name="ct_label_hptemp">Tmp</string>
