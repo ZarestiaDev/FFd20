@@ -32,9 +32,6 @@
 			<sub_ps name="inventory">
 				<class>ps_inventory</class>
 			</sub_ps>
-			<sub_ps name="order">
-				<class>ps_order</class>
-			</sub_ps>
 			<sub_ps name="xp">
 				<class>ps_xp</class>
 			</sub_ps>
@@ -51,10 +48,6 @@
 				<tab>
 					<icon>tab_inventory</icon>
 					<subwindow>inventory</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_order</icon>
-					<subwindow>order</subwindow>
 				</tab>
 				<tab>
 					<icon>tab_xp</icon>
@@ -95,18 +88,11 @@
 			<sub_ps name="inventory">
 				<class>ps_inventory</class>
 			</sub_ps>
-			<sub_ps name="order">
-				<class>ps_order</class>
-			</sub_ps>
 			
 			<tabs_partysheet name="tabs">
 				<tab>
 					<icon>tab_inventory</icon>
 					<subwindow>inventory</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_order</icon>
-					<subwindow>order</subwindow>
 				</tab>
 			</tabs_partysheet>
 			

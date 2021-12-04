@@ -19,7 +19,6 @@ function onOptionChanged()
 		table.insert(aTabs, { sub = "skills", graphic = "tab_skills" });
 	end
 	table.insert(aTabs, { sub = "inventory", graphic = "tab_inventory" });
-	table.insert(aTabs, { sub = "order", graphic = "tab_order" });
 	
 	for i = 1, 4 do
 		if aTabs[i] then
