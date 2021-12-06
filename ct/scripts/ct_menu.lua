@@ -5,7 +5,7 @@
 
 function onInit()
 	if Session.IsHost then
-		registerMenuItem(Interface.getString("menu_init"), "turn", 7);
+		registerMenuItem(Interface.getString("initiative"), "turn", 7);
 		registerMenuItem(Interface.getString("menu_initall"), "shuffle", 7, 8);
 		registerMenuItem(Interface.getString("menu_initnpc"), "mask", 7, 7);
 		registerMenuItem(Interface.getString("menu_initpc"), "portrait", 7, 6);

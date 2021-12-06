@@ -194,7 +194,7 @@ aListViews = {
 	["npc"] = {
 		["byletter"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "npc_grouped_label_name", nWidth=250 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=250 },
 				{ sName = "cr", sType = "number", sHeadingRes = "npc_grouped_label_cr", sTooltipRes = "npc_grouped_tooltip_cr", bCentered=true },
 			},
 			aFilters = { },
@@ -203,7 +203,7 @@ aListViews = {
 		},
 		["bycr"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "npc_grouped_label_name", nWidth=250 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=250 },
 				{ sName = "cr", sType = "number", sHeadingRes = "npc_grouped_label_cr", sTooltipRes = "npc_grouped_tooltip_cr", bCentered=true },
 			},
 			aFilters = { },
@@ -213,7 +213,7 @@ aListViews = {
 		},
 		["bytype"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "npc_grouped_label_name", nWidth=250 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=250 },
 				{ sName = "cr", sType = "number", sHeadingRes = "npc_grouped_label_cr", sTooltipRes = "npc_grouped_tooltip_cr", bCentered=true },
 			},
 			aFilters = { },
@@ -224,7 +224,7 @@ aListViews = {
 	["item"] = {
 		["armor"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "item_grouped_label_name", nWidth=200 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=200 },
 				{ sName = "cost", sType = "string", sHeadingRes = "item_grouped_label_cost", bCentered=true },
 				{ sName = "ac", sType = "number", sHeadingRes = "item_grouped_label_ac", sTooltipRes = "item_grouped_tooltip_ac", nWidth=40, bCentered=true, nSortOrder=1 },
 				{ sName = "maxstatbonus", sType = "number", sHeadingRes = "item_grouped_label_maxstatbonus", sTooltipRes = "item_grouped_tooltip_maxstatbonus", bCentered=true },
@@ -243,7 +243,7 @@ aListViews = {
 		},
 		["weapon"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "item_grouped_label_name", nWidth=200 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=200 },
 				{ sName = "cost", sType = "string", sHeadingRes = "item_grouped_label_cost", bCentered=true },
 				{ sName = "damage", sType = "string", sHeadingRes = "item_grouped_label_damage", nWidth=60, bCentered=true },
 				{ sName = "critical", sType = "string", sHeadingRes = "item_grouped_label_critical", bCentered=true },
@@ -261,7 +261,7 @@ aListViews = {
 		},
 		["equipment"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "item_grouped_label_name", nWidth=200 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=200 },
 				{ sName = "cost", sType = "string", sHeadingRes = "item_grouped_label_cost", bCentered=true },
 				{ sName = "weight", sType = "number", sHeadingRes = "item_grouped_label_weight", sTooltipRes = "item_grouped_tooltip_weight", nWidth=30, bCentered=true },
 			},
@@ -275,7 +275,7 @@ aListViews = {
 	["specialability"] = {
 		["bytype"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "specialability_grouped_label_name", nWidth=250 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=250 },
 			},
 			aFilters = { },
 			aGroups = { { sDBField = "type" } },
@@ -285,7 +285,7 @@ aListViews = {
 	["feat"] = {
 		["bytype"] = {
 			aColumns = {
-				{ sName = "name", sType = "string", sHeadingRes = "feat_grouped_label_name", nWidth=170 },
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
 				{ sName = "prerequisites", sType = "string", sHeadingRes = "feat_grouped_label_prereq", nWidth=240, bWrapped = true },
 				{ sName = "summary", sType = "string", sHeadingRes = "feat_grouped_label_benefit", nWidth=280, bWrapped = true },
 			},

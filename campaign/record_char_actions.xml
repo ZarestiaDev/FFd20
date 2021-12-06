@@ -150,7 +150,7 @@
 			<label>
 				<anchored position="insidetopleft" offset="10,45" />
 				<center />
-				<static textres="char_label_weaponname" />
+				<static textres="name" />
 			</label>
 			<label>
 				<anchored position="insidetopright" offset="326,45" width="29" />
@@ -410,7 +410,7 @@
 			<anchor_column name="columnanchor" />
 
 			<label_column>
-				<static textres="weapon_label_name" />
+				<static textres="name" />
 			</label_column>
 			<string_column name="name" />
 			

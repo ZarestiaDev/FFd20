@@ -7,6 +7,7 @@
 
 <root>
 	<!-- Common -->
+	<string name="name">Name</string>
 	<string name="base">Base</string>
 	<string name="dash">-</string>
 	<string name="str">Str</string>
@@ -64,7 +65,6 @@
 	<string name="menu_restovernight">Overnight Rest</string>
 	<string name="message_restshort">Taking short rest.</string>
 	<string name="message_restovernight">Taking overnight rest.</string>
-	<string name="menu_init">Initiative</string>
 	<string name="menu_initall">Roll All Initiatives</string>
 	<string name="menu_initnpc">Roll NPC Initiatives</string>
 	<string name="menu_initpc">Roll PC Initiatives</string>
@@ -145,7 +145,6 @@
 	<string name="ps_empty_skill">&#171; Skill &#187;</string>
 	<string name="ps_empty_class">&#171; Class &#187;</string>
 
-	<string name="ps_label_name">Name</string>
 	<string name="ps_label_class">Class</string>
 	<string name="ps_label_abilities">Abilities</string>
 	<string name="ps_label_dr">Special Defenses</string>
@@ -188,7 +187,6 @@
 	<string name="ps_tooltip_xpawarded">Awarded?</string>
 	<string name="ps_label_xp">XP</string>
 	<string name="ps_label_xptype">Type</string>
-	<string name="ps_label_xpname">Name</string>
 	
 	<string name="ps_tooltip_showrollon">Show Roll Results</string>
 	<string name="ps_tooltip_showrolloff">Hide Roll Results</string>
@@ -352,7 +350,6 @@
 	<string name="char_tooltip_skilladdcraft">Add Craft Skill</string>
 	<string name="char_tooltip_skilladd">Add Custom Skill</string>
 	<string name="char_tooltip_skillclass">Class skill</string>
-	<string name="char_label_skillname">Name</string>
 	<string name="char_label_skillranks">Ranks</string>
 	<string name="char_label_skillability">Stat</string>
 	<string name="char_label_skillmisc">Misc</string>
@@ -394,7 +391,6 @@
 
 	<!-- Character - Actions -->
 	<string name="char_label_weapons">Weapons</string>
-	<string name="char_label_weaponname">Name</string>
 	<string name="char_label_weapontype">M/R</string>
 	<string name="char_label_weaponnumatt">#att</string>
 	<string name="char_label_weaponattacks">Attacks</string>
@@ -450,7 +446,6 @@
 	<string name="battle_tooltip_xp">Experience Points</string>
 	
 	<!-- Items -->
-	<string name="item_grouped_label_name">Name</string>
 	<string name="item_grouped_label_cost">Cost</string>
 	<string name="item_grouped_label_weight">Wt</string>
 	<string name="item_grouped_tooltip_weight">Weight</string>
@@ -491,7 +486,6 @@
 	<string name="item_label_prereq">Craft Prereq</string>
 
 	<!-- NPCs -->
-	<string name="npc_grouped_label_name">Name</string>
 	<string name="npc_grouped_label_cr">CR</string>
 	<string name="npc_grouped_tooltip_cr">Challenge Rating</string>
 
@@ -607,7 +601,6 @@
 	<string name="spell_error_dropclasslevelmissing">Unable to determine class or level for new spell, please drop within a class level.</string>
 	
 	<!-- Feats -->
-	<string name="feat_grouped_label_name">Name</string>
 	<string name="feat_grouped_label_prereq">Prerequisites</string>
 	<string name="feat_grouped_label_benefit">Benefits</string>
 	<string name="feat_empty_flavor">&#171; Flavor text &#187;</string>
@@ -637,12 +630,10 @@
 	<string name="spell_label_sr">Spell Resist.</string>
 
 	<!-- Special Abilities -->
-	<string name="specialability_grouped_label_name">Name</string>
 	<string name="specialability_label_type">Type</string>
 	<string name="specialability_empty_type">Class Feature</string>
 		
 	<!-- Reference -->
-	<string name="ref_label_listname">Name</string>
 	<string name="ref_label_listcost">Cost</string>
 	<string name="ref_label_listdamage">Damage</string>
 	<string name="ref_label_listcritical">Critical</string>
@@ -677,7 +668,6 @@
 	
 	<!-- Editors -->
 	<string name="weapon_title">Weapon</string>
-	<string name="weapon_label_name">Name</string>
 	<string name="weapon_label_properties">Properties</string>
 	<string name="weapon_header_attack">ATTACK</string>
 	<string name="weapon_label_atkstat">Stat</string>
@@ -693,7 +683,6 @@
 	<string name="weapon_label_dmgcritmult">Crit</string>
 	<string name="weapon_label_dmgtype">Type</string>
 
-	<string name="power_label_name">Name</string>
 	<string name="power_label_targeting">Targeting</string>
 	<string name="power_label_targetnormal">Targets</string>
 	<string name="power_label_targetself">Self</string>

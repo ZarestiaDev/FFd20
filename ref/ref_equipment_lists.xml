@@ -81,7 +81,7 @@
 			<header_reftablegroup />
 			<label_reftable name="headername">
 				<anchored width="120" />
-				<static textres="ref_label_listname" />
+				<static textres="name" />
 			</label_reftable>
 			<label_reftable name="headercost">
 				<static textres="ref_label_listcost" />
@@ -318,7 +318,7 @@
 			<header_reftablegroup />
 			<label_reftable name="headername">
 				<anchored width="140" />
-				<static textres="ref_label_listname" />
+				<static textres="name" />
 			</label_reftable>
 			<label_reftable name="headercost">
 				<static textres="ref_label_listcost" />

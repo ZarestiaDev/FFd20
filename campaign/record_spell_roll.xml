@@ -44,7 +44,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="name_label">
-				<static textres="power_label_name" />
+				<static textres="name" />
 			</label_column>
 			<simplestringc name="name">
 				<anchored>
@@ -217,7 +217,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column>
-				<static textres="power_label_name" />
+				<static textres="name" />
 			</label_column>
 			<simplestringc name="name">
 				<anchored>
@@ -457,7 +457,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="name_label">
-				<static textres="power_label_name" />
+				<static textres="name" />
 			</label_column>
 			<simplestringc name="name">
 				<anchored>
@@ -668,7 +668,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="name_label">
-				<static textres="power_label_name" />
+				<static textres="name" />
 			</label_column>
 			<simplestringc name="name">
 				<anchored>

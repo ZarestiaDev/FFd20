@@ -89,7 +89,7 @@
 			</genericcontrol>
 			<label>
 				<anchored to="skillframe" position="insidetopleft" offset="85,10" />
-				<static textres="char_label_skillname" />
+				<static textres="name" />
 			</label>
 
 			<genericcontrol name="rightanchor">

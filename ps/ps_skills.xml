@@ -13,7 +13,7 @@
 			
 			<label name="namelabel">
 				<anchored to="headeranchor" position="insidetopleft" offset="50,17" width="110" />
-				<static textres="ps_label_name" />
+				<static textres="name" />
 				<center />
 			</label>
 			

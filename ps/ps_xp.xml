@@ -78,7 +78,7 @@
 					<right anchor="left" relation="relative" offset="-10" />
 					<left parent="encounters" offset="30" />
 				</anchored>
-				<static textres="ps_label_xpname" />
+				<static textres="name" />
 				<center />
 			</label>
 			<button_text>
@@ -161,7 +161,7 @@
 					<right anchor="left" relation="relative" offset="-10" />
 					<left parent="quests" offset="30" />
 				</anchored>
-				<static textres="ps_label_xpname" />
+				<static textres="name" />
 				<center />
 			</label>
 			<button_text>
