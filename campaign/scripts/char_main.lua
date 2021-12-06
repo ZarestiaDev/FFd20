@@ -17,7 +17,7 @@ function onLevelChanged()
 end
 
 function onHealthChanged()
-	local sColor = ActorManager35E.getPCSheetWoundColor(getDatabaseNode());
+	local sColor = ActorManagerFFd20.getPCSheetWoundColor(getDatabaseNode());
 	wounds.setColor(sColor);
 	nonlethal.setColor(sColor);
 end

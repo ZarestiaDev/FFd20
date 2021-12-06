@@ -39,7 +39,7 @@ function onTurnEnd(nodeEntry)
 			local rActor = ActorManager.resolveActor(nodeEntry);
 			local sStatus = ActorHealthManager.getHealthStatus(rActor);
 			if sStatus == ActorHealthManager.STATUS_DYING then
-				if not EffectManager35E.hasEffectCondition(rActor, "Stable") then
+				if not EffectManagerFFd20.hasEffectCondition(rActor, "Stable") then
 					ActionDamage.performStabilizationRoll(rActor);
 				end
 			end
@@ -849,14 +849,14 @@ function parseAttackLine(rActor, sLine)
 					if bRanged then
 						local nDmgBonus = rDamage.clauses[1].modifier;
 						if nDmgBonus > 0 then
-							local nStatBonus = ActorManager35E.getAbilityBonus(rActor, "strength");
+							local nStatBonus = ActorManagerFFd20.getAbilityBonus(rActor, "strength");
 							if (nDmgBonus >= nStatBonus) then
 								rDamage.statmult = 1;
 							end
 						end
 					else
 						local nDmgBonus = rDamage.clauses[1].modifier;
-						local nStatBonus = ActorManager35E.getAbilityBonus(rActor, "strength");
+						local nStatBonus = ActorManagerFFd20.getAbilityBonus(rActor, "strength");
 						
 						if (nStatBonus > 0) and (nDmgBonus > 0) then
 							if nDmgBonus >= math.floor(nStatBonus * 1.5) then

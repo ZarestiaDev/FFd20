@@ -591,7 +591,7 @@
 							setValue(nodeLocal.getValue());
 						elseif nodeParent.getName() == "npc" then
 							local rActor = ActorManager.resolveActor(nodeCreature);
-							local nValue = ActorManager35E.getAbilityBonus(rActor, sLocalAbility);
+							local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sLocalAbility);
 							setValue(nValue);
 						end
 					else

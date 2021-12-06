@@ -128,7 +128,7 @@ function getEffectAdjustments(rActor, sActionStat)
 	local nEffectMod = 0;
 	
 	-- Determine general effect modifiers
-	local aInitDice, nInitMod, nInitCount = EffectManager35E.getEffectsBonus(rActor, {"INIT"});
+	local aInitDice, nInitMod, nInitCount = EffectManagerFFd20.getEffectsBonus(rActor, {"INIT"});
 	if nInitCount > 0 then
 		bEffects = true;
 		for _,vDie in ipairs(aInitDice) do
@@ -138,14 +138,14 @@ function getEffectAdjustments(rActor, sActionStat)
 	end
 	
 	-- Get ability effect modifiers
-	local nAbilityMod, nAbilityEffects = ActorManager35E.getAbilityEffectsBonus(rActor, sActionStat);
+	local nAbilityMod, nAbilityEffects = ActorManagerFFd20.getAbilityEffectsBonus(rActor, sActionStat);
 	if nAbilityEffects > 0 then
 		bEffects = true;
 		nEffectMod = nEffectMod + nAbilityMod;
 	end
 	
 	-- Check special conditions
-	if EffectManager35E.hasEffectCondition(rActor, "Deafened") then
+	if EffectManagerFFd20.hasEffectCondition(rActor, "Deafened") then
 		bEffects = true;
 		nEffectMod = nEffectMod - 4;
 	end

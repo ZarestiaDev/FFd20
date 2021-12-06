@@ -30,12 +30,12 @@
 	<includefile source="graphics/graphics_icons.xml" />
 	
 	<!-- Strings -->
-	<includefile source="strings/strings_35e.xml" />
+	<includefile source="strings/strings_FFd20.xml" />
 
 	<!-- Desktop -->
-	<script name="Desktop35E" file="scripts/data_desktop_35E.lua" />
-	<script name="LibraryData35E" file="scripts/data_library_35E.lua" />
-	<script name="Options35E" file="scripts/data_options_35E.lua" />
+	<script name="DesktopFFd20" file="scripts/data_desktop_FFd20.lua" />
+	<script name="LibraryDataFFd20" file="scripts/data_library_FFd20.lua" />
+	<script name="OptionsFFd20" file="scripts/data_options_FFd20.lua" />
 	<includefile source="desktop/desktop_classes.xml" />
 
 	<!-- Utility -->
@@ -93,9 +93,9 @@
 	<script name="GameSystem" file="scripts/manager_gamesystem.lua" />
 	<script name="CampaignDataManager2" file="scripts/manager_campaigndata2.lua" />
 
-	<script name="ActorManager35E" file="scripts/manager_actor_35E.lua" />
+	<script name="ActorManagerFFd20" file="scripts/manager_actor_FFd20.lua" />
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
-	<script name="EffectManager35E" file="scripts/manager_effect_35E.lua" />
+	<script name="EffectManagerFFd20" file="scripts/manager_effect_FFd20.lua" />
 	<script name="ItemManager2" file="scripts/manager_item2.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />
 	<script name="TokenManager2" file="scripts/manager_token2.lua" />

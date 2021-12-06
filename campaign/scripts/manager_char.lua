@@ -785,7 +785,7 @@ function getWeaponDamageRollStructures(nodeWeapon)
 		if sDmgAbility ~= "" then
 			nMult = DB.getValue(v, "statmult", 1);
 			nMax = DB.getValue(v, "statmax", 0);
-			local nAbilityBonus = ActorManager35E.getAbilityBonus(rActor, sDmgAbility);
+			local nAbilityBonus = ActorManagerFFd20.getAbilityBonus(rActor, sDmgAbility);
 			if nMax > 0 then
 				nAbilityBonus = math.min(nAbilityBonus, nMax);
 			end
@@ -873,7 +873,7 @@ function resetHealth(nodeChar)
 	local rActor = ActorManager.resolveActor(nodeChar);
 	local sStatus = ActorHealthManager.getHealthStatus(rActor);
 	if (sStatus ~= ActorHealthManager.STATUS_DYING) and (sStatus ~= ActorHealthManager.STATUS_DEAD) then
-		ActorManager35E.removeStableEffect(rActor);
+		ActorManagerFFd20.removeStableEffect(rActor);
 	end
 end
 
@@ -956,7 +956,7 @@ function getSkillValue(rActor, sSkill, sSubSkill)
 		else
 			if rSkill then
 				if rSkill.stat then
-					nValue = nValue + ActorManager35E.getAbilityBonus(rActor, rSkill.stat);
+					nValue = nValue + ActorManagerFFd20.getAbilityBonus(rActor, rSkill.stat);
 				end
 				
 				if rSkill.armorcheckmultiplier then

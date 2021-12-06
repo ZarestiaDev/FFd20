@@ -188,11 +188,11 @@ end
 function getDeathThreshold(rActor)
 	local nDying = 10;
 
-	local nStat = ActorManager35E.getAbilityScore(rActor, "constitution");
+	local nStat = ActorManagerFFd20.getAbilityScore(rActor, "constitution");
 	if nStat < 0 then
 		nDying = 10;
 	else
-		nDying = nStat - ActorManager35E.getAbilityDamage(rActor, "constitution");
+		nDying = nStat - ActorManagerFFd20.getAbilityDamage(rActor, "constitution");
 		if nDying < 1 then
 			nDying = 1;
 		end
@@ -205,7 +205,7 @@ function getStabilizationRoll(rActor)
 	local rRoll = { sType = "stabilization", sDesc = "[STABILIZATION]" };
 	
 	rRoll.aDice = { "d20" };
-	rRoll.nMod = ActorManager35E.getAbilityBonus(rActor, "constitution");
+	rRoll.nMod = ActorManagerFFd20.getAbilityBonus(rActor, "constitution");
 		
 	local nHP = 0;
 	local nWounds = 0;
@@ -258,7 +258,7 @@ function performConcentrationCheck(draginfo, rActor, nodeSpellClass)
 	end
 
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0);
-	rRoll.nMod = nCL + ActorManager35E.getAbilityBonus(rActor, sAbility);
+	rRoll.nMod = nCL + ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
 	local nCCMisc = DB.getValue(nodeSpellClass, "cc.misc", 0);
 	if nCCMisc ~= 0 then

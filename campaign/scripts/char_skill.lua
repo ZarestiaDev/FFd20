@@ -33,10 +33,6 @@ function updateWindow()
 	end
 end
 
-function onSystemChanged(bPFMode)
-	total.onSourceUpdate();
-end
-
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
 		local node = getDatabaseNode();

@@ -42,7 +42,7 @@ function onStatUpdate()
 		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
 		local rActor = ActorManager.resolveActor(nodeCreature);
-		local nValue = ActorManager35E.getAbilityBonus(rActor, sAbility);
+		local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
 		dcstatmod.setValue(nValue);
 	end

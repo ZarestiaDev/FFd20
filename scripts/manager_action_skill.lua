@@ -128,23 +128,23 @@ function modSkill(rSource, rTarget, rRoll)
 		end
 		
 		-- Get effects
-		local aAddDice, nAddMod, nEffectCount = EffectManager35E.getEffectsBonus(rSource, {"SKILL"}, false, aSkillFilter);
+		local aAddDice, nAddMod, nEffectCount = EffectManagerFFd20.getEffectsBonus(rSource, {"SKILL"}, false, aSkillFilter);
 		if (nEffectCount > 0) then
 			bEffects = true;
 		end
 		
 		-- Get condition modifiers
-		if EffectManager35E.hasEffectCondition(rSource, "Frightened") or 
-				EffectManager35E.hasEffectCondition(rSource, "Panicked") or
-				EffectManager35E.hasEffectCondition(rSource, "Shaken") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
+				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
+				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Sickened") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Sickened") then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Blinded") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Blinded") then
 			if sActionStat == "strength" or sActionStat == "dexterity" then
 				bEffects = true;
 				nAddMod = nAddMod - 4;
@@ -152,13 +152,13 @@ function modSkill(rSource, rTarget, rRoll)
 				bEffects = true;
 				nAddMod = nAddMod - 4;
 			end
-		elseif EffectManager35E.hasEffectCondition(rSource, "Dazzled") then
+		elseif EffectManagerFFd20.hasEffectCondition(rSource, "Dazzled") then
 			if sSkillLower == "perception" then
 				bEffects = true;
 				nAddMod = nAddMod - 1;
 			end
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Fascinated") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Fascinated") then
 			if sSkillLower == "perception" then
 				bEffects = true;
 				nAddMod = nAddMod - 4;
@@ -167,14 +167,14 @@ function modSkill(rSource, rTarget, rRoll)
 		-- Exhausted and Fatigued are handled by the effect checks for general ability modifiers
 
 		-- Get ability modifiers
-		local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sActionStat);
+		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 		if nBonusEffects > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nBonusStat;
 		end
 		
 		-- Get negative levels
-		local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
 		if nNegLevelCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod - nNegLevelMod;

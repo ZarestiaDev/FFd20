@@ -241,7 +241,7 @@ function onStabilization(rSource, rTarget, rRoll)
 	Comm.deliverChatMessage(rMessage);
 
 	if bSuccess then
-		ActorManager35E.applyStableEffect(rSource);
+		ActorManagerFFd20.applyStableEffect(rSource);
 	else
 		applyFailedStabilization(rSource);
 	end
@@ -276,10 +276,10 @@ end
 function applyAbilityEffectsToModRoll(rRoll, rSource, rTarget)
 	for _,vClause in ipairs(rRoll.clauses) do
 		-- Get original stat modifier
-		local nStatMod = ActorManager35E.getAbilityBonus(rSource, vClause.stat);
+		local nStatMod = ActorManagerFFd20.getAbilityBonus(rSource, vClause.stat);
 		
 		-- Get any stat effects bonus
-		local nAbilityEffectMod, nAbilityEffects = ActorManager35E.getAbilityEffectsBonus(rSource, vClause.stat);
+		local nAbilityEffectMod, nAbilityEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, vClause.stat);
 		if nAbilityEffects > 0 then
 			rRoll.bEffects = true;
 			
@@ -367,9 +367,9 @@ end
 function applyDmgEffectsToModRoll(rRoll, rSource, rTarget)
 	local tEffects, nEffectCount;
 	if rRoll.sType == "spdamage" then
-		tEffects, nEffectCount = EffectManager35E.getEffectsBonusByType(rSource, "DMGS", true, rRoll.tAttackFilter, rTarget);
+		tEffects, nEffectCount = EffectManagerFFd20.getEffectsBonusByType(rSource, "DMGS", true, rRoll.tAttackFilter, rTarget);
 	else
-		tEffects, nEffectCount = EffectManager35E.getEffectsBonusByType(rSource, "DMG", true, rRoll.tAttackFilter, rTarget);
+		tEffects, nEffectCount = EffectManagerFFd20.getEffectsBonusByType(rSource, "DMG", true, rRoll.tAttackFilter, rTarget);
 	end
 	if nEffectCount > 0 then
 		-- Use the first damage clause to determine damage type and crit multiplier for effect damage
@@ -454,12 +454,12 @@ end
 
 function applyConditionsToModRoll(rRoll, rSource, rTarget)
 	if rRoll.sType ~= "spdamage" then
-		if EffectManager35E.hasEffectCondition(rSource, "Sickened") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Sickened") then
 			rRoll.nMod = rRoll.nMod - 2;
 			rRoll.nEffectMod = rRoll.nEffectMod - 2;
 			rRoll.bEffects = true;
 		end
-		if EffectManager35E.hasEffect(rSource, "Incorporeal") and (rRoll.range == "M") 
+		if EffectManagerFFd20.hasEffect(rSource, "Incorporeal") and (rRoll.range == "M") 
 				and not rRoll.sDesc:lower():match("incorporeal touch") then
 			rRoll.bEffects = true;
 			table.insert(rRoll.tNotifications, "[INCORPOREAL]");
@@ -484,9 +484,9 @@ function applyDmgTypeEffectsToModRoll(rRoll, rSource, rTarget)
 	local tAddDmgTypes = {};
 	local tDmgTypeEffects;
 	if rRoll.sType == "spdamage" then
-		tDmgTypeEffects = EffectManager35E.getEffectsByType(rSource, "DMGSTYPE", nil, rTarget);
+		tDmgTypeEffects = EffectManagerFFd20.getEffectsByType(rSource, "DMGSTYPE", nil, rTarget);
 	else
-		tDmgTypeEffects = EffectManager35E.getEffectsByType(rSource, "DMGTYPE", nil, rTarget);
+		tDmgTypeEffects = EffectManagerFFd20.getEffectsByType(rSource, "DMGTYPE", nil, rTarget);
 	end
 	for _,rEffectComp in ipairs(tDmgTypeEffects) do
 		for _,v2 in ipairs(rEffectComp.remainder) do
@@ -543,9 +543,9 @@ end
 function applyTargetedDmgEffectsToDamageOutput(rDamageOutput, rSource, rTarget)
 	local tTargetedDamage;
 	if rDamageOutput.sRollType == "spdamage" then
-		tTargetedDamage = EffectManager35E.getEffectsBonusByType(rSource, {"DMGS"}, true, rDamageOutput.aDamageFilter, rTarget, true);
+		tTargetedDamage = EffectManagerFFd20.getEffectsBonusByType(rSource, {"DMGS"}, true, rDamageOutput.aDamageFilter, rTarget, true);
 	else
-		tTargetedDamage = EffectManager35E.getEffectsBonusByType(rSource, {"DMG"}, true, rDamageOutput.aDamageFilter, rTarget, true);
+		tTargetedDamage = EffectManagerFFd20.getEffectsBonusByType(rSource, {"DMG"}, true, rDamageOutput.aDamageFilter, rTarget, true);
 	end
 
 	local nDamageEffectTotal = 0;
@@ -589,9 +589,9 @@ function applyTargetedDmgTypeEffectsToDamageOutput(rDamageOutput, rSource, rTarg
 	local tAddDmgTypes = {};
 	local tDmgTypeEffects;
 	if rDamageOutput.sRollType == "spdamage" then
-		tDmgTypeEffects = EffectManager35E.getEffectsByType(rSource, "DMGSTYPE", nil, rTarget, true);
+		tDmgTypeEffects = EffectManagerFFd20.getEffectsByType(rSource, "DMGSTYPE", nil, rTarget, true);
 	else
-		tDmgTypeEffects = EffectManager35E.getEffectsByType(rSource, "DMGTYPE", nil, rTarget, true);
+		tDmgTypeEffects = EffectManagerFFd20.getEffectsByType(rSource, "DMGTYPE", nil, rTarget, true);
 	end
 	for _,rEffectComp in ipairs(tDmgTypeEffects) do
 		for _,v2 in ipairs(rEffectComp.remainder) do
@@ -886,17 +886,17 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	local aWords;
 	
 	-- GET THE DAMAGE ADJUSTMENT EFFECTS
-	local aImmune = EffectManager35E.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource);
-	local aVuln = EffectManager35E.getEffectsBonusByType(rTarget, "VULN", false, {}, rSource);
-	local aResist = EffectManager35E.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource);
-	local aDR = EffectManager35E.getEffectsByType(rTarget, "DR", {}, rSource);
+	local aImmune = EffectManagerFFd20.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource);
+	local aVuln = EffectManagerFFd20.getEffectsBonusByType(rTarget, "VULN", false, {}, rSource);
+	local aResist = EffectManagerFFd20.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource);
+	local aDR = EffectManagerFFd20.getEffectsByType(rTarget, "DR", {}, rSource);
 	
 	local bApplyIncorporeal = false;
 	local bSourceIncorporeal = false;
 	if string.match(rDamageOutput.sOriginal, "%[INCORPOREAL%]") then
 		bSourceIncorporeal = true;
 	end
-	local bTargetIncorporeal = EffectManager35E.hasEffect(rTarget, "Incorporeal");
+	local bTargetIncorporeal = EffectManagerFFd20.hasEffect(rTarget, "Incorporeal");
 	if bTargetIncorporeal and not bSourceIncorporeal then
 		bApplyIncorporeal = true;
 		aImmune["critical"] = true;
@@ -1369,7 +1369,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		-- Apply remaining damage
 		if nNonlethalDmgAmount > 0 then
 			if (nNonlethal + nNonlethalDmgAmount > nTotalHP) then
-				local aRegen = EffectManager35E.getEffectsByType(rTarget, "REGEN");
+				local aRegen = EffectManagerFFd20.getEffectsByType(rTarget, "REGEN");
 				if #aRegen == 0 then
 					local nOver = nNonlethal + nNonlethalDmgAmount - nTotalHP;
 					if nOver > nNonlethalDmgAmount then
@@ -1404,7 +1404,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 						local sLabel = DB.getValue(v, "label", "");
 						local aEffectComps = EffectManager.parseEffect(sLabel);
 						for i = 1, #aEffectComps do
-							local rEffectComp = EffectManager35E.parseEffectComp(aEffectComps[i]);
+							local rEffectComp = EffectManagerFFd20.parseEffectComp(aEffectComps[i]);
 							if rEffectComp.type == "REGEN" then
 								local sRegen = table.concat(rEffectComp.remainder, " ");
 								aClausesOR = decodeAndOrClauses(sRegen);
@@ -1479,12 +1479,12 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	-- Manage Stable effect add/remove when healed
 	if (sOriginalStatus == ActorHealthManager.STATUS_DYING) or (sOriginalStatus == ActorHealthManager.STATUS_DEAD) then
 		if (sNewStatus ~= ActorHealthManager.STATUS_DYING) and (sNewStatus ~= ActorHealthManager.STATUS_DEAD) then
-			ActorManager35E.removeStableEffect(rTarget);
+			ActorManagerFFd20.removeStableEffect(rTarget);
 		else
 			if ((rDamageOutput.sType == "heal") or (rDamageOutput.sType == "fheal") or (rDamageOutput.sType == "regen")) and (rDamageOutput.nVal > 0) then
-				ActorManager35E.applyStableEffect(rTarget);
+				ActorManagerFFd20.applyStableEffect(rTarget);
 			elseif (rDamageOutput.sType == "damage") and (rDamageOutput.nVal > 0) then
-				ActorManager35E.removeStableEffect(rTarget);
+				ActorManagerFFd20.removeStableEffect(rTarget);
 			end
 		end
 	end

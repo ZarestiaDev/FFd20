@@ -264,12 +264,12 @@ function modAttack(rSource, rTarget, rRoll)
 		-- Get attack effect modifiers
 		local bEffects = false;
 		local nEffectCount;
-		aAddDice, nAddMod, nEffectCount = EffectManager35E.getEffectsBonus(rSource, {"ATK"}, false, aAttackFilter, rTarget);
+		aAddDice, nAddMod, nEffectCount = EffectManagerFFd20.getEffectsBonus(rSource, {"ATK"}, false, aAttackFilter, rTarget);
 		if (nEffectCount > 0) then
 			bEffects = true;
 		end
 		if rRoll.sType == "grapple" then
-			local aPFDice, nPFMod, nPFCount = EffectManager35E.getEffectsBonus(rSource, {"CMB"}, false, aAttackFilter, rTarget);
+			local aPFDice, nPFMod, nPFCount = EffectManagerFFd20.getEffectsBonus(rSource, {"CMB"}, false, aAttackFilter, rTarget);
 			if nPFCount > 0 then
 				bEffects = true;
 				for k, v in ipairs(aPFDice) do
@@ -280,53 +280,53 @@ function modAttack(rSource, rTarget, rRoll)
 		end
 		
 		-- Get condition modifiers
-		if EffectManager35E.hasEffect(rSource, "Invisible") then
+		if EffectManagerFFd20.hasEffect(rSource, "Invisible") then
 			bEffects = true;
 			nAddMod = nAddMod + 2;
 			table.insert(aAddDesc, "[CA]");
-		elseif EffectManager35E.hasEffect(rSource, "CA") then
+		elseif EffectManagerFFd20.hasEffect(rSource, "CA") then
 			bEffects = true;
 			table.insert(aAddDesc, "[CA]");
 		end
-		if EffectManager35E.hasEffect(rSource, "Blinded") then
+		if EffectManagerFFd20.hasEffect(rSource, "Blinded") then
 			bEffects = true;
 			table.insert(aAddDesc, "[BLINDED]");
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Dazzled") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Dazzled") then
 			bEffects = true;
 			nAddMod = nAddMod - 1;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Slowed") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Slowed") then
 			bEffects = true;
 			nAddMod = nAddMod - 1;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Entangled") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Entangled") then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
 		if rRoll.sType == "attack" and 
-				(EffectManager35E.hasEffectCondition(rSource, "Pinned") or
-				EffectManager35E.hasEffectCondition(rSource, "Grappled")) then
+				(EffectManagerFFd20.hasEffectCondition(rSource, "Pinned") or
+				EffectManagerFFd20.hasEffectCondition(rSource, "Grappled")) then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Frightened") or 
-				EffectManager35E.hasEffectCondition(rSource, "Panicked") or
-				EffectManager35E.hasEffectCondition(rSource, "Shaken") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
+				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
+				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Sickened") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Sickened") then
 			bEffects = true;
 			nAddMod = nAddMod - 2;
 		end
 
 		-- Get other effect modifiers
-		if EffectManager35E.hasEffectCondition(rSource, "Squeezing") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Squeezing") then
 			bEffects = true;
 			nAddMod = nAddMod - 4;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Prone") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Prone") then
 			if sAttackType == "M" then
 				bEffects = true;
 				nAddMod = nAddMod - 4;
@@ -334,14 +334,14 @@ function modAttack(rSource, rTarget, rRoll)
 		end
 		
 		-- Get ability modifiers
-		local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sActionStat);
+		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 		if nBonusEffects > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nBonusStat;
 		end
 		
 		-- Get negative levels
-		local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
 		if nNegLevelCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod - nNegLevelMod;
@@ -406,7 +406,7 @@ function onAttack(rSource, rTarget, rRoll)
 		rMessage.text = rMessage.text:gsub(" %[AC %d+%]", "");
 		rMessage.text = rMessage.text:gsub(" %[MISS CHANCE %d+%%%]", "");
 	else
-		nDefenseVal, nAtkEffectsBonus, nDefEffectsBonus, nMissChance = ActorManager35E.getDefenseValue(rSource, rTarget, rRoll);
+		nDefenseVal, nAtkEffectsBonus, nDefEffectsBonus, nMissChance = ActorManagerFFd20.getDefenseValue(rSource, rTarget, rRoll);
 		if nAtkEffectsBonus ~= 0 then
 			rAction.nTotal = rAction.nTotal + nAtkEffectsBonus;
 			local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
@@ -516,7 +516,7 @@ function onAttack(rSource, rTarget, rRoll)
 		if rAction.bCritThreat then
 			local rCritConfirmRoll = { sType = "critconfirm", aDice = {"d20"}, bTower = rRoll.bTower, bSecret = rRoll.bSecret };
 				
-			local nCCMod = EffectManager35E.getEffectsBonus(rSource, {"CC"}, true, nil, rTarget);
+			local nCCMod = EffectManagerFFd20.getEffectsBonus(rSource, {"CC"}, true, nil, rTarget);
 			if nCCMod ~= 0 then
 				rCritConfirmRoll.sDesc = string.format("%s [CONFIRM %+d]", rRoll.sDesc, nCCMod);
 			else

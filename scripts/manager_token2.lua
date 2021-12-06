@@ -15,7 +15,7 @@ function onInit()
 	TokenManager.addEffectTagIconBonus(DataCommon.bonuscomps);
 	TokenManager.addEffectTagIconSimple(DataCommon.othercomps);
 	TokenManager.addEffectConditionIcon(DataCommon.condcomps);
-	TokenManager.addDefaultEffectFeatures(nil, EffectManager35E.parseEffectComp);
+	TokenManager.addDefaultEffectFeatures(nil, EffectManagerFFd20.parseEffectComp);
 end
 
 function getHealthInfo(nodeCT)
@@ -24,5 +24,5 @@ function getHealthInfo(nodeCT)
 end
 
 function handleIFEffectTag(rActor, nodeEffect, vComp)
-	return EffectManager35E.checkConditional(rActor, nodeEffect, vComp.remainder);
+	return EffectManagerFFd20.checkConditional(rActor, nodeEffect, vComp.remainder);
 end

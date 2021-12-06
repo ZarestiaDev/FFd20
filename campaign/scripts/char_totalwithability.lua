@@ -59,7 +59,7 @@ function getAbilityBonus(nMaxMod)
 	local rActor = ActorManager.resolveActor(window.getDatabaseNode().getChild(sCharPath));
 	
 	for k, v in ipairs(aAbility) do
-		local nAbilityBonus = ActorManager35E.getAbilityBonus(rActor, getAbility(k));
+		local nAbilityBonus = ActorManagerFFd20.getAbilityBonus(rActor, getAbility(k));
 		if k == 1 and nMaxMod and nMaxMod >= 0 then
 			if nAbilityBonus > nMaxMod then
 				nAbilityBonus = nMaxMod;

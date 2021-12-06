@@ -207,8 +207,8 @@ function parseSpell(nodeSpell)
 	
 	-- Get the description minos some problem characters and in lowercase
 	local sDesc = string.lower(DB.getValue(nodeSpell, "description", ""));
-	sDesc = string.gsub(sDesc, "’", "'");
-	sDesc = string.gsub(sDesc, "–", "-");
+	sDesc = string.gsub(sDesc, "ï¿½", "'");
+	sDesc = string.gsub(sDesc, "ï¿½", "-");
 	
 	local aWords = StringManager.parseWords(sDesc);
 	
@@ -695,9 +695,9 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 			end
 			
 			if rAction.cm then
-				rAction.modifier = ActorManager35E.getAbilityScore(rActor, "cmb") + DB.getValue(nodeAction, "atkmod", 0);
+				rAction.modifier = ActorManagerFFd20.getAbilityScore(rActor, "cmb") + DB.getValue(nodeAction, "atkmod", 0);
 			else
-				rAction.modifier = ActorManager35E.getAbilityScore(rActor, "bab") + DB.getValue(nodeAction, "atkmod", 0);
+				rAction.modifier = ActorManagerFFd20.getAbilityScore(rActor, "bab") + DB.getValue(nodeAction, "atkmod", 0);
 			end
 			rAction.modifier = DB.getValue(nodeAction, "atkmod", 0);
 			rAction.crit = 20;
@@ -725,7 +725,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 						rAction.modifier = rAction.modifier + DB.getValue(nodeActor, "attackbonus.melee.size", 0) + DB.getValue(nodeActor, "attackbonus.melee.misc", 0);
 					end
 				end
-				rAction.modifier = rAction.modifier + ActorManager35E.getAbilityScore(rActor, "bab") + ActorManager35E.getAbilityBonus(rActor, rAction.stat);
+				rAction.modifier = rAction.modifier + ActorManagerFFd20.getAbilityScore(rActor, "bab") + ActorManagerFFd20.getAbilityBonus(rActor, rAction.stat);
 			else
 				if rAction.range == "R" then
 					rAction.stat = "dexterity";
@@ -733,9 +733,9 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 					rAction.stat = "strength";
 				end
 				if rAction.cm then
-					rAction.modifier = rAction.modifier + ActorManager35E.getAbilityScore(rActor, "cmb");
+					rAction.modifier = rAction.modifier + ActorManagerFFd20.getAbilityScore(rActor, "cmb");
 				else
-					rAction.modifier = rAction.modifier + ActorManager35E.getAbilityScore(rActor, "bab") + ActorManager35E.getAbilityBonus(rActor, rAction.stat);
+					rAction.modifier = rAction.modifier + ActorManagerFFd20.getAbilityScore(rActor, "bab") + ActorManagerFFd20.getAbilityBonus(rActor, rAction.stat);
 				end
 			end
 		end
@@ -782,7 +782,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 	
 	elseif sType == "effect" then
 		local nodeSpellClass = DB.getChild(nodeAction, ".......");
-		rAction.sName = EffectManager35E.evalEffect(rActor, DB.getValue(nodeAction, "label", ""), nodeSpellClass);
+		rAction.sName = EffectManagerFFd20.evalEffect(rActor, DB.getValue(nodeAction, "label", ""), nodeSpellClass);
 
 		rAction.sApply = DB.getValue(nodeAction, "apply", "");
 		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
@@ -871,7 +871,7 @@ function getActionAbilityBonus(nodeAction)
 	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
 	local rActor = ActorManager.resolveActor(nodeCreature);
-	return ActorManager35E.getAbilityBonus(rActor, sAbility);
+	return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 end
 
 function getActionCLC(nodeAction)
@@ -919,7 +919,7 @@ function getActionMod(rActor, nodeAction, sStat, nStatMax)
 			nStat = math.floor((nStat + 1.5) / 2);
 		end
 	else
-		nStat = ActorManager35E.getAbilityBonus(rActor, sStat);
+		nStat = ActorManagerFFd20.getAbilityBonus(rActor, sStat);
 	end
 	
 	if nStat > 0 and nStatMax and nStatMax > 0 then

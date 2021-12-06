@@ -67,10 +67,10 @@ function modHeal(rSource, rTarget, rRoll)
 		-- Apply ability modifiers
 		for kClause,vClause in ipairs(rRoll.clauses) do
 			-- Get original stat modifier
-			local nStatMod = ActorManager35E.getAbilityBonus(rSource, vClause.stat);
+			local nStatMod = ActorManagerFFd20.getAbilityBonus(rSource, vClause.stat);
 			
 			-- Get any stat effects bonus
-			local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, vClause.stat);
+			local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, vClause.stat);
 			if nBonusEffects > 0 then
 				bEffects = true;
 				
@@ -99,7 +99,7 @@ function modHeal(rSource, rTarget, rRoll)
 		
 		-- Apply general heal modifiers
 		local nEffectCount;
-		local aAddDice, nAddMod, nEffectCount = EffectManager35E.getEffectsBonus(rSource, {"HEAL"});
+		local aAddDice, nAddMod, nEffectCount = EffectManagerFFd20.getEffectsBonus(rSource, {"HEAL"});
 		if (nEffectCount > 0) then
 			bEffects = true;
 			

@@ -185,7 +185,7 @@ function modCastSave(rSource, rTarget, rRoll)
 			sActionStat = DataCommon.ability_stol[sModStat];
 		end
 		if sActionStat then
-			local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sActionStat);
+			local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 			if nBonusEffects > 0 then
 				local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
 				rRoll.sDesc = rRoll.sDesc .. " " .. string.format(sFormat, nBonusStat);
@@ -201,14 +201,14 @@ function modCLC(rSource, rTarget, rRoll)
 		local nAddMod = 0;
 		
 		-- Get CLC modifier effects
-		local nCLCMod, nCLCCount = EffectManager35E.getEffectsBonus(rSource, {"CLC"}, true, nil, rTarget);
+		local nCLCMod, nCLCCount = EffectManagerFFd20.getEffectsBonus(rSource, {"CLC"}, true, nil, rTarget);
 		if nCLCCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nCLCMod;
 		end
 		
 		-- Get negative levels
-		local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
 		if nNegLevelCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod - nNegLevelMod;
@@ -242,7 +242,7 @@ function modConcentration(rSource, rTarget, rRoll)
 			sActionStat = DataCommon.ability_stol[sModStat];
 		end
 
-		local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sActionStat);
+		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 		if nBonusEffects > 0 then
 			rRoll.nMod = rRoll.nMod + nBonusStat;
 
@@ -270,7 +270,7 @@ end
 
 function onCastCLC(rSource, rTarget, rRoll)
 	if rTarget then
-		local nSR = ActorManager35E.getSpellDefense(rTarget);
+		local nSR = ActorManagerFFd20.getSpellDefense(rTarget);
 		if nSR > 0 then
 			if not string.match(rRoll.sDesc, "%[SR NOT ALLOWED%]") then
 				local rRoll = { sType = "clc", sDesc = rRoll.sDesc, aDice = {"d20"}, nMod = rRoll.nMod, bRemoveOnMiss = rRoll.bRemoveOnMiss };
@@ -306,7 +306,7 @@ function onCLC(rSource, rTarget, rRoll)
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
 		
 		if bSRAllowed then
-			local nSR = ActorManager35E.getSpellDefense(rTarget);
+			local nSR = ActorManagerFFd20.getSpellDefense(rTarget);
 			if nSR > 0 then
 				if nTotal >= nSR then
 					rMessage.text = rMessage.text .. " [SUCCESS]";

@@ -71,7 +71,7 @@ function onDamageChanged()
 		if sAbility ~= "" then
 			local nMult = DB.getValue(v, "statmult", 1);
 			local nMax = DB.getValue(v, "statmax", 0);
-			local nAbilityBonus = ActorManager35E.getAbilityBonus(rActor, sAbility);
+			local nAbilityBonus = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 			if nMax > 0 then
 				nAbilityBonus = math.min(nAbilityBonus, nMax);
 			end

@@ -38,7 +38,7 @@ function getRoll(rActor, sAbilityStat)
 	local rRoll = {};
 	rRoll.sType = "ability";
 	rRoll.aDice = { "d20" };
-	rRoll.nMod = ActorManager35E.getAbilityBonus(rActor, sAbilityStat);
+	rRoll.nMod = ActorManagerFFd20.getAbilityBonus(rActor, sAbilityStat);
 	
 	rRoll.sDesc = "[ABILITY]";
 	rRoll.sDesc = rRoll.sDesc .. " " .. StringManager.capitalize(sAbilityStat);
@@ -67,32 +67,32 @@ function modRoll(rSource, rTarget, rRoll)
 
 		-- GET ACTION MODIFIERS
 		local nEffectCount;
-		aAddDice, nAddMod, nEffectCount = EffectManager35E.getEffectsBonus(rSource, {"ABIL"}, false, {sAbility});
+		aAddDice, nAddMod, nEffectCount = EffectManagerFFd20.getEffectsBonus(rSource, {"ABIL"}, false, {sAbility});
 		if (nEffectCount > 0) then
 			bEffects = true;
 		end
 		
 		-- GET CONDITION MODIFIERS
-		if EffectManager35E.hasEffectCondition(rSource, "Frightened") or 
-				EffectManager35E.hasEffectCondition(rSource, "Panicked") or
-				EffectManager35E.hasEffectCondition(rSource, "Shaken") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
+				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
+				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
 			nAddMod = nAddMod - 2;
 			bEffects = true;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Sickened") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Sickened") then
 			nAddMod = nAddMod - 2;
 			bEffects = true;
 		end
 
 		-- GET STAT MODIFIERS
-		local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sAbility);
+		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sAbility);
 		if nBonusEffects > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nBonusStat;
 		end
 		
 		-- HANDLE NEGATIVE LEVELS
-		local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
 		if nNegLevelCount > 0 then
 			nAddMod = nAddMod - nNegLevelMod;
 			bEffects = true;

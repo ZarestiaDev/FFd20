@@ -273,21 +273,21 @@ function evalAbilityHelper(rActor, sEffectAbility, nodeSpellClass)
 
 	local nAbility = nil;
 	if sShortAbility == "STR" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "strength");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "strength");
 	elseif sShortAbility == "DEX" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "dexterity");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "dexterity");
 	elseif sShortAbility == "CON" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "constitution");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "constitution");
 	elseif sShortAbility == "INT" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "intelligence");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "intelligence");
 	elseif sShortAbility == "WIS" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "wisdom");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "wisdom");
 	elseif sShortAbility == "CHA" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "charisma");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "charisma");
 	elseif sShortAbility == "LVL" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "level");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "level");
 	elseif sShortAbility == "BAB" then
-		nAbility = ActorManager35E.getAbilityBonus(rActor, "bab");
+		nAbility = ActorManagerFFd20.getAbilityBonus(rActor, "bab");
 	elseif sShortAbility == "CL" then
 		if nodeSpellClass then
 			nAbility = DB.getValue(nodeSpellClass, "cl", 0);
@@ -789,19 +789,19 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
 	for _,v in ipairs(aConditions) do
 		local sLower = v:lower();
 		if sLower == DataCommon.healthstatusfull then
-			local _,_,nPercentLethal = ActorManager35E.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
 			if nPercentLethal > 0 then
 				bReturn = false;
 				break;
 			end
 		elseif sLower == DataCommon.healthstatushalf then
-			local _,_,nPercentLethal = ActorManager35E.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
 			if nPercentLethal < .5 then
 				bReturn = false;
 				break;
 			end
 		elseif sLower == DataCommon.healthstatuswounded then
-			local _,_,nPercentLethal = ActorManager35E.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
 			if nPercentLethal == 0 then
 				bReturn = false;
 				break;
@@ -822,17 +822,17 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
 			local sTypeCheck = sLower:match("^type%s*%(([^)]+)%)$");
 			local sCustomCheck = sLower:match("^custom%s*%(([^)]+)%)$");
 			if sAlignCheck then
-				if not ActorManager35E.isAlignment(rActor, sAlignCheck) then
+				if not ActorManagerFFd20.isAlignment(rActor, sAlignCheck) then
 					bReturn = false;
 					break;
 				end
 			elseif sSizeCheck then
-				if not ActorManager35E.isSize(rActor, sSizeCheck) then
+				if not ActorManagerFFd20.isSize(rActor, sSizeCheck) then
 					bReturn = false;
 					break;
 				end
 			elseif sTypeCheck then
-				if not ActorManager35E.isCreatureType(rActor, sTypeCheck) then
+				if not ActorManagerFFd20.isCreatureType(rActor, sTypeCheck) then
 					bReturn = false;
 					break;
 				end

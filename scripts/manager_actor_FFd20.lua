@@ -131,23 +131,23 @@ function getAbilityEffectsBonus(rActor, sAbility)
 		return 0, 0;
 	end
 	
-	local nEffectMod, nAbilityEffects = EffectManager35E.getEffectsBonus(rActor, sAbilityEffect, true);
+	local nEffectMod, nAbilityEffects = EffectManagerFFd20.getEffectsBonus(rActor, sAbilityEffect, true);
 	
 	if sAbility == "dexterity" then
-		if EffectManager35E.hasEffectCondition(rActor, "Entangled") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Entangled") then
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
-		if EffectManager35E.hasEffectCondition(rActor, "Grappled") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Grappled") then
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
 	end
 	if sAbility == "dexterity" or sAbility == "strength" then
-		if EffectManager35E.hasEffectCondition(rActor, "Exhausted") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Exhausted") then
 			nEffectMod = nEffectMod - 6;
 			nAbilityEffects = nAbilityEffects + 1;
-		elseif EffectManager35E.hasEffectCondition(rActor, "Fatigued") then
+		elseif EffectManagerFFd20.hasEffectCondition(rActor, "Fatigued") then
 			nEffectMod = nEffectMod - 2;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
@@ -602,72 +602,72 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		
 		-- GET DEFENDER SITUATIONAL MODIFIERS - GENERAL
-		if EffectManager35E.hasEffect(rAttacker, "CA", rDefender, true) then
+		if EffectManagerFFd20.hasEffect(rAttacker, "CA", rDefender, true) then
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rAttacker, "Invisible", rDefender, true) then
+		if EffectManagerFFd20.hasEffect(rAttacker, "Invisible", rDefender, true) then
 			nBonusSituational = nBonusSituational - 2;
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "GRANTCA", rAttacker) then
+		if EffectManagerFFd20.hasEffect(rDefender, "GRANTCA", rAttacker) then
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Blinded") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Blinded") then
 			nBonusSituational = nBonusSituational - 2;
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Cowering") or
-				EffectManager35E.hasEffect(rDefender, "Rebuked") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Cowering") or
+				EffectManagerFFd20.hasEffect(rDefender, "Rebuked") then
 			nBonusSituational = nBonusSituational - 2;
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Slowed") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Slowed") then
 			nBonusSituational = nBonusSituational - 1;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Flat-footed") or 
-				EffectManager35E.hasEffect(rDefender, "Flatfooted") or 
-				EffectManager35E.hasEffect(rDefender, "Climbing") or 
-				EffectManager35E.hasEffect(rDefender, "Running") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Flat-footed") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Flatfooted") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Climbing") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Running") then
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Pinned") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Pinned") then
 			bCombatAdvantage = true;
 			nBonusSituational = nBonusSituational - 4;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Helpless") or 
-				EffectManager35E.hasEffect(rDefender, "Paralyzed") or 
-				EffectManager35E.hasEffect(rDefender, "Petrified") or
-				EffectManager35E.hasEffect(rDefender, "Unconscious") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Helpless") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Paralyzed") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Petrified") or
+				EffectManagerFFd20.hasEffect(rDefender, "Unconscious") then
 			if sAttackType == "M" then
 				nBonusSituational = nBonusSituational - 4;
 			end
 			bZeroAbility = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Kneeling") or 
-				EffectManager35E.hasEffect(rDefender, "Sitting") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Kneeling") or 
+				EffectManagerFFd20.hasEffect(rDefender, "Sitting") then
 			if sAttackType == "M" then
 				nBonusSituational = nBonusSituational - 2;
 			elseif sAttackType == "R" then
 				nBonusSituational = nBonusSituational + 2;
 			end
-		elseif EffectManager35E.hasEffect(rDefender, "Prone") then
+		elseif EffectManagerFFd20.hasEffect(rDefender, "Prone") then
 			if sAttackType == "M" then
 				nBonusSituational = nBonusSituational - 4;
 			elseif sAttackType == "R" then
 				nBonusSituational = nBonusSituational + 4;
 			end
 		end
-		if EffectManager35E.hasEffect(rDefender, "Squeezing") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Squeezing") then
 			nBonusSituational = nBonusSituational - 4;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Stunned") then
+		if EffectManagerFFd20.hasEffect(rDefender, "Stunned") then
 			nBonusSituational = nBonusSituational - 2;
 			if rRoll.sType == "grapple" then
 				nBonusSituational = nBonusSituational - 4;
 			end
 			bCombatAdvantage = true;
 		end
-		if EffectManager35E.hasEffect(rDefender, "Invisible", rAttacker) then
+		if EffectManagerFFd20.hasEffect(rDefender, "Invisible", rAttacker) then
 			bTotalConceal = true;
 		end
 		
@@ -687,7 +687,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		if rRoll.sType == "grapple" then
 			table.insert(aIgnoreEffects, "size");
 		end
-		local aACEffects = EffectManager35E.getEffectsBonusByType(rDefender, {"AC"}, true, aAttackFilter, rAttacker);
+		local aACEffects = EffectManagerFFd20.getEffectsBonusByType(rDefender, {"AC"}, true, aAttackFilter, rAttacker);
 		for k,v in pairs(aACEffects) do
 			if not StringManager.contains(aIgnoreEffects, k) then
 				local sBonusType = DataCommon.actypes[k];
@@ -713,7 +713,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 			end
 		end
 		if rRoll.sType == "grapple" then
-			local nPFMod, nPFCount = EffectManager35E.getEffectsBonus(rDefender, {"CMD"}, true, aAttackFilter, rAttacker);
+			local nPFMod, nPFCount = EffectManagerFFd20.getEffectsBonus(rDefender, {"CMD"}, true, aAttackFilter, rAttacker);
 			if nPFCount > 0 then
 				nBonusAC = nBonusAC + nPFMod;
 			end
@@ -765,7 +765,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		
 		-- HANDLE NEGATIVE LEVELS
 		if rRoll.sType == "grapple" then
-			local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rDefender, {"NLVL"}, true);
+			local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rDefender, {"NLVL"}, true);
 			if nNegLevelCount > 0 then
 				nBonusSituational = nBonusSituational - nNegLevelMod;
 			end
@@ -784,16 +784,16 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 
 		-- GET DEFENDER SITUATIONAL MODIFIERS - COVER
 		if nCover < 8 then
-			local aCover = EffectManager35E.getEffectsByType(rDefender, "SCOVER", aAttackFilter, rAttacker);
-			if #aCover > 0 or EffectManager35E.hasEffect(rDefender, "SCOVER", rAttacker) then
+			local aCover = EffectManagerFFd20.getEffectsByType(rDefender, "SCOVER", aAttackFilter, rAttacker);
+			if #aCover > 0 or EffectManagerFFd20.hasEffect(rDefender, "SCOVER", rAttacker) then
 				nBonusSituational = nBonusSituational + 8 - nCover;
 			elseif nCover < 4 then
-				aCover = EffectManager35E.getEffectsByType(rDefender, "COVER", aAttackFilter, rAttacker);
-				if #aCover > 0 or EffectManager35E.hasEffect(rDefender, "COVER", rAttacker) then
+				aCover = EffectManagerFFd20.getEffectsByType(rDefender, "COVER", aAttackFilter, rAttacker);
+				if #aCover > 0 or EffectManagerFFd20.hasEffect(rDefender, "COVER", rAttacker) then
 					nBonusSituational = nBonusSituational + 4 - nCover;
 				elseif nCover < 2 then
-					aCover = EffectManager35E.getEffectsByType(rDefender, "PCOVER", aAttackFilter, rAttacker);
-					if #aCover > 0 or EffectManager35E.hasEffect(rDefender, "PCOVER", rAttacker) then
+					aCover = EffectManagerFFd20.getEffectsByType(rDefender, "PCOVER", aAttackFilter, rAttacker);
+					if #aCover > 0 or EffectManagerFFd20.hasEffect(rDefender, "PCOVER", rAttacker) then
 						nBonusSituational = nBonusSituational + 2 - nCover;
 					end
 				end
@@ -801,12 +801,12 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		
 		-- GET DEFENDER SITUATIONAL MODIFIERS - CONCEALMENT
-		local aConceal = EffectManager35E.getEffectsByType(rDefender, "TCONC", aAttackFilter, rAttacker);
-		if #aConceal > 0 or EffectManager35E.hasEffect(rDefender, "TCONC", rAttacker) or bTotalConceal or bAttackerBlinded then
+		local aConceal = EffectManagerFFd20.getEffectsByType(rDefender, "TCONC", aAttackFilter, rAttacker);
+		if #aConceal > 0 or EffectManagerFFd20.hasEffect(rDefender, "TCONC", rAttacker) or bTotalConceal or bAttackerBlinded then
 			nMissChance = 50;
 		else
-			aConceal = EffectManager35E.getEffectsByType(rDefender, "CONC", aAttackFilter, rAttacker);
-			if #aConceal > 0 or EffectManager35E.hasEffect(rDefender, "CONC", rAttacker) or bConceal then
+			aConceal = EffectManagerFFd20.getEffectsByType(rDefender, "CONC", aAttackFilter, rAttacker);
+			if #aConceal > 0 or EffectManagerFFd20.hasEffect(rDefender, "CONC", rAttacker) or bConceal then
 				nMissChance = 20;
 			end
 		end
@@ -1051,7 +1051,7 @@ end
 --
 
 function applyStableEffect(rActor)
-	if EffectManager35E.hasEffectCondition(rActor, "Stable") then return; end
+	if EffectManagerFFd20.hasEffectCondition(rActor, "Stable") then return; end
 	
 	local nodeCT = ActorManager.getCTNode(rActor);
 	local aEffect = { sName = "Stable", nDuration = 0 };

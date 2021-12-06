@@ -174,7 +174,7 @@ function modSave(rSource, rTarget, rRoll)
 		local bFlatfooted = false;
 		if not rRoll.bVsSave and ModifierManager.getKey("ATT_FF") then
 			bFlatfooted = true;
-		elseif EffectManager35E.hasEffect(rSource, "Flat-footed") or EffectManager35E.hasEffect(rSource, "Flatfooted") then
+		elseif EffectManagerFFd20.hasEffect(rSource, "Flat-footed") or EffectManagerFFd20.hasEffect(rSource, "Flatfooted") then
 			bFlatfooted = true;
 		end
 
@@ -184,7 +184,7 @@ function modSave(rSource, rTarget, rRoll)
 			rSaveSource = ActorManager.resolveActor(rRoll.sSource);
 		end
 		local aExistingBonusByType = {};
-		local aSaveEffects = EffectManager35E.getEffectsByType(rSource, "SAVE", aSaveFilter, rSaveSource, false);
+		local aSaveEffects = EffectManagerFFd20.getEffectsByType(rSource, "SAVE", aSaveFilter, rSaveSource, false);
 		for _,v in pairs(aSaveEffects) do
 			-- Determine bonus type if any
 			local sBonusType = nil;
@@ -221,32 +221,32 @@ function modSave(rSource, rTarget, rRoll)
 		end
 
 		-- Get condition modifiers
-		if EffectManager35E.hasEffectCondition(rSource, "Frightened") or 
-				EffectManager35E.hasEffectCondition(rSource, "Panicked") or
-				EffectManager35E.hasEffectCondition(rSource, "Shaken") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
+				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
+				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
 			nAddMod = nAddMod - 2;
 			bEffects = true;
 		end
-		if EffectManager35E.hasEffectCondition(rSource, "Sickened") then
+		if EffectManagerFFd20.hasEffectCondition(rSource, "Sickened") then
 			nAddMod = nAddMod - 2;
 			bEffects = true;
 		end
 		if sSave == "reflex" then
-			if EffectManager35E.hasEffectCondition(rSource, "Slowed") then
+			if EffectManagerFFd20.hasEffectCondition(rSource, "Slowed") then
 				nAddMod = nAddMod - 1;
 				bEffects = true;
 			end
 		end
 
 		-- Get ability modifiers
-		local nBonusStat, nBonusEffects = ActorManager35E.getAbilityEffectsBonus(rSource, sActionStat);
+		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 		if nBonusEffects > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nBonusStat;
 		end
 		
 		-- Get negative levels
-		local nNegLevelMod, nNegLevelCount = EffectManager35E.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
 		if nNegLevelCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod - nNegLevelMod;
@@ -356,10 +356,10 @@ function applySave(rSource, rOrigin, rAction, sUser)
 					sSave = sSave:lower();
 				end
 				if sSave == "reflex" then
-					if EffectManager35E.hasEffectCondition(rSource, "Improved Evasion") then 
+					if EffectManagerFFd20.hasEffectCondition(rSource, "Improved Evasion") then 
 						bAvoidDamage = true;
 						msgLong.text = msgLong.text .. " [IMPROVED EVASION]";
-					elseif EffectManager35E.hasEffectCondition(rSource, "Evasion") then
+					elseif EffectManagerFFd20.hasEffectCondition(rSource, "Evasion") then
 						bAvoidDamage = true;
 						msgLong.text = msgLong.text .. " [EVASION]";
 					end
@@ -393,7 +393,7 @@ function applySave(rSource, rOrigin, rAction, sUser)
 					sSave = sSave:lower();
 				end
 				if sSave == "reflex" then
-					if EffectManager35E.hasEffectCondition(rSource, "Improved Evasion") then
+					if EffectManagerFFd20.hasEffectCondition(rSource, "Improved Evasion") then
 						bHalfDamage = true;
 						msgLong.text = msgLong.text .. " [IMPROVED EVASION]";
 					end
