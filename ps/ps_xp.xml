@@ -152,7 +152,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
-				<static textres="ps_label_xptype" />
+				<static textres="type" />
 				<center />
 			</label>
 			<label>

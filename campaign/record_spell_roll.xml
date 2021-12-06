@@ -391,7 +391,7 @@
 			
 			<label name="label_type">
 				<anchored position="insidetopleft" offset="20,25" />
-				<static textres="power_label_dmgtype" />
+				<static textres="type" />
 			</label>
 			<stringu name="type">
 				<anchored to="label_type" position="righthigh" offset="10,0">
@@ -470,7 +470,7 @@
 			</simplestringc>
 
 			<label_column name="healtype_label">
-				<static textres="power_label_healtype" />
+				<static textres="type" />
 			</label_column>
 			<button_stringcycler name="healtype">
 				<anchored width="40" height="20">

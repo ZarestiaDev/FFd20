@@ -8,6 +8,7 @@
 <root>
 	<!-- Common -->
 	<string name="name">Name</string>
+	<string name="type">Type</string>
 	<string name="base">Base</string>
 	<string name="dash">-</string>
 	<string name="str">Str</string>
@@ -186,7 +187,6 @@
 	<string name="ps_label_xpawarded">Aw?</string>
 	<string name="ps_tooltip_xpawarded">Awarded?</string>
 	<string name="ps_label_xp">XP</string>
-	<string name="ps_label_xptype">Type</string>
 	
 	<string name="ps_tooltip_showrollon">Show Roll Results</string>
 	<string name="ps_tooltip_showrolloff">Hide Roll Results</string>
@@ -420,7 +420,6 @@
 	<string name="char_spell_message_selectlevel">Select level for spell (%s) in class (%s).</string>
 
 	<!-- Classes -->
-	<string name="class_label_classtype">Type</string>
 	<string name="class_label_classtype_base">Base</string>
 	<string name="class_label_classtype_prestige">Prestige</string>
 	<string name="class_label_classtype_npc">NPC</string>
@@ -468,7 +467,6 @@
 	<string name="item_grouped_label_properties">Properties</string>
 	<string name="item_grouped_label_damagetype">Damage Type</string>
 	
-	<string name="item_label_type">Type</string>
 	<string name="item_label_subtype">Subtype</string>
 	<string name="item_label_damage">Damage</string>
 	<string name="item_label_dmgtype">Damage Type</string>
@@ -493,7 +491,6 @@
 	<string name="npc_label_typetrap">Trap/Haunt</string>
 	<string name="npc_label_typevehicle">Vehicle</string>
 
-	<string name="npc_label_type">Type</string>
 	<string name="npc_label_alignment">Alignment</string>
 	<string name="npc_label_cr">CR</string>
 	<string name="npc_label_senses">Senses</string>
@@ -553,7 +550,6 @@
 	<string name="enc_message_refreshxp_missingnpcxp">[ERROR] CR for NPC '%s' is not valid. Check the NPC record.</string>
 	
 	<!-- Quests -->
-	<string name="quest_label_type">Type</string>
 	<string name="quest_label_xp">XP</string>
 	
 	<string name="quest_label_typeminor">Minor</string>
@@ -604,7 +600,6 @@
 	<string name="feat_grouped_label_prereq">Prerequisites</string>
 	<string name="feat_grouped_label_benefit">Benefits</string>
 	<string name="feat_empty_flavor">&#171; Flavor text &#187;</string>
-	<string name="feat_label_type">Type</string>
 	<string name="feat_label_prereq">Prerequisites</string>
 	<string name="feat_label_summary">Summary</string>
 	<string name="feat_label_benefit">Benefit</string>
@@ -630,7 +625,6 @@
 	<string name="spell_label_sr">Spell Resist.</string>
 
 	<!-- Special Abilities -->
-	<string name="specialability_label_type">Type</string>
 	<string name="specialability_empty_type">Class Feature</string>
 		
 	<!-- Reference -->
@@ -640,7 +634,6 @@
 	<string name="ref_label_listrange">Range</string>
 	<string name="ref_label_listweight">Weight</string>
 	<string name="ref_label_listproperties">Prop.</string>
-	<string name="ref_label_listtype">Type</string>
 	<string name="ref_label_listarmorname">\rName</string>
 	<string name="ref_label_listarmorcost">\rCost</string>
 	<string name="ref_label_listarmorac">AC\rBonus</string>
@@ -681,7 +674,6 @@
 	<string name="weapon_tooltip_dmgstatmax">Maximum ability bonus to apply (before multiple)</string>
 	<string name="weapon_label_dmgbonus">Bonus</string>
 	<string name="weapon_label_dmgcritmult">Crit</string>
-	<string name="weapon_label_dmgtype">Type</string>
 
 	<string name="power_label_targeting">Targeting</string>
 	<string name="power_label_targetnormal">Targets</string>
@@ -727,7 +719,6 @@
 	<string name="power_tooltip_dicemax">Maximum caster level for dice multiple</string>
 	<string name="power_tooltip_statmult">Multiple of caster level or ability</string>
 	<string name="power_tooltip_statmax">Maximum caster level or ability for multiple</string>
-	<string name="power_label_dmgtype">Type</string>
 	<string name="power_label_dmg_dice">Dice</string>
 	<string name="power_label_dmg_dicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_dmg_stat">Mult x Stat (Max)</string>
@@ -735,7 +726,6 @@
 
 	<string name="power_title_heal">Spell/Ability Heal</string>
 	<string name="power_header_heal">HEAL</string>
-	<string name="power_label_healtype">Type</string>
 	<string name="power_label_healtypenormal">HP</string>
 	<string name="power_label_healtypetemp">TEMP</string>
 	<string name="power_label_heal_dice">Dice</string>

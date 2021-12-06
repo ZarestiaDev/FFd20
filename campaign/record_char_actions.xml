@@ -631,7 +631,7 @@
 			
 			<label name="label_type">
 				<anchored position="insidetopleft" offset="20,25" />
-				<static textres="weapon_label_dmgtype" />
+				<static textres="type" />
 			</label>
 			<stringu name="type">
 				<anchored to="label_type" position="righthigh" offset="10,0">

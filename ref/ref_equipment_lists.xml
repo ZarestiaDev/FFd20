@@ -108,7 +108,7 @@
 			</label_reftable>
 			<label_reftable name="headerdmgtype">
 				<anchored width="150" />
-				<static textres="ref_label_listtype" />
+				<static textres="type" />
 			</label_reftable>
 
 			<list_reftablegroup name="grouplist">

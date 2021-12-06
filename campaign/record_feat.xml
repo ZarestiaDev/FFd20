@@ -106,7 +106,7 @@
 			</label_column>
 
 			<label_column name="type_label">
-				<static textres="feat_label_type" />
+				<static textres="type" />
 			</label_column>
 			<string_columnh name="type">
 				<delaykeyupdate />

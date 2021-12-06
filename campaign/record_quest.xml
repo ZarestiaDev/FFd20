@@ -24,7 +24,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="type_label">
-				<static textres="quest_label_type" />
+				<static textres="type" />
 			</label_column>
 			<button_stringcycler name="type">
 				<anchored width="50">

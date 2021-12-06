@@ -128,7 +128,7 @@
 	<template name="spell_action_healtypelabel">
 		<label name="healtypelabel">
 			<anchored position="insidetopright" offset="90,2" />
-			<static textres="power_label_healtype" />
+			<static textres="type" />
 		</label>
 	</template>
 	<template name="spell_action_healtype">

@@ -124,7 +124,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="classtype_label">
-				<static textres="class_label_classtype" />
+				<static textres="type" />
 			</label_column>
 			<cycler_column_classstat name="classtype">
 				<anchored width="80" />
@@ -323,7 +323,7 @@
 			<anchor_column name="columnanchor" />
 			
 			<label_column name="type_label">
-				<static textres="specialability_label_type" />
+				<static textres="type" />
 			</label_column>
 			<string_columnh name="type">
 				<empty textres="specialability_empty_type" />
