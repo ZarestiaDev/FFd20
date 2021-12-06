@@ -30,7 +30,6 @@
 
 	<template name="button_cc">
 		<button_roll>
-			<tooltip textres="spell_tooltip_cc" />
 			<script>
 				function action(draginfo)
 					local nodeSpellClass = window.getDatabaseNode();
@@ -175,7 +174,6 @@
 		<buttoncontrol>
 			<anchored width="10" height="10" />
 			<icon normal="spell_cast" />
-			<tooltip textres="spell_tooltip_usepower" />
 			<script>
 				function onButtonPress()
 					window.usePower();

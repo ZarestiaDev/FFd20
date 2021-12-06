@@ -48,25 +48,21 @@
 			<label_ct name="label_hp">
 				<anchored position="insidetopright" offset="308,38" width="30" />
 				<static textres="hp" />
-				<tooltip textres="hitpoints" />
 				<center />
 			</label_ct>
 			<label_ct name="label_temp">
 				<anchored position="insidetopright" offset="268,38" width="30" />
 				<static textres="ct_label_hptemp" />
-				<tooltip textres="ct_tooltip_hptemp" />
 				<center />
 			</label_ct>
 			<label_ct name="label_nonlethal">
 				<anchored position="insidetopright" offset="228,38" width="30" />
 				<static textres="ct_label_nonlethal" />
-				<tooltip textres="ct_tooltip_nonlethal" />
 				<center />
 			</label_ct>
 			<label_ct name="label_wounds">
 				<anchored position="insidetopright" offset="188,38" width="30" />
 				<static textres="ct_label_wounds" />
-				<tooltip textres="ct_tooltip_wounds" />
 				<center />
 			</label_ct>
 			<frame_ct>

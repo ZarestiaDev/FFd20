@@ -52,7 +52,6 @@
 					<right anchor="left" relation="relative" offset="5" />
 				</anchored>
 				<static textres="ps_label_xpawarded" />
-				<tooltip textres="ps_tooltip_xpawarded" />
 				<center />
 			</label>
 			<label>
@@ -69,7 +68,6 @@
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<static textres="lvl" />
-				<tooltip textres="level" />
 				<center />
 			</label>
 			<label>
@@ -127,7 +125,6 @@
 					<right anchor="left" relation="relative" offset="5" />
 				</anchored>
 				<static textres="ps_label_xpawarded" />
-				<tooltip textres="ps_tooltip_xpawarded" />
 				<center />
 			</label>
 			<label>
@@ -144,7 +141,6 @@
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<static textres="lvl" />
-				<tooltip textres="level" />
 				<center />
 			</label>
 			<label>

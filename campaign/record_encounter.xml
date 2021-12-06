@@ -54,7 +54,6 @@
 			<label name="cr_label">
 				<anchored to="detailframe" position="insidetopleft" offset="15,15" height="20" />
 				<static textres="battle_label_cr" />
-				<tooltip textres="battle_tooltip_cr" />
 			</label>
 			<basicnumber name="cr" source="level">
 				<anchored to="cr_label" position="righthigh" offset="10,0" width="30" height="20" />
@@ -71,7 +70,6 @@
 			<label>
 				<anchored to="exp" position="lefthigh" offset="10,0" />
 				<static textres="battle_label_xp" />
-				<tooltip textres="battle_label_xp" />
 			</label>
 			<button_enc_refreshxp name="button_refreshxp" />
 		</sheetdata>

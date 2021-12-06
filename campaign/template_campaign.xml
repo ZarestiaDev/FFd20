@@ -307,7 +307,6 @@
 				<left parent="cr" anchor="right" offset="5"/>
 			</anchored>
 			<icon normal="button_enc_refreshcr" pressed="button_enc_refreshcr_down" />
-			<tooltip textres="enc_tooltip_refreshcr" />
 			<script>
 				function onButtonPress()
 					CombatManager2.calcBattleCR(window.getDatabaseNode());
@@ -322,7 +321,6 @@
 				<left parent="exp" anchor="right" offset="5" />
 			</anchored>
 			<icon normal="button_enc_refreshxp" pressed="button_enc_refreshxp_down" />
-			<tooltip textres="enc_tooltip_refreshxp" />
 			<script>
 				function onButtonPress()
 					CombatManager2.calcBattleXP(window.getDatabaseNode());

@@ -22,11 +22,9 @@
 			</genericcontrol>
 			<label_ps_skill name="perceptionlabel">
 				<static textres="ps_label_perception" />
-				<tooltip textres="skill_value_perception" />
 			</label_ps_skill>
 			<label_ps_skill name="smlabel">
 				<static textres="ps_label_sensemotive" />
-				<tooltip textres="skill_value_sensemotive" />
 			</label_ps_skill>
 			<label name="passivelabel">
 				<anchored>
@@ -43,27 +41,21 @@
 					<left offset="15" />
 				</anchored>
 				<static textres="ps_label_knowarcana" />
-				<tooltip textres="skill_value_knowarcana" />
 			</label_ps_skill>
 			<label_ps_skill name="dungeoneeringlabel">
 				<static textres="ps_label_knowdungeoneering" />
-				<tooltip textres="skill_value_knowdungeoneering" />
 			</label_ps_skill>
 			<label_ps_skill name="locallabel">
 				<static textres="ps_label_knowlocal" />
-				<tooltip textres="skill_value_knowlocal" />
 			</label_ps_skill>
 			<label_ps_skill name="naturelabel">
 				<static textres="ps_label_knownature" />
-				<tooltip textres="skill_value_knownature" />
 			</label_ps_skill>
 			<label_ps_skill name="planeslabel">
 				<static textres="ps_label_knowplanes" />
-				<tooltip textres="skill_value_knowplanes" />
 			</label_ps_skill>
 			<label_ps_skill name="religionlabel">
 				<static textres="ps_label_knowreligion" />
-				<tooltip textres="skill_value_knowreligion" />
 			</label_ps_skill>
 			<label name="knowledgeskillslabel">
 				<anchored>
@@ -80,15 +72,12 @@
 					<left offset="15" />
 				</anchored>
 				<static textres="ps_label_bluff" />
-				<tooltip textres="skill_value_bluff" />
 			</label_ps_skill>
 			<label_ps_skill name="diplomacylabel">
 				<static textres="ps_label_diplomacy" />
-				<tooltip textres="skill_value_diplomacy" />
 			</label_ps_skill>
 			<label_ps_skill name="intimidatelabel">
 				<static textres="ps_label_intimidate" />
-				<tooltip textres="skill_value_intimidate" />
 			</label_ps_skill>
 			<label name="socialskillslabel">
 				<anchored>
@@ -105,22 +94,18 @@
 					<left offset="15" />
 				</anchored>
 				<static textres="ps_label_acrobatics" />
-				<tooltip textres="skill_value_acrobatics" />
 			</label_ps_skill>
 			<label_ps_skill name="heallabel">
 				<static textres="ps_label_heal" />
-				<tooltip textres="skill_value_heal" />
 			</label_ps_skill>
 			<label_ps_skill name="survivallabel">
 				<static textres="ps_label_survival" />
-				<tooltip textres="skill_value_survival" />
 			</label_ps_skill>
 			<label_ps_skill name="stealthlabel">
 				<anchored>
 					<left offset="15" />
 				</anchored>
 				<static textres="ps_label_stealth" />
-				<tooltip textres="skill_value_stealth" />
 			</label_ps_skill>
 			<label name="physicalskillslabel">
 				<anchored>
@@ -298,7 +283,6 @@
 					<right parent="religion" />
 					<top offset="30" />
 				</anchored>
-				<tooltip textres="ps_label_senses" />
 			</string_ps>
 			<stringu name="languages">
 				<anchored height="20">
@@ -308,7 +292,6 @@
 				</anchored>
 				<readonly />
 				<nodrag />
-				<tooltip textres="ps_label_languages" />
 			</stringu>
 		</sheetdata>
 	</windowclass>

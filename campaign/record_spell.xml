@@ -15,7 +15,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="name" />
 		<nodelete />
 		<playercontrol />
 		<sharable />
@@ -176,7 +175,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="name" />
 		<nodelete />
 		<sheetdata>
 			<sub_ref_header name="header">

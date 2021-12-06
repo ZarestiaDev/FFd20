@@ -46,7 +46,6 @@
 		<label name="levelcheckviewlabel">
 			<anchored to="levelcheckbutton" position="righthigh" offset="3,0" />
 			<static textres="clc" />
-			<tooltip textres="casterlevelcheck" />
 		</label>
 	</template>
 	<template name="spell_action_levelcheckview">
@@ -501,7 +500,6 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<min>0</min>
-				<tooltip textres="spell_tooltip_ppused" />
 				<tabtarget next="availablelevel0" prev="points"/>
 				<script>
 					function onValueChanged()
@@ -522,7 +520,6 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<min>0</min>
-				<tooltip textres="spell_tooltip_ppmax" />
 				<tabtarget next="pointsused" prev="cl"/>
 				<script>
 					function onValueChanged()
@@ -542,7 +539,6 @@
 					<top offset="12" />
 					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
-				<tooltip textres="spell_tooltip_cc" />
 			</button_cc>
 			<label name="label_cc">
 				<anchored>
@@ -550,7 +546,6 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<static textres="spell_label_cc" />
-				<tooltip textres="spell_tooltip_cc" />
 			</label>
 			<basicnumber name="cl">
 				<anchored width="20" height="20">
@@ -558,7 +553,6 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<min>0</min>
-				<tooltip textres="casterlevel" />
 				<tabtarget next="points" prev="label"/>
 				<script>
 					function onValueChanged()
@@ -572,7 +566,6 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<static textres="cl" />
-				<tooltip textres="casterlevel" />
 			</label>
 			<stringu name="label">
 				<anchored height="20">

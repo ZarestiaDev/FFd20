@@ -10,7 +10,6 @@
 		<buttoncontrol name="button_menu">
 			<bounds>26,11,40,20</bounds>
 			<icon normal="button_menu" pressed="button_menu_down" />
-			<tooltip textres="ct_tooltip_menu" />
 			<script file="ct/scripts/ct_menu.lua" />
 		</buttoncontrol>
 	</template>

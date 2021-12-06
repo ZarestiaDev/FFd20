@@ -126,14 +126,6 @@
 	<string name="ct_label_speed">Spd</string>
 	<string name="ct_label_attack">Atk</string>
 	<string name="ct_label_specialqualities">Special</string>
-
-	<string name="ct_tooltip_hptemp">Temporary Hit Points</string>
-	<string name="ct_tooltip_nonlethal">Nonlethal Wounds</string>
-	<string name="ct_tooltip_wounds">Wounds</string>
-	<string name="ct_tooltip_immediateon">Immediate/Swift Action Used</string>
-	<string name="ct_tooltip_immediateoff">Immediate/Swift Action Not Used</string>
-	<string name="ct_tooltip_size">Size</string>
-	<string name="ct_tooltip_reach">Reach</string>
 	
 	<string name="ct_message_rest">Party taking short rest.</string>
 	<string name="ct_message_restovernight">Party taking overnight rest.</string>
@@ -185,11 +177,7 @@
 	<string name="ps_label_encounters">Encounters</string>
 	<string name="ps_label_quests">Quests</string>
 	<string name="ps_label_xpawarded">Aw?</string>
-	<string name="ps_tooltip_xpawarded">Awarded?</string>
 	<string name="ps_label_xp">XP</string>
-	
-	<string name="ps_tooltip_showrollon">Show Roll Results</string>
-	<string name="ps_tooltip_showrolloff">Hide Roll Results</string>
 	
 	<string name="ps_label_award">Award</string>
 	<string name="ps_menu_awardxp">Award XP</string>
@@ -246,36 +234,8 @@
 	<string name="char_label_speedspecial">Special Movement</string>
 	<string name="char_label_melee">Melee</string>
 	<string name="char_label_ranged">Ranged</string>
-	
-	<string name="char_tooltip_wounds">Wounds</string>
-	<string name="char_tooltip_hptemp">Temporary HP</string>
-	<string name="char_tooltip_nonlethal">Nonlethal wounds</string>
-	<string name="char_tooltip_str">Strength score</string>
-	<string name="char_tooltip_dex">Dexterity score</string>
-	<string name="char_tooltip_con">Constitution score</string>
-	<string name="char_tooltip_int">Intelligence score</string>
-	<string name="char_tooltip_wis">Wisdom score</string>
-	<string name="char_tooltip_cha">Charisma score</string>
-	<string name="char_tooltip_strdamage">Strength damage</string>
-	<string name="char_tooltip_dexdamage">Dexterity damage</string>
-	<string name="char_tooltip_condamage">Constitution damage</string>
-	<string name="char_tooltip_intdamage">Intelligence damage</string>
-	<string name="char_tooltip_wisdamage">Wisdom damage</string>
-	<string name="char_tooltip_chadamage">Charisma damage</string>
-	<string name="char_tooltip_strbonus">Strength bonus</string>
-	<string name="char_tooltip_dexbonus">Dexterity bonus</string>
-	<string name="char_tooltip_conbonus">Constitution bonus</string>
-	<string name="char_tooltip_intbonus">Intelligence bonus</string>
-	<string name="char_tooltip_wisbonus">Wisdom bonus</string>
-	<string name="char_tooltip_chabonus">Charisma bonus</string>
-	<string name="char_tooltip_xp">XP</string>
-	<string name="char_tooltip_xpneeded">XP Needed</string>
-	<string name="char_tooltip_speed">Speed</string>
-	<string name="char_tooltip_atkmelee">Melee Attack</string>
-	<string name="char_tooltip_atkranged">Ranged Attack</string>
 
 	<string name="char_label_skillperception">Percept.</string>
-	<string name="char_tooltip_skillcheck">Check</string>
 	
 	<string name="char_message_raceadd">Race '%s' added to '%s'.</string>
 	<string name="char_message_racialtraitadd">Trait '%s' added to '%s'.</string>
@@ -334,22 +294,12 @@
 	<string name="char_label_combatacdodge">Dodge</string>
 	<string name="char_label_combatsaveclass">Class</string>
 	<string name="char_label_combatatkbase">Base Attack Bonus</string>
-	<string name="char_tooltip_combatatkbase">Base Attack Bonus</string>
 	<string name="char_label_combatatkmelee">Melee</string>
 	<string name="char_label_combatatkranged">Ranged</string>
 	<string name="char_label_combatspeed">Speed</string>
-	
-	<string name="char_tooltip_cmdability2">CMD second ability</string>
-	<string name="char_tooltip_cmdbasemod">CMD base modifier</string>
 
 	<!-- Character - Skills -->
 	<string name="char_label_skillpointsspent">Points Spent</string>
-	<string name="char_tooltip_skilladdprofession">Add Profession Skill</string>
-	<string name="char_tooltip_skilladdperform">Add Perform Skill</string>
-	<string name="char_tooltip_skilladdknowledge">Add Knowledge Skill</string>
-	<string name="char_tooltip_skilladdcraft">Add Craft Skill</string>
-	<string name="char_tooltip_skilladd">Add Custom Skill</string>
-	<string name="char_tooltip_skillclass">Class skill</string>
 	<string name="char_label_skillranks">Ranks</string>
 	<string name="char_label_skillability">Stat</string>
 	<string name="char_label_skillmisc">Misc</string>
@@ -376,9 +326,6 @@
 	<string name="char_label_invenclift">Lift off</string>
 	<string name="char_label_invencdrag">Push/drag</string>
 	<string name="char_label_money">Treasure</string>
-	
-	<string name="char_tooltip_armormodoff">Armor modifiers disabled</string>
-	<string name="char_tooltip_armormodon">Armor modifiers enabled</string>
 	
 	<string name="char_encumbrance_title">Encumbrance</string>
 	<string name="char_label_encstradj">Str Adj</string>
@@ -408,14 +355,6 @@
 	<string name="char_label_weaponrangedthrown">Ranged Thrown</string>
 	<string name="char_label_weaponrangedthrownoh">Ranged Thrown OH</string>
 	
-	<string name="char_tooltip_actionedit">Edit Weapon and Spell Lists</string>
-	<string name="char_tooltip_actionaddspellclass">Add Spell Class</string>
-	<string name="char_tooltip_actionaddweapon">Add Weapon</string>
-	<string name="char_tooltip_weaponmaxability"></string>
-	<string name="char_tooltip_weapontypemelee">Melee</string>
-	<string name="char_tooltip_weapontyperanged">Ranged</string>
-	<string name="char_tooltip_weapontypecm">Combat Maneuver</string>
-	
 	<string name="char_spell_title_selectlevel">Select Level</string>
 	<string name="char_spell_message_selectlevel">Select level for spell (%s) in class (%s).</string>
 
@@ -440,30 +379,20 @@
 
 	<!-- Encounters -->
 	<string name="battle_label_cr">CR</string>
-	<string name="battle_tooltip_cr">Challenge Rating</string>
 	<string name="battle_label_xp">XP</string>
-	<string name="battle_tooltip_xp">Experience Points</string>
 	
 	<!-- Items -->
 	<string name="item_grouped_label_cost">Cost</string>
 	<string name="item_grouped_label_weight">Wt</string>
-	<string name="item_grouped_tooltip_weight">Weight</string>
 	<string name="item_grouped_label_ac">AC</string>
-	<string name="item_grouped_tooltip_ac">Base Armor Class</string>
 	<string name="item_grouped_label_maxstatbonus">Max Dex</string>
-	<string name="item_grouped_tooltip_maxstatbonus">Maximum Dexterity Bonus</string>
 	<string name="item_grouped_label_checkpenalty">Skill</string>
-	<string name="item_grouped_tooltip_checkpenalty">Skill Check Penalty</string>
 	<string name="item_grouped_label_spellfailure">Sp Fail</string>
-	<string name="item_grouped_tooltip_spellfailure">Spell Failure Chance</string>
 	<string name="item_grouped_label_speed30">Spd 30</string>
-	<string name="item_grouped_tooltip_speed30">Speed Adjustment for Base 30</string>
 	<string name="item_grouped_label_speed20">Spd 20</string>
-	<string name="item_grouped_tooltip_speed20">Speed Adjustment for Base 20</string>
 	<string name="item_grouped_label_damage">Damage</string>
 	<string name="item_grouped_label_critical">Crit</string>
 	<string name="item_grouped_label_range">Rng</string>
-	<string name="item_grouped_tooltip_range">Range Increment</string>
 	<string name="item_grouped_label_properties">Properties</string>
 	<string name="item_grouped_label_damagetype">Damage Type</string>
 	
@@ -485,7 +414,6 @@
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>
-	<string name="npc_grouped_tooltip_cr">Challenge Rating</string>
 
 	<string name="npc_label_typecreature">Creature</string>
 	<string name="npc_label_typetrap">Trap/Haunt</string>
@@ -540,12 +468,7 @@
 	<string name="npc_label_decks">Decks</string>
 	<string name="npc_label_weapons">Weapons</string>
 	
-	<string name="npc_tooltip_spelledit">Edit Spell List</string>
-	<string name="npc_tooltip_spelladdclass">Add Spell Class</string>
-	
 	<!-- Encounters -->
-	<string name="enc_tooltip_refreshcr">Refresh CR</string>
-	<string name="enc_tooltip_refreshxp">Refresh XP</string>
 	<string name="enc_message_refreshxp_missingnpclink">[ERROR] Link for NPC '%s' is not working. Make sure the correct modules have been opened in the Library.</string>
 	<string name="enc_message_refreshxp_missingnpcxp">[ERROR] CR for NPC '%s' is not valid. Check the NPC record.</string>
 	
@@ -568,11 +491,7 @@
 	<string name="spell_emptydesc">&#171; Short Description &#187;</string>
 	<string name="spell_label_pp">PP</string>
 	<string name="spell_label_cc">CC</string>
-	<string name="spell_tooltip_ppmax">Power Points Max</string>
-	<string name="spell_tooltip_ppused">Power Points Used</string>
-	<string name="spell_tooltip_cc">Concentration Check</string>
 	<string name="spell_label_basedc">Base DC</string>
-	<string name="spell_tooltip_basedc">Base Spell DC</string>
 	<string name="spell_label_ability">Stat</string>
 	<string name="spell_label_mod">Mod</string>
 	<string name="spell_label_misc">Misc</string>
@@ -580,15 +499,8 @@
 	<string name="spell_label_baseability">Ability</string>
 	<string name="spell_label_sp">Spell Penetration</string>
 	<string name="spell_label_ccdetail">Conc. Check</string>
-	<string name="spell_tooltip_toggle">Click to edit / hide details</string>
-	
-	<string name="spell_tooltip_casterprep">Prepared spell caster (Wizard)</string>
-	<string name="spell_tooltip_casterspontaneous">Spontaneous spell caster (Sorcerer)</string>
-	<string name="spell_tooltip_casterpoints">Points spell caster (Psion)</string>
 	
 	<string name="spell_label_cast">Cast</string>
-	<string name="spell_tooltip_usepower">Use Power</string>
-	<string name="spell_tooltip_castspell">Cast Spell</string>
 	<string name="spell_label_atk">Atk</string>
 	<string name="spell_label_dmg">Dmg</string>
 	<string name="spell_label_heal">Heal</string>
@@ -670,8 +582,6 @@
 	<string name="weapon_header_damage">DAMAGE</string>
 	<string name="weapon_label_dmgdice">Dice</string>
 	<string name="weapon_label_dmgstat">Mult x Stat (Max)</string>
-	<string name="weapon_tooltip_dmgstatmult">Multiple of ability bonus</string>
-	<string name="weapon_tooltip_dmgstatmax">Maximum ability bonus to apply (before multiple)</string>
 	<string name="weapon_label_dmgbonus">Bonus</string>
 	<string name="weapon_label_dmgcritmult">Crit</string>
 
@@ -681,15 +591,6 @@
 	<string name="power_label_metamagic">Metamagic</string>
 	<string name="power_label_metamagicempower">Empower</string>
 	<string name="power_label_metamagicmaximize">Maximize</string>
-	<string name="power_tooltip_targetself">Apply to Self</string>
-	<string name="power_tooltip_targetnormal">Apply to current targets</string>
-
-	<string name="power_tooltip_cast">CAST</string>
-	<string name="power_tooltip_save">SAVE</string>
-	<string name="power_tooltip_attack">ATK</string>
-	<string name="power_tooltip_damage">DMG</string>
-	<string name="power_tooltip_heal">HEAL</string>
-	<string name="power_tooltip_effect">EFFECT</string>
 
 	<string name="power_title_cast">Spell/Ability Use</string>
 	<string name="power_header_cast_attack">ATTACK</string>
@@ -716,9 +617,6 @@
 	<string name="power_title_damage">Spell/Ability Damage</string>
 	<string name="power_label_spelldmg">Spell Dmg?</string>
 	<string name="power_header_damage">DAMAGE</string>
-	<string name="power_tooltip_dicemax">Maximum caster level for dice multiple</string>
-	<string name="power_tooltip_statmult">Multiple of caster level or ability</string>
-	<string name="power_tooltip_statmax">Maximum caster level or ability for multiple</string>
 	<string name="power_label_dmg_dice">Dice</string>
 	<string name="power_label_dmg_dicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_dmg_stat">Mult x Stat (Max)</string>
@@ -742,7 +640,6 @@
 	<string name="power_label_effect_applyaction">On next action</string>
 	<string name="power_label_effect_applyroll">On next roll</string>
 	<string name="power_label_effect_applysingle">Once per modifier</string>
-	<string name="power_tooltip_durmult">Multiple of CL or ability</string>
 	<string name="power_label_effect_durdice">Dice</string>
 	<string name="power_label_effect_durdicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_effect_durstat">Mult x Stat (Max)</string>

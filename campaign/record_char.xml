@@ -18,7 +18,6 @@
 		<softclose />
 		<nodelete />
 		<playercontrol />
-		<tooltip field="name" />
 		<export>character</export>
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>

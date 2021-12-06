@@ -286,7 +286,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="name" />
 		<script>
 			function onLockChanged()
 				if header.subwindow then

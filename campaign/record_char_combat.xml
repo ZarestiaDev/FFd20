@@ -107,7 +107,6 @@
 				<baseability>strength</baseability>
 				<fieldabilitymod>cmdstatmod</fieldabilitymod>
 				<source><name>ac.sources.cmdability</name></source>
-				<tooltip textres="char_tooltip_cmdability2" />
 			</cycler_charcombatability>
 			<cycler_charcombatability name="cmdbase">
 				<anchored to="acarmor" position="belowleft" offset="0,125" />
@@ -119,7 +118,6 @@
 					<labelsres>lvl</labelsres>
 					<values>level</values>
 				</parameters>
-				<tooltip textres="char_tooltip_cmdbasemod" />
 			</cycler_charcombatability>
 
 			<number_charcombatabilitymod name="acstatmod" source="ac.sources.abilitymod">

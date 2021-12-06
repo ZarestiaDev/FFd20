@@ -264,11 +264,9 @@
 			</string_ps>
 			<string_ps name="class">
 				<anchored position="insidetopleft" offset="55,30" width="145" />
-				<tooltip textres="ps_label_class" />
 			</string_ps>
 			<number_ps_linked name="level">
 				<anchored position="insidetopleft" offset="205,30" width="30" />
-				<tooltip textres="level" />
 			</number_ps_linked>			
 			
 			<progressbar_health_d20 name="hpbar">
@@ -356,7 +354,6 @@
 					<bottom parent="chacheck" />
 					<right parent="reflex" />
 				</anchored>
-				<tooltip textres="ps_label_dr" />
 			</string_ps>
 			<number_ps_linked name="sr">
 				<anchored height="20">

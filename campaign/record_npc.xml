@@ -16,7 +16,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_npc</minimize>
-		<tooltip field="name" />
 		<nodelete />
 		<gmexport>npc</gmexport>
 		<script file="campaign/scripts/npc.lua" />
@@ -599,7 +598,6 @@
 			<buttoncontrol name="spellclasslist_iadd">
 				<anchored position="insidetopright" offset="35,2" width="20" height="20" />
 				<icon normal="button_star" pressed="button_star_down" />
-				<tooltip textres="npc_tooltip_spelladdclass" />
 				<invisible />
 				<script>
 					function onButtonPress()
@@ -609,7 +607,6 @@
 			</buttoncontrol>
 			<button_iedit name="spellclasslist_iedit">
 				<anchored position="insidetopright" offset="5,2" width="20" height="20" />
-				<tooltip textres="npc_tooltip_spelledit" />
 				<target>spellclasslist</target>
 				<invisible />
 				<script>

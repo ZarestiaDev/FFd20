@@ -76,7 +76,6 @@
 			
 			<button_iedit name="actions_iedit">
 				<anchored to="actionframe" position="insidebottomright" offset="15,15" />
-				<tooltip textres="char_tooltip_actionedit" />
 				<script>
 					function onValueChanged()
 						local bEditMode = (getValue() == 1);
@@ -96,7 +95,6 @@
 			<buttoncontrol name="spellclass_iadd">
 				<anchored to="actions_iedit" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_star" pressed="button_star_down" />
-				<tooltip textres="char_tooltip_actionaddspellclass" />
 				<script>
 					function onButtonPress()
 						window.actions.subwindow.addSpellClass();
@@ -106,7 +104,6 @@
 			<buttoncontrol name="weapon_iadd">
 				<anchored to="spellclass_iadd" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_weapon" pressed="button_weapon_down" />
-				<tooltip textres="char_tooltip_actionaddweapon" />
 				<script>
 					function onButtonPress()
 						window.actions.subwindow.addWeapon();
@@ -368,7 +365,6 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<tooltip control="name" />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>weapon_title</resource>
@@ -577,7 +573,6 @@
 				<min>0.5</min>
 				<wheel>0.5</wheel>
 				<hideonvalue>1</hideonvalue>
-				<tooltip textres="weapon_tooltip_dmgstatmult" />
 			</basicnumber>
 			<label name="label_statmultx">
 				<anchored to="statmult" position="righthigh" offset="5,0" width="10" />
@@ -598,7 +593,6 @@
 				<anchored to="statmaxparen" position="righthigh" offset="5,0" width="15" height="20" />
 				<hideonvalue>0</hideonvalue>
 				<min>0</min>
-				<tooltip textres="weapon_tooltip_dmgstatmax" />
 			</basicnumber>
 			<label name="statmaxparen2">
 				<anchored to="statmax" position="righthigh" offset="5,0"  />

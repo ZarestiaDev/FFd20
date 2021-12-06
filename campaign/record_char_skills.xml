@@ -35,7 +35,6 @@
 			<buttoncontrol name="skills_iadd_profession">
 				<anchored to="skills_iedit" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_skillpr" pressed="button_skillpr_down" />
-				<tooltip textres="char_tooltip_skilladdprofession" />
 				<script>
 					function onButtonPress()
 						window.skills.addNewInstance(Interface.getString("skill_value_profession"));
@@ -45,7 +44,6 @@
 			<buttoncontrol name="skills_iadd_perform">
 				<anchored to="skills_iadd_profession" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_skillpe" pressed="button_skillpe_down" />
-				<tooltip textres="char_tooltip_skilladdperform" />
 				<script>
 					function onButtonPress()
 						window.skills.addNewInstance(Interface.getString("skill_value_perform"));
@@ -55,7 +53,6 @@
 			<buttoncontrol name="skills_iadd_knowledge">
 				<anchored to="skills_iadd_perform" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_skillkn" pressed="button_skillkn_down" />
-				<tooltip textres="char_tooltip_skilladdknowledge" />
 				<script>
 					function onButtonPress()
 						window.skills.addNewInstance(Interface.getString("skill_value_knowledge"));
@@ -65,7 +62,6 @@
 			<buttoncontrol name="skills_iadd_craft">
 				<anchored to="skills_iadd_knowledge" position="lefthigh" offset="5,0" width="20" height="20" />
 				<icon normal="button_skillcr" pressed="button_skillcr_down" />
-				<tooltip textres="char_tooltip_skilladdcraft" />
 				<script>
 					function onButtonPress()
 						window.skills.addNewInstance(Interface.getString("skill_value_craft"));
@@ -75,7 +71,6 @@
 			<button_iadd name="skills_iadd">
 				<anchored to="skills_iadd_craft" position="lefthigh" offset="5,0" width="20" height="20" />
 				<target>skills</target>
-				<tooltip textres="char_tooltip_skilladd" />
 			</button_iadd>
 
 			<frame_char name="skillframe">
@@ -85,7 +80,6 @@
 			<genericcontrol>
 				<anchored to="skillframe" position="insidetopleft" offset="33,15" width="10" height="10" />
 				<icon>char_encumbrance</icon>
-				<tooltip textres="char_tooltip_skillclass" />
 			</genericcontrol>
 			<label>
 				<anchored to="skillframe" position="insidetopleft" offset="85,10" />

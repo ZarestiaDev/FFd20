@@ -17,7 +17,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="name" />
 		<nodelete />
 		<playercontrol />
 		<sharable />
@@ -158,7 +157,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="name" />
 		<script>
 			function onLockChanged()
 				if header.subwindow then

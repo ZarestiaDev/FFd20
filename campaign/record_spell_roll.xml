@@ -17,7 +17,6 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<tooltip control="name" />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_cast</resource>
@@ -173,7 +172,6 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<tooltip control="name" />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_damage</resource>
@@ -336,7 +334,6 @@
 			<basicnumber name="dicestatmax">
 				<anchored to="dicestatmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_dicemax" />
 			</basicnumber>
 			<label name="dicestatmaxparen2">
 				<anchored to="dicestatmax" position="righthigh" offset="5,0" />
@@ -352,7 +349,6 @@
 				<min>0.5</min>
 				<wheel>0.5</wheel>
 				<hideonvalue>1</hideonvalue>
-				<tooltip textres="power_tooltip_statmult" />
 			</basicnumber>
 			<label name="label_statmultx">
 				<anchored to="statmult" position="righthigh" offset="5,0" width="10" />
@@ -374,7 +370,6 @@
 			<basicnumber name="statmax">
 				<anchored to="statmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_statmax" />
 			</basicnumber>
 			<label name="statmaxparen2">
 				<anchored to="statmax" position="righthigh" offset="5,0" />
@@ -413,7 +408,6 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<tooltip control="name" />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_heal</resource>
@@ -575,7 +569,6 @@
 			<basicnumber name="dicestatmax">
 				<anchored to="dicestatmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_dicemax" />
 			</basicnumber>
 			<label name="dicestatmaxparen2">
 				<anchored to="dicestatmax" position="righthigh" offset="5,0" />
@@ -591,7 +584,6 @@
 				<min>0.5</min>
 				<wheel>0.5</wheel>
 				<hideonvalue>1</hideonvalue>
-				<tooltip textres="power_tooltip_statmult" />
 			</basicnumber>
 			<label name="label_statmultx">
 				<anchored to="statmult" position="righthigh" offset="5,0" width="10" />
@@ -613,7 +605,6 @@
 			<basicnumber name="statmax">
 				<anchored to="statmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_statmax" />
 			</basicnumber>
 			<label name="statmaxparen2">
 				<anchored to="statmax" position="righthigh" offset="5,0" />
@@ -641,7 +632,6 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<tooltip control="name" />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_effect</resource>
@@ -721,7 +711,6 @@
 			<basicnumber name="durdicestatmax">
 				<anchored to="durdicestatmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_dicemax" />
 			</basicnumber>
 			<label name="durdicestatmaxparen2">
 				<anchored to="durdicestatmax" position="righthigh" offset="5,0" />
@@ -742,7 +731,6 @@
 				<default>1</default>
 				<min>1</min>
 				<hideonvalue>1</hideonvalue>
-				<tooltip textres="power_tooltip_statmult" />
 			</basicnumber>
 			<label name="label_durstatmultx">
 				<anchored to="durmult" position="righthigh" offset="5,0" width="10" />
@@ -764,7 +752,6 @@
 			<basicnumber name="dmaxstat">
 				<anchored to="durstatmaxparen" position="righthigh" offset="5,0" width="20" height="20" />
 				<hideonvalue value="0" />
-				<tooltip textres="power_tooltip_statmax" />
 			</basicnumber>
 			<label name="durstatmaxparen2">
 				<anchored to="dmaxstat" position="righthigh" offset="5,0" />

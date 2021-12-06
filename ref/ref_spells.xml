@@ -74,7 +74,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="description" />
 		<nodelete />
 		<sheetdata>
 			<windowtitlebar name="reftitle">
@@ -137,7 +136,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="description" />
 		<nodelete />
 		<sheetdata>
 			<windowtitlebar name="reftitle">
@@ -239,7 +237,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<tooltip field="description" />
 		<nodelete />
 		<sheetdata>
 			<windowtitlebar name="reftitle">
