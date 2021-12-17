@@ -207,8 +207,8 @@ function parseSpell(nodeSpell)
 	
 	-- Get the description minos some problem characters and in lowercase
 	local sDesc = string.lower(DB.getValue(nodeSpell, "description", ""));
-	sDesc = string.gsub(sDesc, "�", "'");
-	sDesc = string.gsub(sDesc, "�", "-");
+	sDesc = string.gsub(sDesc, "’", "'");
+	sDesc = string.gsub(sDesc, "–", "-");
 	
 	local aWords = StringManager.parseWords(sDesc);
 	
