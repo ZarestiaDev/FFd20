@@ -6,11 +6,11 @@
 -->
 
 <root version="4.1" release="0.1" logo="logo.png">
-	<announcement text="Final Fantasy d20 ruleset for Fantasy Grounds, development by Zarestia" font="emotefont" />
+	<announcement text="FFd20 ruleset for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
 	<description>
-		<displayname>Final Fantasy d20</displayname>
+		<displayname>FFd20</displayname>
 		<author>Zarestia</author>
 	</description>
 	<importinfo>
