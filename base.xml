@@ -5,7 +5,7 @@
   attribution and copyright information.
 -->
 
-<root version="4.1" release="0.1" logo="logo.png">
+<root version="4.1" release="0.1">
 	<announcement text="FFd20 ruleset for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
