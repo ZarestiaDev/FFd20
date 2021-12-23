@@ -8,6 +8,7 @@
 <root>
 	<!-- Common -->
 	<string name="name">Name</string>
+	<string name="slash">/</string>
 	<string name="type">Type</string>
 	<string name="base">Base</string>
 	<string name="dash">-</string>
@@ -524,6 +525,7 @@
 	<!-- Skills -->
 	<string name="skill_label_ability">Ability</string>
 	<string name="skill_label_trainedonly">Trained Only</string>
+	<string name="skill_label_trainedonly_t">T</string>
 	<string name="skill_label_armorcheckpenalty">AC Pen. Mult.</string>
 	
 	<!-- Spells -->

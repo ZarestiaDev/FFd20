@@ -16,6 +16,7 @@
 	<importinfo>
 		<acceptfrom ruleset="d20" />
 		<acceptfrom ruleset="PFRPG" />
+		<acceptfrom ruleset="3.5E" />
 	</importinfo>
 
 	<!-- Layers -->

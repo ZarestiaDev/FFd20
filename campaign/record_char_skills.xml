@@ -7,6 +7,7 @@
 
 <root>
 	<windowclass name="charsheet_skills">
+		<script file="campaign/scripts/char_skilltotal.lua" />
 		<sheetdata>
 			<frame_char name="skillpointframe">
 				<bounds>15,0,-29,50</bounds>
@@ -17,6 +18,16 @@
 			</label>
 			<simplenumber name="spentskillpoints" source="skillpoints.spent">
 				<anchored to="spent_label" position="righthigh" offset="10,0" width="32" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<readonly />
+				<nodrag />
+			</simplenumber>
+			<label name="spent_label_slash">
+				<anchored to="spentskillpoints" position="righthigh" offset="7" />
+				<static textres="slash" />
+			</label>
+			<simplenumber name="totalskillpoints" source="skillpoints.total">
+				<anchored to="spent_label_slash" position="right" offset="7" width="32" />
 				<frame name="fieldlight" offset="7,5,7,5" />
 				<readonly />
 				<nodrag />
@@ -76,6 +87,12 @@
 			<frame_char name="skillframe">
 				<bounds>15,50,-30,-3</bounds>
 			</frame_char>
+
+			<label name="trainedonly_header">
+				<anchored to="skillframe" position="insidetopleft" offset="16,10" />
+				<static textres="skill_label_trainedonly_t" />
+				<tooltip textres="skill_label_trainedonly" />
+			</label>
 
 			<genericcontrol>
 				<anchored to="skillframe" position="insidetopleft" offset="33,15" width="10" height="10" />
@@ -160,6 +177,16 @@
 					end
 				</script>
 			</hn>
+
+			<label name="trainedonly">
+				<anchored>
+					<top offset="2" />
+					<left offset="6" />
+				</anchored>
+				<static textres="skill_label_trainedonly_t" />
+				<invisible />
+			</label>
+
 			<button_checkbox name="state">
 				<bounds>22,8,12,12</bounds>
 				<script>
@@ -175,7 +202,6 @@
 				- Racial Nummer-Feld erstellen (Automatisierung später)
 				- Rank Synergy Nummer-Feld erstellen (Automatisierung später)
 				- Skill-Points Used System für Classes ebenfalls ändern
-				- Prüfen, ob möglich scripts komplett local laufen zu lassen
 			-->
 			
 			<genericcontrol name="rightanchor">

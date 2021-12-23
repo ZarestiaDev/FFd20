@@ -28,6 +28,12 @@ function updateWindow()
 		else
 			armorcheckmultiplier.setValue(0);
 		end
+
+		if t.trainedonly then
+			trainedonly.setVisible(true);
+		else
+			trainedonly.setVisible(false);
+		end
 	else
 		setCustom(true);
 	end
