@@ -54,11 +54,11 @@
 
 			<!-- Abilities -->
 			<frame_char name="abilityframe">
-				<bounds>15,45,290,225</bounds>
+				<bounds>15,45,205,225</bounds>
 			</frame_char>
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">
-				<anchored to="abilityframe" position="insidetopleft" offset="135,26" />
+				<anchored to="abilityframe" position="insidetopleft" offset="55,26" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="strength_label">
 				<anchored to="strength" />

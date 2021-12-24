@@ -141,7 +141,7 @@
 	</template>
 	<template name="string_charabilitylabel">
 		<label>
-			<anchored position="lefthigh" width="120" height="24" />
+			<anchored position="lefthigh" width="40" height="24" />
 			<static />
 		</label>
 	</template>
