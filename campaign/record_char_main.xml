@@ -59,122 +59,104 @@
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">
 				<anchored to="abilityframe" position="insidetopleft" offset="135,26" />
-				<description textres="char_tooltip_str" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="strength_label">
 				<anchored to="strength" />
-				<static textres="strength" />
+				<static textres="str" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="strengthdamage" source="abilities.strength.damage">
 				<anchored to="strength" />
 				<target>strength</target>
-				<description textres="char_tooltip_strdamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="strengthbonus" source="abilities.strength.bonus">
 				<anchored to="strength" />
 				<target>strength</target>
 				<modifierfield>abilities.strength.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_strbonus" />
 			</number_charabilitybonus>
 
 			<number_charabilityscore name="dexterity" source="abilities.dexterity.score">
 				<anchored to="strength" />
-				<description textres="char_tooltip_dex" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="dexterity_label">
 				<anchored to="dexterity" />
-				<static textres="dexterity" />
+				<static textres="dex" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="dexteritydamage" source="abilities.dexterity.damage">
 				<anchored to="dexterity" />
 				<target>dexterity</target>
-				<description textres="char_tooltip_dexdamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="dexteritybonus" source="abilities.dexterity.bonus">
 				<anchored to="dexterity" />
 				<target>dexterity</target>
 				<modifierfield>abilities.dexterity.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_dexbonus" />
 			</number_charabilitybonus>
 
 			<number_charabilityscore name="constitution" source="abilities.constitution.score">
 				<anchored to="dexterity" />
-				<description textres="char_tooltip_con" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="constitution_label">
 				<anchored to="constitution" />
-				<static textres="constitution" />
+				<static textres="con" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="constitutiondamage" source="abilities.constitution.damage">
 				<anchored to="constitution" />
 				<target>constitution</target>
-				<description textres="char_tooltip_condamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="constitutionbonus" source="abilities.constitution.bonus">
 				<anchored to="constitution" />
 				<target>constitution</target>
 				<modifierfield>abilities.constitution.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_conbonus" />
 			</number_charabilitybonus>
 
 			<number_charabilityscore name="intelligence" source="abilities.intelligence.score">
 				<anchored to="constitution" />
-				<description textres="char_tooltip_int" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="intelligence_label">
 				<anchored to="intelligence" />
-				<static textres="intelligence" />
+				<static textres="int" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="intelligencedamage" source="abilities.intelligence.damage">
 				<anchored to="intelligence" />
 				<target>intelligence</target>
-				<description textres="char_tooltip_intdamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="intelligencebonus" source="abilities.intelligence.bonus">
 				<anchored to="intelligence" />
 				<target>intelligence</target>
 				<modifierfield>abilities.intelligence.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_intbonus" />
 			</number_charabilitybonus>
 
 			<number_charabilityscore name="wisdom" source="abilities.wisdom.score">
 				<anchored to="intelligence" />
-				<description textres="char_tooltip_wis" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="wisdom_label">
 				<anchored to="wisdom" />
-				<static textres="wisdom" />
+				<static textres="wis" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="wisdomdamage" source="abilities.wisdom.damage">
 				<anchored to="wisdom" />
 				<target>wisdom</target>
-				<description textres="char_tooltip_wisdamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="wisdombonus" source="abilities.wisdom.bonus">
 				<anchored to="wisdom" />
 				<target>wisdom</target>
 				<modifierfield>abilities.wisdom.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_wisbonus" />
 			</number_charabilitybonus>
 
 			<number_charabilityscore name="charisma" source="abilities.charisma.score">
 				<anchored to="wisdom" />
-				<description textres="char_tooltip_cha" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="charisma_label">
 				<anchored to="charisma" />
-				<static textres="charisma" />
+				<static textres="cha" />
 			</string_charabilitylabel>
 			<number_charabilitydamage name="charismadamage" source="abilities.charisma.damage">
 				<anchored to="charisma" />
 				<target>charisma</target>
-				<description textres="char_tooltip_chadamage" />
 			</number_charabilitydamage>
 			<number_charabilitybonus name="charismabonus" source="abilities.charisma.bonus">
 				<anchored to="charisma" />
 				<target>charisma</target>
 				<modifierfield>abilities.charisma.bonusmodifier</modifierfield>
-				<description textres="char_tooltip_chabonus" />
 			</number_charabilitybonus>
 
 			<label_fieldtop name="abilityscore_label">
@@ -196,7 +178,6 @@
 			</frame_char>
 			<number_charspeed name="speedfinal" source="speed.final">
 				<anchored to="speedframe" position="insidetopleft" offset="80,15" width="45" height="20" />
-				<description textres="char_tooltip_speed" />
 			</number_charspeed>
 			<label name="speedfinal_label">
 				<anchored to="speedfinal" position="lefthigh" width="65" />
@@ -252,7 +233,6 @@
 				<anchored to="hp" position="right" offset="20,0" width="40" />
 				<color>0000AA</color>
 				<hideonvalue>0</hideonvalue>
-				<description textres="char_tooltip_hptemp" />
 				<script>
 					function onValueChanged()
 						window.onHealthChanged();
@@ -265,7 +245,6 @@
 			</label_fieldtop>
 			<number_charwounds name="wounds" source="hp.wounds">
 				<anchored to="hpframe" position="insidetopright" offset="120,27" width="40" height="28" />
-				<description textres="char_tooltip_wounds" />
 			</number_charwounds>
 			<label_fieldtop name="wounds_label">
 				<anchored to="wounds" />
@@ -274,7 +253,6 @@
 			<number_dropadd name="nonlethal" source="hp.nonlethal">
 				<anchored to="wounds" position="right" offset="20,0" width="40" />
 				<hideonvalue>0</hideonvalue>
-				<description textres="char_tooltip_nonlethal" />
 				<script>
 					function onValueChanged()
 						window.onHealthChanged();
@@ -475,7 +453,6 @@
 			</label_fieldtop>
 			<number_dropadd name="exp">
 				<anchored to="levelframe" position="insidetopright" offset="110,25" width="60" height="20"/>
-				<description textres="char_tooltip_xp" />
 			</number_dropadd>
 			<label_fieldtop>
 				<anchored to="exp" />
@@ -483,7 +460,6 @@
 			</label_fieldtop>
 			<basicnumber name="expneeded">
 				<anchored to="levelframe" position="insidetopright" offset="30,25" width="60" height="20"/>
-				<description textres="char_tooltip_xpneeded" />
 				<script>
 					function onHover(oncontrol)
 						if oncontrol then

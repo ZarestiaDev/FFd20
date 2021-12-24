@@ -27,8 +27,8 @@
 			</frame_ct>
 			<buttoncontrol name="button_global_visibility">
 				<anchored position="insidetopleft" offset="33,37" width="20" height="20" />
-				<state icon="visibilityoff" tooltipres="ct_tooltip_shownpcallon" />
-				<state icon="visibilityon" tooltipres="ct_tooltip_shownpcalloff" />
+				<state icon="visibilityoff" />
+				<state icon="visibilityon" />
 				<script>
 					function onValueChanged()
 						window.list.toggleVisibility();
@@ -283,8 +283,8 @@
 
 			<buttonfield name="immediate">
 				<anchored to="activeicon" position="righthigh" offset="50,0" width="12" height="20" />
-				<state icon="button_checkoff" tooltipres="ct_tooltip_immediateoff" />
-				<state icon="button_checkon" tooltipres="ct_tooltip_immediateon" />
+				<state icon="button_checkoff" />
+				<state icon="button_checkon" />
 			</buttonfield>
 			<label name="immediatelabel">
 				<anchored to="immediate" position="lefthigh" offset="5,0"/>

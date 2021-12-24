@@ -30,12 +30,12 @@
 			</token_char>
 			
 			<genericcontrol name="portraitbase">
-				<bounds>-137,21,45,45</bounds>
+				<bounds>21,21,45,45</bounds>
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<bounds>-137,21,45,45</bounds>
+				<bounds>21,21,45,45</bounds>
 			</portrait_char>
 			
 			<frame_char name="overviewframe">

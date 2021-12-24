@@ -131,8 +131,8 @@
 					<left anchor="right" relation="relative" offset="15" />
 				</anchored>
 				<frame name="fielddark" offset="10,8,10,6" />
-				<state icon="visibilityon" tooltipres="ps_tooltip_showrollon" />
-				<state icon="visibilityoff" tooltipres="ps_tooltip_showrolloff" />
+				<state icon="visibilityon" />
+				<state icon="visibilityoff" />
 				<gmvisibleonly />
 			</buttonfield>
 

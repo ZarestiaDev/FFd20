@@ -250,10 +250,6 @@
 				
 				function onInit()
 					sSkill = Interface.getString(skill[1]);
-					
-					if sSkill then
-						setTooltipText(sSkill .. " " .. Interface.getString("char_tooltip_skillcheck"));
-					end
 				end
 				
 				function action(draginfo)
@@ -335,7 +331,6 @@
 	</template>
 	<template name="number_charmeleetotal">
 		<number_charattacktotal>
-			<description><textres>char_tooltip_atkmelee</textres></description>
 			<modifierfield>attackbonus.melee.temporary</modifierfield>
 			<source><name>attackbonus.base</name><op>+</op></source>
 			<source><name>attackbonus.melee.size</name><op>+</op></source>
@@ -345,7 +340,6 @@
 	</template>
 	<template name="number_charrangedtotal">
 		<number_charattacktotal>
-			<description><textres>char_tooltip_atkranged</textres></description>
 			<modifierfield>attackbonus.ranged.temporary</modifierfield>
 			<source><name>attackbonus.base</name><op>+</op></source>
 			<source><name>attackbonus.ranged.size</name><op>+</op></source>
@@ -501,7 +495,6 @@
 		<number_chartotal>
 			<modifierfield>speed.temporary</modifierfield>
 			<modifiersize>mini</modifiersize>
-			<description textres="char_tooltip_speed" />
 			<source><name>speed.base</name><op>+</op></source>
 			<source><name>speed.armor</name><op>+</op></source>
 			<source><name>speed.misc</name><op>+</op></source>
@@ -856,12 +849,11 @@
 	<template name="state_charweapontype">
 		<buttonfield>
 			<anchored width="25" height="25" />
-			<state icon="char_weapon_melee" tooltipres="char_tooltip_weapontypemelee" />
-			<state icon="char_weapon_ranged" tooltipres="char_tooltip_weapontyperanged" />
+			<state icon="char_weapon_melee" />
+			<state icon="char_weapon_ranged" />
 			<script>
 				function onInit()
 					setStateIcons(2, "char_weapon_cm");
-					setStateTooltipText(2, Interface.getString("char_tooltip_weapontypecm"));
 				end
 			</script>
 		</buttonfield>

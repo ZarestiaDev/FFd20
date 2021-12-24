@@ -40,8 +40,8 @@
 			</label_fieldtop>
 			<buttonfield name="usearmormaxstatbonus" source="encumbrance.armormaxstatbonusactive" insertbefore="encumbranceframe">
 				<anchored to="armorpenaltyframe" position="insidetopleft" offset="67,28" width="12" height="12" />
-				<state icon="button_checkoff" tooltipres="char_tooltip_armormodoff" />
-				<state icon="button_checkon" tooltipres="char_tooltip_armormodon" />
+				<state icon="button_checkoff" />
+				<state icon="button_checkon" />
 				<script>
 					function onInit()
 						onValueChanged();

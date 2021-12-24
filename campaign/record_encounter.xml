@@ -58,14 +58,12 @@
 			<basicnumber name="cr" source="level">
 				<anchored to="cr_label" position="righthigh" offset="10,0" width="30" height="20" />
 				<tabtarget next="exp" prev="name" />
-				<description textres="battle_tooltip_cr" />
 			</basicnumber>
 			<button_enc_refreshcr name="button_refreshcr" />
 
 			<basicnumber name="exp">
 				<anchored to="detailframe" position="insidetopright" offset="40,15" width="70" height="20" />
 				<tabtarget next="npcs" prev="level" />
-				<description textres="battle_tooltip_xp" />
 			</basicnumber>
 			<label>
 				<anchored to="exp" position="lefthigh" offset="10,0" />

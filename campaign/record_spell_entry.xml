@@ -159,9 +159,7 @@
 			<parameters>
 				<icons>button_toggle_self</icons>
 				<values>self</values>
-				<tooltipsres>power_tooltip_targetself</tooltipsres>
 				<defaulticon>button_toggle_trgt</defaulticon>
-				<defaulttooltipres>power_tooltip_targetnormal</defaulttooltipres>
 			</parameters>
 		</button_iconcycler>
 	</template>
@@ -171,9 +169,7 @@
 			<parameters>
 				<icons>button_toggle_action|button_toggle_roll|button_toggle_single</icons>
 				<values>action|roll|single</values>
-				<tooltipsres>effect_tooltip_applyone|effect_tooltip_applyroll|effect_tooltip_applysingle</tooltipsres>
 				<defaulticon>button_toggle_all</defaulticon>
-				<defaulttooltipres>effect_tooltip_applyall</defaulttooltipres>
 			</parameters>
 		</button_iconcycler>
 	</template>
@@ -462,9 +458,7 @@
 				<bounds>10,10,20,20</bounds>
 				<parameters>
 					<defaulticon>caster_prep</defaulticon>
-					<defaulttooltipres>spell_tooltip_casterprep</defaulttooltipres>
 					<icons>caster_spontaneous|caster_points</icons>
-					<tooltipsres>spell_tooltip_casterspontaneous|spell_tooltip_casterpoints</tooltipsres>
 					<values>spontaneous|points</values>
 				</parameters>
 				<script>
@@ -701,7 +695,6 @@
 			</label_fieldtop>
 			<number_spelldc name="dctotal" source="dc.total">
 				<anchored to="dcmisc" position="righthigh" offset="10,0" />
-				<description textres="spell_tooltip_basedc" />
 			</number_spelldc>
 			<label_fieldtop name="dctotal_label">
 				<anchored to="dctotal" />
