@@ -21,25 +21,22 @@
 		<export>character</export>
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
-			<button_charactivate name="speak">
-				<bounds>-41,30,23,22</bounds>
-			</button_charactivate>
-		
-			<token_char name="token">
-				<bounds>-86,23,40,40</bounds>
-			</token_char>
-			
+
 			<genericcontrol name="portraitbase">
-				<bounds>21,21,45,45</bounds>
+				<bounds>21,25,100,100</bounds>
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<bounds>21,21,45,45</bounds>
+				<bounds>21,25,100,100</bounds>
 			</portrait_char>
+
+			<token_char name="token">
+				<bounds>-86,30,40,40</bounds>
+			</token_char>
 			
 			<frame_char name="overviewframe">
-				<bounds>15,20,-140,45</bounds>
+				<bounds>125,25,-90,50</bounds>
 			</frame_char>
 			<string_labeled name="name">
 				<anchored to="overviewframe" position="insidetopleft" offset="15,10" height="20">
@@ -48,28 +45,71 @@
 				<labelres>char_label_name</labelres>
 			</string_labeled>
 
+			<!-- Race -->
+			<frame_char name="raceframe">
+				<bounds>125,75,140,50</bounds>
+			</frame_char>
+			<linkfield name="racelink">
+				<anchored to="raceframe" position="insidetopright" offset="10,10" width="20" height="20" />
+				<description field="race" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
+			<string_labeled name="race">
+				<anchored to="raceframe" position="insidetopleft" offset="15,10" height="20">
+					<right parent="racelink" anchor="left" offset="-5" />
+				</anchored>
+				<labelres>char_label_race</labelres>
+			</string_labeled>
+
+			<!-- Class / Level -->
+			<frame_char name="classframe">
+				<bounds>265,75,-30,50</bounds>
+			</frame_char>
+			<stringc_charclasslevel name="classlevel">
+				<anchored to="classframe" position="insidetopleft" offset="15,10">
+					<right offset="-25" />
+				</anchored>
+				<labelres>char_label_classlevelsummary</labelres>
+			</stringc_charclasslevel>
+			<button_charclasslevel name="button_classlevel">
+				<anchored to="classframe" position="insidetopright" offset="10,10" />
+			</button_charclasslevel>
+
 			<subwindow name="main">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_main</class>
 			</subwindow>
 			<subwindow name="skills">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_skills</class>
 			</subwindow>
 			<subwindow name="abilities">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_abilities</class>
 			</subwindow>
 			<subwindow name="inventory">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_inventory</class>
 			</subwindow>
 			<subwindow name="notes">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_notes</class>
 			</subwindow>
 			<subwindow name="actions">
-				<bounds>0,65,-1,-20</bounds>
+				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_actions</class>
 			</subwindow>
 

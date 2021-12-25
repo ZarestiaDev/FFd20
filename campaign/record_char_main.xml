@@ -9,52 +9,12 @@
 	<windowclass name="charsheet_main">
 		<script file="campaign/scripts/char_main.lua" />
 		<sheetdata>
-			<!-- Race -->
-			<frame_char name="raceframe">
-				<bounds>15,0,145,45</bounds>
-			</frame_char>
-			<linkfield name="racelink">
-				<anchored to="raceframe" position="insidetopright" offset="10,10" width="20" height="20" />
-				<description field="race" />
-				<closetoggle />
-				<invisible />
-				<script>
-					function onInit()
-						onValueChanged();
-					end
-					function onValueChanged()
-						if isEmpty() then
-							setVisible(false);
-						else
-							setVisible(true);
-						end
-					end
-				</script>
-			</linkfield>
-			<string_labeled name="race">
-				<anchored to="raceframe" position="insidetopleft" offset="15,10" height="20">
-					<right parent="racelink" anchor="left" offset="-5" />
-				</anchored>
-				<labelres>char_label_race</labelres>
-			</string_labeled>
 
-			<!-- Class / Level -->
-			<frame_char name="classframe">
-				<bounds>160,0,335,45</bounds>
-			</frame_char>
-			<stringc_charclasslevel name="classlevel">
-				<anchored to="classframe" position="insidetopleft" offset="15,10">
-					<right offset="-25" />
-				</anchored>
-				<labelres>char_label_classlevelsummary</labelres>
-			</stringc_charclasslevel>
-			<button_charclasslevel name="button_classlevel">
-				<anchored to="classframe" position="insidetopright" offset="10,10" />
-			</button_charclasslevel>
+			<!-- Zarestia: Abiltiy Drain extra fields needed? -->
 
 			<!-- Abilities -->
 			<frame_char name="abilityframe">
-				<bounds>15,45,205,225</bounds>
+				<bounds>15,0,205,225</bounds>
 			</frame_char>
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">

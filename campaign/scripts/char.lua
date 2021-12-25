@@ -9,6 +9,17 @@ function onInit()
 		registerMenuItem(Interface.getString("menu_restshort"), "pointer_cone", 7, 8);
 		registerMenuItem(Interface.getString("menu_restovernight"), "pointer_circle", 7, 6);
 	end
+
+	onLevelChanged();
+	DB.addHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
+end
+
+function onClose()
+	DB.removeHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
+end
+
+function onLevelChanged()
+	CharManager.calcLevel(getDatabaseNode());
 end
 
 function onMenuSelection(selection, subselection)
@@ -20,6 +31,16 @@ function onMenuSelection(selection, subselection)
 			local nodeChar = getDatabaseNode();
 			ChatManager.Message(Interface.getString("message_restovernight"), true, ActorManager.resolveActor(nodeChar));
 			CharManager.rest(nodeChar);
+		end
+	end
+end
+
+function onDrop(x, y, draginfo)
+	if draginfo.isType("shortcut") then
+		local sClass, sRecord = draginfo.getShortcutData();
+		if StringManager.contains({"referenceclass", "referencerace"}, sClass) then
+			CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
+			return true;
 		end
 	end
 end
