@@ -21,7 +21,6 @@
 		<export>character</export>
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
-
 			<genericcontrol name="portraitbase">
 				<bounds>21,25,100,100</bounds>
 				<icon>charlist_base</icon>
@@ -35,23 +34,32 @@
 				<bounds>-86,30,40,40</bounds>
 			</token_char>
 			
-			<frame_char name="overviewframe">
-				<bounds>125,25,-90,50</bounds>
-			</frame_char>
-			<string_labeled name="name">
-				<anchored to="overviewframe" position="insidetopleft" offset="15,10" height="20">
-					<right offset="-15" />
-				</anchored>
+			<generic_background name="overviewframe">
+				<bounds>125,40,-90,30</bounds>
+			</generic_background>
+			<string_field name="test">
+				<anchored to="overviewframe" />
 				<labelres>char_label_name</labelres>
-			</string_labeled>
-
+			</string_field>
+			
 			<!-- Race -->
-			<frame_char name="raceframe">
-				<bounds>125,75,140,50</bounds>
-			</frame_char>
+			<generic_background name="raceframe">
+				<bounds>125,90,140,30</bounds>
+			</generic_background>
+			<string_field name="race">
+				<anchored to="raceframe" />
+				<labelres>char_label_race</labelres>
+			</string_field>
+			<button_iadd_creation name="race_add">
+				<anchored to="raceframe" position="insidetopright" offset="5,5" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("masterindex", "race")
+					end
+				</script>
+			</button_iadd_creation>
 			<linkfield name="racelink">
-				<anchored to="raceframe" position="insidetopright" offset="10,10" width="20" height="20" />
-				<description field="race" />
+				<anchored to="raceframe" position="insidetopright" offset="5,5" width="20" height="20" />
 				<closetoggle />
 				<invisible />
 				<script>
@@ -67,27 +75,28 @@
 					end
 				</script>
 			</linkfield>
-			<string_labeled name="race">
-				<anchored to="raceframe" position="insidetopleft" offset="15,10" height="20">
-					<right parent="racelink" anchor="left" offset="-5" />
-				</anchored>
-				<labelres>char_label_race</labelres>
-			</string_labeled>
 
-			<!-- Class / Level -->
-			<frame_char name="classframe">
-				<bounds>265,75,-30,50</bounds>
-			</frame_char>
-			<stringc_charclasslevel name="classlevel">
-				<anchored to="classframe" position="insidetopleft" offset="15,10">
-					<right offset="-25" />
-				</anchored>
+			<!-- Class / Level  -->
+			<generic_background name="classframe">
+				<bounds>275,90,-30,30</bounds>
+			</generic_background>
+			<string_field_charclasslevel name="classlevel">
+				<anchored to="classframe" />
 				<labelres>char_label_classlevelsummary</labelres>
-			</stringc_charclasslevel>
+			</string_field_charclasslevel>
+			<button_iadd_creation name="class_add">
+				<anchored to="classframe" position="insidetopright" offset="5,5" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("masterindex", "class")
+					end
+				</script>
+			</button_iadd_creation>
 			<button_charclasslevel name="button_classlevel">
-				<anchored to="classframe" position="insidetopright" offset="10,10" />
+				<anchored to="classframe" position="insidetopright" offset="25,5" />
 			</button_charclasslevel>
 
+			<!-- Subwindows -->
 			<subwindow name="main">
 				<bounds>0,125,-1,-20</bounds>
 				<class>charsheet_main</class>

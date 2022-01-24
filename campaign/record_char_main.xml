@@ -9,13 +9,92 @@
 	<windowclass name="charsheet_main">
 		<script file="campaign/scripts/char_main.lua" />
 		<sheetdata>
+			<!-- Former notes info -->
+			<generic_background name="gender_background">
+				<bounds>15,20,100,30</bounds>
+			</generic_background>
+			<string_field name="gender">
+				<anchored to="gender_background" />
+				<labelres>char_label_gender</labelres>
+			</string_field>
+			<generic_background name="age_background">
+				<bounds>120,20,100,30</bounds>
+			</generic_background>
+			<string_field name="age">
+				<anchored to="age_background" />
+				<labelres>char_label_age</labelres>
+			</string_field>
+			<generic_background name="height_background">
+				<bounds>225,20,100,30</bounds>
+			</generic_background>
+			<string_field name="height">
+				<anchored to="height_background" />
+				<labelres>char_label_height</labelres>
+			</string_field>
+			<generic_background name="weight_background">
+				<bounds>330,20,100,30</bounds>
+			</generic_background>
+			<string_field name="weight">
+				<anchored to="weight_background" />
+				<labelres>char_label_weight</labelres>
+			</string_field>
+			<generic_background name="size_background">
+				<bounds>15,75,133,30</bounds>
+			</generic_background>
+			<string_field name="size">
+				<anchored to="size_background" />
+				<labelres>char_label_size</labelres>
+			</string_field>
+			<generic_background name="alignment_background">
+				<bounds>153,75,133,30</bounds>
+			</generic_background>
+			<string_field name="alignment">
+				<anchored to="alignment_background" />
+				<labelres>char_label_alignment</labelres>
+			</string_field>
+			<generic_background name="deity_background">
+				<bounds>291,75,134,30</bounds>
+			</generic_background>
+			<string_field name="deity">
+				<anchored to="deity_background" />
+				<labelres>char_label_deity</labelres>
+			</string_field>
 
-			<!-- Zarestia: Abiltiy Drain extra fields needed? -->
+			<!-- Languages moving to main -->
+			<!--
+			<frame_char name="languageframe">
+				<bounds>-189,45,160,190</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="languageframe" />
+				<static textres="char_label_languages" />
+			</label_frametop>
+			<list_language name="languages">
+				<anchored to="languageframe">
+					<top offset="35" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+			</list_language>
+			<scrollbar>
+				<anchored to="languages" />
+				<target>languages</target>
+			</scrollbar>
+			<button_iedit name="languages_iedit">
+				<anchored to="languages" position="aboveright" offset="5,5" />
+				<target>languages</target>
+			</button_iedit>
+			<button_iadd name="languages_iadd">
+				<anchored to="languages" position="aboveleft" offset="10,5" />
+				<target>languages</target>
+			</button_iadd>
+			-->
 
 			<!-- Abilities -->
-			<frame_char name="abilityframe">
-				<bounds>15,0,205,225</bounds>
-			</frame_char>
+			<generic_background name="abilityframe">
+				<bounds>15,120,205,225</bounds>
+			</generic_background>
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">
 				<anchored to="abilityframe" position="insidetopleft" offset="55,26" />
@@ -131,8 +210,8 @@
 				<anchored to="strengthdamage" />
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
-
-			<!-- Speed -->
+			
+			<!-- Speed 
 			<frame_char name="speedframe">
 				<bounds>15,270,385,50</bounds>
 			</frame_char>
@@ -148,7 +227,7 @@
 				<labelres>char_label_speedspecial</labelres>
 			</string_labeled>
 
-			<!-- Senses -->
+			Senses 
 			<frame_char name="sensesframe">
 				<bounds>15,320,385,60</bounds>
 			</frame_char>
@@ -172,7 +251,7 @@
 				<delaykeyupdate />
 			</string_labeled>
 
-			<!-- Health -->
+			 Health 
 			<frame_char name="hpframe">
 				<bounds>15,380,385,100</bounds>
 			</frame_char>
@@ -229,9 +308,9 @@
 				<labelres>char_label_dr</labelres>
 			</string_labeled>
 
-			<!-- Attacks -->
+			Attacks 
 			<frame_char name="combatframe">
-				<bounds>305,45,95,225</bounds>
+				<bounds>305,150,95,225</bounds>
 			</frame_char>
 			<number_charinit name="initiative" source="initiative.total">
 				<anchored to="combatframe" position="insidetop" offset="-25,30" height="28" />
@@ -262,9 +341,9 @@
 				<static textres="grapple" />
 			</label_fieldtop>
 
-			<!-- Defenses -->
+			 Defenses 
 			<frame_char name="acframe">
-				<bounds>400,45,95,225</bounds>
+				<bounds>400,150,95,225</bounds>
 			</frame_char>
 			<number_chartotalac name="ac" source="ac.totals.general">
 				<anchored to="acframe" position="insidetopleft" offset="34,30" width="30" height="28" />
@@ -327,6 +406,7 @@
 				<anchored to="will" />
 				<static textres="will_long" />
 			</label_fieldtop>
+		-->
 		</sheetdata>
 	</windowclass>
 

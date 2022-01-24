@@ -16,6 +16,11 @@
 		<color value="000000" />
 	</font>
 
+	<!-- String Fields -->
+	<font name="string_fields">
+		<ttf file="graphics/fonts/Noto_Sans/NotoSans-Regular.ttf" name="Noto Sans Regular" size="20" />
+	</font>
+
 	<!-- Languages -->
 	<font name="Dwarven">
 		<ttf file="graphics/fonts/Dwarven.ttf" name="D&amp;D Dwarvish Bold" size="20" />

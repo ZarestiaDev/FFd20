@@ -6,6 +6,30 @@
 -->
 
 <root>
+	<template name="generic_background">
+		<genericcontrol>
+			<backcolor>#E7E1DE</backcolor>
+		</genericcontrol>
+	</template>
+
+	<template name="string_field">
+		<stringfield>
+			<anchored position="over" offset="-5" />
+			<font>string_fields</font>
+			<script>
+				function onInit()
+					if labelres then
+						labelwidget = addTextWidget("sheetlabel", string.upper(Interface.getString(labelres[1])));
+						
+						local w,h = labelwidget.getSize();
+						labelwidget.setColor("#0000CD");
+						labelwidget.setPosition("topleft", w/2-5, -h/2);
+					end
+				end
+			</script>
+		</stringfield>
+	</template>
+
 	<template name="windowtitlebar_char">
 		<windowtitlebar>
 			<bounds merge="replace">0,10,-1,40</bounds>
@@ -51,17 +75,23 @@
 		</resize>
 	</template>
 
-	<template name="stringc_charclasslevel">
-		<stringc_labeled>
-			<anchored height="20" />
-			<font>sheettext</font>
-			<lineoffset default="on" mergerule="replace">1</lineoffset>
+	<template name="string_field_charclasslevel">
+		<stringfield>
+			<anchored position="over" offset="-5" />
+			<font>string_fields</font>
 			<readonly />
 			<script>
 				function onInit()
-					super.onInit();
 					update();
 					DB.addHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", update);
+
+					if labelres then
+						labelwidget = addTextWidget("sheetlabel", string.upper(Interface.getString(labelres[1])));
+						
+						local w,h = labelwidget.getSize();
+						labelwidget.setColor("#0000CD");
+						labelwidget.setPosition("topleft", w/2-5, -h/2);
+					end
 				end
 				
 				function onClose()
@@ -71,16 +101,8 @@
 				function update()
 					setValue(CharManager.getClassLevelSummary(window.getDatabaseNode(), true));
 				end
-
-				function onClickDown(button, x, y)
-					return true;
-				end
-
-				function onClickRelease(button, x, y)
-					Interface.openWindow("charsheet_classes", window.getDatabaseNode());
-				end
 			</script>
-		</stringc_labeled>
+		</stringfield>
 	</template>
 	<template name="button_charclasslevel">
 		<buttoncontrol>

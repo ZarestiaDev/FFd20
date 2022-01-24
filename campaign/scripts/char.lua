@@ -9,7 +9,7 @@ function onInit()
 		registerMenuItem(Interface.getString("menu_restshort"), "pointer_cone", 7, 8);
 		registerMenuItem(Interface.getString("menu_restovernight"), "pointer_circle", 7, 6);
 	end
-
+	updateRace()
 	onLevelChanged();
 	DB.addHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
 end
@@ -40,7 +40,15 @@ function onDrop(x, y, draginfo)
 		local sClass, sRecord = draginfo.getShortcutData();
 		if StringManager.contains({"referenceclass", "referencerace"}, sClass) then
 			CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
+			updateRace();
 			return true;
 		end
+	end
+end
+
+function updateRace()
+	local nodeChar = getDatabaseNode();
+	if DB.getValue(nodeChar, "racelink", "") == "referencerace" then
+		race_add.setVisible(false);
 	end
 end

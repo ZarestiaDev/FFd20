@@ -6,6 +6,12 @@
 -->
 
 <root>
+	<template name="button_iadd_creation">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<icon normal="button_add" pressed="button_add_down" />
+		</buttoncontrol>
+	</template>
 	<template name="button_item_armor">
 		<button_text_sm>
 			<anchored to="buttonanchor" width="80">
