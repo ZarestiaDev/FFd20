@@ -16,20 +16,14 @@
 				<static textres="char_label_appearance" />
 			</label_frametop>
 
-			<simpleft name="appearance">
+			<ftbasic name="appearance">
 				<anchored to="appearanceframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-				<frame mergerule="replace" name="fielddark" offset="7,5,7,5" hidereadonly="true" />
-				<stateframe>
-					<keyedit name="fieldfocus" offset="7,5,7,5" />
-					<hover name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
-					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
-				</stateframe>
-			</simpleft>
+			</ftbasic>
 			<scrollbar name="appearance_scrollbar">
 				<anchored to="appearance" />
 				<target>appearance</target>
@@ -42,20 +36,14 @@
 				<anchored to="notesframe" />
 				<static textres="char_label_notes" />
 			</label_frametop>
-			<simpleft name="notes">
+			<ftbasic name="notes">
 				<anchored to="notesframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-				<frame mergerule="replace" name="fielddark" offset="7,5,7,5" hidereadonly="true" />
-				<stateframe>
-					<keyedit name="fieldfocus" offset="7,5,7,5" />
-					<hover name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
-					<drophilight name="fieldfocus" offset="7,5,7,5" hidereadonly="true" />
-				</stateframe>
-			</simpleft>
+			</ftbasic>
 			<scrollbar name="notes_scrollbar">
 				<anchored to="notes" />
 				<target>notes</target>
