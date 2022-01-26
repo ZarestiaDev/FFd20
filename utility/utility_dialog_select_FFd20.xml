@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<!-- 
+	Custom dialog selection for for example language selection
+-->
+	
+<root>
+	<windowclass name="select_dialog_entry_FFd20">
+		<sheetdata>
+			<buttonc_checkbox name="selected" >
+				<anchored position="insidetopleft" offset="0,5" width="20" height="20" />
+			</buttonc_checkbox>
+			<linkcontrol name="shortcut">
+				<anchored position="insidetopright" offset="0,5" width="20" height="20" />
+				<invisible />
+			</linkcontrol>
+			<label name="text">
+				<anchored position="insidetopleft" offset="20,5">
+					<right parent="shortcut" anchor="left" offset="0" />
+				</anchored>
+				<font>sheetlabel</font>
+				<multilinespacing>20</multilinespacing>
+				<script>
+					function onClickDown(button, x, y)
+						return true;
+					end
+					function onClickRelease(button, x, y)
+						window.selected.setValue((window.selected.getValue() + 1) % 2);
+						return true;
+					end
+				</script>
+			</label>
+		</sheetdata>
+	</windowclass>
+</root>

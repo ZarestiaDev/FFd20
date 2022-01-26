@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_main_languages">
+		<frame>utilitybox3</frame>
+		<placement>
+			<size width="350" height="800" />
+		</placement>
+    <script file="campaign/scripts/language_select.lua" />
+      <sheetdata>
+        <windowtitlebar name="title">
+          <resource>language_list</resource>
+        </windowtitlebar>
+
+        <anchor_title_utilitybox3 name="contentanchor" />
+
+        <windowlist name="list">
+          <anchored to="contentanchor" position="below" offset="0,25">
+            <bottom parent="" offset="-80" />
+          </anchored>
+          <frame offset="10,10,20,10" name="groupbox"/>
+          <class>select_dialog_entry_FFd20</class>
+          <readonly />
+        </windowlist>
+
+        <scrollbar_list>
+          <anchored offset="-5,-10" />
+        </scrollbar_list>
+
+        <button_dialog_ok name="button_ok">
+          <anchored to="list" position="belowright" offset="35,15" />
+        </button_dialog_ok>
+        <button_dialog_cancel name="button_cancel">
+          <anchored to="list" position="belowright" offset="0,15" />
+        </button_dialog_cancel>
+
+        <close_utilitybox3 />
+      </sheetdata>
+    </windowclass>
+</root>

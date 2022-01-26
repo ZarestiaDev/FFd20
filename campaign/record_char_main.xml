@@ -9,35 +9,44 @@
 	<windowclass name="charsheet_main">
 		<script file="campaign/scripts/char_main.lua" />
 		<sheetdata>
-			<!-- Former notes info -->
-			<generic_background name="gender_background">
-				<bounds>15,20,100,30</bounds>
-			</generic_background>
-			<string_field name="gender">
-				<anchored to="gender_background" />
-				<labelres>char_label_gender</labelres>
-			</string_field>
-			<generic_background name="age_background">
-				<bounds>120,20,100,30</bounds>
-			</generic_background>
-			<string_field name="age">
-				<anchored to="age_background" />
-				<labelres>char_label_age</labelres>
-			</string_field>
-			<generic_background name="height_background">
-				<bounds>225,20,100,30</bounds>
-			</generic_background>
-			<string_field name="height">
-				<anchored to="height_background" />
-				<labelres>char_label_height</labelres>
-			</string_field>
-			<generic_background name="weight_background">
-				<bounds>330,20,100,30</bounds>
-			</generic_background>
-			<string_field name="weight">
-				<anchored to="weight_background" />
-				<labelres>char_label_weight</labelres>
-			</string_field>
+
+		
+		<!-- Languages moving to main -->
+		<frame_char name="languageframe">
+			<bounds>-189,45,160,190</bounds>
+		</frame_char>
+		<label_frametop>
+			<anchored to="languageframe" />
+			<static textres="char_label_languages" />
+		</label_frametop>
+		<list_language name="languages">
+			<anchored to="languageframe">
+				<top offset="35" />
+				<left offset="15" />
+				<right offset="-20" />
+				<bottom offset="-15" />
+			</anchored>
+		</list_language>
+		<scrollbar>
+			<anchored to="languages" />
+			<target>languages</target>
+		</scrollbar>
+		<button_iedit name="languages_iedit">
+			<anchored to="languages" position="aboveright" offset="5,5" />
+			<target>languages</target>
+		</button_iedit>
+		<button_iadd_creation name="languages_add">
+			<anchored to="languages" position="aboveleft" offset="10,5" />
+			<script>
+				function onButtonPress()
+					Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
+				end
+			</script>
+		</button_iadd_creation>
+		
+
+
+			<!--
 			<generic_background name="size_background">
 				<bounds>15,75,133,30</bounds>
 			</generic_background>
@@ -60,38 +69,8 @@
 				<labelres>char_label_deity</labelres>
 			</string_field>
 
-			<!-- Languages moving to main -->
-			<!--
-			<frame_char name="languageframe">
-				<bounds>-189,45,160,190</bounds>
-			</frame_char>
-			<label_frametop>
-				<anchored to="languageframe" />
-				<static textres="char_label_languages" />
-			</label_frametop>
-			<list_language name="languages">
-				<anchored to="languageframe">
-					<top offset="35" />
-					<left offset="15" />
-					<right offset="-20" />
-					<bottom offset="-15" />
-				</anchored>
-			</list_language>
-			<scrollbar>
-				<anchored to="languages" />
-				<target>languages</target>
-			</scrollbar>
-			<button_iedit name="languages_iedit">
-				<anchored to="languages" position="aboveright" offset="5,5" />
-				<target>languages</target>
-			</button_iedit>
-			<button_iadd name="languages_iadd">
-				<anchored to="languages" position="aboveleft" offset="10,5" />
-				<target>languages</target>
-			</button_iadd>
-			-->
 
-			<!-- Abilities -->
+			Abilities 
 			<generic_background name="abilityframe">
 				<bounds>15,120,205,225</bounds>
 			</generic_background>
@@ -210,7 +189,7 @@
 				<anchored to="strengthdamage" />
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
-			
+			-->
 			<!-- Speed 
 			<frame_char name="speedframe">
 				<bounds>15,270,385,50</bounds>

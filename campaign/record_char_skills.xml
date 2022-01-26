@@ -195,14 +195,6 @@
 					end
 				</script>
 			</button_checkbox>
-
-			<!--	Zarestia
-				- Requires Training besser sichtbar machen
-				- Traits Nummer-Feld erstellen (Automatisierung später)
-				- Racial Nummer-Feld erstellen (Automatisierung später)
-				- Rank Synergy Nummer-Feld erstellen (Automatisierung später)
-				- Skill-Points Used System für Classes ebenfalls ändern
-			-->
 			
 			<genericcontrol name="rightanchor">
 				<anchored width="0" height="0">

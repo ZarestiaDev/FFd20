@@ -42,6 +42,7 @@
 
 	<!-- Utility -->
 	<includefile source="utility/utility_effects.xml" />
+	<includefile source="utility/utility_dialog_select_FFd20.xml" /> 
 
 	<!-- Reference -->
 	<includefile source="ref/ref_equipment.xml" />
@@ -65,6 +66,8 @@
 	<includefile source="campaign/record_char_notes.xml" />
 	<includefile source="campaign/record_char_actions.xml" />
 	<script name="CharManager" file="campaign/scripts/manager_char.lua" />
+
+	<includefile source="campaign/record_char_main_helper.xml" />
 
 	<includefile source="campaign/record_npc.xml" />
 	<includefile source="campaign/record_encounter.xml" />

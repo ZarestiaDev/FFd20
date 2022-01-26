@@ -16,14 +16,14 @@
 				<static textres="char_label_appearance" />
 			</label_frametop>
 
-			<ftbasic name="appearance">
+			<basicft name="appearance">
 				<anchored to="appearanceframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-			</ftbasic>
+			</basicft>
 			<scrollbar name="appearance_scrollbar">
 				<anchored to="appearance" />
 				<target>appearance</target>
@@ -36,14 +36,14 @@
 				<anchored to="notesframe" />
 				<static textres="char_label_notes" />
 			</label_frametop>
-			<ftbasic name="notes">
+			<basicft name="notes">
 				<anchored to="notesframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-			</ftbasic>
+			</basicft>
 			<scrollbar name="notes_scrollbar">
 				<anchored to="notes" />
 				<target>notes</target>
