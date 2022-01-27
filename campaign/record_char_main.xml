@@ -190,7 +190,7 @@
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
 			-->
-			<!-- Speed 
+			<!-- Speed -->
 			<frame_char name="speedframe">
 				<bounds>15,270,385,50</bounds>
 			</frame_char>
@@ -205,8 +205,16 @@
 				<anchored to="speedframe" position="insidetopleft" offset="135,15" width="235" height="20" />
 				<labelres>char_label_speedspecial</labelres>
 			</string_labeled>
+			<button_iadd_creation name="speed_add">
+				<anchored to="speedframe" position="aboveleft" offset="10,5" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("charsheet_main_speed", window.getDatabaseNode());
+					end
+				</script>
+			</button_iadd_creation>
 
-			Senses 
+			<!-- Senses -->
 			<frame_char name="sensesframe">
 				<bounds>15,320,385,60</bounds>
 			</frame_char>
@@ -229,8 +237,16 @@
 				<labelres>char_label_senses</labelres>
 				<delaykeyupdate />
 			</string_labeled>
+			<button_iadd_creation name="senses_add">
+				<anchored to="sensesframe" position="aboveleft" offset="10,5" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("charsheet_main_senses", window.getDatabaseNode());
+					end
+				</script>
+			</button_iadd_creation>
 
-			 Health 
+			<!-- Health 
 			<frame_char name="hpframe">
 				<bounds>15,380,385,100</bounds>
 			</frame_char>

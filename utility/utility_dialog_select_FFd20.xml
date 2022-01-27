@@ -37,4 +37,43 @@
 			</label>
 		</sheetdata>
 	</windowclass>
+
+	<windowclass name="select_dialog_entry_FFd20_numberbox">
+		<sheetdata>
+			<buttonc_checkbox name="selected" >
+				<anchored position="insidetopleft" offset="0,5" width="20" height="20" />
+			</buttonc_checkbox>
+			<linkcontrol name="shortcut">
+				<anchored position="insidetopright" offset="0,5" width="20" height="20" />
+				<invisible />
+			</linkcontrol>
+			<label name="text">
+				<anchored position="insidetopleft" offset="20,5">
+					<right parent="shortcut" anchor="left" offset="0" />
+				</anchored>
+				<font>sheetlabel</font>
+				<multilinespacing>20</multilinespacing>
+				<script>
+					function onClickDown(button, x, y)
+						return true;
+					end
+					function onClickRelease(button, x, y)
+						window.selected.setValue((window.selected.getValue() + 1) % 2);
+						return true;
+					end
+				</script>
+			</label>
+			<basicnumber name="value">
+				<anchored width="32" height="20">
+					<left parent="text" position="right" offset="110" />
+					<top offset="3" />
+				</anchored>
+				<hideonvalue>0</hideonvalue>
+			</basicnumber>
+			<label name="feet">
+				<anchored to="value" position="righthigh" offset="10" />
+				<static textres="feet" />
+			</label>
+		</sheetdata>
+	</windowclass>
 </root>

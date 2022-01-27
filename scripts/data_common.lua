@@ -907,3 +907,19 @@ languages = {
 	"Vieran",
 	"Yagudo"
 }
+
+speedtypes =  {
+	"Base",
+	"Burrow",
+	"Climb",
+	"Fly",
+	"Swim"
+}
+
+senses = {
+	"Blindsense",
+	"Blindsight",
+	"Darkvision",
+	"Low-Light Vision",
+	"Scent"
+}
