@@ -8,6 +8,7 @@ function onInit()
 	local nodeChar = getDatabaseNode();
 
 	-- construct languages
+	list.closeAll();
 	for _,v in ipairs(tLanguages) do
 		local w = list.createWindow();
 		w.text.setValue(v);
