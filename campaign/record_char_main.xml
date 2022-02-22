@@ -10,43 +10,39 @@
 		<script file="campaign/scripts/char_main.lua" />
 		<sheetdata>
 
-		
-		<!-- Languages moving to main -->
-		<frame_char name="languageframe">
-			<bounds>-189,45,160,190</bounds>
-		</frame_char>
-		<label_frametop>
-			<anchored to="languageframe" />
-			<static textres="char_label_languages" />
-		</label_frametop>
-		<list_language name="languages">
-			<anchored to="languageframe">
-				<top offset="35" />
-				<left offset="15" />
-				<right offset="-20" />
-				<bottom offset="-15" />
-			</anchored>
-		</list_language>
-		<scrollbar>
-			<anchored to="languages" />
-			<target>languages</target>
-		</scrollbar>
-		<button_iedit name="languages_iedit">
-			<anchored to="languages" position="aboveright" offset="5,5" />
-			<target>languages</target>
-		</button_iedit>
-		<button_iadd_creation name="languages_add">
-			<anchored to="languages" position="aboveleft" offset="10,5" />
-			<script>
-				function onButtonPress()
-					Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
-				end
-			</script>
-		</button_iadd_creation>
-		
-
-
-			<!--
+			<!-- Languages moving to main -->
+			<frame_char name="languageframe">
+				<bounds>-189,45,160,190</bounds>
+			</frame_char>
+			<label_frametop>
+				<anchored to="languageframe" />
+				<static textres="char_label_languages" />
+			</label_frametop>
+			<list_language name="languages">
+				<anchored to="languageframe">
+					<top offset="35" />
+					<left offset="15" />
+					<right offset="-20" />
+					<bottom offset="-15" />
+				</anchored>
+			</list_language>
+			<scrollbar>
+				<anchored to="languages" />
+				<target>languages</target>
+			</scrollbar>
+			<button_iedit name="languages_iedit">
+				<anchored to="languages" position="aboveright" offset="5,5" />
+				<target>languages</target>
+			</button_iedit>
+			<button_iadd_creation name="languages_add">
+				<anchored to="languages" position="aboveleft" offset="10,5" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
+					end
+				</script>
+			</button_iadd_creation>
+	
 			<generic_background name="size_background">
 				<bounds>15,75,133,30</bounds>
 			</generic_background>
@@ -69,8 +65,6 @@
 				<labelres>char_label_deity</labelres>
 			</string_field>
 
-
-			Abilities 
 			<generic_background name="abilityframe">
 				<bounds>15,120,205,225</bounds>
 			</generic_background>
@@ -189,7 +183,7 @@
 				<anchored to="strengthdamage" />
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
-			-->
+
 			<!-- Speed -->
 			<frame_char name="speedframe">
 				<bounds>15,270,385,50</bounds>
@@ -205,14 +199,6 @@
 				<anchored to="speedframe" position="insidetopleft" offset="135,15" width="235" height="20" />
 				<labelres>char_label_speedspecial</labelres>
 			</string_labeled>
-			<button_iadd_creation name="speed_add">
-				<anchored to="speedframe" position="aboveleft" offset="10,5" />
-				<script>
-					function onButtonPress()
-						Interface.openWindow("charsheet_main_speed", window.getDatabaseNode());
-					end
-				</script>
-			</button_iadd_creation>
 
 			<!-- Senses -->
 			<frame_char name="sensesframe">
@@ -237,16 +223,7 @@
 				<labelres>char_label_senses</labelres>
 				<delaykeyupdate />
 			</string_labeled>
-			<button_iadd_creation name="senses_add">
-				<anchored to="sensesframe" position="aboveleft" offset="10,5" />
-				<script>
-					function onButtonPress()
-						Interface.openWindow("charsheet_main_senses", window.getDatabaseNode());
-					end
-				</script>
-			</button_iadd_creation>
 
-			<!-- Health 
 			<frame_char name="hpframe">
 				<bounds>15,380,385,100</bounds>
 			</frame_char>
@@ -297,13 +274,7 @@
 				<anchored to="nonlethal" />
 				<static textres="char_label_nonlethal" />
 			</label_fieldtop>
-			
-			<string_labeled name="dr" source="defenses.damagereduction">
-				<anchored to="hpframe" position="insidetop" offset="-20,63" height="20" />
-				<labelres>char_label_dr</labelres>
-			</string_labeled>
 
-			Attacks 
 			<frame_char name="combatframe">
 				<bounds>305,150,95,225</bounds>
 			</frame_char>
@@ -336,7 +307,6 @@
 				<static textres="grapple" />
 			</label_fieldtop>
 
-			 Defenses 
 			<frame_char name="acframe">
 				<bounds>400,150,95,225</bounds>
 			</frame_char>
@@ -401,7 +371,6 @@
 				<anchored to="will" />
 				<static textres="will_long" />
 			</label_fieldtop>
-		-->
 		</sheetdata>
 	</windowclass>
 

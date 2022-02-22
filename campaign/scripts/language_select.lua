@@ -47,11 +47,10 @@ function processOK()
 	local nodeChar = getDatabaseNode();
 
 	for _,w in pairs(list.getWindows()) do
+		local sLanguage = w.text.getValue();
 		if w.selected.getValue() == 1 then
-			local sLanguage = w.text.getValue();
 			CharManager.addLanguage(nodeChar, sLanguage);
 		elseif w.selected.getValue() == 0 then
-			local sLanguage = w.text.getValue();
 			removeLanguage(nodeChar, sLanguage);
 		end
 	end
