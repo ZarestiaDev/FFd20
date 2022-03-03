@@ -9,10 +9,10 @@
 	<windowclass name="charsheet">
 		<frame>charsheet</frame>
 		<placement>
-			<size width="525" height="568" />
+			<size width="640" height="760" />
 		</placement>
 		<sizelimits>
-            <minimum width="525" height="568" />
+            <minimum width="640" height="760" />
 			<dynamic />
         </sizelimits>
 		<softclose />
@@ -22,34 +22,59 @@
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
 			<genericcontrol name="portraitbase">
-				<bounds>21,25,100,100</bounds>
+				<bounds>25,24,163,146</bounds>
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<bounds>21,25,100,100</bounds>
+				<bounds>25,24,163,146</bounds>
 			</portrait_char>
 
 			<token_char name="token">
-				<bounds>-86,30,40,40</bounds>
+				<bounds>-86,30,50,50</bounds>
 			</token_char>
 			
-			<generic_background name="overviewframe">
-				<bounds>125,40,-90,30</bounds>
-			</generic_background>
-			<string_field name="test">
-				<anchored to="overviewframe" />
+			<!-- Notes Information -->
+			<frame_char name="overviewframe">
+				<bounds>198,20,-30,97</bounds>
+			</frame_char>
+			<string_labeled name="name">
+				<anchored to="overviewframe" position="insidetopleft" offset="19,15" width="180" height="20" />
 				<labelres>char_label_name</labelres>
-			</string_field>
+			</string_labeled>
+			<string_labeled name="gender">
+				<anchored to="name" position="right" offset="15,0" width="55" />
+				<labelres>char_label_gender</labelres>
+			</string_labeled>
+			<string_labeled name="age">
+				<anchored to="gender" position="right" offset="15,0" width="40" />
+				<labelres>char_label_age</labelres>
+			</string_labeled>
+			<string_labeled name="height">
+				<anchored to="age" position="right" offset="15,0" width="55" />
+				<labelres>char_label_height</labelres>
+			</string_labeled>
+			<string_labeled name="weight">
+				<anchored to="overviewframe" position="insidetopleft" offset="19,57" width="55" height ="20" />
+				<labelres>char_label_weight</labelres>
+			</string_labeled>
+			<string_labeled name="size">
+				<anchored to="weight" position="right" offset="15,0" width="85" />
+				<labelres>char_label_size</labelres>
+			</string_labeled>
+			<string_labeled name="alignment">
+				<anchored to="size" position="right" offset="15,0" width="105" />
+				<labelres>char_label_alignment</labelres>
+			</string_labeled>
+			<string_labeled name="deity">
+				<anchored to="alignment" position="right" offset="15,0" width="85" />
+				<labelres>char_label_deity</labelres>
+			</string_labeled>
 			
 			<!-- Race -->
-			<generic_background name="raceframe">
-				<bounds>125,90,140,30</bounds>
-			</generic_background>
-			<string_field name="race">
-				<anchored to="raceframe" />
-				<labelres>char_label_race</labelres>
-			</string_field>
+			<frame_char name="raceframe">
+				<bounds>198,117,156,57</bounds>
+			</frame_char>
 			<button_iadd_creation name="race_add">
 				<anchored to="raceframe" position="insidetopright" offset="5,5" />
 				<script>
@@ -75,15 +100,23 @@
 					end
 				</script>
 			</linkfield>
+			<string_labeled name="race">
+				<anchored to="raceframe" position="insidetopleft" offset="19,17" height="20">
+					<right parent="racelink" anchor="left" offset="-5" />
+				</anchored>
+				<labelres>char_label_race</labelres>
+			</string_labeled>
 
 			<!-- Class / Level  -->
-			<generic_background name="classframe">
-				<bounds>275,90,-30,30</bounds>
-			</generic_background>
-			<string_field_charclasslevel name="classlevel">
-				<anchored to="classframe" />
+			<frame_char name="classframe">
+				<bounds>354,117,-30,57</bounds>
+			</frame_char>
+			<stringc_charclasslevel name="classlevel">
+				<anchored to="classframe" position="insidetopleft" offset="14,17">
+					<right offset="-25" />
+				</anchored>
 				<labelres>char_label_classlevelsummary</labelres>
-			</string_field_charclasslevel>
+			</stringc_charclasslevel>
 			<button_iadd_creation name="class_add">
 				<anchored to="classframe" position="insidetopright" offset="5,5" />
 				<script>
@@ -98,27 +131,27 @@
 
 			<!-- Subwindows -->
 			<subwindow name="main">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_main</class>
 			</subwindow>
 			<subwindow name="skills">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_skills</class>
 			</subwindow>
 			<subwindow name="abilities">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_abilities</class>
 			</subwindow>
 			<subwindow name="inventory">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_inventory</class>
 			</subwindow>
 			<subwindow name="notes">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_notes</class>
 			</subwindow>
 			<subwindow name="actions">
-				<bounds>0,125,-1,-20</bounds>
+				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_actions</class>
 			</subwindow>
 

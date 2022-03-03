@@ -9,7 +9,6 @@
 	<windowclass name="charsheet_main">
 		<script file="campaign/scripts/char_main.lua" />
 		<sheetdata>
-
 			<!-- Languages moving to main -->
 			<frame_char name="languageframe">
 				<bounds>-189,45,160,190</bounds>
@@ -42,32 +41,10 @@
 					end
 				</script>
 			</button_iadd_creation>
-	
-			<generic_background name="size_background">
-				<bounds>15,75,133,30</bounds>
-			</generic_background>
-			<string_field name="size">
-				<anchored to="size_background" />
-				<labelres>char_label_size</labelres>
-			</string_field>
-			<generic_background name="alignment_background">
-				<bounds>153,75,133,30</bounds>
-			</generic_background>
-			<string_field name="alignment">
-				<anchored to="alignment_background" />
-				<labelres>char_label_alignment</labelres>
-			</string_field>
-			<generic_background name="deity_background">
-				<bounds>291,75,134,30</bounds>
-			</generic_background>
-			<string_field name="deity">
-				<anchored to="deity_background" />
-				<labelres>char_label_deity</labelres>
-			</string_field>
 
-			<generic_background name="abilityframe">
+			<frame_char name="abilityframe">
 				<bounds>15,120,205,225</bounds>
-			</generic_background>
+			</frame_char>
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">
 				<anchored to="abilityframe" position="insidetopleft" offset="55,26" />
