@@ -97,27 +97,9 @@
 	<string name="help_tool_options">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643248/</string>
 	
 	<!-- Options -->
-	<string name="option_label_RMMT">Target: Remove on miss</string>
-	<string name="option_label_SHRR">Chat: Show results to client</string>
-	<string name="option_label_PSMN">Party: Show characters to clients</string>
-	<string name="option_label_INIT">Add: Auto NPC initiative</string>
 	<string name="option_label_ANPC">Chat: Anonymize NPC attacks</string>
-	<string name="option_val_multi">Multi</string>
-	<string name="option_val_pc">PC</string>
-	<string name="option_val_npc">NPC</string>
-	<string name="option_val_group">Group</string>
-	<string name="option_val_max">Max</string>
-	<string name="option_val_random">Random</string>
-	<string name="option_val_fumbleandcrit">Fumble and Crit</string>
-	<string name="option_val_fumble">Fumble</string>
-	<string name="option_val_crit">Crit</string>
-		
-	<string name="option_header_houserule">House Rules (GM)</string>
 	<string name="option_label_HRCC">Attack: Critical confirm</string>
-	<string name="option_label_HRIR">CT: Roll init each round</string>
-	<string name="option_label_HRNH">CT: NPC hit points</string>
-	<string name="option_label_HRST">CT: Auto stabilization rolls</string>
-	<string name="option_label_HRFC">Attack: Fumble/Crit Tables</string>
+	<string name="option_label_HRNH">Combat: NPC hit points</string>
 	
 	<!-- Combat Tracker -->
 	<string name="ct_label_hptemp">Tmp</string>

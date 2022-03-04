@@ -35,7 +35,7 @@ function parseComponents()
 	aComponents = {};
 	
 	-- Get the comma-separated strings
-	local aClauses, aClauseStats = StringManager.split(getValue(), ",;\r", true);
+	local aClauses, aClauseStats = StringManager.split(getValue(), ",;\r\n", true);
 	
 	-- Check each comma-separated string for a potential skill roll or auto-complete opportunity
 	for i = 1, #aClauses do

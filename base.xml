@@ -5,8 +5,8 @@
   attribution and copyright information.
 -->
 
-<root version="4.1" release="0.1">
-	<announcement text="FFd20 ruleset for Fantasy Grounds, development by Zarestia" font="emotefont" />
+<root version="4.1" release="0.2">
+	<announcement text="FFd20 ruleset (2022-03-04) for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
 	<description>
@@ -65,7 +65,6 @@
 	<includefile source="campaign/record_char_inventory.xml" />
 	<includefile source="campaign/record_char_notes.xml" />
 	<includefile source="campaign/record_char_actions.xml" />
-	<script name="CharManager" file="campaign/scripts/manager_char.lua" />
 
 	<includefile source="campaign/record_char_main_helper.xml" />
 
@@ -91,7 +90,6 @@
 	<includefile source="ps/ps_main.xml" />
 	<includefile source="ps/ps_skills.xml" />
 	<includefile source="ps/ps_xp.xml" />
-	<script name="PartyManager2" file="ps/scripts/manager_ps2.lua" />
 
 	<!-- High-level scripts -->
 	<script name="DataCommon" file="scripts/data_common.lua" />
@@ -99,9 +97,11 @@
 	<script name="CampaignDataManager2" file="scripts/manager_campaigndata2.lua" />
 
 	<script name="ActorManagerFFd20" file="scripts/manager_actor_FFd20.lua" />
+	<script name="CharManager" file="scripts/manager_char.lua" />
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
 	<script name="EffectManagerFFd20" file="scripts/manager_effect_FFd20.lua" />
 	<script name="ItemManager2" file="scripts/manager_item2.lua" />
+	<script name="PartyManager2" file="scripts/manager_ps2.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />
 	<script name="TokenManager2" file="scripts/manager_token2.lua" />
 	<script name="VersionManager2" file="scripts/manager_version2.lua" />

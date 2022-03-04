@@ -3,9 +3,7 @@
 -- attribution and copyright information.
 --
 
-function isArmor(vRecord)
-	local bIsArmor = false;
-
+function getItemType(vRecord, sClass)
 	local nodeItem;
 	if type(vRecord) == "string" then
 		nodeItem = DB.findNode(vRecord);
@@ -13,48 +11,36 @@ function isArmor(vRecord)
 		nodeItem = vRecord;
 	end
 	if not nodeItem then
-		return false, "", "";
+		return "", "";
 	end
 	
-	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
+	local sTypeLower = "";
+	local sSubtypeLower = "";
 
-	if (sTypeLower == "armor") then
-		bIsArmor = true;
-	elseif StringManager.contains({"shield", "shields"}, sTypeLower) then
-		bIsArmor = true;
+	sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
+	sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
+
+	if StringManager.contains({"shield", "shields"}, sTypeLower) then
 		sTypeLower = "armor";
 		sSubtypeLower = "shield";
-	end
-	if sSubtypeLower == "shields" then
+	elseif sSubtypeLower == "shields" then
 		sSubtypeLower = "shield";
 	end
-	
+
+	return sTypeLower, sSubtypeLower;
+end
+
+function isArmor(vRecord, sClass)
+	local sTypeLower, sSubtypeLower = getItemType(vRecord, sClass);
+	local bIsArmor = (sTypeLower == "armor");
+
 	return bIsArmor, sTypeLower, sSubtypeLower;
 end
 
-function isWeapon(vRecord)
-	local bIsWeapon = false;
+function isWeapon(vRecord, sClass)
+	local sTypeLower, sSubtypeLower = getItemType(vRecord, sClass);
+	local bIsWeapon = ((sTypeLower == "weapon") and (sSubtypeLower ~= "ammunition")) or (sSubtypeLower == "weapon");
 
-	local nodeItem;
-	if type(vRecord) == "string" then
-		nodeItem = DB.findNode(vRecord);
-	elseif type(vRecord) == "databasenode" then
-		nodeItem = vRecord;
-	end
-	if not nodeItem then
-		return false, "", "";
-	end
-	
-	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
-
-	if sClass == "item" then
-		if ((sTypeLower == "weapon") and (sSubtypeLower ~= "ammunition")) or (sSubtypeLower == "weapon") then
-			bIsWeapon = true;
-		end
-	end
-	
 	return bIsWeapon, sTypeLower, sSubtypeLower;
 end
 

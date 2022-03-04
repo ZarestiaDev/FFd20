@@ -94,7 +94,7 @@
 	
 	<template name="string_charclasslevelsummary">
 		<simplestringc>
-			<lineoffset default="on" mergerule="resetandadd">1</lineoffset>
+			<controlline />
 			<readonly />
 			<script file="campaign/scripts/char_classlevelsummary.lua" />
 		</simplestringc>

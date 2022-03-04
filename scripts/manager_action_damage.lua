@@ -1451,7 +1451,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	local sNewStatus = ActorHealthManager.getHealthStatus(rTarget);
 	
 	local bShowStatus = false;
-	if ActorManager.getFaction(rTarget) == "friend" then
+	if ActorManager.isFaction(rTarget, "friend") then
 		bShowStatus = not OptionsManager.isOption("SHPC", "off");
 	else
 		bShowStatus = not OptionsManager.isOption("SHNPC", "off");
@@ -1477,8 +1477,8 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	end
 	
 	-- Manage Stable effect add/remove when healed
-	if (sOriginalStatus == ActorHealthManager.STATUS_DYING) or (sOriginalStatus == ActorHealthManager.STATUS_DEAD) then
-		if (sNewStatus ~= ActorHealthManager.STATUS_DYING) and (sNewStatus ~= ActorHealthManager.STATUS_DEAD) then
+	if ActorHealthManager.isDyingOrDeadStatus(sOriginalStatus) then
+		if not ActorHealthManager.isDyingOrDeadStatus(sNewStatus) then
 			ActorManagerFFd20.removeStableEffect(rTarget);
 		else
 			if ((rDamageOutput.sType == "heal") or (rDamageOutput.sType == "fheal") or (rDamageOutput.sType == "regen")) and (rDamageOutput.nVal > 0) then

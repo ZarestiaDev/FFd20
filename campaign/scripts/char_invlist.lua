@@ -10,7 +10,6 @@ function setSortLock(isLocked)
 end
 
 function onInit()
-	onEncumbranceChanged();
 
 	registerMenuItem(Interface.getString("list_menu_createitem"), "insert", 5);
 
@@ -24,9 +23,6 @@ function onInit()
 	DB.addHandler(DB.getPath(node, "*.speed20"), "onUpdate", onArmorChanged);
 	DB.addHandler(DB.getPath(node, "*.speed30"), "onUpdate", onArmorChanged);
 	DB.addHandler(DB.getPath(node, "*.carried"), "onUpdate", onCarriedChanged);
-	DB.addHandler(DB.getPath(node, "*.weight"), "onUpdate", onEncumbranceChanged);
-	DB.addHandler(DB.getPath(node, "*.count"), "onUpdate", onEncumbranceChanged);
-	DB.addHandler(DB.getPath(node), "onChildDeleted", onEncumbranceChanged);
 end
 
 function onClose()
@@ -40,9 +36,6 @@ function onClose()
 	DB.removeHandler(DB.getPath(node, "*.speed20"), "onUpdate", onArmorChanged);
 	DB.removeHandler(DB.getPath(node, "*.speed30"), "onUpdate", onArmorChanged);
 	DB.removeHandler(DB.getPath(node, "*.carried"), "onUpdate", onCarriedChanged);
-	DB.removeHandler(DB.getPath(node, "*.weight"), "onUpdate", onEncumbranceChanged);
-	DB.removeHandler(DB.getPath(node, "*.count"), "onUpdate", onEncumbranceChanged);
-	DB.removeHandler(DB.getPath(node), "onChildDeleted", onEncumbranceChanged);
 end
 
 function onMenuSelection(selection)
@@ -93,14 +86,6 @@ function onCarriedChanged(nodeField)
 		if ItemManager2.isArmor(nodeItem) then
 			CharManager.calcItemArmorClass(nodeChar);
 		end
-	end
-	
-	onEncumbranceChanged();
-end
-
-function onEncumbranceChanged()
-	if CharManager.updateEncumbrance then
-		CharManager.updateEncumbrance(window.getDatabaseNode());
 	end
 end
 

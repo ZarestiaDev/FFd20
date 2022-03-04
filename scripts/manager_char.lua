@@ -37,6 +37,7 @@ CLASS_NAME_SORCERER = "Sorcerer";
 CLASS_NAME_SUMMONER = "Summoner";
 CLASS_NAME_WITCH = "Witch";
 CLASS_NAME_WIZARD = "Wizard";
+CLASS_NAME_MAGUS = "Magus";
 
 CLASS_BAB_FAST = "fast";
 CLASS_BAB_MEDIUM = "medium";
@@ -871,8 +872,7 @@ function resetHealth(nodeChar)
 	
 	-- Remove Stable effect if not dead/dying
 	local rActor = ActorManager.resolveActor(nodeChar);
-	local sStatus = ActorHealthManager.getHealthStatus(rActor);
-	if (sStatus ~= ActorHealthManager.STATUS_DYING) and (sStatus ~= ActorHealthManager.STATUS_DEAD) then
+	if not ActorHealthManager.isDyingOrDead(rActor) then
 		ActorManagerFFd20.removeStableEffect(rActor);
 	end
 end
@@ -1035,22 +1035,8 @@ function updateSkillPoints(nodeChar)
 end
 
 function updateEncumbrance(nodeChar)
-	local nEncTotal = 0;
-
-	local nCount, nWeight;
-	for _,vNode in pairs(DB.getChildren(nodeChar, "inventorylist")) do
-		if DB.getValue(vNode, "carried", 0) ~= 0 then
-			nCount = DB.getValue(vNode, "count", 0);
-			if nCount < 1 then
-				nCount = 1;
-			end
-			nWeight = DB.getValue(vNode, "weight", 0);
-			
-			nEncTotal = nEncTotal + (nCount * nWeight);
-		end
-	end
-
-	DB.setValue(nodeChar, "encumbrance.load", "number", nEncTotal);
+	Debug.console("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01");
+	CharEncumbranceManager.updateEncumbrance(nodeChar);
 end
 
 function hasFeat(nodeChar, sFeat)
@@ -1603,22 +1589,12 @@ function addClass(nodeChar, sClass, sRecord)
 	ChatManager.SystemMessage(sMsg);
 	
 	-- Try and match an existing class entry, or create a new one
-	local sRecordSansModule = StringManager.split(sRecord, "@")[1];
 	local nodeClass = nil;
 	for _,v in pairs(nodeList.getChildren()) do
-		local _,sExistingClassPath = DB.getValue(v, "shortcut", "", "");
-		if sExistingClassPath == "" then
-			local sExistingClassName = StringManager.trim(DB.getValue(v, "name", "")):lower();
-			if sExistingClassName ~= "" and (sExistingClassName == sClassNameLower) then
-				nodeClass = v;
-				break;
-			end
-		else
-			local sExistingClassPathSansModule = StringManager.split(sExistingClassPath, "@")[1];
-			if sExistingClassPathSansModule == sRecordSansModule then
-				nodeClass = v;
-				break;
-			end
+		local sExistingClassName = StringManager.trim(DB.getValue(v, "name", "")):lower();
+		if (sExistingClassName == sClassNameLower) and (sExistingClassName ~= "") then
+			nodeClass = v;
+			break;
 		end
 	end
 	local nLevel = 1;
@@ -1964,7 +1940,6 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 		if sClassName == CLASS_NAME_MYSTIC_THEURGE then
 			nChooseSpellClassIncrease = 2;
 		end
-		
 		local aOptions = {};
 		for _,v in pairs(DB.getChildren(nodeChar, "spellset")) do
 			local sSpellClassName = DB.getValue(v, "label", "");
@@ -2351,7 +2326,6 @@ function handleClassFeatureSpells(nodeChar, nodeFeature)
 	if not sAbility then
 		return false;
 	end
-	
 	local nodeSpellClassList = nodeChar.createChild("spellset");
 	local nodeNewSpellClass = nodeSpellClassList.createChild();
 	DB.setValue(nodeNewSpellClass, "label", "string", DB.getValue(nodeFeature, "...name", ""));
@@ -2681,6 +2655,67 @@ function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
 			addClassSpellLevelSlot(nodeSpellClass, 5);
 		elseif nCL == 20 then
 			-- No gain
+		end
+	elseif sClassName == CLASS_NAME_MAGUS then
+		if nCL == 1 then
+			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
+			addClassSpellLevelSlot(nodeSpellClass, 1);
+			nNewSpellLevel = 1;
+		elseif nCL == 2 then
+			addClassSpellLevelSlot(nodeSpellClass, 0);
+			addClassSpellLevelSlot(nodeSpellClass, 1);
+		elseif nCL == 3 then
+			addClassSpellLevelSlot(nodeSpellClass, 1);
+		elseif nCL == 4 then
+			addClassSpellLevelSlot(nodeSpellClass, 2);
+			nNewSpellLevel = 2;
+		elseif nCL == 5 then
+			addClassSpellLevelSlot(nodeSpellClass, 1);
+			addClassSpellLevelSlot(nodeSpellClass, 2);
+		elseif nCL == 6 then
+			addClassSpellLevelSlot(nodeSpellClass, 0);
+			addClassSpellLevelSlot(nodeSpellClass, 2);
+		elseif nCL == 7 then
+			addClassSpellLevelSlot(nodeSpellClass, 3);
+			nNewSpellLevel = 3;
+		elseif nCL == 8 then
+			addClassSpellLevelSlot(nodeSpellClass, 2);
+			addClassSpellLevelSlot(nodeSpellClass, 3);
+		elseif nCL == 9 then
+			addClassSpellLevelSlot(nodeSpellClass, 1);
+			addClassSpellLevelSlot(nodeSpellClass, 3);
+		elseif nCL == 10 then
+			addClassSpellLevelSlot(nodeSpellClass, 4);
+			nNewSpellLevel = 4;
+		elseif nCL == 11 then
+			addClassSpellLevelSlot(nodeSpellClass, 3);
+			addClassSpellLevelSlot(nodeSpellClass, 4);
+		elseif nCL == 12 then
+			addClassSpellLevelSlot(nodeSpellClass, 2);
+			addClassSpellLevelSlot(nodeSpellClass, 4);
+		elseif nCL == 13 then
+			addClassSpellLevelSlot(nodeSpellClass, 5);
+			nNewSpellLevel = 5;
+		elseif nCL == 14 then
+			addClassSpellLevelSlot(nodeSpellClass, 4);
+			addClassSpellLevelSlot(nodeSpellClass, 5);
+		elseif nCL == 15 then
+			addClassSpellLevelSlot(nodeSpellClass, 3);
+			addClassSpellLevelSlot(nodeSpellClass, 5);
+		elseif nCL == 16 then
+			addClassSpellLevelSlot(nodeSpellClass, 6);
+			nNewSpellLevel = 6;
+		elseif nCL == 17 then
+			addClassSpellLevelSlot(nodeSpellClass, 5);
+			addClassSpellLevelSlot(nodeSpellClass, 6);
+		elseif nCL == 18 then
+			addClassSpellLevelSlot(nodeSpellClass, 4);
+			addClassSpellLevelSlot(nodeSpellClass, 6);
+		elseif nCL == 19 then
+			addClassSpellLevelSlot(nodeSpellClass, 5);
+			addClassSpellLevelSlot(nodeSpellClass, 6);
+		elseif nCL == 20 then
+			addClassSpellLevelSlot(nodeSpellClass, 6);
 		end
 	elseif sClassName == CLASS_FEATURE_DOMAIN_SPELLS then
 		if nCL % 2 == 1 then
