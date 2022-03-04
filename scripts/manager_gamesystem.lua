@@ -111,6 +111,9 @@ tokenLightDefaults = {
 function onInit()
 	VisionManager.addLightDefaults(tokenLightDefaults);
 
+	-- Call for new Currency & Encumbrance
+	CharEncumbranceManager.addStandardCalc();
+
 	-- Languages
 	languages = {
 		["Aegyllan"] = "",
