@@ -11,7 +11,7 @@
 		<placement>
 			<size width="350" height="800" />
 		</placement>
-    <script file="campaign/scripts/language_select.lua" />
+    <script file="campaign/scripts/selection_language.lua" />
     <sheetdata>
       <windowtitlebar name="title">
         <resource>language_list</resource>
