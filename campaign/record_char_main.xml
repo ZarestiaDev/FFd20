@@ -42,12 +42,13 @@
 				</script>
 			</button_iadd_creation>
 
+			<!-- Abilities -->
 			<frame_char name="abilityframe">
-				<bounds>15,120,205,225</bounds>
+				<bounds>15,0,242,251</bounds>
 			</frame_char>
 
 			<number_charabilityscore name="strength" source="abilities.strength.score">
-				<anchored to="abilityframe" position="insidetopleft" offset="55,26" />
+				<anchored to="abilityframe" position="insidetopleft" offset="65,26" />
 			</number_charabilityscore>
 			<string_charabilitylabel name="strength_label">
 				<anchored to="strength" />
@@ -161,6 +162,75 @@
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
 
+			<!-- Hit Points -->
+			<frame_char name="hpframe">
+				<bounds>257,0,354,108</bounds>
+			</frame_char>
+			<number_dropadd name="current" source="hp.current">
+				<anchored to="hpframe" position="insidetopleft" offset="58,26" width="36" height="24" />
+			</number_dropadd>>
+			<label name="hitpoints_label">
+				<anchored to="current" position="lefthigh" width="43" />
+				<static textres="hp" />
+			</label>
+			<label_fieldtop name="current_label">
+				<anchored to="current" />
+				<static textres="char_label_current" />
+			</label_fieldtop>
+			<number_dropadd name="hp" source="hp.total">
+				<anchored to="current" position="right" offset="23,0" width="36" />
+				<description textres="hp" />
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="hp_label">
+				<anchored to="hp" />
+				<static textres="hp" />
+			</label_fieldtop>
+			<number_dropadd name="hptemp" source="hp.temporary">
+				<anchored to="hp" position="right" offset="23,0" width="36" />
+				<color>0000AA</color>
+				<hideonvalue>0</hideonvalue>
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="hptemp_label">
+				<anchored to="hptemp" />
+				<static textres="char_label_hptemp" />
+			</label_fieldtop>
+			<number_charwounds name="wounds" source="hp.wounds">
+				<anchored to="hptemp" position="right" offset="23,0" width="36" />
+			</number_charwounds>
+			<label_fieldtop name="wounds_label">
+				<anchored to="wounds" />
+				<static textres="char_label_wounds" />
+			</label_fieldtop>
+			<number_dropadd name="nonlethal" source="hp.nonlethal">
+				<anchored to="wounds" position="right" offset="23,0" width="36" />
+				<hideonvalue>0</hideonvalue>
+				<script>
+					function onValueChanged()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_dropadd>
+			<label_fieldtop name="nonlethal_label">
+				<anchored to="nonlethal" />
+				<static textres="char_label_nonlethal" />
+			</label_fieldtop>
+
+			<!-- Damage Reduction -->
+			<string_labeled name="dr" source="defenses.damagereduction">
+				<anchored to="hpframe" position="insidebottomleft" offset="16,20" width="306" height="20" />
+				<labelres>char_label_dr</labelres>
+			</string_labeled>
+
 			<!-- Speed -->
 			<frame_char name="speedframe">
 				<bounds>15,270,385,50</bounds>
@@ -200,57 +270,6 @@
 				<labelres>char_label_senses</labelres>
 				<delaykeyupdate />
 			</string_labeled>
-
-			<frame_char name="hpframe">
-				<bounds>15,380,385,100</bounds>
-			</frame_char>
-			<number_dropadd name="hp" source="hp.total">
-				<anchored to="hpframe" position="insidetopleft" offset="60,27" width="40" height="28" />
-				<description textres="hp" />
-				<script>
-					function onValueChanged()
-						window.onHealthChanged();
-					end
-				</script>
-			</number_dropadd>
-			<label_fieldtop name="hp_label">
-				<anchored to="hp" />
-				<static textres="hp" />
-			</label_fieldtop>
-			<number_dropadd name="hptemp" source="hp.temporary">
-				<anchored to="hp" position="right" offset="20,0" width="40" />
-				<color>0000AA</color>
-				<hideonvalue>0</hideonvalue>
-				<script>
-					function onValueChanged()
-						window.onHealthChanged();
-					end
-				</script>
-			</number_dropadd>
-			<label_fieldtop name="hptemp_label">
-				<anchored to="hptemp" />
-				<static textres="char_label_hptemp" />
-			</label_fieldtop>
-			<number_charwounds name="wounds" source="hp.wounds">
-				<anchored to="hpframe" position="insidetopright" offset="120,27" width="40" height="28" />
-			</number_charwounds>
-			<label_fieldtop name="wounds_label">
-				<anchored to="wounds" />
-				<static textres="char_label_wounds" />
-			</label_fieldtop>
-			<number_dropadd name="nonlethal" source="hp.nonlethal">
-				<anchored to="wounds" position="right" offset="20,0" width="40" />
-				<hideonvalue>0</hideonvalue>
-				<script>
-					function onValueChanged()
-						window.onHealthChanged();
-					end
-				</script>
-			</number_dropadd>
-			<label_fieldtop name="nonlethal_label">
-				<anchored to="nonlethal" />
-				<static textres="char_label_nonlethal" />
-			</label_fieldtop>
 
 			<frame_char name="combatframe">
 				<bounds>305,150,95,225</bounds>

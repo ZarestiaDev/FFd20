@@ -208,6 +208,7 @@
 	<string name="char_label_abilityscore">Score</string>
 	<string name="char_label_abilitybonus">Bonus</string>
 	<string name="char_label_abilitydamage">Dmg</string>
+	<string name="char_label_current">Current</string>
 	<string name="char_label_wounds">Wounds</string>
 	<string name="char_label_hptemp">Temp</string>
 	<string name="char_label_nonlethal">Subdual</string>
