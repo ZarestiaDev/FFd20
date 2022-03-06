@@ -32,6 +32,7 @@
 
 			<token_char name="token">
 				<bounds>-86,30,50,50</bounds>
+				<invisible />
 			</token_char>
 			
 			<!-- Notes Information -->
