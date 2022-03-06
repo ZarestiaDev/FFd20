@@ -134,6 +134,10 @@
 				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_main</class>
 			</subwindow>
+			<subwindow name="combat">
+				<bounds>0,174,-1,-20</bounds>
+				<class>charsheet_combat</class>
+			</subwindow>
 			<subwindow name="skills">
 				<bounds>0,174,-1,-20</bounds>
 				<class>charsheet_skills</class>
@@ -159,6 +163,10 @@
 				<tab>
 					<icon>tab_main</icon>
 					<subwindow>main</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_combat</icon>
+					<subwindow>combat</subwindow>
 				</tab>
 				<tab>
 					<icon>tab_skills</icon>

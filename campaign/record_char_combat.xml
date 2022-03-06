@@ -11,7 +11,7 @@
 		<sheetdata>
 			<!-- Defenses - Armor -->
 			<frame_char name="acframe">
-				<bounds>15,0,480,210</bounds>
+				<bounds>15,0,-29,210</bounds>
 			</frame_char>
 
 			<number_chartotalac name="ac" source="ac.totals.general">
@@ -256,7 +256,7 @@
 
 			<!-- Defenses - Saves -->
 			<frame_char name="saveframe">
-				<bounds>15,210,350,120</bounds>
+				<bounds>15,210,370,120</bounds>
 			</frame_char>
 
 			<number_charsavefort name="fortitude" source="saves.fortitude.total">
@@ -350,7 +350,7 @@
 
 			<!-- Attacks -->
 			<frame_char name="attackframe">
-				<bounds>15,330,350,150</bounds>
+				<bounds>15,330,370,150</bounds>
 			</frame_char>
 
 			<label name="baseattackbonus_label">
@@ -462,7 +462,7 @@
 
 			<!-- Defenses - Spell -->
 			<frame_char name="srframe">
-				<bounds>365,210,130,90</bounds>
+				<bounds>385,210,130,90</bounds>
 			</frame_char>
 			
 			<number_charsr name="srfinal" source="defenses.sr.total">
@@ -498,7 +498,7 @@
 
 			<!-- Speed -->
 			<frame_char name="speedframe">
-				<bounds>365,300,130,90</bounds>
+				<bounds>385,300,130,90</bounds>
 			</frame_char>
 			
 			<number_charspeed name="speedfinal" source="speed.total">
@@ -538,7 +538,7 @@
 
 			<!-- INITIATIVE -->
 			<frame_char name="initiativeframe">
-				<bounds>365,390,130,90</bounds>
+				<bounds>385,390,130,90</bounds>
 			</frame_char>
 			<number_charinit name="initiative" source="initiative.total">
 				<anchored to="initiativeframe" position="insidetopleft" offset="78,16" width="32" height="20" />
