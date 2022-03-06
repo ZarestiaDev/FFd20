@@ -8,43 +8,44 @@
 <root>
 	<windowclass name="charsheet_notes">
 		<sheetdata>
-			<generic_background name="appearanceframe">
-				<bounds>15,20,-29,190</bounds>
-			</generic_background>
+			<frame_char name="appearanceframe">
+				<bounds>15,0,-29,190</bounds>
+			</frame_char>
 			<label_frametop>
 				<anchored to="appearanceframe" />
 				<static textres="char_label_appearance" />
 			</label_frametop>
-
-			<basicft name="appearance">
+			<stringu name="appearance">
 				<anchored to="appearanceframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-			</basicft>
-			<scrollbar name="appearance_scrollbar">
+				<multilinespacing>20</multilinespacing>
+			</stringu>
+			<scrollbar>
 				<anchored to="appearance" />
 				<target>appearance</target>
 			</scrollbar>
 
-			<generic_background name="notesframe">
-				<bounds>15,235,-29,-2</bounds>
-			</generic_background>
+			<frame_char name="notesframe">
+				<bounds>15,190,-29,-2</bounds>
+			</frame_char>
 			<label_frametop>
 				<anchored to="notesframe" />
 				<static textres="char_label_notes" />
 			</label_frametop>
-			<basicft name="notes">
+			<stringu name="notes">
 				<anchored to="notesframe">
 					<top offset="30" />
 					<left offset="15" />
 					<right offset="-20" />
 					<bottom offset="-15" />
 				</anchored>
-			</basicft>
-			<scrollbar name="notes_scrollbar">
+				<multilinespacing>20</multilinespacing>
+			</stringu>
+			<scrollbar>
 				<anchored to="notes" />
 				<target>notes</target>
 			</scrollbar>
