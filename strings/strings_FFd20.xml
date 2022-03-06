@@ -209,6 +209,7 @@
 	<string name="char_label_abilitybonus">Bonus</string>
 	<string name="char_label_abilitydamage">Dmg</string>
 	<string name="char_label_current">Current</string>
+	<string name="char_label_max">Max</string>
 	<string name="char_label_wounds">Wounds</string>
 	<string name="char_label_hptemp">Temp</string>
 	<string name="char_label_nonlethal">Subdual</string>
@@ -219,6 +220,8 @@
 	<string name="char_label_speedspecial">Special Movement</string>
 	<string name="char_label_melee">Melee</string>
 	<string name="char_label_ranged">Ranged</string>
+	<string name="char_label_defense">Defense</string>
+	<string name="char_label_attack">Attack</string>
 
 	<string name="char_label_skillperception">Percept.</string>
 	

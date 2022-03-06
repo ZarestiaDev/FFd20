@@ -272,7 +272,7 @@
 	</template>
 	<template name="label_charmainskill">
 		<stringcontrol>
-			<anchored position="aboveleft" offset="-10,0" width="40" />
+			<anchored position="aboveleft" offset="-10,0" width="42" />
 			<font>sheetlabelmini</font>
 			<center />
 		</stringcontrol>
