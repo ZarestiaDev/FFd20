@@ -69,14 +69,6 @@
 				function update()
 					setValue(CharManager.getClassLevelSummary(window.getDatabaseNode(), true));
 				end
-
-				function onClickDown(button, x, y)
-					return true;
-				end
-
-				function onClickRelease(button, x, y)
-					Interface.openWindow("charsheet_classes", window.getDatabaseNode());
-				end
 			</script>
 		</stringc_labeled>
 	</template>

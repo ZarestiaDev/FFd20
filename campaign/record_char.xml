@@ -22,12 +22,12 @@
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
 			<genericcontrol name="portraitbase">
-				<bounds>25,24,163,146</bounds>
+				<bounds>25,24,148,148</bounds>
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<bounds>25,24,163,146</bounds>
+				<bounds>25,24,148,148</bounds>
 			</portrait_char>
 
 			<token_char name="token">
@@ -36,10 +36,10 @@
 			
 			<!-- Notes Information -->
 			<frame_char name="overviewframe">
-				<bounds>198,20,-30,97</bounds>
+				<bounds>173,20,-29,97</bounds>
 			</frame_char>
 			<string_labeled name="name">
-				<anchored to="overviewframe" position="insidetopleft" offset="19,15" width="180" height="20" />
+				<anchored to="overviewframe" position="insidetopleft" offset="19,15" width="205" height="20" />
 				<labelres>char_label_name</labelres>
 			</string_labeled>
 			<string_labeled name="gender">
@@ -59,7 +59,7 @@
 				<labelres>char_label_weight</labelres>
 			</string_labeled>
 			<string_labeled name="size">
-				<anchored to="weight" position="right" offset="15,0" width="85" />
+				<anchored to="weight" position="right" offset="15,0" width="80" />
 				<labelres>char_label_size</labelres>
 			</string_labeled>
 			<string_labeled name="alignment">
@@ -67,16 +67,16 @@
 				<labelres>char_label_alignment</labelres>
 			</string_labeled>
 			<string_labeled name="deity">
-				<anchored to="alignment" position="right" offset="15,0" width="85" />
+				<anchored to="alignment" position="right" offset="15,0" width="115" />
 				<labelres>char_label_deity</labelres>
 			</string_labeled>
 			
 			<!-- Race -->
 			<frame_char name="raceframe">
-				<bounds>198,117,156,57</bounds>
+				<bounds>173,117,171,57</bounds>
 			</frame_char>
 			<button_iadd_creation name="race_add">
-				<anchored to="raceframe" position="insidetopright" offset="5,5" />
+				<anchored to="raceframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("masterindex", "race")
@@ -84,7 +84,7 @@
 				</script>
 			</button_iadd_creation>
 			<linkfield name="racelink">
-				<anchored to="raceframe" position="insidetopright" offset="5,5" width="20" height="20" />
+				<anchored to="raceframe" position="insidetopright" offset="10,18" width="20" height="20" />
 				<closetoggle />
 				<invisible />
 				<script>
@@ -102,23 +102,23 @@
 			</linkfield>
 			<string_labeled name="race">
 				<anchored to="raceframe" position="insidetopleft" offset="19,17" height="20">
-					<right parent="racelink" anchor="left" offset="-5" />
+					<right offset="-35" />
 				</anchored>
 				<labelres>char_label_race</labelres>
 			</string_labeled>
 
 			<!-- Class / Level  -->
 			<frame_char name="classframe">
-				<bounds>354,117,-30,57</bounds>
+				<bounds>344,117,-29,57</bounds>
 			</frame_char>
 			<stringc_charclasslevel name="classlevel">
 				<anchored to="classframe" position="insidetopleft" offset="14,17">
-					<right offset="-25" />
+					<right offset="-45" />
 				</anchored>
 				<labelres>char_label_classlevelsummary</labelres>
 			</stringc_charclasslevel>
 			<button_iadd_creation name="class_add">
-				<anchored to="classframe" position="insidetopright" offset="5,5" />
+				<anchored to="classframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("masterindex", "class")
@@ -126,7 +126,7 @@
 				</script>
 			</button_iadd_creation>
 			<button_charclasslevel name="button_classlevel">
-				<anchored to="classframe" position="insidetopright" offset="25,5" />
+				<anchored to="classframe" position="insidetopright" offset="30,18" />
 			</button_charclasslevel>
 
 			<!-- Subwindows -->
