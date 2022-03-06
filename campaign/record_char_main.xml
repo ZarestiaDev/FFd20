@@ -129,9 +129,21 @@
 				<static textres="char_label_abilitydamage" />
 			</label_fieldtop>
 
+			<!-- Initiative -->
+			<frame_char name="initiativeframe">
+				<bounds>15,251,242,60</bounds>
+			</frame_char>
+			<label name="initiative_label">
+				<anchored to="initiativeframe" position="insidetopleft" offset="15,20" />
+				<static textres="initiative" />
+			</label>
+			<number_charinit name="initiative" source="initiative.total">
+				<anchored to="initiativeframe" position="insidetopleft" offset="124,16" width="36" height="24" />
+			</number_charinit>
+
 			<!-- Languages -->
 			<frame_char name="languageframe">
-				<bounds>15,251,242,223</bounds>
+				<bounds>15,311,242,163</bounds>
 			</frame_char>
 			<label_frametop>
 				<anchored to="languageframe" />
@@ -150,11 +162,11 @@
 				<target>languages</target>
 			</scrollbar>
 			<button_iedit name="languages_iedit">
-				<anchored to="languages" position="aboveright" offset="5,5" />
+				<anchored to="languages" position="aboveright" offset="5,3" />
 				<target>languages</target>
 			</button_iedit>
 			<button_iadd_creation name="languages_add">
-				<anchored to="languages" position="aboveleft" offset="10,5" />
+				<anchored to="languages" position="aboveleft" offset="10,3" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
