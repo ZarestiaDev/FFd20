@@ -1236,9 +1236,11 @@ function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
 		end
 	
 	elseif sTraitType:match(RACIAL_TRAIT_DARKVISION) or 
-			sTraitType:match(RACIAL_TRAIT_LOWLIGHTVISION) or 
 			sTraitType:match(RACIAL_TRAIT_SUPERIORDARKVISION) then 
 		handleRacialVision(nodeChar, nodeSource);
+
+	elseif sTraitType:match(RACIAL_TRAIT_LOWLIGHTVISION) then
+		handleRacialVision(nodeChar, nodeSource, true);
 		
 	elseif sTraitType:match(RACIAL_TRAIT_WEAPONFAMILIARITY) then 
 		if not handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList) then
@@ -1435,18 +1437,20 @@ function handleRacialSpeed(nodeChar, nodeTrait, sTraitType, nodeTargetList)
 	return true;
 end
 
-function handleRacialVision(nodeChar, nodeTrait)
+function handleRacialVision(nodeChar, nodeTrait, bIgnoreText)
 	local sSenses = DB.getValue(nodeChar, "senses", "");
 	if sSenses ~= "" then
 		sSenses = sSenses .. ", ";
 	end
 	sSenses = sSenses .. DB.getValue(nodeTrait, "name", "");
 	
-	local sText = DB.getText(nodeTrait, "text");
-	if sText then
-		local sDist = sText:match("%d+");
-		if sDist then
-			sSenses = sSenses .. " " .. sDist;
+	if not bIgnoreText then
+		local sText = DB.getText(nodeTrait, "text");
+		if sText then
+			local sDist = sText:match("%d+");
+			if sDist then
+				sSenses = sSenses .. " " .. sDist;
+			end
 		end
 	end
 	

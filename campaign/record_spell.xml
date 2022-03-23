@@ -18,16 +18,7 @@
 		<nodelete />
 		<playercontrol />
 		<sharable />
-		<script>
-			function onLockChanged()
-				if header.subwindow then
-					header.subwindow.update();
-				end
-				if content.subwindow then
-					content.subwindow.update();
-				end
-			end
-		</script>
+		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_record_header name="header">
 				<class>spelldesc_header</class>
@@ -49,27 +40,16 @@
 
 	<windowclass name="spelldesc_header">
 		<margins control="0,0,0,7" />
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_header.lua" />
 		<sheetdata>
-			<link_record_header>
-				<class>spelldesc</class>
-			</link_record_header>
+			<link_record_header name="link" />
 
 			<anchor_record_header_right />
 			<icon_record_locked />
 			<button_record_locked />
 
-			<string_record_name name="name">
-				<empty textres="library_recordtype_empty_spell" />
-			</string_record_name>
+			<string_record_name name="name" />
+			<label_recordtype name="recordtype_label" />
 		</sheetdata>
 	</windowclass>
 	
@@ -195,7 +175,7 @@
 	<windowclass name="spelldesc2_header">
 		<margins control="0,0,0,7" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>spelldesc2</class>
 			</link_record_header>
 			<string_record_name_ref name="name" />

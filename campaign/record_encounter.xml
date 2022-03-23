@@ -31,7 +31,7 @@
 			end
 		</script>
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>battle</class>
 			</link_record_header>
 			

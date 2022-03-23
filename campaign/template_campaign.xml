@@ -153,23 +153,6 @@
 		</button_text_sm>
 	</template>
 
-	<template name="label_recordtype">
-		<stringcontrol>
-			<anchored to="name" position="belowleft" offset="0,7">
-				<right parent="" offset="-25" />
-			</anchored>
-			<font>reference-subtitle</font>
-			<readonly />
-			<script>
-				function onInit()
-					if getValue() == "" then
-						setVisible(false);
-					end
-				end
-			</script>
-		</stringcontrol>
-	</template>
-
 	<template name="frame_record_editor">
 		<genericcontrol name="contentframe">
 			<anchored>

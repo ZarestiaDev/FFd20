@@ -286,16 +286,7 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<script>
-			function onLockChanged()
-				if header.subwindow then
-					header.subwindow.update();
-				end
-				
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				text.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_record_header name="header">
 				<class>ref_proficiency_header</class>
@@ -317,17 +308,9 @@
 	</windowclass>
 	<windowclass name="ref_proficiency_header">
 		<margins control="0,0,0,2" />
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_header_simple.lua" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referenceproficiency</class>
 			</link_record_header>
 
@@ -338,7 +321,7 @@
 			<string_record_name name="name">
 				<empty textres="library_recordtype_empty_proficiency" />
 			</string_record_name>
-			<label_recordtype name="recordtype">
+			<label_recordtype name="recordtype_label">
 				<static textres="record_label_proficiency" />
 			</label_recordtype>	
 		</sheetdata>

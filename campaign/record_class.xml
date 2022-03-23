@@ -20,19 +20,7 @@
 		<nodelete />
 		<playercontrol />
 		<sharable />
-		<script>
-			function onLockChanged()
-				if header.subwindow then
-					header.subwindow.update();
-				end
-				if stats.subwindow then
-					stats.subwindow.update();
-				end
-				
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				text.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_record_header name="header">
 				<class>ref_class_header</class>
@@ -44,7 +32,7 @@
 				<anchored to="contentframe" position="over" />
 				<invisible />
 			</ft_record>
-			<subwindow_record name="stats">
+			<subwindow_record name="content">
 				<class>ref_class_stats</class>
 			</subwindow_record>
 
@@ -52,7 +40,7 @@
 				<target>text</target>
 			</scrollbar_record>
 			<scrollbar_record>
-				<target>stats</target>
+				<target>content</target>
 			</scrollbar_record>
 			
 			<tabs_recordsheet name="tabs">
@@ -62,7 +50,7 @@
 				</tab>
 				<tab>
 					<icon>tab_other</icon>
-					<subwindow>stats</subwindow>
+					<subwindow>content</subwindow>
 				</tab>
 			</tabs_recordsheet>
 			
@@ -73,17 +61,9 @@
 
 	<windowclass name="ref_class_header">
 		<margins control="0,0,0,2" />
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_header.lua" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referenceclass</class>
 			</link_record_header>
 
@@ -91,12 +71,8 @@
 			<icon_record_locked />
 			<button_record_locked />
 
-			<string_record_name name="name">
-				<empty textres="library_recordtype_empty_class" />
-			</string_record_name>
-			<label_recordtype name="recordtype">
-				<static textres="library_recordtype_single_class" />
-			</label_recordtype>	
+			<string_record_name name="name" />
+			<label_recordtype name="recordtype_label" />
 		</sheetdata>
 	</windowclass>
 	<template name="cycler_column_classstat">
@@ -253,16 +229,7 @@
 		<nodelete />
 		<playercontrol />
 		<sharable />
-		<script>
-			function onLockChanged()
-				if header.subwindow then
-					header.subwindow.update();
-				end
-				if content.subwindow then
-					content.subwindow.update();
-				end
-			end
-		</script>
+		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_ref_header name="header">
 				<class>ref_classability_header</class>
@@ -280,17 +247,9 @@
 	</windowclass>
 	<windowclass name="ref_classability_header">
 		<margins control="0,0,0,2" />
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_header_simple.lua" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referenceclassability</class>
 			</link_record_header>
 
@@ -301,7 +260,7 @@
 			<string_record_name name="name">
 				<empty textres="library_recordtype_empty_classfeature" />
 			</string_record_name>
-			<label_recordtype name="recordtype">
+			<label_recordtype name="recordtype_label">
 				<static textres="record_label_classfeature" />
 			</label_recordtype>	
 		</sheetdata>

@@ -36,7 +36,7 @@
 	<windowclass name="ref_weapon_header">
 		<margins control="0,0,0,7" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referenceweapon</class>
 			</link_record_header>
 			<string_record_name_ref name="name" />
@@ -156,7 +156,7 @@
 	<windowclass name="ref_armor_header">
 		<margins control="0,0,0,7" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referencearmor</class>
 			</link_record_header>
 			<string_record_name_ref name="name" />
@@ -293,7 +293,7 @@
 	<windowclass name="ref_equipment_header">
 		<margins control="0,0,0,7" />
 		<sheetdata>
-			<link_record_header>
+			<link_record_header name="link">
 				<class>referenceequipment</class>
 			</link_record_header>
 			<string_record_name_ref name="name" />

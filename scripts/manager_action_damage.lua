@@ -33,7 +33,7 @@ function handleApplyDamage(msgOOB)
 	end
 	
 	local nTotal = tonumber(msgOOB.nTotal) or 0;
-	applyDamage(rSource, rTarget, (tonumber(msgOOB.nSecret) == 1), msgOOB.sRollType, msgOOB.sDamage, nTotal);
+	ActionDamage.applyDamage(rSource, rTarget, (tonumber(msgOOB.nSecret) == 1), msgOOB.sRollType, msgOOB.sDamage, nTotal);
 end
 
 function notifyApplyDamage(rSource, rTarget, bSecret, sRollType, sDesc, nTotal)
@@ -94,7 +94,7 @@ function getRoll(rActor, rAction)
 	end
 	
 	-- Encode the damage types
-	encodeDamageTypes(rRoll);
+	ActionDamage.encodeDamageTypes(rRoll);
 
 	-- Encode meta tags
 	if rAction.meta then
@@ -109,7 +109,7 @@ function getRoll(rActor, rAction)
 end
 
 function performRoll(draginfo, rActor, rAction)
-	local rRoll = getRoll(rActor, rAction);
+	local rRoll = ActionDamage.getRoll(rActor, rAction);
 	
 	ActionsManager.performAction(draginfo, rActor, rRoll);
 end
@@ -153,13 +153,13 @@ function onDamageRoll(rSource, rRoll)
 			local nDieSides = tonumber(v.type:match("[dgpr](%d+)")) or 0;
 			if nDieSides > 0 then
 				v.result = nDieSides;
-				v.value = nil;
+				v.value = v.result;
 			end
 		end
 	end
 	
 	-- Decode damage types
-	decodeDamageTypes(rRoll, true);
+	ActionDamage.decodeDamageTypes(rRoll, true);
 
 	-- Apply empower meta damage
 	if bEmpower then
@@ -205,7 +205,7 @@ function onDamageRoll(rSource, rRoll)
 	end
 	
 	-- Encode the damage results for damage application and readability
-	encodeDamageText(rRoll);
+	ActionDamage.encodeDamageText(rRoll);
 end
 
 function onDamage(rSource, rTarget, rRoll)
@@ -225,7 +225,7 @@ function onDamage(rSource, rTarget, rRoll)
 	end
 
 	-- Apply damage to the PC or CT entry referenced
-	notifyApplyDamage(rSource, rTarget, rRoll.bTower, rRoll.sType, rMessage.text, nTotal);
+	ActionDamage.notifyApplyDamage(rSource, rTarget, rRoll.bTower, rRoll.sType, rMessage.text, nTotal);
 end
 
 function onStabilization(rSource, rTarget, rRoll)
@@ -243,7 +243,7 @@ function onStabilization(rSource, rTarget, rRoll)
 	if bSuccess then
 		ActorManagerFFd20.applyStableEffect(rSource);
 	else
-		applyFailedStabilization(rSource);
+		ActionDamage.applyFailedStabilization(rSource);
 	end
 end
 
@@ -797,7 +797,7 @@ function decodeAndOrClauses(sText)
 			end
 			
 			if nStartOR then
-				nParen = getParenDepth(sText, nStartOR);
+				nParen = ActionDamage.getParenDepth(sText, nStartOR);
 				if nParen ~= 0 then
 					nTempIndex = nEndOR + 1;
 				end
@@ -820,7 +820,7 @@ function decodeAndOrClauses(sText)
 				nStartAND, nEndAND = string.find(sPhraseOR, "%s+and%s+", nTempIndex);
 				
 				if nStartAND then
-					nParen = getParenDepth(sText, nIndexOR + nStartAND);
+					nParen = ActionDamage.getParenDepth(sText, nIndexOR + nStartAND);
 					if nParen ~= 0 then
 						nTempIndex = nEndAND + 1;
 					end
@@ -1007,8 +1007,8 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 					bApplyDR = true;
 				else
 					bApplyDR = true;
-					aClausesOR = decodeAndOrClauses(kDR);
-					if matchAndOrClauses(aClausesOR, aSrcDmgClauseTypes) then
+					aClausesOR = ActionDamage.decodeAndOrClauses(kDR);
+					if ActionDamage.matchAndOrClauses(aClausesOR, aSrcDmgClauseTypes) then
 						bApplyDR = false;
 					end
 				end
@@ -1236,7 +1236,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	local sOriginalStatus = ActorHealthManager.getHealthStatus(rTarget);
 
 	-- Decode damage/heal description
-	local rDamageOutput = decodeDamageText(nTotal, sDamage);
+	local rDamageOutput = ActionDamage.decodeDamageText(nTotal, sDamage);
 	rDamageOutput.sRollType = sRollType;
 	rDamageOutput.tNotifications = {};
 	rDamageOutput.tRegenEffectsToDisable = {};
@@ -1301,7 +1301,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		local isHalf = sDamage:match("%[HALF%]");
 		local sAttack = sDamage:match("%[DAMAGE[^]]*%] ([^[]+)");
 		if sAttack then
-			local sDamageState = getDamageState(rSource, rTarget, StringManager.trim(sAttack));
+			local sDamageState = ActionDamage.getDamageState(rSource, rTarget, StringManager.trim(sAttack));
 			if sDamageState == "none" then
 				isAvoided = true;
 				bRemoveTarget = true;
@@ -1407,8 +1407,8 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 							local rEffectComp = EffectManagerFFd20.parseEffectComp(aEffectComps[i]);
 							if rEffectComp.type == "REGEN" then
 								local sRegen = table.concat(rEffectComp.remainder, " ");
-								aClausesOR = decodeAndOrClauses(sRegen);
-								if matchAndOrClauses(aClausesOR, aActualDamageTypes) then
+								aClausesOR = ActionDamage.decodeAndOrClauses(sRegen);
+								if ActionDamage.matchAndOrClauses(aClausesOR, aActualDamageTypes) then
 									bMatch = true;
 								end
 							end
@@ -1490,7 +1490,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	end
 	
 	-- Output results
-	messageDamage(rSource, rTarget, bSecret, rDamageOutput.sTypeOutput, sDamage, rDamageOutput.sVal, table.concat(rDamageOutput.tNotifications, " "));
+	ActionDamage.messageDamage(rSource, rTarget, bSecret, rDamageOutput.sTypeOutput, sDamage, rDamageOutput.sVal, table.concat(rDamageOutput.tNotifications, " "));
 
 	-- Remove target after applying damage
 	if bRemoveTarget and rSource and rTarget then
@@ -1604,7 +1604,7 @@ function applyFailedStabilization(rActor)
 	end
 
 	-- Output results
-	messageDamage(nil, rActor, false, sDamageTypeOutput, sDamage, sDamageOutput, table.concat(aNotifications, " "));
+	ActionDamage.messageDamage(nil, rActor, false, sDamageTypeOutput, sDamage, sDamageOutput, table.concat(aNotifications, " "));
 end
 
 --
@@ -1631,13 +1631,13 @@ function handleApplyDamageState(msgOOB)
 	local rTarget = ActorManager.resolveActor(msgOOB.sTargetNode);
 	
 	if Session.IsHost then
-		setDamageState(rSource, rTarget, msgOOB.sAttack, msgOOB.sState);
+		ActionDamage.setDamageState(rSource, rTarget, msgOOB.sAttack, msgOOB.sState);
 	end
 end
 
 function setDamageState(rSource, rTarget, sAttack, sState)
 	if not Session.IsHost then
-		applyDamageState(rSource, rTarget, sAttack, sState);
+		ActionDamage.applyDamageState(rSource, rTarget, sAttack, sState);
 		return;
 	end
 	

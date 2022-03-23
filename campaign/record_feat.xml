@@ -18,16 +18,7 @@
 		<nodelete />
 		<playercontrol />
 		<sharable />
-		<script>
-			function onLockChanged()
-				if header.subwindow then
-					header.subwindow.update();
-				end
-				if content.subwindow then
-					content.subwindow.update();
-				end
-			end
-		</script>
+		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_ref_header name="header">
 				<class>ref_feat_header</class>
@@ -46,27 +37,16 @@
 
 	<windowclass name="ref_feat_header">
 		<margins control="0,0,0,7" />
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
+		<script file="common/scripts/record_header.lua" />
 		<sheetdata>
-			<link_record_header>
-				<class>referencefeat</class>
-			</link_record_header>
+			<link_record_header name="link" />
 
 			<anchor_record_header_right />
 			<icon_record_locked />
 			<button_record_locked />
 
-			<string_record_name name="name">
-				<empty textres="library_recordtype_empty_feat" />
-			</string_record_name>
+			<string_record_name name="name" />
+			<label_recordtype name="recordtype_label" />
 		</sheetdata>
 	</windowclass>
 	
