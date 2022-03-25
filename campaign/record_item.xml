@@ -35,22 +35,65 @@
 			<label_column name="type_label">
 				<static textres="type" />
 			</label_column>
-			<string_columnh name="type">
+			<combobox name="type">
 				<nohide />
-				<delaykeyupdate />
+				<listdirection>down</listdirection>
+				<anchored width="140" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="95" />
+				</anchored>
 				<script>
+					local item_types = {
+						"Armor",
+						"Cybertech",
+						"Goods and Service",
+						"Magic Item",
+						"Weapon"
+					}
+
+					function onInit()
+						super.onInit();
+						addItems(item_types);
+					end
+
 					function onValueChanged()
+						window.subtype.clear();
+						window.subtype.setValue("");
 						window.update();
+						if getValue() ~= nil then
+							if window.subtype ~= nil and window.subtype.getValue() ~= "" then
+								window.parentcontrol.window.header.subwindow.update(getValue() .. " (" .. window.subtype.getValue() .. ")");
+							else
+								window.parentcontrol.window.header.subwindow.update(getValue());
+							end
+						end
 					end
 				</script>
-			</string_columnh>
+			</combobox>
 
 			<label_column name="subtype_label">
 				<static textres="item_label_subtype" />
 			</label_column>
-			<string_columnh name="subtype">
-				<delaykeyupdate />
-			</string_columnh>
+			<combobox name="subtype">
+				<nohide />
+				<listdirection>down</listdirection>
+				<anchored width="200" height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="95" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						window.update();
+						if getValue() ~= nil then
+							if window.type ~= nil and window.type.getValue() ~= "" then
+								window.parentcontrol.window.header.subwindow.update(window.type.getValue() .. " (" .. getValue() .. ")");
+							else
+								window.parentcontrol.window.header.subwindow.update(window.type.getValue());
+							end
+						end
+					end
+				</script>
+			</combobox>
 
 			<line_column name="divider2" />
 
@@ -65,6 +108,33 @@
 			<number_columnh name="weight" />
 
 			<line_column name="divider3" />
+
+			<label_column name="charges_label">
+				<anchored>
+					<top offset="16" />
+				</anchored>
+				<static textres="item_label_charges" />
+			</label_column>
+			<number_columnh name="charges">
+				<anchored>
+					<top offset="16" />
+				</anchored>
+				<delaykeyupdate />
+			</number_columnh>
+			<label_fieldtop name="charges_labeltop">
+				<anchored to="charges" />
+				<static textres="item_label_charges_current" />
+			</label_fieldtop>
+			<number_columnh name="charges_max">
+				<anchored to="charges">
+					<top offset="-20" />
+				</anchored>
+				<default>50</default>
+			</number_columnh>
+			<label_fieldtop name="charges_max_label">
+				<anchored to="charges_max" />
+				<static textres="item_label_charges_max" />
+			</label_fieldtop>
 
 			<label_column name="damage_label">
 				<static textres="item_label_damage" />
