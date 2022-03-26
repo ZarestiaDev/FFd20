@@ -95,11 +95,11 @@ function updateControl(sControl, bReadOnly, bID)
 	if not self[sControl] then
 		return false;
 	end
-		
+
 	if not bID then
 		return self[sControl].update(bReadOnly, true);
 	end
-	
+
 	return self[sControl].update(bReadOnly);
 end
 
@@ -108,7 +108,7 @@ function update()
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState("item", nodeRecord);
 	local nCostVisibility = cost_visibility.getValue();
-	
+
 	local sType = type.getValue();
 	local sSubType = subtype.getValue();
 	local bArmor = (sType == "Armor");
@@ -173,7 +173,11 @@ function update()
 	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
 
 	-- Wand & Stave
-	updateControl("charges", bReadOnly, bID and (bStave or bWand));
+	if updateControl("charges", bReadOnly, bID and (bStave or bWand)) then
+		charges_labeltop.setVisible(true);
+	else
+		charges_labeltop.setVisible(false);
+	end
 	updateControl("charges_max", bReadOnly, bID and (bStave or bWand));
 	
 	-- Weapon

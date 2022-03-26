@@ -95,8 +95,6 @@
 				</script>
 			</combobox>
 
-			<line_column name="divider2" />
-
 			<label_column name="cost_label">
 				<static textres="item_label_cost" />
 			</label_column>
@@ -121,8 +119,6 @@
 			</label_column>
 			<number_columnh name="weight" />
 
-			<line_column name="divider3" />
-
 			<label_column name="charges_label">
 				<anchored>
 					<top offset="16" />
@@ -134,7 +130,7 @@
 					<top offset="16" />
 				</anchored>
 			</number_columnh>
-			<label_fieldtop name="charges_current">
+			<label_fieldtop name="charges_labeltop">
 				<anchored to="charges" />
 				<static textres="item_label_charges_current" />
 			</label_fieldtop>
@@ -214,8 +210,6 @@
 				<static textres="item_label_properties" />
 			</label_column>
 			<string_columnh name="properties" />
-			
-			<line_column name="divider4" />
 
 			<label_column name="bonus_label">
 				<static textres="item_label_bonus" />
@@ -238,8 +232,6 @@
 				<static textres="item_label_prereq" />
 			</label_column>
 			<string_columnh name="prerequisites" />
-			
-			<line_column name="divider5" />
 
 			<ft_columnh name="description" />
 		</sheetdata>
