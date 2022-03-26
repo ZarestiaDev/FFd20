@@ -107,6 +107,7 @@ function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState("item", nodeRecord);
+	local nCostVisibility = cost_visibility.getValue();
 	
 	local sType = type.getValue();
 	local sSubType = subtype.getValue();
@@ -163,15 +164,16 @@ function update()
 	end
 
 	local bSection2 = false;
-	if updateControl("cost", bReadOnly, bID) then bSection2 = true; end
+	if Session.IsHost then
+		if updateControl("cost", bReadOnly, bID) then bSection2 = true; end
+	else
+		Debug.chat(nCostVisibility)
+		if updateControl("cost", bReadOnly, bID and (nCostVisibility == 0)) then bSection2 = true; end
+	end
 	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
 
 	-- Wand & Stave
-	if updateControl("charges", bReadOnly, bID and (bStave or bWand)) then
-		charges_labeltop.setVisible(true);
-	else
-		charges_labeltop.setVisible(false);
-	end
+	updateControl("charges", bReadOnly, bID and (bStave or bWand));
 	updateControl("charges_max", bReadOnly, bID and (bStave or bWand));
 	
 	-- Weapon

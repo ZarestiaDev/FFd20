@@ -100,7 +100,21 @@
 			<label_column name="cost_label">
 				<static textres="item_label_cost" />
 			</label_column>
-			<string_columnh name="cost" />
+			<string_columnh name="cost">
+				<anchored>
+					<right offset="-30" />
+				</anchored>
+			</string_columnh>
+			<buttonfield name="cost_visibility">
+				<anchored to="cost" position="right" offset="10,0" width="20" />
+				<state icon="visibilityon" />>
+				<state icon="visibilityoff" />
+				<script>
+					function onValueChanged()
+						window.update();
+					end
+				</script>
+			</buttonfield>
 
 			<label_column name="weight_label">
 				<static textres="item_label_weight" />
@@ -119,9 +133,8 @@
 				<anchored>
 					<top offset="16" />
 				</anchored>
-				<delaykeyupdate />
 			</number_columnh>
-			<label_fieldtop name="charges_labeltop">
+			<label_fieldtop name="charges_current">
 				<anchored to="charges" />
 				<static textres="item_label_charges_current" />
 			</label_fieldtop>
