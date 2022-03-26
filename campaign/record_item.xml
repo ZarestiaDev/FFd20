@@ -121,13 +121,13 @@
 
 			<label_column name="charges_label">
 				<anchored>
-					<top offset="16" />
+					<top offset="18" />
 				</anchored>
 				<static textres="item_label_charges" />
 			</label_column>
 			<number_columnh name="charges">
 				<anchored>
-					<top offset="16" />
+					<top offset="18" />
 				</anchored>
 			</number_columnh>
 			<label_fieldtop name="charges_labeltop">

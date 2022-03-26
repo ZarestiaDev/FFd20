@@ -387,7 +387,7 @@
 	<string name="item_label_subtype">Subtype</string>
 	<string name="item_label_charges">Charges</string>
 	<string name="item_label_charges_current">Current</string>
-	<string name="item_label_charges_max">Maximum</string>
+	<string name="item_label_charges_max">Max</string>
 	<string name="item_label_damage">Damage</string>
 	<string name="item_label_dmgtype">Damage Type</string>
 	<string name="item_label_critical">Critical</string>
