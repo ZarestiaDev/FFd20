@@ -134,6 +134,7 @@ aRecordOverrides = {
 		aPlayerListButtons = { "button_item_armor", "button_item_weapons" },
 		aCustomFilters = {
 			["Type"] = { sField = "type" },
+			["Subtype"] = {sField = "subtype" },
 		},
 	},
 
