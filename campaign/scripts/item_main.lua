@@ -52,7 +52,7 @@ local magic_item_subtypes = {
 	"Rod",
 	"Royal Arms",
 	"Scroll",
-	"Stave",
+	"Staff",
 	"Wand",
 	"Wondrous Item"
 }
@@ -118,7 +118,7 @@ function update()
 	local bWeapon = (sType == "Weapon");
 	local bMagicalArmor = (sSubType == "Magical Armor");
 	local bMagicalWeapon = (sSubType == "Magical Weapon");
-	local bStave = (sSubType == "Stave");
+	local bStaff = (sSubType == "Staff");
 	local bWand = (sSubType == "Wand");
 
 	if bArmor then
@@ -138,17 +138,13 @@ function update()
 		subtype.addItems(weapon_subtypes);
 	end
 
-	-- Hide comboboxes if locked
+	-- Set comboboxes readonly if locked
 	if bReadOnly == true then
-		type_label.setVisible(false);
-		type.setComboBoxVisible(false);
-		subtype_label.setVisible(false);
-		subtype.setComboBoxVisible(false);
+		type.setComboBoxReadOnly(true);
+		subtype.setComboBoxReadOnly(true);
 	else
-		type_label.setVisible(true);
-		type.setComboBoxVisible(true);
-		subtype_label.setVisible(true);
-		subtype.setComboBoxVisible(true);
+		type.setComboBoxReadOnly(false);
+		subtype.setComboBoxReadOnly(false);
 	end
 	
 	local bSection1 = false;
@@ -172,12 +168,12 @@ function update()
 	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
 
 	-- Wand & Stave
-	if updateControl("charges", bReadOnly, bID and (bStave or bWand)) then
+	if updateControl("charges", bReadOnly, bID and (bStaff or bWand)) then
 		charges_labeltop.setVisible(true);
 	else
 		charges_labeltop.setVisible(false);
 	end
-	updateControl("charges_max", bReadOnly, bID and (bStave or bWand));
+	updateControl("charges_max", bReadOnly, bID and (bStaff or bWand));
 	
 	-- Weapon
 	updateControl("damage", bReadOnly, bID and (bWeapon or bMagicalWeapon));
