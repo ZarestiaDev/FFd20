@@ -112,6 +112,8 @@
 						window.update();
 					end
 				</script>
+				<gmeditonly />
+				<gmvisibleonly />
 			</buttonfield>
 
 			<label_column name="weight_label">

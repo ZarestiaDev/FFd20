@@ -167,7 +167,6 @@ function update()
 	if Session.IsHost then
 		if updateControl("cost", bReadOnly, bID) then bSection2 = true; end
 	else
-		Debug.chat(nCostVisibility)
 		if updateControl("cost", bReadOnly, bID and (nCostVisibility == 0)) then bSection2 = true; end
 	end
 	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
