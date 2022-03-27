@@ -108,6 +108,7 @@ function update()
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState("item", nodeRecord);
 	local nCostVisibility = cost_visibility.getValue();
+	local nCharges = charges.getValue();
 
 	local sType = type.getValue();
 	local sSubType = subtype.getValue();
@@ -167,13 +168,17 @@ function update()
 	end
 	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
 
-	-- Wand & Stave
+	-- Wand & Staff workaround for visible labeltop if no wand or staff. Hide Charges_Max dependant on number of charges left.
 	if updateControl("charges", bReadOnly, bID and (bStaff or bWand)) then
 		charges_labeltop.setVisible(true);
 	else
 		charges_labeltop.setVisible(false);
 	end
-	updateControl("charges_max", bReadOnly, bID and (bStaff or bWand));
+	if bReadOnly then
+		updateControl("charges_max", bReadOnly, bID and (bStaff or bWand) and nCharges > 0);
+	else
+		updateControl("charges_max", bReadOnly, bID and (bStaff or bWand));
+	end
 	
 	-- Weapon
 	updateControl("damage", bReadOnly, bID and (bWeapon or bMagicalWeapon));

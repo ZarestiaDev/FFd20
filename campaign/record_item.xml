@@ -139,10 +139,12 @@
 				<anchored>
 					<top offset="18" />
 				</anchored>
+				<default>50</default>
 			</number_columnh>
 			<label_fieldtop name="charges_labeltop">
 				<anchored to="charges" />
 				<static textres="item_label_charges_current" />
+				<invisible />
 			</label_fieldtop>
 			<number_columnh name="charges_max">
 				<anchored to="charges">
