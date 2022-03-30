@@ -245,6 +245,11 @@
 			</label_column>
 			<string_columnh name="prerequisites" />
 
+			<label_column name="activation_label">
+				<static textres="item_label_activation" />
+			</label_column>
+			<string_columnh name="activation" />
+
 			<ft_columnh name="description" />
 		</sheetdata>
 	</windowclass>

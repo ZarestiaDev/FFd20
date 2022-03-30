@@ -402,6 +402,7 @@
 	<string name="item_label_bonus">Bonus</string>
 	<string name="item_label_aura">Aura</string>
 	<string name="item_label_prereq">Craft Prereq</string>
+	<string name="item_label_activation">Activation</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>

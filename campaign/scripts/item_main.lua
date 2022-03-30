@@ -201,6 +201,7 @@ function update()
 	updateControl("aura", bReadOnly, bID and bMagicItem);
 	updateControl("cl", bReadOnly, bID and bMagicItem);
 	updateControl("prerequisites", bReadOnly, bID and bMagicItem);
+	updateControl("activation", bReadOnly, bID and bMagicItem);
 	
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
