@@ -230,6 +230,11 @@
 				<delaykeyupdate />
 			</number_columnh>
 
+			<label_column name="slot_label">
+				<static textres="item_label_slot" />
+			</label_column>
+			<string_columnh name="slot" />
+
 			<label_column name="aura_label">
 				<static textres="item_label_aura" />
 			</label_column>
