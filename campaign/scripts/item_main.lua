@@ -121,6 +121,7 @@ function update()
 	local bMagicalWeapon = (sSubType == "Magical Weapon");
 	local bStaff = (sSubType == "Staff");
 	local bWand = (sSubType == "Wand");
+	local bMateria = (sSubType == "Materia");
 
 	if bArmor then
 		subtype.clear();
@@ -162,11 +163,11 @@ function update()
 
 	local bSection2 = false;
 	if Session.IsHost then
-		if updateControl("cost", bReadOnly, bID) then bSection2 = true; end
+		if updateControl("cost", bReadOnly, bID and not bMateria) then bSection2 = true; end
 	else
-		if updateControl("cost", bReadOnly, bID and (nCostVisibility == 0)) then bSection2 = true; end
+		if updateControl("cost", bReadOnly, bID and (nCostVisibility == 0) and not bMateria) then bSection2 = true; end
 	end
-	if updateControl("weight", bReadOnly, bID) then bSection2 = true; end
+	if updateControl("weight", bReadOnly, bID and not bMateria) then bSection2 = true; end
 
 	-- Wand & Staff workaround for visible labeltop if no wand or staff. Hide Charges_Max dependant on number of charges left.
 	if updateControl("charges", bReadOnly, bID and (bStaff or bWand)) then
@@ -200,10 +201,17 @@ function update()
 	updateControl("bonus", bReadOnly, bID and (bMagicalWeapon or bMagicalArmor));
 	updateControl("aura", bReadOnly, bID and bMagicItem);
 	updateControl("cl", bReadOnly, bID and bMagicItem);
-	updateControl("prerequisites", bReadOnly, bID and bMagicItem);
+	updateControl("prerequisites", bReadOnly, bID and bMagicItem and not bMateria);
 	updateControl("activation", bReadOnly, bID and bMagicItem);
 	updateControl("slot", bReadOnly, bID and bMagicItem);
-	
+
+	-- Materia
+	updateControl("materia_type", bReadOnly, bID and bMateria);
+	updateControl("materia_rarity", bReadOnly, bID and bMateria);
+	updateControl("materia_cost_lvl1", bReadOnly, bID and bMateria);
+	updateControl("materia_cost_lvl2", bReadOnly, bID and bMateria);
+	updateControl("materia_cost_lvl3", bReadOnly, bID and bMateria);
+
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
 	

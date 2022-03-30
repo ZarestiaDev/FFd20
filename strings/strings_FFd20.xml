@@ -404,6 +404,11 @@
 	<string name="item_label_prereq">Craft Prereq</string>
 	<string name="item_label_activation">Activation</string>
 	<string name="item_label_slot">Slot</string>
+	<string name="item_label_materia_cost_lvl1">Cost (Level 1)</string>
+	<string name="item_label_materia_cost_lvl2">Cost (Level 2)</string>
+	<string name="item_label_materia_cost_lvl3">Cost (Level 3)</string>
+	<string name="item_label_materia_type">Materia Type</string>
+	<string name="item_label_materia_rarity">Materia Rarity</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>

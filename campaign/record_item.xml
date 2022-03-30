@@ -129,6 +129,31 @@
 			</label_column>
 			<number_columnh name="weight" />
 
+			<label_column name="materia_type_label">
+				<static textres="item_label_materia_type" />
+			</label_column>
+			<string_columnh name="materia_type" />
+
+			<label_column name="materia_rarity_label">
+				<static textres="item_label_materia_rarity" />
+			</label_column>
+			<string_columnh name="materia_rarity" />
+
+			<label_column name="materia_cost_lvl1_label">
+				<static textres="item_label_materia_cost_lvl1" />
+			</label_column>
+			<string_columnh name="materia_cost_lvl1" />
+
+			<label_column name="materia_cost_lvl2_label">
+				<static textres="item_label_materia_cost_lvl2" />
+			</label_column>
+			<string_columnh name="materia_cost_lvl2" />
+
+			<label_column name="materia_cost_lvl3_label">
+				<static textres="item_label_materia_cost_lvl3" />
+			</label_column>
+			<string_columnh name="materia_cost_lvl3" />
+
 			<label_column name="charges_label">
 				<anchored>
 					<top offset="18" />
