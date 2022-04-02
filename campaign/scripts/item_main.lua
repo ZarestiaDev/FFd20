@@ -228,9 +228,9 @@ function update()
 	updateControl("materia_cost_lvl1", bReadOnly, bID and bMateria);
 	updateControl("materia_cost_lvl2", bReadOnly, bID and bMateria);
 	updateControl("materia_cost_lvl3", bReadOnly, bID and bMateria);
-	updateControl("materia_level", bReadOnly, bID and bMateriaRarity);
-	updateControl("mxp", bReadOnly, bID and bMateriaRarity);
-	updateControl("mxp_nlvl", bReadOnly, bID and bMateriaRarity);
+	updateControl("materia_level", bReadOnly, bID and (bMateriaRarity and bMateria));
+	updateControl("mxp", bReadOnly, bID and (bMateriaRarity and bMateria));
+	updateControl("mxp_nlvl", bReadOnly, bID and (bMateriaRarity and bMateria));
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
