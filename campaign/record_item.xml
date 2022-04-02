@@ -44,6 +44,7 @@
 			</label_column>
 			<combobox name="type">
 				<nohide />
+				<unsorted />
 				<listdirection>down</listdirection>
 				<anchored width="140" height="20">
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
@@ -83,6 +84,7 @@
 			</label_column>
 			<combobox name="subtype">
 				<nohide />
+				<unsorted />
 				<listdirection>down</listdirection>
 				<listmaxsize>7</listmaxsize>
 				<anchored width="200" height="20">
@@ -137,7 +139,15 @@
 			<label_column name="materia_rarity_label">
 				<static textres="item_label_materia_rarity" />
 			</label_column>
-			<string_columnh name="materia_rarity" />
+			<string_columnh name="materia_rarity">
+				<script>
+					function onValueChanged()
+						window.update();
+						window.calcMateria();
+					end
+				</script>
+				<delaykeyupdate />
+			</string_columnh>
 
 			<label_column name="materia_cost_lvl1_label">
 				<static textres="item_label_materia_cost_lvl1" />
@@ -279,6 +289,27 @@
 				<static textres="item_label_activation" />
 			</label_column>
 			<string_columnh name="activation" />
+
+			<label_column name="materia_level_label">
+				<static textres="item_label_materia_level" />
+			</label_column>
+			<number_columnh name="materia_level">
+				<script>
+					function onValueChanged()
+						window.calcMateria();
+					end
+				</script>
+			</number_columnh>
+
+			<label_column name="mxp_label">
+				<static textres="item_label_mxp" />
+			</label_column>
+			<number_columnh name="mxp" />
+
+			<label_column name="mxp_nlvl_label">
+				<static textres="item_label_mxp_nlvl" />
+			</label_column>
+			<number_columnh name="mxp_nlvl" />
 
 			<ft_columnh name="description" />
 		</sheetdata>

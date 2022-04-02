@@ -409,6 +409,9 @@
 	<string name="item_label_materia_cost_lvl3">Cost (Level 3)</string>
 	<string name="item_label_materia_type">Materia Type</string>
 	<string name="item_label_materia_rarity">Materia Rarity</string>
+	<string name="item_label_materia_level">Materia Level</string>
+	<string name="item_label_mxp">Materia XP</string>
+	<string name="item_label_mxp_nlvl">Next Level</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>

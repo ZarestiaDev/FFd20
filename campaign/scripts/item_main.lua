@@ -79,6 +79,21 @@ local weapon_subtypes = {
 	"Other"
 }
 
+local materia = {
+	["Common"] = {
+		[0] = 0,0,500,1000,2000
+	},
+	["Uncommon"] = {
+		[0] = 0,500,1000,2000,4000
+	},
+	["Rare"] = {
+		[0] = 0,750,1500,3000,6000
+	},
+	["Legendary"] = {
+		[0] = 0,1000,2000,4000,8000
+	}
+}
+
 function onInit()
 	update();
 end
@@ -107,11 +122,12 @@ function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
 	local bID = LibraryData.getIDState("item", nodeRecord);
+
 	local nCostVisibility = cost_visibility.getValue();
 	local nCharges = charges.getValue();
-
 	local sType = type.getValue();
 	local sSubType = subtype.getValue();
+	local sMateriaRarity = materia_rarity.getValue();
 	local bArmor = (sType == "Armor");
 	local bCybertech = (sType == "Cybertech");
 	local bGoodsAndService = (sType == "Goods and Service");
@@ -122,6 +138,7 @@ function update()
 	local bStaff = (sSubType == "Staff");
 	local bWand = (sSubType == "Wand");
 	local bMateria = (sSubType == "Materia");
+	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
 
 	if bArmor then
 		subtype.clear();
@@ -211,9 +228,24 @@ function update()
 	updateControl("materia_cost_lvl1", bReadOnly, bID and bMateria);
 	updateControl("materia_cost_lvl2", bReadOnly, bID and bMateria);
 	updateControl("materia_cost_lvl3", bReadOnly, bID and bMateria);
+	updateControl("materia_level", bReadOnly, bID and bMateriaRarity);
+	updateControl("mxp", bReadOnly, bID and bMateriaRarity);
+	updateControl("mxp_nlvl", bReadOnly, bID and bMateriaRarity);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
 	
 	divider.setVisible(bSection1 and bSection2);
+end
+
+function calcMateria()
+	local nodeRecord = getDatabaseNode();
+	local sMateriaRarity = DB.getValue(nodeRecord, "materia_rarity", "");
+	local nMateriaLevel = DB.getValue(nodeRecord, "materia_level", 0);
+	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
+
+	if bMateriaRarity then
+		local nCalcMXPnLVL = materia[sMateriaRarity][nMateriaLevel];
+		DB.setValue(nodeRecord, "mxp_nlvl", "number", nCalcMXPnLVL);
+	end
 end
