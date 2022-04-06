@@ -3,11 +3,9 @@
 -- attribution and copyright information.
 --
 
--- Reset power points and individual spells cast
+-- Reset individual spells cast
 function resetSpells(nodeCaster)
 	for _,nodeSpellClass in pairs(DB.getChildren(nodeCaster, "spellset")) do
-		DB.setValue(nodeSpellClass, "pointsused", "number", 0);
-		
 		for _,nodeLevel in pairs(DB.getChildren(nodeSpellClass, "levels")) do
 			for _,nodeSpell in pairs(DB.getChildren(nodeLevel, "spells")) do
 				DB.setValue(nodeSpell, "cast", "number", 0);
@@ -118,13 +116,6 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 
 	local nodeParent = nodeTargetLevelSpells.getParent();
 	if nodeParent then
-		-- Set the default cost for points casters
-		local nCost = tonumber(string.sub(nodeParent.getName(), -1)) or 0;
-		if nCost > 0 then
-			nCost = ((nCost - 1) * 2) + 1;
-		end
-		DB.setValue(nodeNewSpell, "cost", "number", nCost);
-
 		-- If spell level not visible, then make it so.
 		local sAvailablePath = "....available" .. nodeParent.getName();
 		local nAvailable = DB.getValue(nodeTargetLevelSpells, sAvailablePath, 1);
@@ -602,9 +593,6 @@ end
 
 function updateSpellClassCounts(nodeSpellClass)
 	local sCasterType = DB.getValue(nodeSpellClass, "castertype", "");
-	if sCasterType == "points" then
-		return;
-	end
 	
 	for _,vLevel in pairs(DB.getChildren(nodeSpellClass, "levels")) do
 		-- Calculate spell statistics

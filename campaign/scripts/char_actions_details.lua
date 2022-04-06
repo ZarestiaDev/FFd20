@@ -36,7 +36,6 @@ function addSpellClass()
 	if w then
 		w.activatedetail.setValue(1);
 		w.label.setFocus();
-		DB.setValue(getDatabaseNode(), "spellmode", "string", "standard");
 	end
 end
 

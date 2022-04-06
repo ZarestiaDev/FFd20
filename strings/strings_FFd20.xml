@@ -480,17 +480,9 @@
 	<string name="quest_label_typemajor">Major</string>
 
 	<!-- Spells -->
-	<string name="spell_label_mode">Mode</string>
-	<string name="spell_label_modestd">Standard</string>
-	<string name="spell_label_modeprep">Preparation</string>
-	<string name="spell_label_modecombat">Combat</string>
-	<string name="spell_label_display">Display</string>
-	<string name="spell_label_displaystd">Summary</string>
-	<string name="spell_label_displayaction">Actions</string>
 	<string name="spellclass_emptyname">&#171; Class &#187;</string>
 	<string name="spelllevel_emptyname">&#171; Class Level &#187;</string>
 	<string name="spell_emptydesc">&#171; Short Description &#187;</string>
-	<string name="spell_label_pp">PP</string>
 	<string name="spell_label_cc">CC</string>
 	<string name="spell_label_basedc">Base DC</string>
 	<string name="spell_label_ability">Stat</string>

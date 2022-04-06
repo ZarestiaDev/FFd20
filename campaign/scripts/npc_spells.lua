@@ -26,12 +26,6 @@ function onClose()
 	DB.removeHandler(DB.getPath(node, "spellset"), "onChildUpdate", updateAbility);
 end
 
-function onModeChanged()
-	for _,vClass in pairs(spellclasslist.getWindows()) do
-		vClass.onSpellCounterUpdate();
-	end
-end
-
 function update()
 	local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 	
@@ -42,8 +36,6 @@ function update()
 	spellclasslist.setVisible(not bReadOnly);
 	expand_full.setVisible(not bReadOnly);
 	collapse_full.setVisible(not bReadOnly);
-	label_mode.setVisible(not bReadOnly);
-	spellmode.setVisible(not bReadOnly);
 end
 
 function updateAbility()
@@ -57,7 +49,6 @@ function addSpellClass()
 	if w then
 		w.activatedetail.setValue(1);
 		w.label.setFocus();
-		DB.setValue(getDatabaseNode(), "spellmode", "string", "standard");
 	end
 end
 

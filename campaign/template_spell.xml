@@ -144,19 +144,6 @@
 			<anchored width="25" height="20" />
 		</basicnumber>
 	</template>
-	<template name="number_spellsavailable">
-		<number_spell>
-			<anchored to="availablelevel" width="15">
-				<top />
-				<left anchor="right" relation="relative" offset="10" />
-			</anchored>
-			<script>
-				function onValueChanged()
-					window.onSpellCounterUpdate();
-				end
-			</script>
-		</number_spell>
-	</template>
 	
 	<template name="string_spell">
 		<basicstring>

@@ -5,8 +5,6 @@
 
 function onInit()
 	DB.addHandler(DB.getPath(getDatabaseNode()), "onChildAdded", onChildAdded);
-
-	onModeChanged();
 end
 
 function onListChanged()
@@ -16,17 +14,7 @@ function onListChanged()
 end
 
 function onChildAdded()
-	onModeChanged();
 	update();
-end
-
-function onModeChanged()
-	local bPrepMode = (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "preparation");
-	for _,w in ipairs(getWindows()) do
-		w.carried.setVisible(bPrepMode);
-	end
-	
-	applyFilter();
 end
 
 function update()
@@ -49,7 +37,7 @@ function onDrop(x, y, draginfo)
 end
 
 function onFilter(w)
-	if (DB.getValue(window.getDatabaseNode(), "spellmode", "") == "combat") and (w.carried.getValue() < 2) then
+	if (w.carried.getValue() < 2) then
 		return false;
 	end
 	

@@ -3,15 +3,38 @@
 -- attribution and copyright information.
 --
 
+local tBonusMP = {
+	[0] = {0,0,0,0,0,0,0,0,0},
+	[1] = {1,1,1,1,1,1,1,1,1},
+	[2] = {1,3,3,3,3,3,3,3,3},
+	[3] = {1,3,6,6,6,6,6,6,6},
+	[4] = {1,3,6,10,10,10,10,10,10},
+	[5] = {2,4,7,11,16,16,16,16,16},
+	[6] = {2,6,9,13,18,24,24,24,24},
+	[7] = {2,6,12,16,21,27,34,34,34},
+	[8] = {2,6,12,20,25,31,38,46,46},
+	[9] = {3,7,13,21,31,37,44,52,61},
+	[10] = {3,9,15,23,33,45,52,60,69},
+	[11] = {3,9,18,26,36,48,62,70,79},
+	[12] = {3,9,18,30,40,52,66,82,91},
+	[13] = {4,10,19,31,46,58,72,88,106},
+	[14] = {4,12,21,33,48,66,80,96,114},
+	[15] = {4,12,24,36,51,69,90,106,124},
+	[16] = {4,12,24,40,55,73,94,118,136},
+	[17] = {5,13,25,41,61,79,100,124,151}
+}
+
 local bInitialized = false;
 local bShow = true;
 	
 function onInit()
 	bInitialized = true;
 	
-	onCasterTypeChanged();
 	toggleDetail();
-	onDisplayChanged();
+
+	local nDCStatValue = dcstatmod.getValue();
+	local nBonusMP = tBonusMP[nDCStatValue][9];
+	Debug.console("bonusMP:", nBonusMP)
 end
 
 function update(bEditMode)
@@ -28,10 +51,7 @@ function registerMenuItems()
 		registerMenuItem(Interface.getString("menu_deletespellclass"), "delete", 6);
 		registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 6, 7);
 	end
-	
-	if DB.getValue(getDatabaseNode(), "castertype", "") == "" then
-		registerMenuItem(Interface.getString("menu_resetspells"), "pointer_circle", 3);
-	end
+	registerMenuItem(Interface.getString("menu_resetspells"), "pointer_circle", 3);
 end
 
 function onStatUpdate()
@@ -89,19 +109,6 @@ end
 
 function toggleDetail()
 	local status = (activatedetail.getValue() == 1);
-
-	frame_levels.setVisible(status);
-	updateControl("availablelevel", status);
-	updateControl("availablelevel0", status);
-	updateControl("availablelevel1", status);
-	updateControl("availablelevel2", status);
-	updateControl("availablelevel3", status);
-	updateControl("availablelevel4", status);
-	updateControl("availablelevel5", status);
-	updateControl("availablelevel6", status);
-	updateControl("availablelevel7", status);
-	updateControl("availablelevel8", status);
-	updateControl("availablelevel9", status);
 	
 	frame_stat.setVisible(status);
 	ability_label.setVisible(status);
@@ -134,30 +141,6 @@ function isInitialized()
 	return bInitialized;
 end
 
-function getSheetMode()
-	return DB.getValue(getDatabaseNode(), "...spellmode", "standard");
-end
-
-function onCasterTypeChanged()
-	local bShowPP = (DB.getValue(getDatabaseNode(), "castertype", "") == "points");
-	pointsused.setVisible(bShowPP);
-	label_pointsused.setVisible(bShowPP);
-	points.setVisible(bShowPP);
-	label_points.setVisible(bShowPP);
-	
-	onSpellCounterUpdate();
-	
-	registerMenuItems();
-end
-
-function onDisplayChanged()
-	for _,vLevel in pairs(levels.getWindows()) do
-		for _,vSpell in pairs(vLevel.spells.getWindows()) do
-			vSpell.onDisplayChanged();
-		end
-	end
-end
-
 function onSpellCounterUpdate()
 	if not isInitialized() then
 		return;
@@ -174,14 +157,9 @@ function updateSpellView()
 	local nodeSpellClass = getDatabaseNode();
 
 	local bClassShow = false;
-	local sSheetMode = getSheetMode();
-	local sCasterType = DB.getValue(nodeSpellClass, "castertype", "");
 
-	local bLevelShow, nodeLevel, nAvailable, nTotalCast, nTotalPrepared, nMaxPrepared, nSpells;
-	local bSpellShow, nodeSpell, nCast, nPrepared, nPointCost;
-
-	local nPP = DB.getValue(nodeSpellClass, "points", 0);
-	local nPPUsed = DB.getValue(nodeSpellClass, "pointsused", 0);
+	local bLevelShow, nodeLevel, nAvailable, nTotalCast, nSpells;
+	local bSpellShow, nodeSpell, nCast;
 	
 	for kLevel, vLevel in pairs(levels.getWindows()) do
 		bLevelShow = false;
@@ -194,8 +172,6 @@ function updateSpellView()
 		
 		nSpells = 0;
 		nTotalCast = DB.getValue(nodeLevel, "totalcast", 0);
-		nTotalPrepared = DB.getValue(nodeLevel, "totalprepared", 0);
-		nMaxPrepared = DB.getValue(nodeLevel, "maxprepared", 0);
 
 		if nodeLevel and nodeLevel.getName() == "level0" then
 			for _,vSpell in pairs(vLevel.spells.getWindows()) do
@@ -203,81 +179,17 @@ function updateSpellView()
 				nSpells = nSpells + 1;
 				
 				bSpellShow = true;
-				nPrepared = DB.getValue(nodeSpell, "prepared", 0);
-				
-				if sCasterType == "" and sSheetMode == "combat" then
-					if nPrepared == 0 then
-						bSpellShow = false;
-					end
-				end
 				bLevelShow = bLevelShow or bSpellShow;
 				vSpell.setFilter(bSpellShow);
 				
-				if sCasterType == "" then
-					if sSheetMode == "preparation" then
-						vSpell.header.subwindow.usepower.setVisible(false);
-						vSpell.header.subwindow.counter.setVisible(true);
-						vSpell.header.subwindow.counter.update(sSheetMode, (sCasterType == "spontaneous"), nAvailable, 0, nTotalPrepared, nMaxPrepared);
-						vSpell.header.subwindow.usespacer.setVisible(nAvailable == 0);
-					else
-						if (nPrepared > 0) then
-							vSpell.header.subwindow.usepower.setVisible(true);
-							vSpell.header.subwindow.usepower.setTooltipText(Interface.getString("spell_tooltip_castspell"));
-							vSpell.header.subwindow.usespacer.setVisible(false);
-						else
-							vSpell.header.subwindow.usepower.setVisible(false);
-							vSpell.header.subwindow.usespacer.setVisible(true);
-						end
-						vSpell.header.subwindow.counter.setVisible(false);
-					end
-				elseif sCasterType == "points" then
-					vSpell.header.subwindow.usepower.setVisible(true);
-					vSpell.header.subwindow.usepower.setTooltipText(Interface.getString("spell_tooltip_usepower"));
-					vSpell.header.subwindow.counter.setVisible(false);
-					vSpell.header.subwindow.usespacer.setVisible(false);
-				else
-					vSpell.header.subwindow.usepower.setVisible(true);
-					vSpell.header.subwindow.usepower.setTooltipText(Interface.getString("spell_tooltip_castspell"));
-					vSpell.header.subwindow.counter.setVisible(false);
-					vSpell.header.subwindow.usespacer.setVisible(false);
-				end
+				vSpell.header.subwindow.usepower.setVisible(false);
+				vSpell.header.subwindow.usespacer.setVisible(true);
+				vSpell.header.subwindow.counter.setVisible(false);
 				vSpell.header.subwindow.cost.setVisible(false);
 				vSpell.header.subwindow.cost_spacer.setVisible(false);
 			end
 			
-			if sSheetMode == "combat" then
-				bLevelShow = bLevelShow and (nAvailable > 0) and (nSpells > 0);
-			else
-				bLevelShow = (nAvailable > 0);
-			end
-			
-		elseif sCasterType == "points" then
-			for _,vSpell in pairs(vLevel.spells.getWindows()) do
-				nodeSpell = vSpell.getDatabaseNode();
-				nSpells = nSpells + 1;
-				
-				nPointCost = DB.getValue(nodeSpell, "cost", 0);
-				
-				if sSheetMode ~= "combat" then
-					bSpellShow = true;
-				else
-					bSpellShow = (nPointCost <= (nPP - nPPUsed));
-				end
-				vSpell.setFilter(bSpellShow);
-				bLevelShow = bLevelShow or bSpellShow;
-
-				vSpell.header.subwindow.usepower.setVisible(true);
-				vSpell.header.subwindow.cost.setVisible(true);
-				vSpell.header.subwindow.cost_spacer.setVisible(true);
-				vSpell.header.subwindow.counter.setVisible(false);
-				vSpell.header.subwindow.usespacer.setVisible(false);
-			end
-		
-			if sSheetMode == "combat" then
-				bLevelShow = bLevelShow and (nAvailable > 0) and (nSpells > 0);
-			else
-				bLevelShow = (nAvailable > 0);
-			end
+			bLevelShow = bLevelShow and (nAvailable > 0) and (nSpells > 0);
 		else
 			-- Update spell counter objects and spell visibility
 			for _,vSpell in pairs(vLevel.spells.getWindows()) do
@@ -285,13 +197,8 @@ function updateSpellView()
 				nSpells = nSpells + 1;
 				
 				nCast = DB.getValue(nodeSpell, "cast", 0);
-				nPrepared = DB.getValue(nodeSpell, "prepared", 0);
 				
-				if sCasterType == "spontaneous" or sSheetMode ~= "combat" then
-					bSpellShow = true;
-				else
-					bSpellShow = (nCast < nPrepared);
-				end
+				bSpellShow = true;
 				bLevelShow = bLevelShow or bSpellShow;
 				vSpell.setFilter(bSpellShow);
 
@@ -299,20 +206,11 @@ function updateSpellView()
 				vSpell.header.subwindow.cost.setVisible(false);
 				vSpell.header.subwindow.cost_spacer.setVisible(false);
 				vSpell.header.subwindow.counter.setVisible(true);
-				vSpell.header.subwindow.counter.update(sSheetMode, (sCasterType == "spontaneous"), nAvailable, nTotalCast, nTotalPrepared, nMaxPrepared);
-				if (sSheetMode == "preparation" or sCasterType == "spontaneous") then
-					vSpell.header.subwindow.usespacer.setVisible(nAvailable == 0);
-				else
-					vSpell.header.subwindow.usespacer.setVisible(nPrepared == 0);
-				end
+				vSpell.header.subwindow.counter.update(true, nAvailable, nTotalCast);
+				vSpell.header.subwindow.usespacer.setVisible(nAvailable == 0);
 			end
 			
-			-- Determine level visibility
-			if sSheetMode == "combat" then
-				bLevelShow = bLevelShow and (nTotalCast < nAvailable) and (nAvailable > 0) and (nSpells > 0);
-			else
-				bLevelShow = (nAvailable > 0);
-			end
+			bLevelShow = bLevelShow and (nTotalCast < nAvailable) and (nAvailable > 0) and (nSpells > 0);
 		end
 		bClassShow = bClassShow or bLevelShow;
 		vLevel.setFilter(bLevelShow);
@@ -320,27 +218,12 @@ function updateSpellView()
 		-- Set level statistics label
 		local sStats = "";
 		if nodeLevel and nodeLevel.getName() == "level0" then
-			if sCasterType == "" then
-				sStats = "Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
-			end
-		elseif (sCasterType ~= "points") and (nAvailable > 0) and (nSpells > 0) then
-			if (sCasterType == "spontaneous") then
-				sStats = "Cast:  " .. nTotalCast .. " / " .. nAvailable;
-			else
-				sStats = "Cast:  " .. nTotalCast .. " / " .. nTotalPrepared;
-				if nTotalPrepared < nAvailable then
-					sStats = sStats .. "    Prepared:  " .. nTotalPrepared .. " / " .. nAvailable;
-				end
-			end
+			sStats = "Cast:  " .. nTotalCast .. " / " .. nAvailable;
 		end
 		vLevel.stats.setValue(sStats);
 	end
 	
-	if sSheetMode == "combat" then
-		setFilter(bClassShow);
-	else
-		setFilter(true);
-	end
+	setFilter(bClassShow);
 end
 
 function performFilter()

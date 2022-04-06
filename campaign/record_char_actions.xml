@@ -7,7 +7,6 @@
 
 <root>
 	<windowclass name="charsheet_actions">
-		<script file="campaign/scripts/char_actions.lua" />
 		<sheetdata>
 			<frame_char name="actionframe">
 				<bounds>15,0,-29,-2</bounds>
@@ -37,57 +36,11 @@
 				<target>actions,spellclasslist,levels,spells</target>
 				<togglelevel>3</togglelevel>
 			</button_collapse>
-
-			<label name="label_mode">
-				<anchored to="actionframe" position="insidebottomleft" offset="90,15" />
-				<static textres="spell_label_mode" />
-			</label>
-			<button_stringcycler name="spellmode">
-				<anchored to="label_mode" position="righthigh" offset="10,0" width="80" />
-				<parameters>
-					<labelsres>spell_label_modeprep|spell_label_modecombat</labelsres>
-					<values>preparation|combat</values>
-					<defaultlabelres>spell_label_modestd</defaultlabelres>
-				</parameters>
-				<script>
-					function onValueChanged()
-						window.onModeChanged();
-					end
-				</script>
-			</button_stringcycler>
-			
-			<label name="label_display">
-				<anchored to="actionframe" position="insidebottomleft" offset="250,15" />
-				<static textres="spell_label_display" />
-			</label>
-			<button_stringcycler name="spelldisplaymode">
-				<anchored to="label_display" position="righthigh" offset="10,0" width="80" />
-				<parameters>
-					<labelsres>spell_label_displayaction</labelsres>
-					<values>action</values>
-					<defaultlabelres>spell_label_displaystd</defaultlabelres>
-				</parameters>
-				<script>
-					function onValueChanged()
-						window.onDisplayChanged();
-					end
-				</script>
-			</button_stringcycler>
 			
 			<button_iedit name="actions_iedit">
 				<anchored to="actionframe" position="insidebottomright" offset="15,15" />
 				<script>
-					function onValueChanged()
-						local bEditMode = (getValue() == 1);
-						
-						window.label_mode.setVisible(not bEditMode);
-						window.spellmode.setVisible(not bEditMode);
-						window.label_display.setVisible(not bEditMode);
-						window.spelldisplaymode.setVisible(not bEditMode);
-						if bEditMode then
-							DB.setValue(window.getDatabaseNode(), "spellmode", "string", "standard");
-							DB.setValue(window.getDatabaseNode(), "spelldisplaymode", "string", "");
-						end
+					function onValueChanged()					
 						window.actions.subwindow.update();
 					end
 				</script>

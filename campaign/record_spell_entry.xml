@@ -454,19 +454,10 @@
 		<margins control="0,0,0,5" />
 		<script file="campaign/scripts/spell_class.lua" />
 		<sheetdata>
-			<button_iconcycler name="castertype">
+			<genericcontrol name="castertype">
 				<bounds>10,10,20,20</bounds>
-				<parameters>
-					<defaulticon>caster_prep</defaulticon>
-					<icons>caster_spontaneous|caster_points</icons>
-					<values>spontaneous|points</values>
-				</parameters>
-				<script>
-					function onValueChanged()
-						window.onCasterTypeChanged();
-					end
-				</script>
-			</button_iconcycler>
+				<icon>caster_spontaneous</icon>
+			</genericcontrol>
 
 			<genericcontrol name="hanchor">
 				<anchored width="0" height="0">
@@ -488,46 +479,6 @@
 				</anchored>
 				<anchored position="insidetopright" offset="8,12" />
 			</button_toggledetail>
-			<basicnumber name="pointsused">
-				<anchored width="20" height="20">
-					<top offset="12" />
-					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<min>0</min>
-				<tabtarget next="availablelevel0" prev="points"/>
-				<script>
-					function onValueChanged()
-						window.onSpellCounterUpdate();
-					end
-				</script>
-			</basicnumber>
-			<label name="label_pointsused">
-				<anchored>
-					<top offset="12" />
-					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<static>/</static>
-			</label>
-			<basicnumber name="points">
-				<anchored width="20" height="20">
-					<top offset="12" />
-					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<min>0</min>
-				<tabtarget next="pointsused" prev="cl"/>
-				<script>
-					function onValueChanged()
-						window.onSpellCounterUpdate();
-					end
-				</script>
-			</basicnumber>
-			<label name="label_points">
-				<anchored>
-					<top offset="12" />
-					<right parent="hanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<static textres="spell_label_pp" />
-			</label>
 			<button_cc name="button_cc">
 				<anchored width="20" height="20">
 					<top offset="12" />
@@ -547,7 +498,7 @@
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<min>0</min>
-				<tabtarget next="points" prev="label"/>
+				<tabtarget next="dcmisc" prev="label"/>
 				<script>
 					function onValueChanged()
 						window.onStatUpdate();
@@ -575,92 +526,6 @@
 			<genericcontrol name="detailanchor">
 				<bounds>0,35,0,0</bounds>
 			</genericcontrol>
-
-			<genericcontrol name="frame_levels">
-				<anchored width="325" height="55">
-					<top parent="detailanchor" anchor="bottom" relation="relative" />
-					<left offset="5" />
-				</anchored>
-				<frame name="groupbox3" />
-			</genericcontrol>
-			
-			<label name="availablelevel_label">
-				<anchored to="frame_levels" position="insidetopleft" offset="15,25" />
-				<static textres="level" />
-			</label>
-			<genericcontrol name="availablelevel">
-				<anchored to="frame_levels" position="insidetopleft" offset="55,25" width="1" height="25" />
-			</genericcontrol>
-			<number_spellsavailable name="availablelevel0">
-				<tabtarget next="availablelevel1" prev="pointsused"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel1">
-				<tabtarget next="availablelevel2" prev="availablelevel0"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel2">
-				<tabtarget next="availablelevel3" prev="availablelevel1"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel3">
-				<tabtarget next="availablelevel4" prev="availablelevel2"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel4">
-				<tabtarget next="availablelevel5" prev="availablelevel3"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel5">
-				<tabtarget next="availablelevel6" prev="availablelevel4"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel6">
-				<tabtarget next="availablelevel7" prev="availablelevel5"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel7">
-				<tabtarget next="availablelevel8" prev="availablelevel6"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel8">
-				<tabtarget next="availablelevel9" prev="availablelevel7"/>
-			</number_spellsavailable>
-			<number_spellsavailable name="availablelevel9">
-				<tabtarget next="dcmisc" prev="availablelevel8"/>
-			</number_spellsavailable>
-			<label_fieldtop name="availablelevel0_label">
-				<anchored to="availablelevel0" />
-				<static>0</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel1_label">
-				<anchored to="availablelevel1" />
-				<static>1</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel2_label">
-				<anchored to="availablelevel2" />
-				<static>2</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel3_label">
-				<anchored to="availablelevel3" />
-				<static>3</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel4_label">
-				<anchored to="availablelevel4" />
-				<static>4</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel5_label">
-				<anchored to="availablelevel5" />
-				<static>5</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel6_label">
-				<anchored to="availablelevel6" />
-				<static>6</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel7_label">
-				<anchored to="availablelevel7" />
-				<static>7</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel8_label">
-				<anchored to="availablelevel8" />
-				<static>8</static>
-			</label_fieldtop>
-			<label_fieldtop name="availablelevel9_label">
-				<anchored to="availablelevel9" />
-				<static>9</static>
-			</label_fieldtop>
 
 			<genericcontrol name="frame_dc">
 				<anchored width="180" height="55">

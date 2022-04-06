@@ -2334,12 +2334,7 @@ function handleClassFeatureSpells(nodeChar, nodeFeature)
 	local nodeNewSpellClass = nodeSpellClassList.createChild();
 	DB.setValue(nodeNewSpellClass, "label", "string", DB.getValue(nodeFeature, "...name", ""));
 	DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility:lower());
-	if sSpellcasting:match("can cast any spell s?he knows without preparing") or 
-			sSpellcasting:match("can cast any spell s?he knows at any time without preparing") then
-		DB.setValue(nodeNewSpellClass, "castertype", "string", "spontaneous");
-	end
-		
-	DB.setValue(nodeChar, "spellmode", "string", "standard");
+
 	return true;
 end
 

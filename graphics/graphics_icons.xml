@@ -42,8 +42,6 @@
 	<icon name="button_enc_refreshxp_down" file="graphics/buttons/button_ctnextround_down.png" />
 	
 	<!-- Spells -->
-	<icon name="caster_prep" file="graphics/icons/caster_prep.png" />
-	<icon name="caster_points" file="graphics/icons/caster_points.png" />
 	<icon name="caster_spontaneous" file="graphics/icons/caster_spontaneous.png" />
 	<icon name="spell_cast" file="graphics/icons/spell_cast.png" />
 	<icon name="spell_damage" file="graphics/icons/spell_damage.png" />

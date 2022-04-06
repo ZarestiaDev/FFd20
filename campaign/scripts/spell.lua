@@ -34,24 +34,10 @@ function onInit()
 		DB.setValue(nodeSpell, "parse", "number", 0);
 		SpellManager.parseSpell(nodeSpell);
 	end
-	
-	onDisplayChanged();
 end
 
 function update(bEditMode)
 	idelete.setVisibility(bEditMode);
-end
-
-function onDisplayChanged()
-	sDisplayMode = DB.getValue(getDatabaseNode(), ".......spelldisplaymode", "");
-
-	if sDisplayMode == "action" then
-		header.subwindow.shortdescription.setVisible(false);
-		header.subwindow.actionsmini.setVisible(true);
-	else
-		header.subwindow.shortdescription.setVisible(true);
-		header.subwindow.actionsmini.setVisible(false);
-	end
 end
 
 function createAction(sType)
@@ -119,25 +105,9 @@ end
 
 function usePower()
 	local nodeSpell = getDatabaseNode();
-	local nodeSpellClass = nodeSpell.getChild(".....");
 	local rActor = ActorManager.resolveActor(nodeSpell.getChild("......."));
 
-	local sMessage;
-	if DB.getValue(nodeSpellClass, "castertype", "") == "points" then
-		local nPP = DB.getValue(nodeSpell, ".....points", 0);
-		local nPPUsed = DB.getValue(nodeSpell, ".....pointsused", 0);
-		local nCost = DB.getValue(nodeSpell, "cost", 0);
-		
-		sMessage = DB.getValue(nodeSpell, "name", "") .. " [" .. nCost .. " PP]";
-		if (nPP - nPPUsed) < nCost then
-			sMessage = sMessage .. " [INSUFFICIENT PP AVAILABLE]";
-		else
-			nPPUsed = nPPUsed + nCost;
-			DB.setValue(nodeSpell, ".....pointsused", "number", nPPUsed);
-		end
-	else
-		sMessage = DB.getValue(nodeSpell, "name", "");
-	end
+	local sMessage = DB.getValue(nodeSpell, "name", "");
 
 	ChatManager.Message(sMessage, ActorManager.isPC(rActor), rActor);
 end

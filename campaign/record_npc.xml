@@ -20,9 +20,6 @@
 		<gmexport>npc</gmexport>
 		<script file="campaign/scripts/npc.lua" />
 		<sheetdata>
-			<hs name="spelldisplaymode">
-				<default>action</default>
-			</hs>
 			
 			<sub_record_header name="header">
 				<class>npc_header</class>
@@ -576,25 +573,6 @@
 				<togglelevel>2</togglelevel>
 				<invisible />
 			</button_collapse>
-			<label name="label_mode">
-				<anchored position="insidetopleft" offset="75,2" height="20" />
-				<static textres="spell_label_mode" />
-				<invisible />
-			</label>
-			<button_stringcycler name="spellmode">
-				<anchored to="label_mode" position="righthigh" offset="10,0" width="80" />
-				<parameters>
-					<labelsres>spell_label_modeprep|spell_label_modecombat</labelsres>
-					<values>preparation|combat</values>
-					<defaultlabelres>spell_label_modestd</defaultlabelres>
-				</parameters>
-				<invisible />
-				<script>
-					function onValueChanged()
-						window.onModeChanged();
-					end
-				</script>
-			</button_stringcycler>
 			<buttoncontrol name="spellclasslist_iadd">
 				<anchored position="insidetopright" offset="35,2" width="20" height="20" />
 				<icon normal="button_star" pressed="button_star_down" />
@@ -611,13 +589,6 @@
 				<invisible />
 				<script>
 					function onValueChanged()
-						local bEditMode = (getValue() == 1);
-						
-						window.label_mode.setVisible(not bEditMode);
-						window.spellmode.setVisible(not bEditMode);
-						if bEditMode then
-							DB.setValue(window.getDatabaseNode(), "spellmode", "string", "standard");
-						end
 						window.spellclasslist.update();
 					end
 				</script>
