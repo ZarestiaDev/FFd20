@@ -28,6 +28,26 @@
 		</windowlist>
 	</template>
 
+	<template name="button_spellactionheader_mini">
+		<button_roll>
+			<bounds>1,1,20,20</bounds>
+			<script>
+				function action(draginfo)
+					SpellManager.onSpellAction(draginfo, window.getDatabaseNode());
+				end
+				
+				function onButtonPress()
+					action();
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</button_roll>
+	</template>
+
 	<template name="button_cc">
 		<button_roll>
 			<script>
@@ -167,16 +187,6 @@
 				end
 			</script>
 		</buttoncontrol>
-	</template>
-	<template name="counter_spell">
-		<genericcontrol>
-			<anchored width="10" height="20" />
-			<stateicons>
-				<on>button_checkon</on>
-				<off>button_checkoff</off>
-			</stateicons>
-			<script file="campaign/scripts/counter_spell.lua" />
-		</genericcontrol>
 	</template>
 	
 	<template name="dice_spell_action">

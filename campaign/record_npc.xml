@@ -603,14 +603,11 @@
 					function onInit()
 						super.onInit();
 						registerMenuItem(Interface.getString("menu_addspellclass"), "insert", 5);
-						registerMenuItem(Interface.getString("menu_resetspells"), "lockvisibilityon", 8);
 					end
 					
 					function onMenuSelection(selection)
 						if selection == 5 then
 							window.addSpellClass();
-						elseif selection == 8 then
-							SpellManager.resetSpells(window.getDatabaseNode());
 						end
 					end
 				</script>

@@ -58,13 +58,10 @@ function createDisplay(sType)
 	if sType == "cast" then
 		createControl("spell_action_castbutton", "castbutton");
 		createControl("spell_action_castlabel", "castlabel");
-		createControl("spell_action_attackbutton", "attackbutton");
 		createControl("spell_action_attackviewlabel", "attackviewlabel");
 		createControl("spell_action_attackview", "attackview");
-		createControl("spell_action_levelcheckbutton", "levelcheckbutton");
 		createControl("spell_action_levelcheckviewlabel", "levelcheckviewlabel");
 		createControl("spell_action_levelcheckview", "levelcheckview");
-		createControl("spell_action_savebutton", "savebutton");
 		createControl("spell_action_saveviewlabel", "saveviewlabel");
 		createControl("spell_action_saveview", "saveview");
 		createControl("spell_action_castdetailbutton", "castdetail");

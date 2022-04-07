@@ -3,27 +3,7 @@
 -- attribution and copyright information.
 --
 
--- Reset individual spells cast
-function resetSpells(nodeCaster)
-	for _,nodeSpellClass in pairs(DB.getChildren(nodeCaster, "spellset")) do
-		for _,nodeLevel in pairs(DB.getChildren(nodeSpellClass, "levels")) do
-			for _,nodeSpell in pairs(DB.getChildren(nodeLevel, "spells")) do
-				DB.setValue(nodeSpell, "cast", "number", 0);
-			end
-		end
-	end
-end
-
--- Iterate through each spell to reset
-function resetPrepared(nodeCaster)
-	for _,nodeSpellClass in pairs(DB.getChildren(nodeCaster, "spellset")) do
-		for _,nodeLevel in pairs(DB.getChildren(nodeSpellClass, "levels")) do
-			for _,nodeSpell in pairs(DB.getChildren(nodeLevel, "spells")) do
-				DB.setValue(nodeSpell, "prepared", "number", 0);
-			end
-		end
-	end
-end
+-- Zarestia - Need to implement a resting for MP!
 
 function convertSpellDescToFormattedText(nodeSpell)
 	local nodeDesc = nodeSpell.getChild("description");
@@ -187,7 +167,7 @@ function addSpellCastAction(nodeSpell)
 end
 
 function parseSpell(nodeSpell)
-	-- CLean out old actions
+	-- Clean out old actions
 	local nodeActions = nodeSpell.createChild("actions");
 	for k, v in pairs(nodeActions.getChildren()) do
 		v.delete();
@@ -588,38 +568,6 @@ function parseSpell(nodeSpell)
 				end
 			end
 		end
-	end
-end
-
-function updateSpellClassCounts(nodeSpellClass)
-	local sCasterType = DB.getValue(nodeSpellClass, "castertype", "");
-	
-	for _,vLevel in pairs(DB.getChildren(nodeSpellClass, "levels")) do
-		-- Calculate spell statistics
-		local nTotalCast = 0;
-		local nTotalPrepared = 0;
-		local nMaxPrepared = 0;
-		local nSpells = 0;
-		
-		for _,vSpell in pairs(DB.getChildren(vLevel, "spells")) do
-			nSpells = nSpells + 1;
-			
-			local nCast = DB.getValue(vSpell, "cast", 0);
-			nTotalCast = nTotalCast + nCast;
-			
-			local nPrepared = 0;
-			if sCasterType ~= "spontaneous" then
-				nPrepared = DB.getValue(vSpell, "prepared", 0);
-				nTotalPrepared = nTotalPrepared + nPrepared;
-				if nPrepared > nMaxPrepared then
-					nMaxPrepared = nPrepared;
-				end
-			end
-		end
-		
-		DB.setValue(vLevel, "totalcast", "number", nTotalCast);
-		DB.setValue(vLevel, "totalprepared", "number", nTotalPrepared);
-		DB.setValue(vLevel, "maxprepared", "number", nMaxPrepared);
 	end
 end
 

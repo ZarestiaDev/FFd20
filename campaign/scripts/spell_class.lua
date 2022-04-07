@@ -51,7 +51,6 @@ function registerMenuItems()
 		registerMenuItem(Interface.getString("menu_deletespellclass"), "delete", 6);
 		registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 6, 7);
 	end
-	registerMenuItem(Interface.getString("menu_resetspells"), "pointer_circle", 3);
 end
 
 function onStatUpdate()
@@ -80,10 +79,7 @@ function onStatUpdate()
 end
 
 function onMenuSelection(selection, subselection)
-	if selection == 3 then
-		local nodeCaster = getDatabaseNode().getChild("...");
-		SpellManager.resetPrepared(nodeCaster);
-	elseif selection == 6 and subselection == 7 then
+	if selection == 6 and subselection == 7 then
 		local node = getDatabaseNode();
 		if node then
 			node.delete();
@@ -141,25 +137,13 @@ function isInitialized()
 	return bInitialized;
 end
 
-function onSpellCounterUpdate()
-	if not isInitialized() then
-		return;
-	end
-	
-	SpellManager.updateSpellClassCounts(getDatabaseNode());
-
-	updateSpellView();
-	
-	performFilter();
-end
-
 function updateSpellView()
 	local nodeSpellClass = getDatabaseNode();
 
 	local bClassShow = false;
 
 	local bLevelShow, nodeLevel, nAvailable, nTotalCast, nSpells;
-	local bSpellShow, nodeSpell, nCast;
+	local bSpellShow, nodeSpell;
 	
 	for kLevel, vLevel in pairs(levels.getWindows()) do
 		bLevelShow = false;
@@ -183,10 +167,6 @@ function updateSpellView()
 				vSpell.setFilter(bSpellShow);
 				
 				vSpell.header.subwindow.usepower.setVisible(false);
-				vSpell.header.subwindow.usespacer.setVisible(true);
-				vSpell.header.subwindow.counter.setVisible(false);
-				vSpell.header.subwindow.cost.setVisible(false);
-				vSpell.header.subwindow.cost_spacer.setVisible(false);
 			end
 			
 			bLevelShow = bLevelShow and (nAvailable > 0) and (nSpells > 0);
@@ -203,24 +183,12 @@ function updateSpellView()
 				vSpell.setFilter(bSpellShow);
 
 				vSpell.header.subwindow.usepower.setVisible(false);
-				vSpell.header.subwindow.cost.setVisible(false);
-				vSpell.header.subwindow.cost_spacer.setVisible(false);
-				vSpell.header.subwindow.counter.setVisible(true);
-				vSpell.header.subwindow.counter.update(true, nAvailable, nTotalCast);
-				vSpell.header.subwindow.usespacer.setVisible(nAvailable == 0);
 			end
 			
 			bLevelShow = bLevelShow and (nTotalCast < nAvailable) and (nAvailable > 0) and (nSpells > 0);
 		end
 		bClassShow = bClassShow or bLevelShow;
 		vLevel.setFilter(bLevelShow);
-
-		-- Set level statistics label
-		local sStats = "";
-		if nodeLevel and nodeLevel.getName() == "level0" then
-			sStats = "Cast:  " .. nTotalCast .. " / " .. nAvailable;
-		end
-		vLevel.stats.setValue(sStats);
 	end
 	
 	setFilter(bClassShow);

@@ -84,13 +84,7 @@ end
 
 function getDescription()
 	local nodeSpell = getDatabaseNode();
-	
 	local s = DB.getValue(nodeSpell, "name", "");
-	
-	local sShort = DB.getValue(nodeSpell, "shortdescription", "");
-	if sShort ~= "" then
-		s = s .. " - " .. sShort;
-	end
 
 	return s;
 end

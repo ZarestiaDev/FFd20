@@ -115,6 +115,16 @@
 			<string_column name="hitdie">
 				<anchored width="30"><right merge="delete" /></anchored>
 			</string_column>
+
+			<label_column name="spellcasting_label">
+				<static textres="class_label_spellcasting" />
+			</label_column>
+			<cycler_column_classstat name="spellcasting">
+				<parameters>
+					<labelsres>class_label_spellcasting_third|class_label_spellcasting_half|class_label_spellcasting_full</labelsres>
+					<values>Third|Half|Full</values>
+				</parameters>
+			</cycler_column_classstat>
 			
 			<label_column name="bab_label">
 				<static textres="class_label_bab" />

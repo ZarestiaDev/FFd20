@@ -73,7 +73,6 @@
 	<string name="menu_initpc">Roll PC Initiatives</string>
 	<string name="menu_initclear">Clear All Initiatives</string>
 
-	<string name="menu_resetspells">Reset Spells</string>
 	<string name="menu_addspellclass">Add Spell Class</string>
 	<string name="menu_deletespellclass">Delete Spell Class</string>
 	<string name="menu_addspell">Add Spell</string>
@@ -351,6 +350,10 @@
 	<string name="class_label_classtype_prestige">Prestige</string>
 	<string name="class_label_classtype_npc">NPC</string>
 	<string name="class_label_hitdie">Hit Die</string>
+	<string name="class_label_spellcasting">Spellcasting</string>
+	<string name="class_label_spellcasting_third">Third</string>
+	<string name="class_label_spellcasting_half">Half</string>
+	<string name="class_label_spellcasting_full">Full</string>
 	<string name="class_label_bab">Base Attack</string>
 	<string name="class_label_bab_fast">Fast</string>
 	<string name="class_label_bab_medium">Medium</string>
@@ -482,7 +485,6 @@
 	<!-- Spells -->
 	<string name="spellclass_emptyname">&#171; Class &#187;</string>
 	<string name="spelllevel_emptyname">&#171; Class Level &#187;</string>
-	<string name="spell_emptydesc">&#171; Short Description &#187;</string>
 	<string name="spell_label_cc">CC</string>
 	<string name="spell_label_basedc">Base DC</string>
 	<string name="spell_label_ability">Stat</string>

@@ -17,34 +17,21 @@
 			<static textres="spell_label_cast" />
 		</label>
 	</template>
-	<template name="spell_action_attackbutton">
-		<button_spellaction name="attackbutton">
-			<anchored to="castlabel" position="righthigh" offset="15,0" />
-			<icon normal="button_action_attack" pressed="button_action_attack_down" />
-			<subroll>atk</subroll>
-		</button_spellaction>
-	</template>
 	<template name="spell_action_attackviewlabel">
 		<label name="attackviewlabel">
-			<anchored to="attackbutton" position="righthigh" offset="3,0" />
+			<anchored to="castlabel" position="righthigh" offset="15,0" />
 			<static textres="spell_label_atk" />
 		</label>
 	</template>
 	<template name="spell_action_attackview">
 		<string_spellactionview name="attackview">
-			<anchored to="attackviewlabel" position="righthigh" offset="7,0" width="80" />
+			<anchored to="attackviewlabel" position="righthigh" offset="7,0" width="90" />
 			<subroll>atk</subroll>
 		</string_spellactionview>
 	</template>
-	<template name="spell_action_levelcheckbutton">
-		<button_spellaction name="levelcheckbutton">
-			<anchored to="attackview" position="righthigh" offset="15,0" />
-			<subroll>clc</subroll>
-		</button_spellaction>
-	</template>
 	<template name="spell_action_levelcheckviewlabel">
 		<label name="levelcheckviewlabel">
-			<anchored to="levelcheckbutton" position="righthigh" offset="3,0" />
+			<anchored to="attackview" position="righthigh" offset="15,0" />
 			<static textres="clc" />
 		</label>
 	</template>
@@ -54,21 +41,15 @@
 			<subroll>clc</subroll>
 		</string_spellactionview>
 	</template>
-	<template name="spell_action_savebutton">
-		<button_spellaction name="savebutton">
-			<anchored to="levelcheckview" position="righthigh" offset="15,0" />
-			<subroll>save</subroll>
-		</button_spellaction>
-	</template>
 	<template name="spell_action_saveviewlabel">
 		<label name="saveviewlabel">
-			<anchored to="savebutton" position="righthigh" offset="3,0" />
+			<anchored to="levelcheckview" position="righthigh" offset="15,0" />
 			<static textres="save" />
 		</label>
 	</template>
 	<template name="spell_action_saveview">
 		<string_spellactionview name="saveview">
-			<anchored to="saveviewlabel" position="righthigh" offset="7,0" width="60" />
+			<anchored to="saveviewlabel" position="righthigh" offset="7,0" width="70" />
 			<subroll>save</subroll>
 		</string_spellactionview>
 	</template>
@@ -230,13 +211,6 @@
 	<windowclass name="spell_header">
 		<margins control="0,0,0,2" />
 		<script>
-			function onInit()
-				if not ActorManager.isPC(getDatabaseNode().getChild(".......")) then
-					shortdescription.setVisible(false);
-					actionsmini.setVisible(true);
-				end
-			end
-	
 			function activatePower()
 				parentcontrol.window.activatePower();
 			end
@@ -244,75 +218,35 @@
 			function usePower()
 				parentcontrol.window.usePower();
 			end
-			
-			function onSpellCounterUpdate()
-				parentcontrol.window.windowlist.window.onSpellCounterUpdate();
-			end
 		</script>
 		<sheetdata>
 			<anchor_column name="hanchor" />
 			
-			<genericcontrol name="usespacer">
-				<anchored width="10" height="20">
-					<top offset="2" />
-					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
-				</anchored>
-			</genericcontrol>
 			<icon_usepower name="usepower">
-				<anchored>
-					<top offset="7" />
-					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
-				</anchored>
-			</icon_usepower>
-			<basicnumber name="cost">
 				<anchored width="20" height="20">
 					<top offset="2" />
 					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
 				</anchored>
-				<min>0</min>
-			</basicnumber>
-			<genericcontrol name="cost_spacer">
-				<anchored width="0" height="20">
-					<top offset="2" />
-					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
-				</anchored>
-				<disabled />
-			</genericcontrol>
-			<counter_spell name="counter">
+			</icon_usepower>
+
+			<windowlist name="actionsmini">
 				<anchored>
 					<top offset="2" />
-					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
-				</anchored>
-			</counter_spell>
-
-			<genericcontrol name="rightanchor">
-				<anchored position="insidetopright" width="0" height="0" />
-			</genericcontrol>
-			<windowlist name="actionsmini">
-				<anchored width="100">
-					<top offset="2" />
-					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+					<left anchor="center" offset="10" />
+					<right offset="-5" />
 				</anchored>
 				<datasource>.actions</datasource>
-				<class>spell_action_mini</class>
+				<class>spell_actionheader_mini</class>
 				<noscroll />
 				<readonly />
 				<columns width="25" fillwidth="true" />
-				<invisible />
 			</windowlist>
-			<string_spell name="shortdescription">
-				<anchored width="200" height="20">
-					<top offset="2" />
-					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
-				</anchored>
-				<empty textres="spell_emptydesc" />
-			</string_spell>
 			
 			<string_spell name="name">
 				<anchored>
 					<top offset="2" />
-					<left parent="hanchor" anchor="right" relation="relative" offset="5" />
-					<right parent="rightanchor" anchor="left" relation="relative" offset="-10" />
+					<left parent="hanchor" anchor="right" relation="relative" offset="10" />
+					<right anchor="center" />
 				</anchored>
 				<multilinespacing>20</multilinespacing>
 				<empty textres="library_recordtype_empty_spell" />
@@ -344,6 +278,16 @@
 					end
 				</script>
 			</string_spell>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="spell_actionheader_mini">
+		<margins control="0,0,1,1" />
+		<minisheet />
+		<script file="campaign/scripts/spell_actionheader_mini.lua" />
+		<sheetdata>
+			<hs name="type" />
+			<button_spellactionheader_mini name="button" />
 		</sheetdata>
 	</windowclass>
 	
@@ -427,10 +371,6 @@
 			
 			<label name="label">
 				<anchored position="insidetopleft" offset="10,2" width="60" />
-				<disabled />
-			</label>
-			<label name="stats">
-				<anchored to="label" position="righthigh" offset="10,0" />
 				<disabled />
 			</label>
 			

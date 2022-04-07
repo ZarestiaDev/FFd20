@@ -11,9 +11,6 @@
 		<script>
 			function onInit()
 				spellnode = link.getTargetDatabaseNode();
-				if spellnode then
-					shortdescription.setValue(DB.getValue(spellnode, "shortdescription", ""));
-				end
 			end
 		</script>
 		<sheetdata>
@@ -38,11 +35,6 @@
 			<stringc_list_link name="name">
 				<bounds>30,2,140,20</bounds>
 			</stringc_list_link>
-			<stringcontrol name="shortdescription">
-				<bounds>235,2,-1,20</bounds>
-				<font>reference-r</font>
-				<static />
-			</stringcontrol>
 		</sheetdata>
 	</windowclass>
 
@@ -169,9 +161,6 @@
 		<script>
 			function onInit()
 				spellnode = link.getTargetDatabaseNode();
-				if spellnode then
-					shortdescription.setValue(DB.getValue(spellnode, "shortdescription", ""));
-				end
 			end
 		</script>
 		<sheetdata>
@@ -188,11 +177,6 @@
 				<font>reference-r</font>
 				<readonly />
 			</number>
-			<stringcontrol name="shortdescription">
-				<bounds>265,2,-1,20</bounds>
-				<font>reference-r</font>
-				<static />
-			</stringcontrol>
 		</sheetdata>
 	</windowclass>
 

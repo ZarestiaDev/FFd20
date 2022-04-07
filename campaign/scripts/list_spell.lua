@@ -15,19 +15,8 @@ function onMenuSelection(selection)
 	end
 end
 
-local bCounting = false;
 function onListChanged()
-	if not bCounting then
-		bCounting = true;
-		onSpellCounterUpdate();
-		bCounting = false;
-	end
-
 	window.windowlist.window.windowlist.update();
-end
-
-function onSpellCounterUpdate()
-	window.onSpellCounterUpdate();
 end
 
 function addEntry(bFocus)
