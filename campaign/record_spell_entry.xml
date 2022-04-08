@@ -49,7 +49,7 @@
 	</template>
 	<template name="spell_action_saveview">
 		<string_spellactionview name="saveview">
-			<anchored to="saveviewlabel" position="righthigh" offset="7,0" width="70" />
+			<anchored to="saveviewlabel" position="righthigh" offset="7,0" width="100" />
 			<subroll>save</subroll>
 		</string_spellactionview>
 	</template>

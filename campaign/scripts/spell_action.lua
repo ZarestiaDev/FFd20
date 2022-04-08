@@ -46,14 +46,6 @@ function onDataChanged()
 	bDataChangedLock = false;
 end
 
-function highlight(bState)
-	if bState then
-		setFrame("rowshade");
-	else
-		setFrame(nil);
-	end
-end
-
 function createDisplay(sType)
 	if sType == "cast" then
 		createControl("spell_action_castbutton", "castbutton");

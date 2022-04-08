@@ -31,10 +31,6 @@ function onInit()
 	bInitialized = true;
 	
 	toggleDetail();
-
-	local nDCStatValue = dcstatmod.getValue();
-	local nBonusMP = tBonusMP[nDCStatValue][9];
-	Debug.console("bonusMP:", nBonusMP)
 end
 
 function update(bEditMode)
@@ -66,12 +62,12 @@ function onStatUpdate()
 		dcstatmod.setValue(nValue);
 	end
 	
-	for kLevel, vLevel in pairs(levels.getWindows()) do
-		for kSpell, vSpell in pairs(vLevel.spells.getWindows()) do
-			for kAction, vAction in pairs(vSpell.actions.getWindows()) do
+	for _,vLevel in pairs(levels.getWindows()) do
+		for _,vSpell in pairs(vLevel.spells.getWindows()) do
+			for _,vAction in pairs(vSpell.actions.getWindows()) do
 				vAction.updateViews();
 			end
-			for kAction, vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
+			for _,vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
 				vAction.updateViews();
 			end
 		end
@@ -135,63 +131,6 @@ end
 
 function isInitialized()
 	return bInitialized;
-end
-
-function updateSpellView()
-	local nodeSpellClass = getDatabaseNode();
-
-	local bClassShow = false;
-
-	local bLevelShow, nodeLevel, nAvailable, nTotalCast, nSpells;
-	local bSpellShow, nodeSpell;
-	
-	for kLevel, vLevel in pairs(levels.getWindows()) do
-		bLevelShow = false;
-
-		nAvailable = 0;
-		nodeLevel = vLevel.getDatabaseNode();
-		if nodeLevel then
-			nAvailable = DB.getValue(nodeSpellClass, "available" .. nodeLevel.getName(), 0);
-		end
-		
-		nSpells = 0;
-		nTotalCast = DB.getValue(nodeLevel, "totalcast", 0);
-
-		if nodeLevel and nodeLevel.getName() == "level0" then
-			for _,vSpell in pairs(vLevel.spells.getWindows()) do
-				nodeSpell = vSpell.getDatabaseNode();
-				nSpells = nSpells + 1;
-				
-				bSpellShow = true;
-				bLevelShow = bLevelShow or bSpellShow;
-				vSpell.setFilter(bSpellShow);
-				
-				vSpell.header.subwindow.usepower.setVisible(false);
-			end
-			
-			bLevelShow = bLevelShow and (nAvailable > 0) and (nSpells > 0);
-		else
-			-- Update spell counter objects and spell visibility
-			for _,vSpell in pairs(vLevel.spells.getWindows()) do
-				nodeSpell = vSpell.getDatabaseNode();
-				nSpells = nSpells + 1;
-				
-				nCast = DB.getValue(nodeSpell, "cast", 0);
-				
-				bSpellShow = true;
-				bLevelShow = bLevelShow or bSpellShow;
-				vSpell.setFilter(bSpellShow);
-
-				vSpell.header.subwindow.usepower.setVisible(false);
-			end
-			
-			bLevelShow = bLevelShow and (nTotalCast < nAvailable) and (nAvailable > 0) and (nSpells > 0);
-		end
-		bClassShow = bClassShow or bLevelShow;
-		vLevel.setFilter(bLevelShow);
-	end
-	
-	setFilter(bClassShow);
 end
 
 function performFilter()

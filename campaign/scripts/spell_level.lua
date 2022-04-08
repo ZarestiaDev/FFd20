@@ -40,10 +40,6 @@ function updateLabel()
 	
 	label.setValue(sLabel);
 end
-	
-function onSpellCounterUpdate()
-	windowlist.window.onSpellCounterUpdate();
-end
 
 function onMenuSelection(selection, subselection)
 	if selection == 5 then
