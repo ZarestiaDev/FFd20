@@ -125,6 +125,16 @@
 					<values>Third|Half|Full</values>
 				</parameters>
 			</cycler_column_classstat>
+
+			<label_column name="stat_label">
+				<static textres="class_label_stat" />
+			</label_column>
+			<cycler_column_classstat name="stat">
+				<parameters>
+					<labelsres>str|dex|con|int|wis|cha</labelsres>
+					<values>strength|dexterity|constitution|intelligence|wisdom|charisma</values>
+				</parameters>
+			</cycler_column_classstat>
 			
 			<label_column name="bab_label">
 				<static textres="class_label_bab" />

@@ -33,24 +33,6 @@ RACIAL_TRAIT_WEAPONFAMILIARITY = "^weapon familiarity$";
 
 TRAIT_MULTITALENTED = "multitalented";
 
-CLASS_NAME_ADEPT = "Adept";
-CLASS_NAME_ALCHEMIST = "Alchemist";
-CLASS_NAME_ASSASSIN = "Assassin";
-CLASS_NAME_BARD = "Bard";
-CLASS_NAME_BLACKGUARD = "Blackguard";
-CLASS_NAME_CLERIC = "Cleric";
-CLASS_NAME_DRUID = "Druid";
-CLASS_NAME_INQUISITOR = "Inquisitor";
-CLASS_NAME_MYSTIC_THEURGE = "Mystic Theurge";
-CLASS_NAME_ORACLE = "Oracle";
-CLASS_NAME_PALADIN = "Paladin";
-CLASS_NAME_RANGER = "Ranger";
-CLASS_NAME_SORCERER = "Sorcerer";
-CLASS_NAME_SUMMONER = "Summoner";
-CLASS_NAME_WITCH = "Witch";
-CLASS_NAME_WIZARD = "Wizard";
-CLASS_NAME_MAGUS = "Magus";
-
 CLASS_BAB_FAST = "fast";
 CLASS_BAB_MEDIUM = "medium";
 CLASS_BAB_SLOW = "slow";
@@ -1181,36 +1163,6 @@ function addRace(nodeChar, sClass, sRecord)
 	for _,v in pairs(DB.getChildren(nodeSource, "racialtraits")) do
 		addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
 	end
-
-	-- TO DO - Possible future additions
-	-- 		Gnome - Gnome magic
-	-- 		Aasimar/Ifrit/Oread/Sylph/Tiefling/Undine - Spell-Like Ability
-	-- 		Aasimar/Ifrit/Oread/Sylph/Tiefling/Undine - Energy Resistance
-	--		Catfolk - Cat's Luck
-	-- 		Dhampir - Senses
-	--		Dhampir - Manipulative
-	-- 		Dhampir - Spell-Like Ability
-	--		Drow - Spell Resistance
-	--		Drow - Spell-Like Abilities
-	--		Fetchling - Shadowy Resistance
-	--		Fetchling - Spell-Like Abilities
-	--		Kobold - Armor
-	--		Tengu - Swordtrained
-	--		Tengu - Natural Weapon
-	-- 		Changeling - Claws
-	--		Changeling - Natural Armor
-	--		Duergar - Spell-Like Abilities
-	--		Kitsune - Kitsune Magic
-	--		Kitsune - Natural Weapons
-	--		Merfolk - Armor
-	-- 		Nagaji - Armored Scales
-	--		Samsaran - Samsaran Magic
-	--		Suli - Energy resistance 5
-	--		Svirfneblin - Defensive
-	--		Svirfneblin - Senses
-	--		Svirfneblin - Spell Resistance
-	--		Svirfneblin - Svirfneblin Magic
-	--		Wayang - Shadow Magic
 end
 
 function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
@@ -1952,9 +1904,6 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 		handleProficiencies(nodeChar, nodeSource);
 	elseif sFeatureType:match(CLASS_FEATURE_SPELLS_PER_DAY) then
 		local nChooseSpellClassIncrease = 1;
-		if sClassName == CLASS_NAME_MYSTIC_THEURGE then
-			nChooseSpellClassIncrease = 2;
-		end
 		local aOptions = {};
 		for _,v in pairs(DB.getChildren(nodeChar, "spellset")) do
 			local sSpellClassName = DB.getValue(v, "label", "");
@@ -1976,8 +1925,6 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 				wSelect.requestSelection(sTitle, sMessage, aOptions, CharManager.onSpellClassIncreaseSelect, nodeChar, nChooseSpellClassIncrease);
 			end
 		end
-	elseif sFeatureType:match(CLASS_FEATURE_EXTRACTS_PER_DAY) then
-		addClassSpellLevel(nodeChar, CLASS_NAME_ALCHEMIST);
 	else
 		if not handleDuplicateFeatures(nodeChar, nodeSource, sFeatureType, nodeTargetList) then
 			bCreateFeatureEntry = true;
@@ -2337,6 +2284,7 @@ end
 
 function handleClassFeatureSpells(nodeChar, nodeFeature)
 	local sSpellcasting = DB.getText(nodeFeature, "text", "");
+	-- Zarestia: Change text detection to Spellcasting Third/Half/Full
 	local sAbility = sSpellcasting:match("must have an? (%a+) score equal to");
 	if not sAbility then
 		return false;
@@ -2366,390 +2314,15 @@ end
 function addClassSpellLevel(nodeChar, sClassName)
 	for _,v in pairs(DB.getChildren(nodeChar, "spellset")) do
 		if DB.getValue(v, "label", "") == sClassName then
-			addClassSpellLevelHelper(nodeChar, v);
+			addClassSpellLevelHelper(v);
 		end
-	end
-	if sClassName == CLASS_NAME_CLERIC then
-		addClassSpellLevel(nodeChar, CLASS_FEATURE_DOMAIN_SPELLS);
 	end
 end
 
-function addClassSpellLevelHelper(nodeChar, nodeSpellClass)
-	local sClassName = DB.getValue(nodeSpellClass, "label", "");
-	
+function addClassSpellLevelHelper(nodeSpellClass)
 	-- Increment caster level
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
 	DB.setValue(nodeSpellClass, "cl", "number", nCL);
-
-	-- Update spell slots based on class
-	local nNewSpellLevel = 0;
-	if StringManager.contains({ CLASS_NAME_CLERIC, CLASS_NAME_DRUID, CLASS_NAME_WITCH, CLASS_NAME_WIZARD }, sClassName) then
-		if nCL == 1 then
-			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			nNewSpellLevel = 2;
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			nNewSpellLevel = 3;
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			nNewSpellLevel = 4;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			nNewSpellLevel = 5;
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			nNewSpellLevel = 6;
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-			nNewSpellLevel = 7;
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-			nNewSpellLevel = 8;
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			addClassSpellLevelSlot(nodeSpellClass, 9);
-			nNewSpellLevel = 9;
-		elseif nCL == 18 then
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-			addClassSpellLevelSlot(nodeSpellClass, 9);
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-			addClassSpellLevelSlot(nodeSpellClass, 9);
-		elseif nCL == 20 then
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-			addClassSpellLevelSlot(nodeSpellClass, 9);
-		end
-	elseif StringManager.contains({ CLASS_NAME_ALCHEMIST, CLASS_NAME_BARD, CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER }, sClassName) then
-		if nCL == 1 then
-			if StringManager.contains({ CLASS_NAME_INQUISITOR, CLASS_NAME_SUMMONER }, sClassName) then
-				addClassSpellLevelSlot(nodeSpellClass, 0);
-			end
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			nNewSpellLevel = 3;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			nNewSpellLevel = 4;
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			nNewSpellLevel = 5;
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			nNewSpellLevel = 6;
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 18 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 20 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		end
-	elseif StringManager.contains({ CLASS_NAME_ORACLE, CLASS_NAME_SORCERER }, sClassName) then
-		if nCL == 1 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			addClassSpellLevelSlot(nodeSpellClass, 1, 3);
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2, 3);
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3, 3);
-			nNewSpellLevel = 3;
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4, 3);
-			nNewSpellLevel = 4;
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5, 3);
-			nNewSpellLevel = 5;
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6, 3);
-			nNewSpellLevel = 6;
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			addClassSpellLevelSlot(nodeSpellClass, 7, 3);
-			nNewSpellLevel = 7;
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-			addClassSpellLevelSlot(nodeSpellClass, 8, 3);
-			nNewSpellLevel = 8;
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 7);
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-		elseif nCL == 18 then
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-			addClassSpellLevelSlot(nodeSpellClass, 9, 3);
-			nNewSpellLevel = 9;
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 8);
-			addClassSpellLevelSlot(nodeSpellClass, 9);
-		elseif nCL == 20 then
-			addClassSpellLevelSlot(nodeSpellClass, 9, 2);
-		end
-	elseif StringManager.contains({ CLASS_NAME_PALADIN, CLASS_NAME_RANGER }, sClassName) then
-		if nCL == 1 then
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			-- No gain
-		elseif nCL == 4 then
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 7 then
-			nNewSpellLevel = 3;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 4;
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		end
-	elseif StringManager.contains({ CLASS_NAME_ADEPT }, sClassName) then
-		if nCL == 1 then
-			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			-- No gain
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 4 then
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			-- No gain
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 8 then
-			nNewSpellLevel = 3;
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 10 then
-			-- No gain
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 12 then
-			nNewSpellLevel = 4;
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 14 then
-			-- No gain
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 16 then
-			nNewSpellLevel = 5;
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 18 then
-			-- No gain
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 20 then
-			-- No gain
-		end
-	elseif sClassName == CLASS_NAME_MAGUS then
-		if nCL == 1 then
-			addClassSpellLevelSlot(nodeSpellClass, 0, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			nNewSpellLevel = 1;
-		elseif nCL == 2 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 3 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-		elseif nCL == 4 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			nNewSpellLevel = 2;
-		elseif nCL == 5 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 6 then
-			addClassSpellLevelSlot(nodeSpellClass, 0);
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-		elseif nCL == 7 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			nNewSpellLevel = 3;
-		elseif nCL == 8 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 9 then
-			addClassSpellLevelSlot(nodeSpellClass, 1);
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-		elseif nCL == 10 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			nNewSpellLevel = 4;
-		elseif nCL == 11 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 12 then
-			addClassSpellLevelSlot(nodeSpellClass, 2);
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-		elseif nCL == 13 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			nNewSpellLevel = 5;
-		elseif nCL == 14 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 15 then
-			addClassSpellLevelSlot(nodeSpellClass, 3);
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-		elseif nCL == 16 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-			nNewSpellLevel = 6;
-		elseif nCL == 17 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 18 then
-			addClassSpellLevelSlot(nodeSpellClass, 4);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 19 then
-			addClassSpellLevelSlot(nodeSpellClass, 5);
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		elseif nCL == 20 then
-			addClassSpellLevelSlot(nodeSpellClass, 6);
-		end
-	elseif sClassName == CLASS_FEATURE_DOMAIN_SPELLS then
-		if nCL % 2 == 1 then
-			local nNewDomainSpellLevel = math.floor((nCL + 1) / 2);
-			if nNewDomainSpellLevel >= 1 and nNewDomainSpellLevel <= 9 then
-				addClassSpellLevelSlot(nodeSpellClass, nNewDomainSpellLevel);
-			end
-		end
-	end
-	
-	-- Add bonus spell slots, if we just gained a new spell level
-	if nNewSpellLevel >= 1 and nNewSpellLevel <= 9 then
-		local sSpellAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
-		if StringManager.contains(DataCommon.abilities, sSpellAbility) then
-			local nBonus = 0;
-			local nAbilityScore = DB.getValue(nodeChar, "abilities." .. sSpellAbility .. ".score", 10);
-			if nAbilityScore >= (10 + (nNewSpellLevel * 2)) then
-				nBonus = math.floor((nAbilityScore - (10 + (nNewSpellLevel * 2))) / 8) + 1;
-			end
-			if nBonus > 0 then
-				DB.setValue(nodeSpellClass, "availablelevel" .. nNewSpellLevel, "number", DB.getValue(nodeSpellClass, "availablelevel" .. nNewSpellLevel, 0) + nBonus);
-			end
-		end
-	end
 end
 
 function addClassSpellLevelSlot(nodeSpellClass, nSpellLevel, nSlots)

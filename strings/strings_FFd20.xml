@@ -350,6 +350,7 @@
 	<string name="class_label_classtype_prestige">Prestige</string>
 	<string name="class_label_classtype_npc">NPC</string>
 	<string name="class_label_hitdie">Hit Die</string>
+	<string name="class_label_stat">Stat</string>
 	<string name="class_label_spellcasting">Spellcasting</string>
 	<string name="class_label_spellcasting_third">Third</string>
 	<string name="class_label_spellcasting_half">Half</string>
