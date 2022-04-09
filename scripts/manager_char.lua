@@ -2137,11 +2137,22 @@ end
 function handleClassFeatureSpells(nodeChar, nodeClass, sAbility)
 	local sClassName = DB.getValue(nodeClass, "name", "");
 	local nodeSpellClassList = nodeChar.createChild("spellset");
-	local nodeNewSpellClass = nodeSpellClassList.createChild();
-	
-	DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
-	DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
+	local nCount = nodeSpellClassList.getChildCount();
 
+	if nCount == 0 then
+		local nodeNewSpellClass = nodeSpellClassList.createChild();
+		DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
+		DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
+	else
+		for _,v in pairs(nodeSpellClassList.getChildren()) do
+			local sExistingClassName = DB.getValue(v, "label", "");
+			if sClassName ~= sExistingClassName then
+				local nodeNewSpellClass = nodeSpellClassList.createChild();
+				DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
+				DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
+			end
+		end
+	end
 	return true;
 end
 
@@ -2151,12 +2162,6 @@ function handleClassFeatureDomains(nodeChar, nodeFeature)
 	DB.setValue(nodeNewSpellClass, "label", "string", CLASS_FEATURE_DOMAIN_SPELLS);
 	DB.setValue(nodeNewSpellClass, "dc.ability", "string", "wisdom");
 	return true;
-end
-
-function onSpellClassIncreaseSelect(aSelection, nodeChar)
-	for _,sClassName in ipairs(aSelection) do
-		addClassSpellLevel(nodeChar, sClassName);
-	end
 end
 
 function addClassSpellLevel(nodeChar, sClassName)
