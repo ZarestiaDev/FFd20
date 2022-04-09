@@ -40,9 +40,7 @@ CLASS_SAVE_GOOD = "good";
 CLASS_SAVE_BAD = "bad";
 
 CLASS_FEATURE_PROFICIENCY = "^weapon and armor proficiency$";
-CLASS_FEATURE_SPELLS_PER_DAY = "^spells per day";
 CLASS_FEATURE_EXTRACTS_PER_DAY = "^extracts per day";
-CLASS_FEATURE_SPELLS = "^spells$";
 CLASS_FEATURE_ALCHEMY = "^alchemy$";
 CLASS_FEATURE_DOMAINS = "^domains$";
 CLASS_FEATURE_DOMAIN_SPELLS = "Domain Spells";
@@ -1450,11 +1448,6 @@ function checkForRacialAbilityInName(nodeChar, sTraitType)
 	return bHandled;
 end
 
--- Special handling
--- Half-orcs receive a +2 racial bonus on Intimidate checks due to their fearsome nature.
--- Fetchlings have a +2 racial bonus on Knowledge (planes) and Stealth checks.
--- Kobolds gain a +2 racial bonus on Craft (trapmaking), Perception, and Profession (miner) checks.
--- Ratfolk gain a +2 racial bonus on Craft (alchemy), Perception, and Use Magic Device checks.
 function checkForRacialSkillBonus(nodeChar, nodeTrait)
 	local sText = DB.getText(nodeTrait, "text", "");
 	sText = sText:gsub(" due to their fearsome nature%.", "."); -- Half-orc Intimidating
@@ -1644,10 +1637,10 @@ function addClass(nodeChar, sClass, sRecord)
 end
 
 function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
-	local sClassLookup = StringManager.strip(DB.getValue(nodeClass, "name", ""):lower());
-
 	local sClassType = DB.getValue(nodeSource, "classtype");
 	local sHD = StringManager.trim(DB.getValue(nodeSource, "hitdie", ""));
+	local sSpellcastingType = DB.getValue(nodeSource, "spellcasting", "");
+	local sSpellcastingStat = DB.getValue(nodeSource, "stat", "");
 	local sBAB = StringManager.trim(DB.getValue(nodeSource, "bab", "")):lower();
 	local sFort = StringManager.trim(DB.getValue(nodeSource, "fort", "")):lower();
 	local sRef = StringManager.trim(DB.getValue(nodeSource, "ref", "")):lower();
@@ -1655,7 +1648,12 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	local nSkillPoints = DB.getValue(nodeSource, "skillranks", 0);
 	local sClassSkills = DB.getValue(nodeSource, "classskills", "");
 	local bPrestige = (sClassType == "prestige");
-	
+
+	-- Spellcasting
+	if sSpellcastingType ~= "" and sSpellcastingStat ~= "" then
+		handleClassFeatureSpells(nodeChar, nodeClass, sSpellcastingStat);
+	end
+
 	-- Hit points
 	local sHDMult, sHDSides = sHD:match("^(%d?)d(%d+)");
 	if sHDSides then
@@ -1897,96 +1895,18 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 	local sClassName = StringManager.strip(DB.getValue(nodeSource, "...name", ""));
 	local sFeatureName = DB.getValue(nodeSource, "name", "");
 	local sFeatureType = StringManager.strip(sFeatureName):lower();
-	local sFeatureTypeWithClass = sFeatureType .. " (" .. sClassName:lower() .. ")";
 
 	local bCreateFeatureEntry = false;
 	if not nodeTargetList and sFeatureType:match(CLASS_FEATURE_PROFICIENCY) then
 		handleProficiencies(nodeChar, nodeSource);
-	elseif sFeatureType:match(CLASS_FEATURE_SPELLS_PER_DAY) then
-		local nChooseSpellClassIncrease = 1;
-		local aOptions = {};
-		for _,v in pairs(DB.getChildren(nodeChar, "spellset")) do
-			local sSpellClassName = DB.getValue(v, "label", "");
-			if sSpellClassName ~= CLASS_FEATURE_DOMAIN_SPELLS then
-				table.insert(aOptions, sSpellClassName);
-			end
-		end
-		table.sort(aOptions);
-		
-		if #aOptions > 0 then
-			if #aOptions <= nChooseSpellClassIncrease then
-				for _,v in ipairs(aOptions) do
-					addClassSpellLevel(nodeChar, v);
-				end
-			else
-				local wSelect = Interface.openWindow("select_dialog", "");
-				local sTitle = Interface.getString("char_title_selectspellclassincrease");
-				local sMessage = string.format(Interface.getString("char_message_selectspellclassincrease"), nChooseSpellClassIncrease);
-				wSelect.requestSelection(sTitle, sMessage, aOptions, CharManager.onSpellClassIncreaseSelect, nodeChar, nChooseSpellClassIncrease);
-			end
-		end
 	else
 		if not handleDuplicateFeatures(nodeChar, nodeSource, sFeatureType, nodeTargetList) then
 			bCreateFeatureEntry = true;
-			if sFeatureType:match(CLASS_FEATURE_SPELLS) or
-					sFeatureType:match(CLASS_FEATURE_ALCHEMY) then
-				handleClassFeatureSpells(nodeChar, nodeSource);
-			elseif sFeatureType:match(CLASS_FEATURE_DOMAINS) then
+			if sFeatureType:match(CLASS_FEATURE_DOMAINS) then
 				handleClassFeatureDomains(nodeChar, nodeSource);
 			end
 		end
 	end
-	-- TO DO - Possible future additions
-	--			To do these, we would also need to strip (ex), (su), (sp) and (ex or sp)
-	--		Fast Movement (Barbarian) - Speed - Interacts with armor equip
-	--		Rage (Barbarian) - Ability
-	--		Rage Power (Barbarian) - Choice
-	--			Power Selection - Ability
-	--		Greater Rage (Barbarian) - Ability
-	--		Mighty Rage (Barbarian) - Ability
-	--		Bardic Knowledge (Bard) - Skill Bonus (variable)
-	--		Bardic Performance (Bard) - Ability (multiple)
-	--		Jack of All Trades (Bard) - Skill (training, class)
-	-- 		Channel Energy (Cleric) - Ability
-	--		Domains (Cleric) - Choice (two)
-	--			Domain Selection and Leveling - Spell Addition, Ability
-	--		Nature Sense (Druid) - Skill Bonus
-	-- 		Bonus Feat (Fighter) - Feat (Combat only) (multiple)
-	--		Armor Training (Fighter) - Misc - Interacts with automatic AC on armor equip
-	--		AC Bonus (Monk) - AC - Interacts with armor equip
-	--		Flurry of Blows (Monk) - Ability/weapon
-	--		Unarmed Strike (Monk) - Ability/weapon
-	-- 		Bonus Feat (Monk) - Feat (Choice of set)
-	--		Stunning Fist (Monk) - Ability
-	--		Fast Movement (Monk) - Speed - Interacts with armor equip
-	-- 		Maneuver Training (Monk) - CMB
-	--		Ki Pool (Monk) - Ability
-	--			Ki Strike (Monk)
-	--			Wholeness of Body (Monk)
-	--			Abundant Step (Monk)
-	--			Empty Body (Monk)
-	--		Diamond Soul (Monk) - SR
-	--		Quivering Palm (Monk) - Ability
-	--		Detect Evil (Paladin) - Ability
-	-- 		Smite Evil (Paladin) - Ability
-	-- 		Divine Grace (Paladin) - Saves
-	-- 		Lay on Hands (Paladin) - Ability
-	-- 		Channel Positive Energy (Paladin) - Ability
-	--		Track (Ranger) - Skill Bonus (variable)
-	--		Combat Style (Ranger) - Choice
-	--			Style Selection - ?
-	-- 		Endurance (Ranger) - Feat
-	--		Sneak Attack (Rogue) - Ability
-	--		Rogue Talent (Rogue) - Choice (multiple)
-	--			Talent Selection - Ability
-	--		Advanced Talents (Rogue) - Choice (multiple)
-	--			Talent Selection - Ability
-	--		Bloodline (Sorcerer) - Choice
-	--			Bloodline Selection and Leveling - Class Skill, Bonus Feat, Abilities
-	--		Arcane School (Wizard) - Choice (plus opposition school choices)
-	-- 		Scribe Scroll (Wizard) - Feat
-	-- 		Bonus Feat (Wizard) - Feat (metamagic, item creation, spell mastery)
-
 	if bCreateFeatureEntry then
 		if not nodeTargetList then
 			nodeTargetList = nodeChar.createChild("specialabilitylist");
@@ -2043,74 +1963,6 @@ function parseFeatureName(s)
 	return s:lower(), nMult, sSuffix;
 end
 
--- Multiple 
---		Rage Power - Barb
---		Bloodline feat - Drag Disc
---		Bonus combat feat - Eldritch knight
---		Bonus feat - Fighter
---		Secret - Loremaster
---		Bonus feat - Monk
---		Mercy - Paladin
---		Combat Style Feat - Ranger
---		Rogue talent - Rogue, Shadowdancer
---		Bloodline power - Sorcerer
---		Bloodline spell - Sorcerer
---		Bonus feat - Wizard
---		Discovery - ALchemist
---		Cruelty - Antipaladin
---		Bonus feat - Cavalier
---		Order ability - Cavalier
---		Favored terrain - Horizon Walker
---		Terrain mastery - Horizon Walker
---		Terrain dominance - Horizon Walker
---		Teamwork feat - Inquisitor
---		Favored terrain - Nature warden
---		Mystery spell - Oracle
---		Revelation - Oracle
---		Rage Prophet Mystery - Rage Prophet
---		Hex - Witch
--- Special handling (** not handled for now)
--- 		Trap Sense (+#) - Barb
---		Damage reduction (1/-) - Barb
---		Sneak attack +#d6 - Arc Trickster, Assassin, 
---		Impromptu sneak attack #/day - Arc Trickster
---		+# save bonus against poison - Assassin
---		Inspire courage +# - Brd
---		Inspire competence +# - Brd
---		Lore master #/day - Brd
---		Channel Energy #d6 - Cle
--- 		Natural armor increase (+1) - Drag Disc
---		**Ability boost (Str +2) - Drag Disc
---		Dragon form (#/day) - Drag Disc
---		Blindsense # ft. - Drag Disc
---		Wild shape (#/day) - Druid
---		**Wild shape (at will) - Druid
---		Imrpoved Reaction +# - Duelist
---		Bravery +# - Fighter
---		Armor training # - Fighter
---		Weapon training # - Fighter
---		AC Bonus (+#) - Monk
---		Slow fall # ft. - Monk
---		**Combined Spells (1st)(2nd)(3rd)(4th)(5th) - Mystic Theurge
---		Smite evil #/day - Paladin
---		**Inspired action (move) (standard) - Pathinfder Chronicler
---		**1st/2nd/3rd/4th/5th favored enemy - Ranger
---		**1st/2nd/3rd/4th favored terrain - Ranger
---		Sneak Attack +#d6 - Rogue
--- 		Trap Sense +# - Rogue
---		Shadow jump # ft. - Shadowdancer
---		Bomb #d6 - Alchemist
---		Poison resistance +# - ALchemist
---		Smite good #/day - Antipaladin
--- 		**1st inspiring command (+1) / 2nd inspiring command / Inspiring command (+2) / 3rd inspiring command / 4th inspiring command (+3) / 5th inspiring command / Inspiring command (+4) - Battle Herald
---		Challenge #/day - Cavalier
---		Judgement #/day = Inquisitor
---		Mutate #/day - Master Chymist
---		Brutality (+#) - Master Chymist
--- 		Sneak attack +#d6 - Master spy
---		Nonmagical aura #/day - Master spy (no advancement)
---		AC Bonus (+#) - Stalwart Defender
---		Damage reduction #/- - Stalwart Defender
 function handleDuplicateFeatures(nodeChar, nodeFeature, sFeatureType, nodeTargetList)
 	local sClassName = StringManager.strip(DB.getValue(nodeFeature, "...name", ""));
 	local sFeatureStrip = StringManager.strip(DB.getValue(nodeFeature, "name", ""));
@@ -2282,17 +2134,13 @@ function handleProficiencies(nodeChar, nodeFeature)
 	return (#aWeapons > 0) or (#aArmor > 0);
 end
 
-function handleClassFeatureSpells(nodeChar, nodeFeature)
-	local sSpellcasting = DB.getText(nodeFeature, "text", "");
-	-- Zarestia: Change text detection to Spellcasting Third/Half/Full
-	local sAbility = sSpellcasting:match("must have an? (%a+) score equal to");
-	if not sAbility then
-		return false;
-	end
+function handleClassFeatureSpells(nodeChar, nodeClass, sAbility)
+	local sClassName = DB.getValue(nodeClass, "name", "");
 	local nodeSpellClassList = nodeChar.createChild("spellset");
 	local nodeNewSpellClass = nodeSpellClassList.createChild();
-	DB.setValue(nodeNewSpellClass, "label", "string", DB.getValue(nodeFeature, "...name", ""));
-	DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility:lower());
+	
+	DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
+	DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
 
 	return true;
 end
