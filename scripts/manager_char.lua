@@ -1652,6 +1652,9 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 	-- Spellcasting
 	if sSpellcastingType ~= "" and sSpellcastingStat ~= "" then
 		handleClassFeatureSpells(nodeChar, nodeClass, sSpellcastingStat);
+
+		local nAvailableSpells = tClassSpellLvl[sSpellcastingType][nLevel];
+		local nClassMP = tClassMP[sSpellcastingType][nLevel];
 	end
 
 	-- Hit points
@@ -2176,10 +2179,6 @@ function addClassSpellLevelHelper(nodeSpellClass)
 	-- Increment caster level
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
 	DB.setValue(nodeSpellClass, "cl", "number", nCL);
-end
-
-function addClassSpellLevelSlot(nodeSpellClass, nSpellLevel, nSlots)
-	DB.setValue(nodeSpellClass, "availablelevel" .. nSpellLevel, "number", DB.getValue(nodeSpellClass, "availablelevel" .. nSpellLevel, 0) + (nSlots or 1));
 end
 
 function onFavoredClassSelect(aSelection, rFavoredClassSelect)

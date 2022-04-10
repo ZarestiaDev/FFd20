@@ -452,6 +452,32 @@
 				</anchored>
 				<static textres="cl" />
 			</label>
+			<basicnumber name="mp_max">
+				<anchored width="26" height="20">
+					<top offset="12" />
+					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+			</basicnumber>
+			<label name="label_slash">
+				<anchored>
+					<top offset="12" />
+					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<static textres="slash" />
+			</label>
+			<basicnumber name="mp_current">
+				<anchored width="26" height="20">
+					<top offset="12" />
+					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+			</basicnumber>
+			<label name="label_mp" >
+				<anchored>
+					<top offset="12" />
+					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<static textres="mp" />
+			</label>
 			<stringu name="label">
 				<anchored height="20">
 					<top offset="12" />

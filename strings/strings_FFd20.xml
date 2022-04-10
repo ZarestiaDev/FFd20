@@ -54,6 +54,7 @@
 	<string name="cmb">CMB</string>
 	<string name="cl">CL</string>
 	<string name="casterlevel">Caster Level</string>
+	<string name="mp">MP</string>
 	<string name="clc">CLC</string>
 	<string name="casterlevelcheck">Caster Level Check</string>
 	<string name="evencl">Even CLs</string>
