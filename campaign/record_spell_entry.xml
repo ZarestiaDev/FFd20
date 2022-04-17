@@ -452,7 +452,7 @@
 				</anchored>
 				<static textres="cl" />
 			</label>
-			<basicnumber name="mp_max">
+			<basicnumber name="mp_max" source="mp.max">
 				<anchored width="26" height="20">
 					<top offset="12" />
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
@@ -465,7 +465,7 @@
 				</anchored>
 				<static textres="slash" />
 			</label>
-			<basicnumber name="mp_current">
+			<basicnumber name="mp_current" source="mp.current">
 				<anchored width="26" height="20">
 					<top offset="12" />
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
