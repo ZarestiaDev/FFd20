@@ -74,6 +74,15 @@ function onStatUpdate()
 	end
 end
 
+function calcMaxMP()
+	local node = getDatabaseNode();
+	local nBonus = DB.getValue(node, "mp.bonus", 0);
+	local nClass = DB.getValue(node, "mp.class", 0);
+
+	local nMax = nBonus + nClass
+	DB.setValue(node, "mp.max", "number", nMax);
+end
+
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
 		local node = getDatabaseNode();
@@ -119,6 +128,8 @@ function toggleDetail()
 	frame_cc.setVisible(status);
 	label_cc.setVisible(status);
 	updateControl("ccmisc", status);
+
+	frame_mp.setVisible(status);
 end
 
 function setFilter(bFilter)

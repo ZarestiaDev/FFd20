@@ -607,6 +607,39 @@
 				<anchored to="ccmisc" />
 				<static textres="spell_label_mod" />
 			</label_fieldtop>
+
+			<genericcontrol name="frame_mp">
+				<anchored to="frame_stat" width="245" height="110">
+					<top />
+					<left anchor="right" offset="-5" />
+				</anchored>
+				<frame name="groupbox3" />
+			</genericcontrol>
+			<label name="label_mp_bonus">
+				<anchored to="frame_mp" position="insidetopleft" offset="15,25" />
+				<static textres="spell_label_mpbonus" />
+			</label>
+			<number_spell name="mp_bonus" source="mp.bonus">
+				<anchored to="label_mp_bonus" position="righthigh" offset="10" />
+				<script>
+					function onValueChanged()
+						window.calcMaxMP();
+					end
+				</script>
+			</number_spell>
+			<label name="label_mp_class">
+				<anchored to="frame_mp" position="insidetopleft" offset="15,80" />
+				<static textres="spell_label_mpclass" />
+			</label>
+			<number_spell name="mp_bonus" source="mp.class">
+				<anchored to="label_mp_class" position="righthigh" offset="10" />
+				<script>
+					function onValueChanged()
+						window.calcMaxMP();
+					end
+				</script>
+			</number_spell>
+
 			
 			<genericcontrol name="classframe">
 				<anchored>

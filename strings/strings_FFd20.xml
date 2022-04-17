@@ -496,6 +496,8 @@
 	<string name="spell_label_baseability">Ability</string>
 	<string name="spell_label_sp">Spell Penetration</string>
 	<string name="spell_label_ccdetail">Conc. Check</string>
+	<string name="spell_label_mpbonus">Bonus MP</string>
+	<string name="spell_label_mpclass">Class MP</string>
 	
 	<string name="spell_label_cast">Cast</string>
 	<string name="spell_label_atk">Atk</string>
