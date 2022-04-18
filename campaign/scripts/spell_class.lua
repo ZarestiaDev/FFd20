@@ -3,7 +3,19 @@
 -- attribution and copyright information.
 --
 
-local tBonusMP = {
+local tClassSpellLvl = {
+	["Third"] = {0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,4,4},
+	["Half"] = {1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,6,6},
+	["Full"] = {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,9,9}
+}
+
+local tClassMP = {
+	["Third"] = {0,0,0,1,2,3,4,5,6,7,8,10,12,14,16,19,22,25,29,33},
+	["Half"] = {1,2,3,4,6,8,10,14,17,20,25,29,33,40,46,50,59,66,74,79},
+	["Full"] = {3,4,5,6,8,11,15,20,26,32,39,47,56,65,75,86,98,110,122,135}
+}
+
+local tAbilityBonusMP = {
 	[0] = {0,0,0,0,0,0,0,0,0},
 	[1] = {1,1,1,1,1,1,1,1,1},
 	[2] = {1,3,3,3,3,3,3,3,3},
@@ -60,6 +72,7 @@ function onStatUpdate()
 		local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
 		dcstatmod.setValue(nValue);
+		calcAbilityBonusMP(nodeSpellClass, nValue);
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
@@ -72,6 +85,19 @@ function onStatUpdate()
 			end
 		end
 	end
+end
+
+function calcAbilityBonusMP(node, nValue)
+	if nValue < 0 or nValue > 17 then
+		return;
+	end
+
+	local sType = DB.getValue(node, "type", "");
+	local nLevel = DB.getValue(node, "cl", 0);
+
+	local nSpellLevel = tClassSpellLvl[sType][nLevel];
+
+	DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nValue][nSpellLevel]);
 end
 
 function calcMaxMP()

@@ -3,18 +3,6 @@
 -- attribution and copyright information.
 --
 
-local tClassMP = {
-	["Third"] = {0,0,0,1,2,3,4,5,6,7,8,10,12,14,16,19,22,25,29,33},
-	["Half"] = {1,2,3,4,6,8,10,14,17,20,25,29,33,40,46,50,59,66,74,79},
-	["Full"] = {3,4,5,6,8,11,15,20,26,32,39,47,56,65,75,86,98,110,122,135}
-}
-
-local tClassSpellLvl = {
-	["Third"] = {0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,4,4},
-	["Half"] = {1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,6,6},
-	["Full"] = {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,9,9}
-}
-
 RACIAL_TRAIT_ABILITY_D20PFSRD = "^ability score racial traits$";
 RACIAL_TRAIT_ABILITY_SW = "attribute adjustments$";
 RACIAL_TRAIT_LANGUAGES = "^languages$";
@@ -1651,10 +1639,7 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 
 	-- Spellcasting
 	if sSpellcastingType ~= "" and sSpellcastingStat ~= "" then
-		handleClassFeatureSpells(nodeChar, nodeClass, sSpellcastingStat);
-
-		local nAvailableSpells = tClassSpellLvl[sSpellcastingType][nLevel];
-		local nClassMP = tClassMP[sSpellcastingType][nLevel];
+		handleClassFeatureSpells(nodeChar, nodeClass, sSpellcastingStat, sSpellcastingType);
 	end
 
 	-- Hit points
@@ -2137,7 +2122,7 @@ function handleProficiencies(nodeChar, nodeFeature)
 	return (#aWeapons > 0) or (#aArmor > 0);
 end
 
-function handleClassFeatureSpells(nodeChar, nodeClass, sAbility)
+function handleClassFeatureSpells(nodeChar, nodeClass, sAbility, sType)
 	local sClassName = DB.getValue(nodeClass, "name", "");
 	local nodeSpellClassList = nodeChar.createChild("spellset");
 	local nCount = nodeSpellClassList.getChildCount();
@@ -2146,6 +2131,7 @@ function handleClassFeatureSpells(nodeChar, nodeClass, sAbility)
 		local nodeNewSpellClass = nodeSpellClassList.createChild();
 		DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
 		DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
+		DB.setValue(nodeNewSpellClass, "type", "string", sType);
 	else
 		for _,v in pairs(nodeSpellClassList.getChildren()) do
 			local sExistingClassName = DB.getValue(v, "label", "");
@@ -2153,6 +2139,7 @@ function handleClassFeatureSpells(nodeChar, nodeClass, sAbility)
 				local nodeNewSpellClass = nodeSpellClassList.createChild();
 				DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
 				DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
+				DB.setValue(nodeNewSpellClass, "type", "string", sType);
 			end
 		end
 	end
