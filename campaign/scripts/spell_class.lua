@@ -130,6 +130,10 @@ function toggleDetail()
 	updateControl("ccmisc", status);
 
 	frame_mp.setVisible(status);
+	label_mpbonus.setVisible(status);
+	label_mpclass.setVisible(status);
+	updateControl("mpbonus", status);
+	updateControl("mpclass", status);
 end
 
 function setFilter(bFilter)

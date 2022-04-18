@@ -615,24 +615,24 @@
 				</anchored>
 				<frame name="groupbox3" />
 			</genericcontrol>
-			<label name="label_mp_bonus">
+			<label name="label_mpbonus">
 				<anchored to="frame_mp" position="insidetopleft" offset="15,25" />
 				<static textres="spell_label_mpbonus" />
 			</label>
-			<number_spell name="mp_bonus" source="mp.bonus">
-				<anchored to="label_mp_bonus" position="righthigh" offset="10" />
+			<number_spell name="mpbonus" source="mp.bonus">
+				<anchored to="label_mpbonus" position="righthigh" offset="10" />
 				<script>
 					function onValueChanged()
 						window.calcMaxMP();
 					end
 				</script>
 			</number_spell>
-			<label name="label_mp_class">
+			<label name="label_mpclass">
 				<anchored to="frame_mp" position="insidetopleft" offset="15,80" />
 				<static textres="spell_label_mpclass" />
 			</label>
-			<number_spell name="mp_bonus" source="mp.class">
-				<anchored to="label_mp_class" position="righthigh" offset="10" />
+			<number_spell name="mpclass" source="mp.class">
+				<anchored to="label_mpclass" position="righthigh" offset="10" />
 				<script>
 					function onValueChanged()
 						window.calcMaxMP();
