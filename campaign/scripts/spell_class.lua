@@ -100,6 +100,14 @@ function calcAbilityBonusMP(node, nValue)
 	DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nValue][nSpellLevel]);
 end
 
+function calcClassMP()
+	local node = getDatabaseNode();
+	local sType = DB.getValue(node, "type", "");
+	local nLevel = DB.getValue(node, "cl", 0);
+
+	DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
+end
+
 function calcMaxMP()
 	local node = getDatabaseNode();
 	local nBonus = DB.getValue(node, "mp.bonus", 0);

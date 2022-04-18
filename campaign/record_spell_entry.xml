@@ -442,6 +442,7 @@
 				<script>
 					function onValueChanged()
 						window.onStatUpdate();
+						window.calcClassMP();
 					end
 				</script>
 			</basicnumber>
