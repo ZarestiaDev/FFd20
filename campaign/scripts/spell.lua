@@ -89,14 +89,6 @@ function getDescription()
 	return s;
 end
 
-function activatePower()
-	local nodeSpell = getDatabaseNode();
-	if nodeSpell then
-		local rActor = ActorManager.resolveActor(nodeSpell.getChild("......."));
-		ChatManager.Message(getDescription(), true, rActor);
-	end
-end
-
 function usePower()
 	local nodeSpell = getDatabaseNode();
 	local rActor = ActorManager.resolveActor(nodeSpell.getChild("......."));

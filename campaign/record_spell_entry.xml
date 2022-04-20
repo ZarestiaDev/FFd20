@@ -210,11 +210,7 @@
 
 	<windowclass name="spell_header">
 		<margins control="0,0,0,2" />
-		<script>
-			function activatePower()
-				parentcontrol.window.activatePower();
-			end
-			
+		<script>		
 			function usePower()
 				parentcontrol.window.usePower();
 			end
@@ -250,13 +246,7 @@
 				</anchored>
 				<multilinespacing>20</multilinespacing>
 				<empty textres="library_recordtype_empty_spell" />
-				<script>
-					function onDoubleClick(x, y)
-						window.activatePower();
-						
-						return true;
-					end
-					
+				<script>				
 					function onDragStart(button, x, y, draginfo)
 						local node = window.getDatabaseNode();
 						if not node then
