@@ -448,6 +448,7 @@
 					<top offset="12" />
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
 				</anchored>
+				<min>0</min>
 			</basicnumber>
 			<label name="label_slash">
 				<anchored>
@@ -471,6 +472,7 @@
 						end
 					end
 				</script>
+				<min>0</min>
 			</basicnumber>
 			<label name="label_mp" >
 				<anchored>

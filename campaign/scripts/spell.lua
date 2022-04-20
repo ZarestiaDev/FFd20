@@ -92,8 +92,17 @@ end
 function usePower()
 	local nodeSpell = getDatabaseNode();
 	local rActor = ActorManager.resolveActor(nodeSpell.getChild("......."));
+	
+	local nMPCurrent = DB.getValue(nodeSpell, ".....mp.current", 0);
+	local nCost = DB.getValue(nodeSpell, "...level", 0);
 
-	local sMessage = DB.getValue(nodeSpell, "name", "");
-
+	local sMessage = DB.getValue(nodeSpell, "name", "") .. " [" .. nCost .. " MP]";
+	if nCost > nMPCurrent then
+		sMessage = sMessage .. " [NOT ENOUGH MP AVAILABLE]";
+	else
+		nMPCurrent = nMPCurrent - nCost;
+		DB.setValue(nodeSpell, ".....mp.current", "number", nMPCurrent);
+	end
+	
 	ChatManager.Message(sMessage, ActorManager.isPC(rActor), rActor);
 end
