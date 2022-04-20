@@ -816,6 +816,7 @@ end
 
 function rest(nodeChar)
 	resetHealth(nodeChar);
+	SpellManager.resetMP(nodeChar);
 end
 
 function resetHealth(nodeChar)

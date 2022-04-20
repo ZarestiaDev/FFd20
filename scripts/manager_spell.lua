@@ -3,7 +3,16 @@
 -- attribution and copyright information.
 --
 
--- Zarestia - Need to implement a resting for MP!
+function resetMP(nodeCaster)
+	for _,nodeSpellClass in pairs(DB.getChildren(nodeCaster, "spellset")) do
+		local nCL = DB.getValue(nodeSpellClass, "cl", 0);
+		local nStat = DB.getValue(nodeSpellClass, "dc.abilitymod", 0);
+		local nMPCurrent = DB.getValue(nodeSpellClass, "mp.current", 0);
+		local nMPRested = nCL + nStat + nMPCurrent;
+
+		DB.setValue(nodeSpellClass, "mp.current", "number", nMPRested);
+	end
+end
 
 function convertSpellDescToFormattedText(nodeSpell)
 	local nodeDesc = nodeSpell.getChild("description");

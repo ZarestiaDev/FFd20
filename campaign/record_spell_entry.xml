@@ -471,6 +471,16 @@
 					<top offset="12" />
 					<right parent="hanchor" anchor="left" relation="relative" offset="-10" />
 				</anchored>
+				<script>
+					function onValueChanged()
+						local nCurrent = getValue();
+						local nMax = window.mp_max.getValue();
+
+						if nCurrent > nMax then
+							setValue(nMax);
+						end
+					end
+				</script>
 			</basicnumber>
 			<label name="label_mp" >
 				<anchored>
