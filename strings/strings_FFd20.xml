@@ -592,6 +592,13 @@
 	<string name="power_label_metamagicempower">Empower</string>
 	<string name="power_label_metamagicmaximize">Maximize</string>
 
+	<string name="power_tooltip_cast">CAST</string>
+	<string name="power_tooltip_save">SAVE</string>
+	<string name="power_tooltip_attack">ATK</string>
+	<string name="power_tooltip_damage">DMG</string>
+	<string name="power_tooltip_heal">HEAL</string>
+	<string name="power_tooltip_effect">EFFECT</string>
+
 	<string name="power_title_cast">Spell/Ability Use</string>
 	<string name="power_header_cast_attack">ATTACK</string>
 	<string name="power_label_atktypenone">None</string>
