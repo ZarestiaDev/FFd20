@@ -95,9 +95,11 @@ function calcAbilityBonusMP(node, nValue)
 	local sType = DB.getValue(node, "type", "");
 	local nLevel = DB.getValue(node, "cl", 0);
 
-	local nSpellLevel = tClassSpellLvl[sType][nLevel];
+	if sType ~= "" then
+		local nSpellLevel = tClassSpellLvl[sType][nLevel];
 
-	DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nValue][nSpellLevel]);
+		DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nValue][nSpellLevel]);
+	end
 end
 
 function calcClassMP()
