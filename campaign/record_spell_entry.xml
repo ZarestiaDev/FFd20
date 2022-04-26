@@ -303,7 +303,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
-				<class>spelldesc2</class>
+				<class>spelldesc</class>
 				<readonly />
 			</linkcontrol>
 			<button_toggledetail name="activatedetail">

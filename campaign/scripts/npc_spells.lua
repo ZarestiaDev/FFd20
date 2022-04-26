@@ -62,7 +62,7 @@ function onSpellDrop(x, y, draginfo)
 	elseif draginfo.isType("shortcut") then
 		local sClass = draginfo.getShortcutData();
 		
-		if sClass == "spelldesc" or sClass == "spelldesc2" then
+		if sClass == "spelldesc" then
 			ChatManager.Message(Interface.getString("spell_error_dropclasslevelmissing"));
 			return true;
 		end

@@ -801,7 +801,7 @@ function onActionDrop(draginfo, nodeChar)
 	elseif draginfo.isType("shortcut") then
 		local sClass, sRecord = draginfo.getShortcutData();
 		
-		if sClass == "spelldesc" or sClass == "spelldesc2" then
+		if sClass == "spelldesc" then
 			ChatManager.Message(Interface.getString("spell_error_dropclasslevelmissing"));
 			return true;
 		elseif LibraryData.isRecordDisplayClass("item", sClass) and ItemManager2.isWeapon(sRecord) then

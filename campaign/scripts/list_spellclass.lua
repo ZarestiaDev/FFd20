@@ -77,7 +77,7 @@ function onDrop(x, y, draginfo)
 	elseif draginfo.isType("shortcut") then
 		local sDropClass, sSource = draginfo.getShortcutData();
 
-		if sDropClass == "spelldesc" or sDropClass == "spelldesc2" then
+		if sDropClass == "spelldesc" then
 			local winClass = getWindowAt(x, y);
 			if winClass then
 				local aSelections = {};

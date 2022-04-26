@@ -68,7 +68,7 @@ function onDrop(x, y, draginfo)
 	elseif draginfo.isType("shortcut") then
 		local sDropClass, sSource = draginfo.getShortcutData();
 
-		if sDropClass == "spelldesc" or sDropClass == "spelldesc2" then
+		if sDropClass == "spelldesc" then
 			local node = winLevel.getDatabaseNode();
 			if node then
 				local nodeSource = DB.findNode(sSource);
