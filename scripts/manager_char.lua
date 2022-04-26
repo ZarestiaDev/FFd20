@@ -2166,7 +2166,9 @@ end
 function addClassSpellLevelHelper(nodeSpellClass)
 	-- Increment caster level
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
+	local nClassLevel = DB.getValue(nodeSpellClass, "classlevel", 0) + 1;
 	DB.setValue(nodeSpellClass, "cl", "number", nCL);
+	DB.setValue(nodeSpellClass, "classlevel", "number", nClassLevel);
 end
 
 function onFavoredClassSelect(aSelection, rFavoredClassSelect)

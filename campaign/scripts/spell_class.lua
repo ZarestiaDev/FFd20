@@ -93,7 +93,7 @@ function calcAbilityBonusMP(node, nValue)
 	end
 
 	local sType = DB.getValue(node, "type", "");
-	local nLevel = DB.getValue(node, "cl", 0);
+	local nLevel = DB.getValue(node, "classlevel", 0);
 
 	if sType ~= "" then
 		local nSpellLevel = tClassSpellLvl[sType][nLevel];
@@ -105,7 +105,7 @@ end
 function calcClassMP()
 	local node = getDatabaseNode();
 	local sType = DB.getValue(node, "type", "");
-	local nLevel = DB.getValue(node, "cl", 0);
+	local nLevel = DB.getValue(node, "classlevel", 0);
 
 	DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
 end
@@ -168,8 +168,10 @@ function toggleDetail()
 	frame_mp.setVisible(status);
 	label_mpbonus.setVisible(status);
 	label_mpclass.setVisible(status);
+	label_classlevel.setVisible(status);
 	updateControl("mpbonus", status);
 	updateControl("mpclass", status);
+	updateControl("classlevel", status);
 end
 
 function setFilter(bFilter)

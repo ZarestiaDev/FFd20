@@ -432,7 +432,6 @@
 				<script>
 					function onValueChanged()
 						window.onStatUpdate();
-						window.calcClassMP();
 					end
 				</script>
 			</basicnumber>
@@ -641,6 +640,19 @@
 						window.calcMaxMP();
 					end
 				</script>
+			</number_spell>
+			<label name="label_classlevel">
+				<anchored to="frame_mp" position="insidetopleft" offset="128,80" />
+				<static textres="spell_label_classlevel" />
+			</label>
+			<number_spell name="classlevel" source="classlevel">
+				<anchored to="label_classlevel" position="righthigh" offset="10" />
+				<script>
+					function onValueChanged()
+						window.calcClassMP();
+					end
+				</script>
+				<delaykeyupdate />
 			</number_spell>
 
 			
