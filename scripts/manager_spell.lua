@@ -49,8 +49,7 @@ function convertSpellDescToString(nodeSpell)
 			local sDesc = nodeDesc.getText();
 			local sValue = nodeDesc.getValue();
 
-			nodeDesc.delete();
-			DB.setValue(nodeSpell, "description", "string", sDesc);
+			DB.setValue(nodeSpell, "descparse", "string", sDesc);
 			
 			local nodeLinkedSpells = nodeSpell.createChild("linkedspells");
 			if nodeLinkedSpells then
@@ -97,11 +96,6 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	
 	-- Copy the spell details over
 	DB.copyNode(nodeSource, nodeNewSpell);
-	
-	-- Convert the description field from module data
-	local nodeNewSpellDesc = nodeNewSpell.getChild("description");
-	convertSpellDescToString(nodeNewSpell);
-	nodeNewSpellDesc = nodeNewSpell.getChild("description");
 
 	local nodeParent = nodeTargetLevelSpells.getParent();
 	if nodeParent then
@@ -117,7 +111,9 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	if DB.getChildCount(nodeNewSpell, "actions") == 0 then
 		parseSpell(nodeNewSpell);
 	end
-	
+
+	DB.setValue(nodeNewSpell, "locked", "number", 1);
+
 	return nodeNewSpell;
 end
 
@@ -184,13 +180,19 @@ function parseSpell(nodeSpell)
 	
 	-- Always create a cast action
 	addSpellCastAction(nodeSpell);
+
+	-- Get the description as temporary string
+	convertSpellDescToString(nodeSpell);
 	
 	-- Get the description minos some problem characters and in lowercase
-	local sDesc = string.lower(DB.getValue(nodeSpell, "description", ""));
+	local sDesc = string.lower(DB.getValue(nodeSpell, "descparse", ""));
 	sDesc = string.gsub(sDesc, "’", "'");
 	sDesc = string.gsub(sDesc, "–", "-");
 	
 	local aWords = StringManager.parseWords(sDesc);
+
+	-- Delete the temporary string
+	nodeSpell.getChild("descparse").delete();
 	
 	-- Damage/Heal setup
 	local aDamages = {};

@@ -82,13 +82,6 @@ function toggleDetail()
 	actions.setVisible(status);
 end
 
-function getDescription()
-	local nodeSpell = getDatabaseNode();
-	local s = DB.getValue(nodeSpell, "name", "");
-
-	return s;
-end
-
 function usePower()
 	local nodeSpell = getDatabaseNode();
 	local rActor = ActorManager.resolveActor(nodeSpell.getChild("......."));
