@@ -50,7 +50,7 @@
 	<string name="initiative">Initiative</string>
 	<string name="bab">BAB</string>
 	<string name="grp">Grp</string>
-	<string name="grapple">Grapple</string>
+	<string name="grapple">CMB</string>
 	<string name="cmb">CMB</string>
 	<string name="cl">CL</string>
 	<string name="casterlevel">Caster Level</string>
