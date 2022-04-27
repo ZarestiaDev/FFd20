@@ -42,6 +42,7 @@ local bShow = true;
 function onInit()
 	bInitialized = true;
 	
+	registerMenuItems();
 	toggleDetail();
 end
 
