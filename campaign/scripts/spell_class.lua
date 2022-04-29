@@ -44,6 +44,7 @@ function onInit()
 	
 	registerMenuItems();
 	toggleDetail();
+	onClassLevelChanged();
 end
 
 function update(bEditMode)
@@ -170,9 +171,11 @@ function toggleDetail()
 	label_mpbonus.setVisible(status);
 	label_mpclass.setVisible(status);
 	label_classlevel.setVisible(status);
+	label_maxlevel.setVisible(status);
 	updateControl("mpbonus", status);
 	updateControl("mpclass", status);
 	updateControl("classlevel", status);
+	updateControl("maxlevel", status);
 end
 
 function setFilter(bFilter)
@@ -187,6 +190,22 @@ function isInitialized()
 	return bInitialized;
 end
 
+function updateSpellView()
+	local nodeSpellClass = getDatabaseNode();
+	local nAvailableLevel = DB.getValue(nodeSpellClass, "availablelevel", 0);
+	local bShowLevel;
+
+	for _,vLevel in pairs(levels.getWindows()) do
+		local nLevel = DB.getValue(vLevel.getDatabaseNode(), "level", 0);
+		if nAvailableLevel >= nLevel then
+			bShowLevel = true;
+		else
+			bShowLevel = false;
+		end
+		vLevel.setFilter(bShowLevel);
+	end
+end
+
 function performFilter()
 	for _,vLevel in pairs(levels.getWindows()) do
 		vLevel.spells.applyFilter();
@@ -194,6 +213,11 @@ function performFilter()
 	levels.applyFilter();
 
 	windowlist.applyFilter();
+end
+
+function onClassLevelChanged()
+	updateSpellView();
+	performFilter();
 end
 
 function showSpellsForLevel(nLevel)

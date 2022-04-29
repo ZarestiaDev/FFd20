@@ -2164,11 +2164,22 @@ function addClassSpellLevel(nodeChar, sClassName)
 end
 
 function addClassSpellLevelHelper(nodeSpellClass)
-	-- Increment caster level
 	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
 	local nClassLevel = DB.getValue(nodeSpellClass, "classlevel", 0) + 1;
+	local sType = DB.getValue(nodeSpellClass, "type", "");
+	local tClassSpellLvl = {
+		["Third"] = {0,0,0,1,1,1,2,2,2,3,3,3,4,4,4,4,4,4,4,4},
+		["Half"] = {1,1,1,2,2,2,3,3,3,4,4,4,5,5,5,6,6,6,6,6},
+		["Full"] = {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,9,9}
+	}
+	-- Increment caster level
 	DB.setValue(nodeSpellClass, "cl", "number", nCL);
 	DB.setValue(nodeSpellClass, "classlevel", "number", nClassLevel);
+
+	-- Set available spell level
+	local nSpellLevel = tClassSpellLvl[sType][nClassLevel];
+
+	DB.setValue(nodeSpellClass, "availablelevel", "number", nSpellLevel);
 end
 
 function onFavoredClassSelect(aSelection, rFavoredClassSelect)

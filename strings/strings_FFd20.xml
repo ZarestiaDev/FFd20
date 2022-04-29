@@ -499,6 +499,7 @@
 	<string name="spell_label_mpbonus">Bonus MP</string>
 	<string name="spell_label_mpclass">Class MP</string>
 	<string name="spell_label_classlevel">Class Level</string>
+	<string name="spell_label_maxlevel">Max Level</string>
 	
 	<string name="spell_label_cast">Cast</string>
 	<string name="spell_label_atk">Atk</string>
