@@ -131,6 +131,16 @@
 			</label_column>
 			<number_columnh name="weight" />
 
+			<label_column name="craftinstall_label">
+				<static textres="item_label_craftinstall" />
+			</label_column>
+			<string_columnh name="craftinstall" />
+
+			<label_column name="implantation_label">
+				<static textres="item_label_implantation" />
+			</label_column>
+			<number_columnh name="implantation" />
+
 			<label_column name="apply_label">
 				<static textres="item_label_apply" />
 			</label_column>

@@ -236,6 +236,9 @@ function update()
 	-- Chocobo Food
 	updateControl("apply", bReadOnly, bID and bChocoboFood);
 
+	--Cybertech
+	updateControl("implantation", bReadOnly, bID and bCybertech);
+
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
 	
