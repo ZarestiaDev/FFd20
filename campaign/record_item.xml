@@ -207,6 +207,11 @@
 				<static textres="item_label_charges_max" />
 			</label_fieldtop>
 
+			<label_column name="ammo_label">
+				<static textres="item_label_ammo" />
+			</label_column>
+			<string_columnh name="ammo" />
+
 			<label_column name="damage_label">
 				<static textres="item_label_damage" />
 			</label_column>
@@ -226,6 +231,21 @@
 				<static textres="item_label_range" />
 			</label_column>
 			<number_columnh name="range" />
+
+			<label_column name="rof_label">
+				<static textres="item_label_rof" />
+			</label_column>
+			<string_columnh name="rof" />
+
+			<label_column name="capacity_label">
+				<static textres="item_label_capacity" />
+			</label_column>
+			<string_columnh name="capacity" />
+
+			<label_column name="size_label">
+				<static textres="item_label_size" />
+			</label_column>
+			<string_columnh name="size" />
 			
 			<label_column name="ac_label">
 				<static textres="item_label_ac" />

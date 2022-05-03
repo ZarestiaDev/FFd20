@@ -420,6 +420,10 @@
 	<string name="item_label_apply">Time to Apply</string>
 	<string name="item_label_craftinstall">Craft/Install</string>
 	<string name="item_label_implantation">Implantation</string>
+	<string name="item_label_ammo">Ammo Type</string>
+	<string name="item_label_rof">Rate of Fire</string>
+	<string name="item_label_capacity">Capacity</string>
+	<string name="item_label_size">Size</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>

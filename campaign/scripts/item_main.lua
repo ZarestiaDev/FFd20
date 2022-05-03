@@ -140,6 +140,7 @@ function update()
 	local bMateria = (sSubType == "Materia");
 	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
 	local bChocoboFood = (sSubType == "Chocobo Food");
+	local bFirearms = (sSubType == "Firearms")
 
 	if bArmor then
 		subtype.clear();
@@ -236,9 +237,15 @@ function update()
 	-- Chocobo Food
 	updateControl("apply", bReadOnly, bID and bChocoboFood);
 
-	--Cybertech
+	-- Cybertech
 	updateControl("craftinstall", bReadOnly, bID and bCybertech);
 	updateControl("implantation", bReadOnly, bID and bCybertech);
+
+	-- Firearms
+	updateControl("ammo", bReadOnly, bID and bFirearms);
+	updateControl("rof", bReadOnly, bID and bFirearms);
+	updateControl("capacity", bReadOnly, bID and bFirearms);
+	updateControl("size", bReadOnly, bID and bFirearms);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
