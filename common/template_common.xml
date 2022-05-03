@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <!-- Overwrite CoreRPG for more left offset -->
+    <template name="string_columnh_wide">
+        <basicstring>
+            <anchored>
+                <top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+                <left offset="120" />
+                <right offset="-5" />
+            </anchored>
+            <multilinespacing>20</multilinespacing>
+            <script file="common/scripts/column_string.lua" />
+        </basicstring>
+    </template>
+
+    <template name="number_columnh_wide">
+        <basicnumber>
+            <anchored width="40" height="20">
+                <top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+                <left offset="120" />
+            </anchored>
+            <script file="common/scripts/column_number.lua" />
+        </basicnumber>
+    </template>
+</root>

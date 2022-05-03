@@ -30,12 +30,12 @@
 			<label_column name="nonid_name_label">
 				<static textres="item_label_unidentified" />
 			</label_column>
-			<string_columnh name="nonid_name" />
+			<string_columnh_wide name="nonid_name" />
 			
 			<label_column name="nonidentified_label">
 				<static textres="item_label_unidentifiednotes" />
 			</label_column>
-			<string_columnh name="nonidentified" />
+			<string_columnh_wide name="nonidentified" />
 			
 			<line_column name="divider" />
 			
@@ -48,7 +48,7 @@
 				<listdirection>down</listdirection>
 				<anchored width="140" height="20">
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
-					<left offset="95" />
+					<left offset="120" />
 				</anchored>
 				<script>
 					local item_types = {
@@ -89,7 +89,7 @@
 				<listmaxsize>7</listmaxsize>
 				<anchored width="200" height="20">
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
-					<left offset="95" />
+					<left offset="120" />
 				</anchored>
 				<script>
 					function onValueChanged()
@@ -108,11 +108,11 @@
 			<label_column name="cost_label">
 				<static textres="item_label_cost" />
 			</label_column>
-			<string_columnh name="cost">
+			<string_columnh_wide name="cost">
 				<anchored>
 					<right offset="-30" />
 				</anchored>
-			</string_columnh>
+			</string_columnh_wide>
 			<buttonfield name="cost_visibility">
 				<anchored to="cost" position="right" offset="10,0" width="20" />
 				<state icon="visibilityon" />>
@@ -129,32 +129,32 @@
 			<label_column name="weight_label">
 				<static textres="item_label_weight" />
 			</label_column>
-			<number_columnh name="weight" />
+			<number_columnh_wide name="weight" />
 
 			<label_column name="craftinstall_label">
 				<static textres="item_label_craftinstall" />
 			</label_column>
-			<string_columnh name="craftinstall" />
+			<string_columnh_wide name="craftinstall" />
 
 			<label_column name="implantation_label">
 				<static textres="item_label_implantation" />
 			</label_column>
-			<number_columnh name="implantation" />
+			<number_columnh_wide name="implantation" />
 
 			<label_column name="apply_label">
 				<static textres="item_label_apply" />
 			</label_column>
-			<string_columnh name="apply" /> 
+			<string_columnh_wide name="apply" /> 
 
 			<label_column name="materia_type_label">
 				<static textres="item_label_materia_type" />
 			</label_column>
-			<string_columnh name="materia_type" />
+			<string_columnh_wide name="materia_type" />
 
 			<label_column name="materia_rarity_label">
 				<static textres="item_label_materia_rarity" />
 			</label_column>
-			<string_columnh name="materia_rarity">
+			<string_columnh_wide name="materia_rarity">
 				<script>
 					function onValueChanged()
 						window.update();
@@ -162,22 +162,22 @@
 					end
 				</script>
 				<delaykeyupdate />
-			</string_columnh>
+			</string_columnh_wide>
 
 			<label_column name="materia_cost_lvl1_label">
 				<static textres="item_label_materia_cost_lvl1" />
 			</label_column>
-			<string_columnh name="materia_cost_lvl1" />
+			<string_columnh_wide name="materia_cost_lvl1" />
 
 			<label_column name="materia_cost_lvl2_label">
 				<static textres="item_label_materia_cost_lvl2" />
 			</label_column>
-			<string_columnh name="materia_cost_lvl2" />
+			<string_columnh_wide name="materia_cost_lvl2" />
 
 			<label_column name="materia_cost_lvl3_label">
 				<static textres="item_label_materia_cost_lvl3" />
 			</label_column>
-			<string_columnh name="materia_cost_lvl3" />
+			<string_columnh_wide name="materia_cost_lvl3" />
 
 			<label_column name="charges_label">
 				<anchored>
@@ -185,23 +185,23 @@
 				</anchored>
 				<static textres="item_label_charges" />
 			</label_column>
-			<number_columnh name="charges">
+			<number_columnh_wide name="charges">
 				<anchored>
 					<top offset="18" />
 				</anchored>
 				<default>50</default>
-			</number_columnh>
+			</number_columnh_wide>
 			<label_fieldtop name="charges_labeltop">
 				<anchored to="charges" />
 				<static textres="item_label_charges_current" />
 				<invisible />
 			</label_fieldtop>
-			<number_columnh name="charges_max">
+			<number_columnh_wide name="charges_max">
 				<anchored to="charges">
 					<top offset="-20" />
 				</anchored>
 				<default>50</default>
-			</number_columnh>
+			</number_columnh_wide>
 			<label_fieldtop name="charges_max_label">
 				<anchored to="charges_max" />
 				<static textres="item_label_charges_max" />
@@ -210,166 +210,166 @@
 			<label_column name="ammo_label">
 				<static textres="item_label_ammo" />
 			</label_column>
-			<string_columnh name="ammo" />
+			<string_columnh_wide name="ammo" />
 
 			<label_column name="damage_label">
 				<static textres="item_label_damage" />
 			</label_column>
-			<string_columnh name="damage" />
+			<string_columnh_wide name="damage" />
 
 			<label_column name="gdamage_label">
 				<static textres="item_label_gdamage" />
 			</label_column>
-			<string_columnh name="gdamage" />
+			<string_columnh_wide name="gdamage" />
 			
 			<label_column name="damagetype_label">
 				<static textres="item_label_dmgtype" />
 			</label_column>
-			<string_columnh name="damagetype" />
+			<string_columnh_wide name="damagetype" />
 
 			<label_column name="gdamagetype_label">
 				<static textres="item_label_gdmgtype" />
 			</label_column>
-			<string_columnh name="gdamagetype" />
+			<string_columnh_wide name="gdamagetype" />
 			
 			<label_column name="critical_label">
 				<static textres="item_label_critical" />
 			</label_column>
-			<string_columnh name="critical" />
+			<string_columnh_wide name="critical" />
 			
 			<label_column name="range_label">
 				<static textres="item_label_range" />
 			</label_column>
-			<number_columnh name="range" />
+			<number_columnh_wide name="range" />
 
 			<label_column name="rof_label">
 				<static textres="item_label_rof" />
 			</label_column>
-			<string_columnh name="rof" />
+			<string_columnh_wide name="rof" />
 
 			<label_column name="capacity_label">
 				<static textres="item_label_capacity" />
 			</label_column>
-			<string_columnh name="capacity" />
+			<string_columnh_wide name="capacity" />
 
 			<label_column name="burstradius_label">
 				<static textres="item_label_burstradius" />
 			</label_column>
-			<string_columnh name="burstradius" />
+			<string_columnh_wide name="burstradius" />
 
 			<label_column name="reflexdc_label">
 				<static textres="item_label_reflexdc" />
 			</label_column>
-			<number_columnh name="reflexdc" />
+			<number_columnh_wide name="reflexdc" />
 
 			<label_column name="size_label">
 				<static textres="item_label_size" />
 			</label_column>
-			<string_columnh name="size" />
+			<string_columnh_wide name="size" />
 
 			<label_column name="craftdc_label">
 				<static textres="item_label_craftdc" />
 			</label_column>
-			<number_columnh name="craftdc" />
+			<number_columnh_wide name="craftdc" />
 			
 			<label_column name="ac_label">
 				<static textres="item_label_ac" />
 			</label_column>
-			<number_columnh name="ac">
+			<number_columnh_wide name="ac">
 				<delaykeyupdate />
 				<displaysign />
-			</number_columnh>
+			</number_columnh_wide>
 			
 			<label_column name="maxstatbonus_label">
 				<static textres="item_label_maxstat" />
 			</label_column>
-			<number_columnh name="maxstatbonus">
+			<number_columnh_wide name="maxstatbonus">
 				<delaykeyupdate />
 				<displaysign />
-			</number_columnh>
+			</number_columnh_wide>
 			
 			<label_column name="checkpenalty_label">
 				<static textres="item_label_scp" />
 			</label_column>
-			<number_columnh name="checkpenalty">
+			<number_columnh_wide name="checkpenalty">
 				<delaykeyupdate />
 				<displaysign />
-			</number_columnh>
+			</number_columnh_wide>
 			
 			<label_column name="spellfailure_label">
 				<static textres="item_label_spellfail" />
 			</label_column>
-			<number_columnh name="spellfailure">
+			<number_columnh_wide name="spellfailure">
 				<delaykeyupdate />
-			</number_columnh>
+			</number_columnh_wide>
 			
 			<label_column name="speed30_label">
 				<static textres="item_label_speed30" />
 			</label_column>
-			<number_columnh name="speed30" />
+			<number_columnh_wide name="speed30" />
 			
 			<label_column name="speed20_label">
 				<static textres="item_label_speed20" />
 			</label_column>
-			<number_columnh name="speed20" />
+			<number_columnh_wide name="speed20" />
 
 			<label_column name="properties_label">
 				<static textres="item_label_properties" />
 			</label_column>
-			<string_columnh name="properties" />
+			<string_columnh_wide name="properties" />
 
 			<label_column name="bonus_label">
 				<static textres="item_label_bonus" />
 			</label_column>
-			<number_columnh name="bonus">
+			<number_columnh_wide name="bonus">
 				<delaykeyupdate />
-			</number_columnh>
+			</number_columnh_wide>
 
 			<label_column name="slot_label">
 				<static textres="item_label_slot" />
 			</label_column>
-			<string_columnh name="slot" />
+			<string_columnh_wide name="slot" />
 
 			<label_column name="aura_label">
 				<static textres="item_label_aura" />
 			</label_column>
-			<string_columnh name="aura" />
+			<string_columnh_wide name="aura" />
 
 			<label_column name="cl_label">
 				<static textres="casterlevel" />
 			</label_column>
-			<number_columnh name="cl" />
+			<number_columnh_wide name="cl" />
 
 			<label_column name="prerequisites_label">
 				<static textres="item_label_prereq" />
 			</label_column>
-			<string_columnh name="prerequisites" />
+			<string_columnh_wide name="prerequisites" />
 
 			<label_column name="activation_label">
 				<static textres="item_label_activation" />
 			</label_column>
-			<string_columnh name="activation" />
+			<string_columnh_wide name="activation" />
 
 			<label_column name="materia_level_label">
 				<static textres="item_label_materia_level" />
 			</label_column>
-			<number_columnh name="materia_level">
+			<number_columnh_wide name="materia_level">
 				<script>
 					function onValueChanged()
 						window.calcMateria();
 					end
 				</script>
-			</number_columnh>
+			</number_columnh_wide>
 
 			<label_column name="mxp_label">
 				<static textres="item_label_mxp" />
 			</label_column>
-			<number_columnh name="mxp" />
+			<number_columnh_wide name="mxp" />
 
 			<label_column name="mxp_nlvl_label">
 				<static textres="item_label_mxp_nlvl" />
 			</label_column>
-			<number_columnh name="mxp_nlvl" />
+			<number_columnh_wide name="mxp_nlvl" />
 
 			<ft_columnh name="description" />
 		</sheetdata>

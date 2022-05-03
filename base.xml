@@ -82,6 +82,9 @@
 	<includefile source="ct/ct_host.xml" />
 	<includefile source="ct/ct_client.xml" />
 
+	<!-- Common -->
+	<includefile source="common/template_common.xml" />
+
 	<!-- Party sheet -->
 	<includefile source="ps/template_ps.xml" />
 	<includefile source="ps/ps.xml" />
