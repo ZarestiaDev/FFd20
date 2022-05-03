@@ -74,7 +74,10 @@ local weapon_subtypes = {
 	"Exotic Two-Handed",
 	"Exotic Ranged",
 	"Exotic Ammunition",
-	"Firearms",
+	"Simple Firearms",
+	"Advanced Firearms",
+	"Artillery Firearms",
+	"Explosives",
 	"Gun Arms",
 	"Other"
 }
@@ -128,19 +131,21 @@ function update()
 	local sType = type.getValue();
 	local sSubType = subtype.getValue();
 	local sMateriaRarity = materia_rarity.getValue();
+
 	local bArmor = (sType == "Armor");
+	local bChocoboFood = (sSubType == "Chocobo Food");
 	local bCybertech = (sType == "Cybertech");
+	local bExplosives = (sSubType == "Explosives");
+	local bFirearms = (sSubType == "Simple Firearms" or sSubType == "Advanced Firearms" or sSubType == "Artillery Firearms");
 	local bGoodsAndService = (sType == "Goods and Service");
 	local bMagicItem = (sType == "Magic Item");
-	local bWeapon = (sType == "Weapon");
 	local bMagicalArmor = (sSubType == "Magical Armor");
 	local bMagicalWeapon = (sSubType == "Magical Weapon");
-	local bStaff = (sSubType == "Staff");
-	local bWand = (sSubType == "Wand");
 	local bMateria = (sSubType == "Materia");
 	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
-	local bChocoboFood = (sSubType == "Chocobo Food");
-	local bFirearms = (sSubType == "Firearms")
+	local bStaff = (sSubType == "Staff");
+	local bWand = (sSubType == "Wand");
+	local bWeapon = (sType == "Weapon");
 
 	if bArmor then
 		subtype.clear();
