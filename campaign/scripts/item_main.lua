@@ -138,6 +138,7 @@ function update()
 	local bExplosives = (sSubType == "Explosives");
 	local bFirearms = (sSubType == "Simple Firearms" or sSubType == "Advanced Firearms" or sSubType == "Artillery Firearms");
 	local bGoodsAndService = (sType == "Goods and Service");
+	local bGunArms = (sSubType == "Gun Arms");
 	local bMagicItem = (sType == "Magic Item");
 	local bMagicalArmor = (sSubType == "Magical Armor");
 	local bMagicalWeapon = (sSubType == "Magical Weapon");
@@ -249,13 +250,17 @@ function update()
 	-- Firearms
 	updateControl("ammo", bReadOnly, bID and bFirearms);
 	updateControl("rof", bReadOnly, bID and bFirearms);
-	updateControl("capacity", bReadOnly, bID and bFirearms);
+	updateControl("capacity", bReadOnly, bID and (bFirearms or bGunArms));
 	updateControl("size", bReadOnly, bID and (bFirearms or bExplosives));
 
 	-- Explosives
 	updateControl("burstradius", bReadOnly, bID and bExplosives);
 	updateControl("reflexdc", bReadOnly, bID and bExplosives);
 	updateControl("craftdc", bReadOnly, bID and bExplosives);
+
+	-- Gun Arms
+	updateControl("gdamage", bReadOnly, bID and bGunArms);
+	updateControl("gdamagetype", bReadOnly, bID and bGunArms);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);

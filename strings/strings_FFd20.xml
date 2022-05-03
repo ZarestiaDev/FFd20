@@ -427,6 +427,8 @@
 	<string name="item_label_burstradius">Burst Radius</string>
 	<string name="item_label_reflexdc">Reflex DC</string>
 	<string name="item_label_craftdc">Craft DC</string>
+	<string name="item_label_gdamage">Gun Damage</string>
+	<string name="item_label_gdmgtype">Gun Damage Type</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>
