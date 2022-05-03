@@ -237,6 +237,7 @@ function update()
 	updateControl("apply", bReadOnly, bID and bChocoboFood);
 
 	--Cybertech
+	updateControl("craftinstall", bReadOnly, bID and bCybertech);
 	updateControl("implantation", bReadOnly, bID and bCybertech);
 
 	description.setVisible(bID);

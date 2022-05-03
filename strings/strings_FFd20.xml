@@ -417,6 +417,9 @@
 	<string name="item_label_materia_level">Materia Level</string>
 	<string name="item_label_mxp">Materia XP</string>
 	<string name="item_label_mxp_nlvl">Next Level</string>
+	<string name="item_label_apply">Time to Apply</string>
+	<string name="item_label_craftinstall">Craft/Install</string>
+	<string name="item_label_implantation">Implantation</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>
