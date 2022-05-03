@@ -242,10 +242,25 @@
 			</label_column>
 			<string_columnh name="capacity" />
 
+			<label_column name="burstradius_label">
+				<static textres="item_label_burstradius" />
+			</label_column>
+			<string_columnh name="burstradius" />
+
+			<label_column name="reflexdc_label">
+				<static textres="item_label_reflexdc" />
+			</label_column>
+			<number_columnh name="reflexdc" />
+
 			<label_column name="size_label">
 				<static textres="item_label_size" />
 			</label_column>
 			<string_columnh name="size" />
+
+			<label_column name="craftdc_label">
+				<static textres="item_label_craftdc" />
+			</label_column>
+			<number_columnh name="craftdc" />
 			
 			<label_column name="ac_label">
 				<static textres="item_label_ac" />

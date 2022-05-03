@@ -250,7 +250,12 @@ function update()
 	updateControl("ammo", bReadOnly, bID and bFirearms);
 	updateControl("rof", bReadOnly, bID and bFirearms);
 	updateControl("capacity", bReadOnly, bID and bFirearms);
-	updateControl("size", bReadOnly, bID and bFirearms);
+	updateControl("size", bReadOnly, bID and (bFirearms or bExplosives));
+
+	-- Explosives
+	updateControl("burstradius", bReadOnly, bID and bExplosives);
+	updateControl("reflexdc", bReadOnly, bID and bExplosives);
+	updateControl("craftdc", bReadOnly, bID and bExplosives);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);

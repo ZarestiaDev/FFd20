@@ -424,6 +424,9 @@
 	<string name="item_label_rof">Rate of Fire</string>
 	<string name="item_label_capacity">Capacity</string>
 	<string name="item_label_size">Size</string>
+	<string name="item_label_burstradius">Burst Radius</string>
+	<string name="item_label_reflexdc">Reflex DC</string>
+	<string name="item_label_craftdc">Craft DC</string>
 
 	<!-- NPCs -->
 	<string name="npc_grouped_label_cr">CR</string>
