@@ -490,6 +490,7 @@ bonustypes = {
 	"deflection",
 	"dodge",
 	"enhancement",
+	"equipment",
 	"insight",
 	"luck",
 	"morale",
