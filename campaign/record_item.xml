@@ -131,6 +131,11 @@
 			</label_column>
 			<number_columnh_wide name="weight" />
 
+			<label_column name="royalarms_type_label">
+				<static textres="item_label_royalarms_type" />
+			</label_column>
+			<string_columnh_wide name="royalarms_type" />
+
 			<label_column name="usage_label">
 				<static textres="item_label_usage" />
 			</label_column>

@@ -54,7 +54,6 @@ local magic_item_subtypes = {
 	"Ring",
 	"Relic",
 	"Rod",
-	"Royal Arms",
 	"Scroll",
 	"Staff",
 	"Wand",
@@ -83,6 +82,7 @@ local weapon_subtypes = {
 	"Artillery Firearms",
 	"Explosives",
 	"Gun Arms",
+	"Royal Arms",
 	"Other"
 }
 
@@ -234,7 +234,7 @@ function update()
 	updateControl("aura", bReadOnly, bID and bMagicItem);
 	updateControl("cl", bReadOnly, bID and bMagicItem);
 	updateControl("prerequisites", bReadOnly, bID and bMagicItem and not bMateria);
-	updateControl("activation", bReadOnly, bID and bMagicItem);
+	updateControl("activation", bReadOnly, bID and (bMagicItem or bRoyalArms));
 	updateControl("slot", bReadOnly, bID and bMagicItem);
 
 	-- Materia
@@ -271,6 +271,9 @@ function update()
 
 	-- Alchemical
 	updateControl("usage", bReadOnly, bID and bAlchemical);
+
+	-- Royal Arms
+	updateControl("royalarms_type", bReadOnly, bID and bRoyalArms);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
