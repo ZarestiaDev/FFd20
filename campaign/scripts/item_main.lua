@@ -136,7 +136,7 @@ function update()
 	local sSubType = subtype.getValue();
 	local sMateriaRarity = materia_rarity.getValue();
 
-	local bAlchemical = (sSubType == "Tier 1 Alchemical Items" or "Tier 2 Alchemical Items" or "Tier 3 Alchemical Items" or "Tier 4 Alchemical Items" or "Tier 5 Alchemical Items")
+	local bAlchemical = (sSubType == "Tier 1 Alchemical Items" or sSubType == "Tier 2 Alchemical Items" or sSubType == "Tier 3 Alchemical Items" or sSubType == "Tier 4 Alchemical Items" or sSubType == "Tier 5 Alchemical Items")
 	local bArmor = (sType == "Armor");
 	local bChocoboFood = (sSubType == "Chocobo Food");
 	local bCybertech = (sType == "Cybertech");
@@ -149,6 +149,7 @@ function update()
 	local bMagicalWeapon = (sSubType == "Magical Weapon");
 	local bMateria = (sSubType == "Materia");
 	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
+	local bRoyalArms = (sSubType == "Royal Arms");
 	local bStaff = (sSubType == "Staff");
 	local bWand = (sSubType == "Wand");
 	local bWeapon = (sType == "Weapon");
@@ -233,8 +234,8 @@ function update()
 	updateControl("aura", bReadOnly, bID and bMagicItem);
 	updateControl("cl", bReadOnly, bID and bMagicItem);
 	updateControl("prerequisites", bReadOnly, bID and bMagicItem and not bMateria);
-	updateControl("activation", bReadOnly, bID and bMagicItem and not bAlchemical);
-	updateControl("slot", bReadOnly, bID and bMagicItem and not bAlchemical);
+	updateControl("activation", bReadOnly, bID and bMagicItem);
+	updateControl("slot", bReadOnly, bID and bMagicItem);
 
 	-- Materia
 	updateControl("materia_type", bReadOnly, bID and bMateria);
