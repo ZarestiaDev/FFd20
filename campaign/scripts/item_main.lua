@@ -147,6 +147,7 @@ function update()
 	local bStaff = (sSubType == "Staff");
 	local bWand = (sSubType == "Wand");
 	local bWeapon = (sType == "Weapon");
+	local bTechnologicalGear = (sSubType == "Technological Gear")
 
 	if bArmor then
 		subtype.clear();
@@ -251,7 +252,7 @@ function update()
 	updateControl("ammo", bReadOnly, bID and bFirearms);
 	updateControl("rof", bReadOnly, bID and bFirearms);
 	updateControl("capacity", bReadOnly, bID and (bFirearms or bGunArms));
-	updateControl("size", bReadOnly, bID and (bFirearms or bExplosives));
+	updateControl("size", bReadOnly, bID and (bFirearms or bExplosives or bTechnologicalGear));
 
 	-- Explosives
 	updateControl("burstradius", bReadOnly, bID and bExplosives);
