@@ -37,7 +37,11 @@ local goods_and_servives_subtypes = {
 }
 
 local magic_item_subtypes = {
-	"Alchemical Items",
+	"Tier 1 Alchemical Items",
+	"Tier 2 Alchemical Items",
+	"Tier 3 Alchemical Items",
+	"Tier 4 Alchemical Items",
+	"Tier 5 Alchemical Items",
 	"Artifact",
 	"Cursed Item",
 	"Intelligent Item",
@@ -132,6 +136,7 @@ function update()
 	local sSubType = subtype.getValue();
 	local sMateriaRarity = materia_rarity.getValue();
 
+	local bAlchemical = (sSubType == "Tier 1 Alchemical Items" or "Tier 2 Alchemical Items" or "Tier 3 Alchemical Items" or "Tier 4 Alchemical Items" or "Tier 5 Alchemical Items")
 	local bArmor = (sType == "Armor");
 	local bChocoboFood = (sSubType == "Chocobo Food");
 	local bCybertech = (sType == "Cybertech");
@@ -228,8 +233,8 @@ function update()
 	updateControl("aura", bReadOnly, bID and bMagicItem);
 	updateControl("cl", bReadOnly, bID and bMagicItem);
 	updateControl("prerequisites", bReadOnly, bID and bMagicItem and not bMateria);
-	updateControl("activation", bReadOnly, bID and bMagicItem);
-	updateControl("slot", bReadOnly, bID and bMagicItem);
+	updateControl("activation", bReadOnly, bID and bMagicItem and not bAlchemical);
+	updateControl("slot", bReadOnly, bID and bMagicItem and not bAlchemical);
 
 	-- Materia
 	updateControl("materia_type", bReadOnly, bID and bMateria);
@@ -262,6 +267,9 @@ function update()
 	-- Gun Arms
 	updateControl("gdamage", bReadOnly, bID and bGunArms);
 	updateControl("gdamagetype", bReadOnly, bID and bGunArms);
+
+	-- Alchemical
+	updateControl("usage", bReadOnly, bID and bAlchemical);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);

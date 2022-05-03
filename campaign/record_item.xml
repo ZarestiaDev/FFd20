@@ -131,6 +131,11 @@
 			</label_column>
 			<number_columnh_wide name="weight" />
 
+			<label_column name="usage_label">
+				<static textres="item_label_usage" />
+			</label_column>
+			<string_columnh_wide name="usage" />
+
 			<label_column name="craftinstall_label">
 				<static textres="item_label_craftinstall" />
 			</label_column>
