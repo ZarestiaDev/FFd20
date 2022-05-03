@@ -139,6 +139,7 @@ function update()
 	local bWand = (sSubType == "Wand");
 	local bMateria = (sSubType == "Materia");
 	local bMateriaRarity = (sMateriaRarity == "Common" or sMateriaRarity == "Unommon" or sMateriaRarity == "Rare" or sMateriaRarity == "Legendary" );
+	local bChocoboFood = (sSubType == "Chocobo Food");
 
 	if bArmor then
 		subtype.clear();
@@ -231,6 +232,9 @@ function update()
 	updateControl("materia_level", bReadOnly, bID and (bMateriaRarity and bMateria));
 	updateControl("mxp", bReadOnly, bID and (bMateriaRarity and bMateria));
 	updateControl("mxp_nlvl", bReadOnly, bID and (bMateriaRarity and bMateria));
+
+	-- Chocobo Food
+	updateControl("apply", bReadOnly, bID and bChocoboFood);
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);

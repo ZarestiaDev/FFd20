@@ -131,6 +131,11 @@
 			</label_column>
 			<number_columnh name="weight" />
 
+			<label_column name="apply_label">
+				<static textres="item_label_apply" />
+			</label_column>
+			<string_columnh name="apply" /> 
+
 			<label_column name="materia_type_label">
 				<static textres="item_label_materia_type" />
 			</label_column>
