@@ -519,7 +519,7 @@
 				<static textres="spell_label_ability" />
 			</label_fieldtop>
 			<number_spell name="dcmisc" source="dc.misc">
-				<anchored to="dcstatmod" position="righthigh" offset="5,0" width="15" />
+				<anchored to="dcstatmod" position="righthigh" offset="5,0" />
 				<tabtarget next="sp" prev="availablelevel9" />
 			</number_spell>
 			<label_fieldtop name="dcmisc_label">
