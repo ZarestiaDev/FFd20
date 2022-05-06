@@ -644,6 +644,7 @@
 	<string name="power_label_dmg_dicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_dmg_stat">Mult x Stat (Max)</string>
 	<string name="power_label_dmg_bonus">Bonus</string>
+	<string name="power_label_stat">Stat</string>
 
 	<string name="power_title_heal">Spell/Ability Heal</string>
 	<string name="power_header_heal">HEAL</string>
