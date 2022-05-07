@@ -416,10 +416,10 @@
 	<windowclass name="power_heal_editor">
 		<frame>recordsheet</frame>
 		<placement>
-			<size width="500" height="350" />
+			<size width="560" height="350" />
 		</placement>
 		<sizelimits>
-			<minimum width="500" height="350" />
+			<minimum width="560" height="350" />
 			<dynamic />
 		</sizelimits>
 		<nodelete />
@@ -527,20 +527,24 @@
 				<class>power_heal_entry</class>
 			</list_editor>
 			
-			<label_fieldtop>
+			<label_fieldtop name="label_heal_dice">
 				<anchored to="list" position="aboveleft" offset="5,1" width="60" />
 				<static textres="power_label_heal_dice" />
 			</label_fieldtop>
-			<label_fieldtop>
-				<anchored to="list" position="aboveleft" offset="85,1" width="100" />
+			<label_fieldtop name="label_heal_dicemult">
+				<anchored to="list" position="aboveleft" offset="80,1" width="110" />
 				<static textres="power_label_heal_dicemult" />
 			</label_fieldtop>
-			<label_fieldtop>
+			<label_fieldtop name="label_heal_stat">
 				<anchored to="list" position="aboveleft" offset="200,1" width="140" />
 				<static textres="power_label_heal_stat" />
 			</label_fieldtop>
-			<label_fieldtop>
-				<anchored to="list" position="aboveleft" offset="363,1" width="30" />
+			<label_fieldtop name="label_heal_mod">
+				<anchored to="list" position="aboveleft" offset="370,1" width="32" />
+				<static textres="power_label_stat" />
+			</label_fieldtop>
+			<label_fieldtop name="label_heal_bonus">
+				<anchored to="list" position="aboveleft" offset="426,1" width="32" />
 				<static textres="power_label_heal_bonus" />
 			</label_fieldtop>
 		</sheetdata>
@@ -630,8 +634,20 @@
 				<anchored to="statmaxparen2" position="righthigh" offset="2,0" width="10" />
 				<static>+</static>
 			</label>
+			<cycler_ability name="spellmod">
+				<anchored to="label_plus2" position="righthigh" offset="5,0" width="40" />
+				<parameters>
+					<defaultlabelres>dash</defaultlabelres>
+					<labelsres>mod</labelsres>
+					<values>mod</values>
+				</parameters>
+			</cycler_ability>
+			<label name="label_plus3">
+				<anchored to="spellmod" position="righthigh" offset="5,0" width="10" />
+				<static>+</static>
+			</label>
 			<basicnumber name="bonus">
-				<anchored to="label_plus2" position="righthigh" offset="2,0" width="30" height="20" />
+				<anchored to="label_plus3" position="righthigh" offset="4,0" width="30" height="20" />
 				<hideonvalue>0</hideonvalue>
 			</basicnumber>
 		</sheetdata>

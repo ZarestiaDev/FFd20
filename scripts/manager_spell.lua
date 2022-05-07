@@ -965,6 +965,12 @@ function getActionHeal(rActor, nodeAction)
 			nMod = nMod + math.floor(nStat * nStatMult);
 		end
 
+		local sDmgSpellMod = DB.getValue(v, "spellmod", "");
+		if sDmgSpellMod ~= "" then
+			local nDmgSpellMod = getActionAbilityBonus(nodeAction);
+			nMod = nMod + nDmgSpellMod;
+		end
+
 		table.insert(clauses, { dice = aDice, modifier = nMod, mult = 2, stat = sStat, statmax = nStatMax, statmult = nStatMult });
 	end
 
