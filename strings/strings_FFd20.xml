@@ -25,6 +25,7 @@
 	<string name="intelligence">Intelligence</string>
 	<string name="wisdom">Wisdom</string>
 	<string name="charisma">Charisma</string>
+	<string name="mod">Mod</string>
 	<string name="lvl">Lvl</string>
 	<string name="level">Level</string>
 	<string name="hp">HP</string>

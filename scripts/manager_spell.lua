@@ -913,6 +913,12 @@ function getActionDamage(rActor, nodeAction)
 			nDmgMod = nDmgMod + math.floor(nDmgStat * nDmgStatMult);
 		end
 
+		local sDmgSpellMod = DB.getValue(v, "spellmod", "");
+		if sDmgSpellMod ~= "" then
+			local nDmgSpellMod = getActionAbilityBonus(nodeAction);
+			nDmgMod = nDmgMod + nDmgSpellMod;
+		end
+
 		local aDamageTypes = ActionDamage.getDamageTypesFromString(DB.getValue(v, "type", ""));
 		local sDmgType = table.concat(aDamageTypes, ",");
 		
