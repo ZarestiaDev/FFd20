@@ -643,7 +643,7 @@
 				</parameters>
 			</cycler_ability>
 			<label name="label_plus3">
-				<anchored to="spellmod" position="righthigh" offset="5,0" width="10" />
+				<anchored to="spellmod" position="righthigh" offset="7,0" width="10" />
 				<static>+</static>
 			</label>
 			<basicnumber name="bonus">
@@ -656,10 +656,10 @@
 	<windowclass name="power_effect_editor">
 		<frame>recordsheet</frame>
 		<placement>
-			<size width="460" height="370" />
+			<size width="470" height="370" />
 		</placement>
 		<sizelimits>
-			<minimum width="460" height="370" />
+			<minimum width="470" height="370" />
 			<dynamic />
 		</sizelimits>
 		<nodelete />
@@ -800,7 +800,7 @@
 				<static>+</static>
 			</label>
 			<basicnumber name="durmod">
-				<anchored to="label_durplus2" position="righthigh" offset="2,0" width="20" height="20" />
+				<anchored to="label_durplus2" position="righthigh" offset="2,0" width="24" height="20" />
 				<hideonvalue>0</hideonvalue>
 			</basicnumber>
 			<label_fieldtop>
