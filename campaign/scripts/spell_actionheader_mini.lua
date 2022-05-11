@@ -78,11 +78,19 @@ end
 
 function onDamageChanged()
 	local sDamage = SpellManager.getActionDamageText(getDatabaseNode());
+	local sTargeting = DB.getValue(getDatabaseNode(), "targeting", "");
+	if sTargeting == "self" then
+		sDamage = "[SELF]; " .. sDamage;
+	end
 	button.setTooltipText(string.format("%s: %s", Interface.getString("power_tooltip_damage"), sDamage));
 end
 
 function onHealChanged()
 	local sHeal = SpellManager.getActionHealText(getDatabaseNode());
+	local sTargeting = DB.getValue(getDatabaseNode(), "targeting", "");
+	if sTargeting == "self" then
+		sHeal = "[SELF]; " .. sHeal;
+	end
 	button.setTooltipText(string.format("%s: %s", Interface.getString("power_tooltip_heal"), sHeal));
 end
 

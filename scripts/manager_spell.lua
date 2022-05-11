@@ -708,6 +708,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 	elseif sType == "damage" then
 		rAction.clauses = getActionDamage(rActor, nodeAction);
 		
+		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
 		rAction.meta = DB.getValue(nodeAction, "meta", "");
 
 		rAction.bSpellDamage = (DB.getValue(nodeAction, "dmgnotspell", 0) == 0);
@@ -724,6 +725,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 	elseif sType == "heal" then
 		rAction.clauses = getActionHeal(rActor, nodeAction);
 
+		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
 		rAction.subtype = DB.getValue(nodeAction, "healtype", "");
 		rAction.meta = DB.getValue(nodeAction, "meta", "");
 	

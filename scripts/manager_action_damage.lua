@@ -104,6 +104,10 @@ function getRoll(rActor, rAction)
 			rRoll.sDesc = rRoll.sDesc .. " [MAXIMIZE]";
 		end
 	end
+
+	if rAction.sTargeting == "self" then
+		rRoll.bSelfTarget = true;
+	end
 	
 	return rRoll;
 end

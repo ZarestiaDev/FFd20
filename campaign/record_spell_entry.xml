@@ -66,15 +66,25 @@
 			<icon normal="button_action_damage" pressed="button_action_damage_down" />
 		</button_spellaction>
 	</template>
+	<template name="spell_action_damagetargeting">
+		<button_iconcycler name="targeting">
+			<anchored to="damagebutton" position="righthigh" offset="5,5" width="24" height="10" />
+			<parameters>
+				<icons>button_toggle_self</icons>
+				<values>self</values>
+				<defaulticon>button_toggle_trgt</defaulticon>
+			</parameters>
+		</button_iconcycler>
+	</template>
 	<template name="spell_action_damagelabel">
 		<label name="damagelabel">
-			<anchored to="damagebutton" position="righthigh" offset="5,0" width="40" />
+			<anchored to="targeting" position="righthigh" offset="5,-5" width="35" />
 			<static textres="spell_label_dmg" />
 		</label>
 	</template>
 	<template name="spell_action_damageview">
 		<string_spellactionview name="damageview">
-			<anchored to="damagelabel" position="righthigh" offset="10,0">
+			<anchored to="damagelabel" position="righthigh" offset="2,0">
 				<right parent="" offset="-40" />
 			</anchored>
 		</string_spellactionview>
@@ -92,15 +102,25 @@
 			<icon normal="button_action_heal" pressed="button_action_heal_down" />
 		</button_spellaction>
 	</template>
+	<template name="spell_action_healtargeting">
+		<button_iconcycler name="targeting">
+			<anchored to="healbutton" position="righthigh" offset="5,5" width="24" height="10" />
+			<parameters>
+				<icons>button_toggle_self</icons>
+				<values>self</values>
+				<defaulticon>button_toggle_trgt</defaulticon>
+			</parameters>
+		</button_iconcycler>
+	</template>
 	<template name="spell_action_heallabel">
 		<label name="heallabel">
-			<anchored to="healbutton" position="righthigh" offset="5,0" width="40" />
+			<anchored to="targeting" position="righthigh" offset="5,-5" width="35" />
 			<static textres="spell_label_heal" />
 		</label>
 	</template>
 	<template name="spell_action_healview">
 		<string_spellactionview name="healview">
-			<anchored to="heallabel" position="righthigh" offset="10,0">
+			<anchored to="heallabel" position="righthigh" offset="2,0">
 				<right parent="" offset="-140" />
 			</anchored>
 		</string_spellactionview>

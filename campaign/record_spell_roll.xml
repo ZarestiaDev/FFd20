@@ -226,8 +226,23 @@
 				<multilinespacing>20</multilinespacing>
 				<readonly />
 			</simplestringc>
+
+			<label_column name="label_damage_targeting">
+				<static textres="power_label_targeting" />
+			</label_column>
+			<button_stringcycler name="targeting">
+				<anchored width="60">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="97" />
+				</anchored>
+				<parameters>
+					<defaultlabelres>power_label_targetnormal</defaultlabelres>
+					<labelsres>power_label_targetself</labelsres>
+					<values>self</values>
+				</parameters>
+			</button_stringcycler>
 			
-			<label_column>
+			<label_column name="label_damage_meta">
 				<static textres="power_label_metamagic" />
 			</label_column>
 			<button_stringcycler name="meta">
@@ -242,7 +257,7 @@
 				</parameters>
 			</button_stringcycler>
 
-			<label_column>
+			<label_column name="label_damage_dmgnotspell">
 				<static textres="power_label_spelldmg" />
 			</label_column>
 			<buttonfield name="dmgnotspell">
@@ -478,6 +493,21 @@
 				<multilinespacing>20</multilinespacing>
 				<readonly />
 			</simplestringc>
+
+			<label_column name="label_heal_targeting">
+				<static textres="power_label_targeting" />
+			</label_column>
+			<button_stringcycler name="targeting">
+				<anchored width="60">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
+					<left offset="97" />
+				</anchored>
+				<parameters>
+					<defaultlabelres>power_label_targetnormal</defaultlabelres>
+					<labelsres>power_label_targetself</labelsres>
+					<values>self</values>
+				</parameters>
+			</button_stringcycler>
 
 			<label_column name="healtype_label">
 				<static textres="type" />

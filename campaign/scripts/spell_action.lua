@@ -59,11 +59,13 @@ function createDisplay(sType)
 		createControl("spell_action_castdetailbutton", "castdetail");
 	elseif sType == "damage" then
 		createControl("spell_action_damagebutton", "damagebutton");
+		createControl("spell_action_damagetargeting", "targeting");
 		createControl("spell_action_damagelabel", "damagelabel");
 		createControl("spell_action_damageview", "damageview");
 		createControl("spell_action_damagedetailbutton", "damagedetail");
 	elseif sType == "heal" then
 		createControl("spell_action_healbutton", "healbutton");
+		createControl("spell_action_healtargeting", "targeting");
 		createControl("spell_action_heallabel", "heallabel");
 		createControl("spell_action_healview", "healview");
 		createControl("spell_action_healtypelabel", "healtypelabel");

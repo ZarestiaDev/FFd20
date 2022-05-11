@@ -48,6 +48,10 @@ function getRoll(rActor, rAction)
 		end
 	end
 
+	if rAction.sTargeting == "self" then
+		rRoll.bSelfTarget = true;
+	end
+
 	return rRoll;
 end
 
@@ -149,7 +153,7 @@ function onHeal(rSource, rTarget, rRoll)
 	end
 	if bEmpower then
 		local nEmpowerTotal = ActionsManager.total(rRoll);
-		nEmpowerMod = math.floor(nEmpowerTotal / 2);
+		local nEmpowerMod = math.floor(nEmpowerTotal / 2);
 		
 		local sReplace = string.format(" [EMPOWER %+d]", nEmpowerMod);
 		rRoll.sDesc = string.gsub(rRoll.sDesc, " %[EMPOWER%]", sReplace);
