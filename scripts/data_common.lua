@@ -231,26 +231,26 @@ conditionaltags = {
 conditions = {
 	"antagonized",
 	"banished",
-	"berserk",
-	"bleed",
+	"berserk", -- +2 circumstance STR, -2 AC, IMMUNE: fear
+	"bleed", -- use DMGO
 	"blinded",
-	"burning",
+	"burning", -- use DNGO
 	"charmed",
 	"climbing",
 	"confused",
 	"cowering",
-	"cursed",
+	"cursed", -- LB is not usable
 	"dazed",
 	"dazzled",
 	"deafened",
-	"deprotect",
-	"deshell",
-	"dimmed",
+	"deprotect", -- -AC
+	"deshell", -- -Saves
+	"dimmed", -- 20% concealment
 	"disabled",
 	"diseased",
-	"doom",
-	"drenched",
-	"energy drained",
+	"doom", -- -Death countdown
+	"drenched", -- more lighting damage, save vs. ice
+	"energy drained", -- Negative Levels
 	"entangled",
 	"exhausted",
 	"fascinated",
@@ -258,41 +258,41 @@ conditions = {
 	"flat-footed",
 	"float",
 	"frightened",
-	"frog",
+	"frog", -- size change
 	"frozen",
 	"grappled",
-	"hasted",
+	"hasted", -- like haste
 	"helpless",
-	"illuminated",
+	"illuminated", -- light
 	"immobilized",
-	"imperil",
+	"imperil", -- Worse elemental resistance
 	"incorporeal",
 	"invisible",
 	"kneeling",
-	"lucky",
-	"mini",
+	"lucky", -- advantage
+	"mini", -- 10% size, 10% damage
 	"nauseated",
 	"panicked",
 	"paralyzed",
 	"petrified",
 	"pinned",
-	"poisoned",
+	"poisoned", -- DMGO: 1d6
 	"prone",
-	"protect",
+	"protect", -- AC
 	"rebuked",
 	"reflect",
-	"regen",
-	"reraise",
+	"regen", -- regen
+	"reraise", -- Does not die, raised on 1 HP
 	"running",
-	"sapped",
+	"sapped", -- like poisoned
 	"shaken",
-	"shell",
+	"shell", -- Saves
 	"sickened",
 	"silenced",
 	"sitting",
 	"sleep",
 	"slowed",
-	"squalled",
+	"squalled", -- spell failure
 	"squeezing",
 	"stable",
 	"staggered",
@@ -301,9 +301,9 @@ conditions = {
 	"stunned",
 	"turned",
 	"unconscious",
-	"unlucky",
+	"unlucky", -- disadvantage
 	"weighted",
-	"zombie"
+	"zombie" -- change to undead
 };
 
 -- Bonus/penalty effect types for token widgets
