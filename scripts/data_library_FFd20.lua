@@ -189,6 +189,18 @@ aRecordOverrides = {
 			["Type"] = { sField = "type" },
 		},
 	},
+	["deity"] = {
+		bExport = true;
+		aDataMap = { "deity", "reference.deities" },
+		sRecordDisplayClass = "referencedeity",
+		sSidebarCategory = "create",
+	},
+	["traits"] = {
+		bExport = true;
+		aDataMap = { "traits", "reference.traits" },
+		sRecordDisplayClass = "referencetraits",
+		sSidebarCategory = "create",
+	},
 };
 
 aListViews = {
