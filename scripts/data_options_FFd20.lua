@@ -37,4 +37,21 @@ function registerOptions()
 			{ labels = "option_val_all|option_val_friendly", values = "all|on", baselabel = "option_val_off", baseval = "off", default = "on" });
 	OptionsManager.registerOption2("HRFC", false, "option_header_houserule", "option_label_HRFC", "option_entry_cycler", 
 			{ labels = "option_val_fumbleandcrit|option_val_fumble|option_val_crit", values = "both|fumble|criticalhit", baselabel = "option_val_off", baseval = "", default = "" });
+
+	OptionsManager.registerOption2("GFP", false, "option_header_optional", "option_label_GFP", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("HP", false, "option_header_optional", "option_label_HP", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("MITR", false, "option_header_optional", "option_label_MITR", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("RL", false, "option_header_optional", "option_label_RL", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("SE", false, "option_header_optional", "option_label_SE", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("SHP", false, "option_header_optional", "option_label_SHP", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("VMP", false, "option_header_optional", "option_label_VMP", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
+	OptionsManager.registerOption2("VM", false, "option_header_optional", "option_label_VM", "option_entry_cycler",
+			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 end
