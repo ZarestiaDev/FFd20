@@ -77,6 +77,9 @@
 	<includefile source="campaign/record_race.xml" />
 	<includefile source="campaign/record_skill.xml" />
 
+	<includefile source="campaign/record_trait.xml" />
+	<includefile source="campaign/record_deity.xml" />
+
 	<!-- Combat tracker -->
 	<includefile source="ct/template_ct.xml" />
 	<includefile source="ct/ct_host.xml" />

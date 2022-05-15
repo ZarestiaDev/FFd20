@@ -193,13 +193,23 @@ aRecordOverrides = {
 		bExport = true;
 		aDataMap = { "deity", "reference.deities" },
 		sRecordDisplayClass = "referencedeity",
+		aGMListButtons = { "button_deity_type" },
+		aPlayerListButtons = { "button_deity_type" },
 		sSidebarCategory = "create",
+		aCustomFilters = {
+			["Type"] = { sField = "type" },
+		},
 	},
-	["traits"] = {
+	["trait"] = {
 		bExport = true;
-		aDataMap = { "traits", "reference.traits" },
-		sRecordDisplayClass = "referencetraits",
+		aDataMap = { "trait", "reference.traits" },
+		sRecordDisplayClass = "referencetrait",
+		aGMListButtons = { "button_trait_type" },
+		aPlayerListButtons = { "button_trait_type" },
 		sSidebarCategory = "create",
+		aCustomFilters = {
+			["Type"] = { sField = "type" },
+		},
 	},
 };
 
@@ -301,6 +311,32 @@ aListViews = {
 				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
 				{ sName = "prerequisites", sType = "string", sHeadingRes = "feat_grouped_label_prereq", nWidth=240, bWrapped = true },
 				{ sName = "summary", sType = "string", sHeadingRes = "feat_grouped_label_benefit", nWidth=280, bWrapped = true },
+			},
+			aFilters = { },
+			aGroups = { { sDBField = "type" } },
+			aGroupValueOrder = { },
+		},
+	},
+	["trait"] = {
+		["bytype"] = {
+			aColumns = {
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
+				{ sName = "prerequisites", sType = "string", sHeadingRes = "feat_grouped_label_prereq", nWidth=240, bWrapped = true },
+				{ sName = "benefit", sType = "formattedtext", sHeadingRes = "feat_grouped_label_benefit", nWidth=280, bWrapped = true },
+			},
+			aFilters = { },
+			aGroups = { { sDBField = "type" } },
+			aGroupValueOrder = { },
+		},
+	},
+	["deity"] = {
+		["bytype"] = {
+			aColumns = {
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
+				{ sName = "alignment", sType = "string", sHeadingRes = "deity_label_alignment", nWidth=100, bWrapped = true },
+				{ sName = "portfolio", sType = "string", sHeadingRes = "deity_label_portfolio", nWidth=240, bWrapped = true },
+				{ sName = "domains", sType = "string", sHeadingRes = "deity_label_domains", nWidth=240, bWrapped = true },
+				{ sName = "favored", sType = "string", sHeadingRes = "deity_label_favored", nWidth=120, bWrapped = true },
 			},
 			aFilters = { },
 			aGroups = { { sDBField = "type" } },

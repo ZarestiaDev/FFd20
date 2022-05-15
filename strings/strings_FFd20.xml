@@ -565,7 +565,18 @@
 
 	<!-- Special Abilities -->
 	<string name="specialability_empty_type">Class Feature</string>
-		
+	
+	<!-- Deities -->
+	<string name="deity_label_titles">Titles</string>
+	<string name="deity_label_homeplane">Home Plane</string>
+	<string name="deity_label_powerlevel">Power Level</string>
+	<string name="deity_label_alignment">Alignment</string>
+	<string name="deity_label_allied">Allied Deities</string>
+	<string name="deity_label_portfolio">Portfolio</string>
+	<string name="deity_label_domains">Domains</string>
+	<string name="deity_label_favored">Fav. Weapon</string>
+	<string name="deity_label_relic">Relic</string>
+
 	<!-- Reference -->
 	<string name="ref_label_listcost">Cost</string>
 	<string name="ref_label_listdamage">Damage</string>
@@ -684,11 +695,16 @@
 	<string name="library_recordtype_empty_classfeature">&#171; New Class Feature &#187;</string>
 	<string name="library_recordtype_empty_racialtrait">&#171; New Racial Trait &#187;</string>
 	<string name="library_recordtype_empty_proficiency">&#171; New Proficiency &#187;</string>
+	<string name="library_recordtype_empty_deity">&#171; New Deity &#187;</string>
+	<string name="library_recordtype_empty_trait">&#171; New Trait &#187;</string>
 	
 	<string name="record_label_classfeature">Class Feature</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
 	<string name="record_label_proficiency">Proficiency</string>
 
 	<string name="library_recordtype_label_deity">Deities</string>
-	<string name="library_recordtype_label_traits">Traits</string>
+	<string name="library_recordtype_label_trait">Traits</string>
+
+	<string name="library_recordview_label_trait_bytype">By Type</string>
+	<string name="library_recordview_label_deity_bytype">By Type</string>
 </root>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencetrait">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script file="common/scripts/record_window.lua" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_trait_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_trait_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_trait_header">
+		<margins control="0,0,0,7" />
+		<script file="common/scripts/record_header.lua" />
+		<sheetdata>
+			<link_record_header name="link" />
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name" />
+			<label_recordtype name="recordtype_label" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_trait_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				if bReadOnly then
+					type_biglabel.setValue("[" .. type.getValue() .. "]");
+					type_biglabel.setVisible(true);
+					
+					type.update(bReadOnly, true);
+				else
+					type_biglabel.setVisible(false);
+					type.update(bReadOnly);
+				end
+				prerequisites.update(bReadOnly);
+				flavor.update(bReadOnly);
+				benefit.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_biglabel">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<label_column name="type_label">
+				<static textres="type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<string_columnh_full name="flavor">
+				<font>reference-i</font>
+				<empty textres="empty_flavor" />
+			</string_columnh_full>
+			
+			<label_column name="prerequisites_label">
+				<static textres="feat_label_prereq" />
+			</label_column>
+			<string_columnh name="prerequisites" />
+
+			<header_column name="benefit_label">
+				<static textres="feat_label_benefit"/>
+				<center />
+			</header_column>
+			<ft_columnh name="benefit" />
+		</sheetdata>
+	</windowclass>
+</root>

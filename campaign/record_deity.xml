@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="referencedeity">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script file="common/scripts/record_window.lua" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_deity_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_deity_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_deity_header">
+		<margins control="0,0,0,7" />
+		<script file="common/scripts/record_header.lua" />
+		<sheetdata>
+			<link_record_header name="link" />
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name" />
+			<label_recordtype name="recordtype_label" />
+		</sheetdata>
+	</windowclass>
+	
+	<windowclass name="ref_deity_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				if bReadOnly then
+					type_biglabel.setValue("[" .. type.getValue() .. "]");
+					type_biglabel.setVisible(true);
+					
+					type.update(bReadOnly, true);
+				else
+					type_biglabel.setVisible(false);
+					type.update(bReadOnly);
+				end
+				titles.update(bReadOnly);
+                homeplane.update(bReadOnly);
+                powerlevel.update(bReadOnly);
+                alignment.update(bReadOnly);
+                allied.update(bReadOnly);
+                portfolio.update(bReadOnly);
+                domains.update(bReadOnly);
+                favored.update(bReadOnly);
+                relic.update(bReadOnly);
+                description.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_biglabel">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<label_column name="type_label">
+				<static textres="type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+			</string_columnh>
+			
+			<label_column name="titles_label">
+				<static textres="deity_label_titles" />
+			</label_column>
+			<string_columnh name="titles" />
+
+            <label_column name="homeplane_label">
+				<static textres="deity_label_homeplane" />
+			</label_column>
+			<string_columnh name="homeplane" />
+
+            <label_column name="powerlevel_label">
+				<static textres="deity_label_powerlevel" />
+			</label_column>
+			<string_columnh name="powerlevel" />
+
+            <label_column name="alignment_label">
+				<static textres="deity_label_alignment" />
+			</label_column>
+			<string_columnh name="alignment" />
+
+            <label_column name="allied_label">
+				<static textres="deity_label_allied" />
+			</label_column>
+			<string_columnh name="allied" />
+
+            <label_column name="portfolio_label">
+				<static textres="deity_label_portfolio" />
+			</label_column>
+			<string_columnh name="portfolio" />
+
+            <label_column name="domains_label">
+				<static textres="deity_label_domains" />
+			</label_column>
+			<string_columnh name="domains" />
+
+            <label_column name="favored_label">
+				<static textres="deity_label_favored" />
+			</label_column>
+			<string_columnh name="favored" />
+
+            <label_column name="relic_label">
+				<static textres="deity_label_relic" />
+			</label_column>
+			<string_columnh name="relic" />
+
+            <ft_columnh name="description" />
+		</sheetdata>
+	</windowclass>
+</root>

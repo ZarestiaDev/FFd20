@@ -152,6 +152,46 @@
 			</script>
 		</button_text_sm>
 	</template>
+	<template name="button_trait_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_trait_bytype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.traitsbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.traitsbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.traitsbytype");
+						w.init({ sRecordType = "trait", sListView = "bytype" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
+	<template name="button_deity_type">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_deity_bytype" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.deitiesbytype");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.deitiesbytype");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.deitiesbytype");
+						w.init({ sRecordType = "deity", sListView = "bytype" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
 
 	<template name="frame_record_editor">
 		<genericcontrol name="contentframe">
