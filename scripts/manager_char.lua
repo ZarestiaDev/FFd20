@@ -1065,6 +1065,8 @@ function addInfoDB(nodeChar, sClass, sRecord, nodeTargetList)
 		addClassFeature(nodeChar, sClass, sRecord, nodeTargetList);
 	elseif sClass == "referencefeat" then
 		addFeat(nodeChar, sClass, sRecord, nodeTargetList);
+	elseif sClass == "referencedeity" then
+		addDeity(nodeChar, sClass, sRecord);
 	else
 		return false;
 	end
@@ -1130,6 +1132,18 @@ function getClassNode(nodeChar, sClassName)
 		end
 	end
 	return nil;
+end
+
+function addDeity(nodeChar, sClass, sRecord)
+	local nodeSource = resolveRefNode(sRecord);
+	if not nodeSource then
+		return;
+	end
+
+	local sDeity = DB.getValue(nodeSource, "name", "");
+
+	DB.setValue(nodeChar, "deity", "string", sDeity);
+	DB.setValue(nodeChar, "deitylink", "windowreference", sClass, nodeSource.getPath());
 end
 
 function addRace(nodeChar, sClass, sRecord)

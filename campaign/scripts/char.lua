@@ -9,7 +9,7 @@ function onInit()
 		registerMenuItem(Interface.getString("menu_restshort"), "pointer_cone", 7, 8);
 		registerMenuItem(Interface.getString("menu_restovernight"), "pointer_circle", 7, 6);
 	end
-	updateRace()
+	updateAdd();
 	onLevelChanged();
 	DB.addHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
 end
@@ -38,17 +38,20 @@ end
 function onDrop(x, y, draginfo)
 	if draginfo.isType("shortcut") then
 		local sClass, sRecord = draginfo.getShortcutData();
-		if StringManager.contains({"referenceclass", "referencerace"}, sClass) then
+		if StringManager.contains({"referenceclass", "referencerace", "referencedeity"}, sClass) then
 			CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
-			updateRace();
+			updateAdd();
 			return true;
 		end
 	end
 end
 
-function updateRace()
+function updateAdd()
 	local nodeChar = getDatabaseNode();
 	if DB.getValue(nodeChar, "racelink", "") == "referencerace" then
 		race_add.setVisible(false);
+	end
+	if DB.getValue(nodeChar, "deitylink", "") == "referencedeity" then
+		deity_add.setVisible(false);
 	end
 end

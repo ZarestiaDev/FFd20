@@ -56,19 +56,45 @@
 				<labelres>char_label_height</labelres>
 			</string_labeled>
 			<string_labeled name="weight">
-				<anchored to="overviewframe" position="insidetopleft" offset="19,57" width="55" height ="20" />
+				<anchored to="overviewframe" position="insidetopleft" offset="19,57" width="45" height ="20" />
 				<labelres>char_label_weight</labelres>
 			</string_labeled>
 			<string_labeled name="size">
-				<anchored to="weight" position="right" offset="15,0" width="80" />
+				<anchored to="weight" position="right" offset="15,0" width="70" />
 				<labelres>char_label_size</labelres>
 			</string_labeled>
 			<string_labeled name="alignment">
-				<anchored to="size" position="right" offset="15,0" width="105" />
+				<anchored to="size" position="right" offset="15,0" width="75" />
 				<labelres>char_label_alignment</labelres>
 			</string_labeled>
+
+			<button_iadd_creation name="deity_add">
+				<anchored to="overviewframe" position="insidetopright" offset="10,58" />
+				<script>
+					function onButtonPress()
+						Interface.openWindow("masterindex", "deity")
+					end
+				</script>
+			</button_iadd_creation>
+			<linkfield name="deitylink">
+				<anchored to="overviewframe" position="insidetopright" offset="10,58" width="20" height="20" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
 			<string_labeled name="deity">
-				<anchored to="alignment" position="right" offset="15,0" width="115" />
+				<anchored to="alignment" position="right" offset="15,0" width="150" />
 				<labelres>char_label_deity</labelres>
 			</string_labeled>
 			
