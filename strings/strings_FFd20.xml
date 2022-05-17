@@ -577,6 +577,11 @@
 	<string name="deity_label_favored">Fav. Weapon</string>
 	<string name="deity_label_relic">Relic</string>
 
+	<!-- Talents -->
+	<string name="talents_label_advance">Advance</string>
+	<string name="talents_label_prerequisites">Prerequisites</string>
+	<string name="talents_label_benefit">Benefit</string>
+
 	<!-- Reference -->
 	<string name="ref_label_listcost">Cost</string>
 	<string name="ref_label_listdamage">Damage</string>
@@ -697,6 +702,7 @@
 	<string name="library_recordtype_empty_proficiency">&#171; New Proficiency &#187;</string>
 	<string name="library_recordtype_empty_deity">&#171; New Deity &#187;</string>
 	<string name="library_recordtype_empty_trait">&#171; New Trait &#187;</string>
+	<string name="library_recordtype_empty_talent">&#171; New Talent &#187;</string>
 	
 	<string name="record_label_classfeature">Class Feature</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
@@ -704,7 +710,9 @@
 
 	<string name="library_recordtype_label_deity">Deities</string>
 	<string name="library_recordtype_label_trait">Traits</string>
+	<string name="library_recordtype_label_talent">Talents</string>
 
 	<string name="library_recordview_label_trait_bytype">By Type</string>
 	<string name="library_recordview_label_deity_bytype">By Type</string>
+	<string name="library_recordview_label_talent_byclass">By Class</string>
 </root>

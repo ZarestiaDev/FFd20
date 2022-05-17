@@ -211,6 +211,17 @@ aRecordOverrides = {
 			["Type"] = { sField = "type" },
 		},
 	},
+	["talent"] = {
+		bExport = true;
+		aDataMap = { "talent", "reference.talents" },
+		sRecordDisplayClass = "referencetalent",
+		aGMListButtons = { "button_talent_class" },
+		aPlayerListButtons = { "button_talent_class" },
+		sSidebarCategory = "create",
+		aCustomFilters = {
+			["Class"] = { sField = "class" },
+		},
+	},
 };
 
 aListViews = {
@@ -340,6 +351,19 @@ aListViews = {
 			},
 			aFilters = { },
 			aGroups = { { sDBField = "type" } },
+			aGroupValueOrder = { },
+		},
+	},
+	["talent"] = {
+		["byclass"] = {
+			aColumns = {
+				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
+				{ sName = "advance", sType = "string", sHeadingRes = "talents_label_advance", nWidth=100 },
+				{ sName = "prerequisites", sType = "string", sHeadingRes = "feat_grouped_label_prereq", nWidth=240, bWrapped = true },
+				{ sName = "benefit", sType = "formattedtext", sHeadingRes = "feat_grouped_label_benefit", nWidth=280, bWrapped = true },
+			},
+			aFilters = { },
+			aGroups = { { sDBField = "class" } },
 			aGroupValueOrder = { },
 		},
 	},

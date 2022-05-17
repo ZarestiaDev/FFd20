@@ -192,6 +192,26 @@
 			</script>
 		</button_text_sm>
 	</template>
+	<template name="button_talent_class">
+		<button_text_sm>
+			<anchored to="buttonanchor" width="80">
+				<top />
+				<left anchor="right" relation="relative" offset="5" />
+			</anchored>
+			<state textres="library_recordview_label_talent_byclass" />
+			<script>
+				function onButtonPress()
+					local w = Interface.findWindow("reference_groupedlist", "reference.talentsbyclass");
+					if w then
+						Interface.toggleWindow("reference_groupedlist", "reference.talentsbyclass");
+					else
+						w = Interface.openWindow("reference_groupedlist", "reference.talentsbyclass");
+						w.init({ sRecordType = "talent", sListView = "byclass" });
+					end
+				end
+			</script>
+		</button_text_sm>
+	</template>
 
 	<template name="frame_record_editor">
 		<genericcontrol name="contentframe">
