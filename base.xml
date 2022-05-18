@@ -60,6 +60,7 @@
 	<includefile source="campaign/record_char_combat.xml" />
 	<includefile source="campaign/record_char_skills.xml" />
 	<includefile source="campaign/record_char_abilities.xml" />
+	<includefile source="campaign/record_ability_ftt.xml" />
 	<includefile source="campaign/record_char_inventory.xml" />
 	<includefile source="campaign/record_char_notes.xml" />
 	<includefile source="campaign/record_char_actions.xml" />

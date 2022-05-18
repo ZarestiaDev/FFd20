@@ -1024,7 +1024,7 @@ function hasFeat(nodeChar, sFeat)
 		return false;
 	end
 	local sLowerFeat = StringManager.trim(sFeat:lower());
-	for _,vNode in pairs(DB.getChildren(nodeChar, "featlist")) do
+	for _,vNode in pairs(DB.getChildren(nodeChar, "fttlist")) do
 		if StringManager.trim(DB.getValue(vNode, "name", ""):lower()) == sLowerFeat then
 			return true;
 		end
@@ -1063,8 +1063,8 @@ function addInfoDB(nodeChar, sClass, sRecord, nodeTargetList)
 		addClass(nodeChar, sClass, sRecord);
 	elseif sClass == "referenceclassability" then
 		addClassFeature(nodeChar, sClass, sRecord, nodeTargetList);
-	elseif sClass == "referencefeat" then
-		addFeat(nodeChar, sClass, sRecord, nodeTargetList);
+	elseif sClass == "referencefeat" or sClass == "referencetrait" or sClass == "referencetalent" then
+		addFeat(nodeChar, sRecord, nodeTargetList);
 	elseif sClass == "referencedeity" then
 		addDeity(nodeChar, sClass, sRecord);
 	else
@@ -2269,19 +2269,30 @@ function onFavoredClassBonusSelect(aSelection, rFavoredClassBonusSelect)
 	end
 end
 
-function addFeat(nodeChar, sClass, sRecord, nodeTargetList)
+function addFeat(nodeChar, sRecord, nodeTargetList)
 	local nodeSource = resolveRefNode(sRecord);
 	if not nodeSource then
 		return;
 	end
 	
 	if not nodeTargetList then
-		nodeTargetList = nodeChar.createChild("featlist");
+		nodeTargetList = nodeChar.createChild("fttlist");
 		if not nodeTargetList then
 			return;
 		end
 	end
+
+	local sRecordType;
+	if string.find(sRecord, "feat") then
+		sRecordType = "feat";
+	elseif string.find(sRecord, "trait") then
+		sRecordType = "trait";
+	elseif string.find(sRecord, "talent") then
+		sRecordType = "talent";
+	end
 	
 	local nodeEntry = nodeTargetList.createChild();
+	DB.setValue(nodeEntry, "recordtype", "string", sRecordType)
 	DB.copyNode(nodeSource, nodeEntry);
+	DB.setValue(nodeEntry, "locked", "number", 1);
 end

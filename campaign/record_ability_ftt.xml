@@ -6,7 +6,7 @@
 -->
 
 <root>
-	<windowclass name="referencetalent">
+	<windowclass name="ability_ftt">
 		<frame>referencepage</frame>
 		<placement>
 			<size width="400" height="350" />
@@ -21,12 +21,12 @@
 		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_ref_header name="header">
-				<class>ref_talent_header</class>
+				<class>ref_ftt_header</class>
 			</sub_ref_header>
 
 			<frame_ref_content />
 			<sub_ref_content name="content">
-				<class>ref_talent_stats</class>
+				<class>ref_ftt_stats</class>
 			</sub_ref_content>
 			<scrollbar_ref_content />
 			
@@ -35,7 +35,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="ref_talent_header">
+	<windowclass name="ref_ftt_header">
 		<margins control="0,0,0,7" />
 		<script file="common/scripts/record_header.lua" />
 		<sheetdata>
@@ -50,31 +50,25 @@
 		</sheetdata>
 	</windowclass>
 	
-	<windowclass name="ref_talent_stats">
-		<script>
-			function onInit()
-				update();
-			end
-			function update()
-				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				if bReadOnly then
-                    class_biglabel.setValue("[" .. class.getValue() .. "]");
-                    class_biglabel.setVisible(true);
-					
-					class.update(bReadOnly, true);
-				else
-                    class_biglabel.setVisible(false);
-					class.update(bReadOnly);
-				end
-				advance.update(bReadOnly);
-                prerequisites.update(bReadOnly);
-                benefit.update(bReadOnly);
-			end
-		</script>
-
+	<windowclass name="ref_ftt_stats">
+		<script file="campaign/scripts/ability_ftt.lua" />
 		<sheetdata>
 			<anchor_column name="columnanchor" />
 			
+			<label_column name="type_biglabel">
+				<anchored>
+					<top relation="relative" offset="7" />
+				</anchored>
+				<font>reference-b-large</font>
+			</label_column>
+
+			<label_column name="type_label">
+				<static textres="type" />
+			</label_column>
+			<string_columnh name="type">
+				<delaykeyupdate />
+			</string_columnh>
+
 			<label_column name="class_biglabel">
 				<anchored>
 					<top relation="relative" offset="7" />
@@ -88,22 +82,45 @@
 			<string_columnh name="class">
 				<delaykeyupdate />
 			</string_columnh>
-			
+
 			<label_column name="advance_label">
 				<static textres="talents_label_advance" />
 			</label_column>
 			<string_columnh name="advance" />
-
-            <label_column name="prerequisites_label">
+			
+			<string_columnh_full name="flavor">
+				<font>reference-i</font>
+				<empty textres="empty_flavor" />
+			</string_columnh_full>
+			
+			<label_column name="prerequisites_label">
 				<static textres="feat_label_prereq" />
 			</label_column>
 			<string_columnh name="prerequisites" />
+			
+			<header_column name="summary_label">
+				<static textres="feat_label_summary"/>
+				<center />
+			</header_column>
+			<string_columnh_full name="summary" />
 
 			<header_column name="benefit_label">
 				<static textres="feat_label_benefit"/>
 				<center />
 			</header_column>
 			<ft_columnh name="benefit" />
+
+			<header_column name="normal_label">
+				<static textres="feat_label_normal"/>
+				<center />
+			</header_column>
+			<ft_columnh name="normal" />
+
+			<header_column name="special_label">
+				<static textres="feat_label_special"/>
+				<center />
+			</header_column>
+			<ft_columnh name="special" />
 		</sheetdata>
 	</windowclass>
 </root>

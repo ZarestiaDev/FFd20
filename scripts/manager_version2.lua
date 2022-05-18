@@ -204,7 +204,7 @@ function migrateCharProf17(nodePC, nodeAbility, sPrefix)
 end
 
 function migrateChar17(nodePC)
-	for _,nodeRecord in pairs(DB.getChildren(nodePC, "featlist")) do
+	for _,nodeRecord in pairs(DB.getChildren(nodePC, "fttlist")) do
 		migrateCharFeat17(nodeRecord);
 	end
 	for _,nodeRecord in pairs(DB.getChildren(nodePC, "specialabilitylist")) do

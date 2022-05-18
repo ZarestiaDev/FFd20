@@ -15,7 +15,7 @@
 			function handleDrop(draginfo, nodeTargetList)
 				if draginfo.isType("shortcut") then
 					local sClass, sRecord = draginfo.getShortcutData();
-					if StringManager.contains({"referencefeat", "referenceclassability", "referenceracialtrait"}, sClass) then
+					if StringManager.contains({"referencefeat", "referenceclassability", "referenceracialtrait", "referencetrait", "referencetalent"}, sClass) then
 						CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord, nodeTargetList);
 						return true;
 					end
@@ -31,12 +31,12 @@
 			</frame_char>
 			<label_frametop>
 				<anchored to="featframe" />
-				<static textres="char_label_feats" />
+				<static textres="char_label_featstraitstalents" />
 			</label_frametop>
 			<list_charabilities name="feats">
 				<anchored to="featframe" />
-				<datasource>.featlist</datasource>
-				<class>char_ability_feat</class>
+				<datasource>.fttlist</datasource>
+				<class>char_ability_ftt</class>
 			</list_charabilities>
 			<scrollbar>
 				<anchored to="feats" />
@@ -137,7 +137,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="char_ability_feat">
+	<windowclass name="char_ability_ftt">
 		<margins control="0,0,0,2" />
 		<sheetdata>
 			<genericcontrol name="rightanchor">
@@ -157,7 +157,7 @@
 					<top offset="2" />
 					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
-				<class>referencefeat</class>
+				<class>ability_ftt</class>
 				<description field="name" />
 				<readonly />
 			</linkcontrol>

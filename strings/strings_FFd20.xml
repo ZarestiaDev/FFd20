@@ -307,7 +307,7 @@
 	<string name="char_message_missingskilldesc">Unable to find skill record with the correct name.</string>
 
 	<!-- Character - Abilities -->
-	<string name="char_label_feats">Feats</string>
+	<string name="char_label_featstraitstalents">Feats / Talents / Traits</string>
 	<string name="char_label_sa">Class Abilities</string>
 	<string name="char_label_proficiencies">Proficiency</string>
 	<string name="char_label_traits">Racial Traits</string>
@@ -579,8 +579,7 @@
 
 	<!-- Talents -->
 	<string name="talents_label_advance">Advance</string>
-	<string name="talents_label_prerequisites">Prerequisites</string>
-	<string name="talents_label_benefit">Benefit</string>
+	<string name="talents_label_class">Class</string>
 
 	<!-- Reference -->
 	<string name="ref_label_listcost">Cost</string>
