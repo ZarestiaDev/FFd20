@@ -161,10 +161,23 @@
 				<description field="name" />
 				<readonly />
 			</linkcontrol>
+			<label name="abilitytype">
+				<anchored width="40">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onFirstLayout()
+						local nodeRecord = window.getDatabaseNode();
+						local sRecordType = DB.getValue(nodeRecord, "recordtype", "");
+						setValue(StringManager.capitalize(sRecordType));
+					end
+				</script>
+			</label>
 			<string_textlistitem name="name">
 				<anchored>
 					<top offset="2" />
-					<left offset="5" />
+					<left parent="abilitytype" anchor="right" offset="10" />
 					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<multilinespacing>20</multilinespacing>
