@@ -498,6 +498,14 @@
 	<string name="npc_label_crew">Crew</string>
 	<string name="npc_label_decks">Decks</string>
 	<string name="npc_label_weapons">Weapons</string>
+
+	<string name="npc_label_absorb">Absorb</string>
+	<string name="npc_label_dr">DR</string>
+	<string name="npc_label_immunity">Immunity</string>
+	<string name="npc_label_resistance">Resistance</string>
+	<string name="npc_label_weakness">Weakness</string>
+	<string name="npc_label_strong">Strong</string>
+	<string name="npc_label_sr">SR</string>
 	
 	<!-- Encounters -->
 	<string name="enc_message_refreshxp_missingnpclink">[ERROR] Link for NPC '%s' is not working. Make sure the correct modules have been opened in the Library.</string>

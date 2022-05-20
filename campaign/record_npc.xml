@@ -43,6 +43,11 @@
 			<subwindow_record name="spells">
 				<class>npc_spells</class>
 			</subwindow_record>
+			<!-- Zarestia Add subsection in text for possible blue mage spell aqcuisition
+				- Add
+				- Name & Spell Link
+				- Knowledge Check & DC
+			-->
 			<ft_record name="text">
 				<anchored to="contentframe" position="over" />
 				<invisible />
@@ -198,6 +203,41 @@
 				<anchored to="willsave" />
 				<static textres="will_long" />
 			</label_fieldtop>
+
+			<label_column name="absorb_label">
+				<static textres="npc_label_absorb" />
+			</label_column>
+			<string_columnh name="absorb" />
+
+			<label_column name="dr_label">
+				<static textres="npc_label_dr" />
+			</label_column>
+			<string_columnh name="dr" />
+
+			<label_column name="immunity_label">
+				<static textres="npc_label_immunity" />
+			</label_column>
+			<string_columnh name="immunity" />
+
+			<label_column name="resistance_label">
+				<static textres="npc_label_resistance" />
+			</label_column>
+			<string_columnh name="resistance" />
+
+			<label_column name="weakness_label">
+				<static textres="npc_label_weakness" />
+			</label_column>
+			<string_columnh name="weakness" />
+
+			<label_column name="strong_label">
+				<static textres="npc_label_strong" />
+			</label_column>
+			<string_columnh name="strong" />
+
+			<label_column name="sr_label">
+				<static textres="npc_label_sr" />
+			</label_column>
+			<number_columnh name="sr" />
 
 			<label_column name="specialqualities_label">
 				<static textres="npc_label_sq" />

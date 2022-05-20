@@ -47,6 +47,13 @@ function update()
 	
 	updateControl("ac", bReadOnly);
 	updateControl("hd", bReadOnly);
+	updateControl("absorb", bReadOnly);
+	updateControl("dr", bReadOnly);
+	updateControl("immunity", bReadOnly);
+	updateControl("resistance", bReadOnly);
+	updateControl("weakness", bReadOnly);
+	updateControl("strong", bReadOnly);
+	updateControl("sr", bReadOnly);
 	updateControl("specialqualities", bReadOnly);
 	
 	updateControl("speed", bReadOnly);
