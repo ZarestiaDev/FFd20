@@ -141,26 +141,44 @@ creaturesubtype = {
 	"avian",
 	"azata",
 	"behemoth",
-	"bomb",
-	"boss",
+	["bomb"] = {
+		immune = "bleed, paralysis, poison, sleep",
+		fortification = 25
+	},
+	["boss"] = {
+		immune = "banish, daze, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, stunning, petrify"
+	},
 	"catfolk",
 	"centaur",
 	"chaotic",
-	"cie'th",
+	["cie'th"] = {
+		immune = "mind-affecting"
+	},
 	"clockwork",
 	"cold",
 	"colossus",
-	"daemon",
+	["daemon"] = {
+		immune = "earth, death, doom, disease, poison",
+		resistance = "earth 10, ice 10, fire 10"
+	},
 	"dark folk",
 	"deep one",
 	"demodand",
-	"demon",
-	"devil",
+	["demon"] = {
+		immune = "lighting, poison",
+		resistance = "earth 10, ice 10, fire 10"
+	},
+	["devil"] = {
+		immune = "fire, poison",
+		resistance = "earth 10, ice 10"
+	},
 	"div",
 	"dwarf",
 	"earth",
 	"element",
-	"elemental",
+	["elemental"] = {
+		immune = "bleed, paralysis, poison, sleep, stunning, critical, flanking, precision"
+	},
 	"elf",
 	"elvaan",
 	"evil",
@@ -194,7 +212,9 @@ creaturesubtype = {
 	"leshy",
 	"living construct",
 	"lightning",
-	"machina",
+	["machina"] = {
+		weakness = "lightning"
+	},
 	"merfolk",
 	"mini-boss",
 	"moogle",
@@ -217,8 +237,14 @@ creaturesubtype = {
 	"samsaran",
 	"sasquatch",
 	"shapechanger",
-	"sin eater",
-	"super boss",
+	["sin eater"] = {
+		immune = "death, doom, holy, mind-affecting, petrify",
+		resistance = "lighting 10, fire 10",
+		dr = "5 evil"
+	},
+	["super boss"] = {
+		immune = "banish, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, petrify"
+	},
 	"swarm",
 	"shadow",
 	"troop",
