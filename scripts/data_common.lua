@@ -101,17 +101,28 @@ creaturehalftypesubrace = "human";
 creaturetype = {
 	"aberration",
 	"animal",
-	"construct",
-	"dragon",
+	["construct"] = {
+		immune = "mind-affecting, bleed, blind, disease, death, doom, necromancy, paralysis, poison, sleep, stunning, fatigued, exhaustion, nonlethal"
+	},
+	["dragon"] = {
+		immune = "sleep, paralysis"
+	},
 	"fey",
 	"humanoid",
 	"magical beast",
 	"monstrous humanoid",
 	"multiple",
-	"ooze",
+	["ooze"] = {
+		immune = "mind-affecting, gaze, illusion, poison, sleep, paralysis, polymorph, stunning, critical, flanking, precision",
+		strong = "physical"
+	},
 	"outsider",
 	"plant",
-	"undead",
+	["undead"] = {
+		absorb = "shadow",
+		immune = "mind-affecting, bleed, disable, death, doom, disease, paralysis, poison, sleep, stunning, zombie, nonlethal, fatigued, exhaustion",
+		weakness = "holy"
+	},
 	"vermin",
 };
 creaturesubtype = {
