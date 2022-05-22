@@ -139,7 +139,7 @@
 			</buttonfield>
 
 			<genericcontrol name="partyskillframe">
-				<anchored to="leftanchor" height="20" width="295">
+				<anchored to="leftanchor" height="20" width="335">
 					<top />
 					<left anchor="right" relation="relative" offset="15" />
 				</anchored>
@@ -157,9 +157,10 @@
 				<gmvisibleonly />
 			</label>	
 			<combobox name="selectedskill">
-				<anchored to="skilllabel" position="righthigh" offset="10,0" width="120" height="20" />
+				<anchored to="skilllabel" position="righthigh" offset="10,0" width="160" height="20" />
 				<empty textres="ps_empty_skill" />
 				<gmvisibleonly />
+				<listmaxsize>7</listmaxsize>
 				<script>
 					function onInit()
 						super.onInit();
