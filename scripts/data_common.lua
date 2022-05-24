@@ -117,30 +117,57 @@ creaturetype = {
 		strong = "physical"
 	},
 	"outsider",
-	"plant",
+	["plant"] = {
+		immune = "mind-affecting, paralysis, poison, polymorph, sleep, stunning"
+	},
 	["undead"] = {
 		absorb = "shadow",
 		immune = "mind-affecting, bleed, disable, death, doom, disease, paralysis, poison, sleep, stunning, zombie, nonlethal, fatigued, exhaustion",
 		weakness = "holy"
 	},
-	"vermin",
+	["vermin"] = {
+		immune = "mind-affecting"
+	},
 };
 creaturesubtype = {
 	"adlet",
-	"aeon",
-	"agathion",
+	["aeon"] = {
+		immune = "ice, poison, critical",
+		resistance = "lightning 10, fire 10"
+	},
+	["agathion"] = {
+		immune = "lightning, petrify",
+		resistance = "ice 10"
+	},
 	"air",
 	"amalj'aa",
-	"angel",
+	["angel"] = {
+		immune = "earth, ice, petrify",
+		resistance = "lightning 10, fire 10"
+	},
 	"aquatic",
 	"archfiend",
-	"archon",
-	"asura",
+	["archon"] = {
+		immune = "lightning, petrify"
+	},
+	["asura"] = {
+		immune = "curse, disease, poison",
+		resistance = "earth 10, lightning 10"
+	},
 	"augmented",
-	"automaton",
+	["automaton"] = {
+		immune = "lightning",
+		resistance = "ice 10"
+	},
 	"avian",
-	"azata",
-	"behemoth",
+	["azata"] = {
+		immune = "lightning, petrify",
+		resistance = "ice 10, fire 10"
+	},
+	["behemoth"] = {
+		immune = "bleed, disease, fire, mind-affecting, paralysis, petrify, poison, polymorph",
+		dr = "15 epic"
+	},
 	["bomb"] = {
 		immune = "bleed, paralysis, poison, sleep",
 		fortification = 25
@@ -154,8 +181,13 @@ creaturesubtype = {
 	["cie'th"] = {
 		immune = "mind-affecting"
 	},
-	"clockwork",
-	"cold",
+	["clockwork"] = {
+		weakness = "lightning"
+	},
+	["cold"] = {
+		immune = "ice",
+		weakness = "fire"
+	},
 	"colossus",
 	["daemon"] = {
 		immune = "earth, death, doom, disease, poison",
@@ -163,16 +195,22 @@ creaturesubtype = {
 	},
 	"dark folk",
 	"deep one",
-	"demodand",
+	["demodand"] = {
+		immune = "earth, poison",
+		resistance = "fire 10, ice 10"
+	},
 	["demon"] = {
-		immune = "lighting, poison",
+		immune = "lightning, poison",
 		resistance = "earth 10, ice 10, fire 10"
 	},
 	["devil"] = {
 		immune = "fire, poison",
 		resistance = "earth 10, ice 10"
 	},
-	"div",
+	["div"] = {
+		immune = "fire, poison",
+		resistance = "earth 10, lightning 10"
+	},
 	"dwarf",
 	"earth",
 	"element",
@@ -184,7 +222,10 @@ creaturesubtype = {
 	"evil",
 	"extraplanar",
 	"familiar",
-	"fire",
+	["fire"] = {
+		immune = "fire",
+		weakness = "ice"
+	},
 	"giant",
 	"gnoll",
 	"gnome",
@@ -194,22 +235,34 @@ creaturesubtype = {
 	"great old one",
 	"halfling",
 	"herald",
-	"hive",
+	["hive"] = {
+		immune = "earth"
+	},
 	"holy",
 	"human",
 	"hume",
 	"ice",
 	"incorporeal",
 	"inevitable",
-	"kaiju",
-	"kami",
+	["kaiju"] = {
+		immune = "death, doom, disease, fear",
+		dr = "20 epic"
+	},
+	["kami"] = {
+		immune = "bleed, mind-affecting, petrify, polymorph",
+		resistance = "earth 10, lightning 10, fire 10"
+	},
 	"kasatha",
 	"kitsune",
 	"kobold",
 	"kojin",
-	"kyton",
+	["kyton"] = {
+		immune = "ice"
+	},
 	"lawful",
-	"leshy",
+	["leshy"] = {
+		immune = "lightning"
+	},
 	"living construct",
 	"lightning",
 	["machina"] = {
@@ -225,21 +278,32 @@ creaturesubtype = {
 	"non-elemental",
 	"oni",
 	"orc",
-	"protean",
+	["protean"] = {
+		immune = "earth",
+		resistance = "lightning 10"
+	},
 	"primal",
-	"psychopomp",
-	"qlippoth",
+	["psychopomp"] = {
+		immune = "death, doom, disease, poison",
+		resistance = "ice 10, lightning 10"
+	},
+	["qlippoth"] = {
+		immune = "ice, mind-affecting, poison",
+		resistance = "earth 10, lightning 10, fire 10"
+	},
 	"quadav",
 	"rakshasa",
 	"ratfolk",
 	"reptilian",
-	"robot",
+	["robot"] = {
+		weakness = "lightning"
+	},
 	"samsaran",
 	"sasquatch",
 	"shapechanger",
 	["sin eater"] = {
 		immune = "death, doom, holy, mind-affecting, petrify",
-		resistance = "lighting 10, fire 10",
+		resistance = "lightning 10, fire 10",
 		dr = "5 evil"
 	},
 	["super boss"] = {
@@ -255,7 +319,10 @@ creaturesubtype = {
 	"vishkanya",
 	"water",
 	"wayang",
-	"wild hunt",
+	["wild hunt"] = {
+		immune = "ice",
+		resistance = "lightning 10, fire 10"
+	},
 	"wind"
 };
 
@@ -286,7 +353,7 @@ conditions = {
 	"disabled",
 	"diseased",
 	"doom", -- -Death countdown
-	"drenched", -- more lighting damage, save vs. ice
+	"drenched", -- more lightning damage, save vs. ice
 	"energy drained", -- Negative Levels
 	"entangled",
 	"exhausted",
