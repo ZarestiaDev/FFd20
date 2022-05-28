@@ -501,7 +501,7 @@
 
 	<string name="npc_label_absorb">Absorb</string>
 	<string name="npc_label_dr">DR</string>
-	<string name="npc_label_immunity">Immunity</string>
+	<string name="npc_label_immune">Immune</string>
 	<string name="npc_label_resistance">Resistance</string>
 	<string name="npc_label_weakness">Weakness</string>
 	<string name="npc_label_strong">Strong</string>

@@ -102,10 +102,10 @@ creaturetype = {
 	"aberration",
 	"animal",
 	["construct"] = {
-		immune = "mind-affecting, bleed, blind, disease, death, doom, necromancy, paralysis, poison, sleep, stunning, fatigued, exhaustion, nonlethal"
+		immune = "bleed, blind, disease, death, doom, exhaustion, fatigued, mind-affecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
 	},
 	["dragon"] = {
-		immune = "sleep, paralysis"
+		immune = "paralysis, sleep"
 	},
 	"fey",
 	"humanoid",
@@ -113,7 +113,7 @@ creaturetype = {
 	"monstrous humanoid",
 	"multiple",
 	["ooze"] = {
-		immune = "mind-affecting, gaze, illusion, poison, sleep, paralysis, polymorph, stunning, critical, flanking, precision",
+		immune = "critical, flanking, gaze, illusion, mind-affecting, poison, sleep, paralysis, precision, polymorph, stunning",
 		strong = "physical"
 	},
 	"outsider",
@@ -122,7 +122,7 @@ creaturetype = {
 	},
 	["undead"] = {
 		absorb = "shadow",
-		immune = "mind-affecting, bleed, disable, death, doom, disease, paralysis, poison, sleep, stunning, zombie, nonlethal, fatigued, exhaustion",
+		immune = "bleed, death, disable, disease, doom, exhaustion, fatigued, mind-affecting, nonlethal, paralysis, poison, sleep, stunning, zombie",
 		weakness = "holy"
 	},
 	["vermin"] = {

@@ -15,6 +15,56 @@ function updateControl(sControl, bReadOnly, bForceHide)
 	return self[sControl].update(bReadOnly, bForceHide);
 end
 
+function insertTables(aTypeSubtype, nodeRecord)
+	for category,value in pairs(aTypeSubtype) do
+		local sExistingValue = DB.getValue(nodeRecord, category, "");
+
+		if sExistingValue == "" then
+			DB.setValue(nodeRecord, category, "string", value);
+		else
+			local aValues = {}
+			local aSplit = StringManager.split(value, " ", true);
+			local aSourceSplit = StringManager.split(sExistingValue, " ", true);
+
+			for _,v in pairs(aSplit) do
+				if not string.find(table.concat(aSourceSplit), v) then
+					table.insert(aValues, v);
+				end;
+			end
+
+			local sNewValues = table.concat(aValues);
+			if sNewValues ~= "" then
+				sNewValues = ", " .. string.gsub(sNewValues, ",", ", ");
+				DB.setValue(nodeRecord, category, "string", sExistingValue .. sNewValues);
+			end
+		end
+	end
+end
+
+function parseTypeAndSubtype()
+	local nodeRecord = getDatabaseNode();
+	local sRecord = DB.getValue(nodeRecord, "type", "");
+	local sCreatureType, sSubTypes = string.match(sRecord, "([^(]+) %(([^)]+)%)");
+	local aAllTypes = StringManager.split(sCreatureType, " ", true);
+	local sType = aAllTypes[#aAllTypes]:lower();
+	local aCreatureType = DataCommon.creaturetype[sType];
+
+	insertTables(aCreatureType, nodeRecord);
+
+	local aSubTypes = {};
+	if sSubTypes then
+		aSubTypes = StringManager.split(sSubTypes, ",", true);
+		for _,v in pairs(aSubTypes) do
+			local sSubType = v:lower();
+			local aCreatureSubType = DataCommon.creaturesubtype[sSubType];
+
+			if aCreatureSubType then
+				insertTables(aCreatureSubType, nodeRecord);
+			end
+		end
+	end
+end
+
 function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(nodeRecord);
@@ -49,7 +99,7 @@ function update()
 	updateControl("hd", bReadOnly);
 	updateControl("absorb", bReadOnly);
 	updateControl("dr", bReadOnly);
-	updateControl("immunity", bReadOnly);
+	updateControl("immune", bReadOnly);
 	updateControl("resistance", bReadOnly);
 	updateControl("weakness", bReadOnly);
 	updateControl("strong", bReadOnly);

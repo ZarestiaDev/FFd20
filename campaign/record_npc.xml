@@ -110,6 +110,11 @@
 			</label_column>
 			<string_columnh name="type">
 				<delaykeyupdate />
+				<script>
+					function onValueChanged()
+						window.parseTypeAndSubtype();
+					end
+				</script>
 			</string_columnh>
 			
 			<label_column name="alignment_label">
@@ -214,10 +219,10 @@
 			</label_column>
 			<string_columnh name="dr" />
 
-			<label_column name="immunity_label">
-				<static textres="npc_label_immunity" />
+			<label_column name="immune_label">
+				<static textres="npc_label_immune" />
 			</label_column>
-			<string_columnh name="immunity" />
+			<string_columnh name="immune" />
 
 			<label_column name="resistance_label">
 				<static textres="npc_label_resistance" />
