@@ -45,11 +45,16 @@ function parseTypeAndSubtype()
 	local nodeRecord = getDatabaseNode();
 	local sRecord = DB.getValue(nodeRecord, "type", "");
 	local sCreatureType, sSubTypes = string.match(sRecord, "([^(]+) %(([^)]+)%)");
-	local aAllTypes = StringManager.split(sCreatureType, " ", true);
-	local sType = aAllTypes[#aAllTypes]:lower();
-	local aCreatureType = DataCommon.creaturetype[sType];
-
-	insertTables(aCreatureType, nodeRecord);
+	
+	if sCreatureType then
+		local aAllTypes = StringManager.split(sCreatureType, " ", true);
+		local sType = aAllTypes[#aAllTypes]:lower();
+		local aCreatureType = DataCommon.creaturetype[sType];
+	
+		if aCreatureType then
+			insertTables(aCreatureType, nodeRecord);
+		end
+	end
 
 	local aSubTypes = {};
 	if sSubTypes then
