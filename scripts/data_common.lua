@@ -102,7 +102,7 @@ creaturetype = {
 	"aberration",
 	"animal",
 	["construct"] = {
-		immune = "bleed, blind, disease, death, doom, exhaustion, fatigued, mind-affecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
+		immune = "bleed, blind, disease, death, doom, exhaustion, fatigued, mindaffecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
 	},
 	["dragon"] = {
 		immune = "paralysis, sleep"
@@ -113,20 +113,20 @@ creaturetype = {
 	"monstrous humanoid",
 	"multiple",
 	["ooze"] = {
-		immune = "critical, flanking, gaze, illusion, mind-affecting, poison, sleep, paralysis, precision, polymorph, stunning",
+		immune = "critical, flanking, gaze, illusion, mindaffecting, poison, sleep, paralysis, precision, polymorph, stunning",
 		strong = "physical"
 	},
 	"outsider",
 	["plant"] = {
-		immune = "mind-affecting, paralysis, poison, polymorph, sleep, stunning"
+		immune = "mindaffecting, paralysis, poison, polymorph, sleep, stunning"
 	},
 	["undead"] = {
 		absorb = "shadow",
-		immune = "bleed, death, disable, disease, doom, exhaustion, fatigued, mind-affecting, nonlethal, paralysis, poison, sleep, stunning, zombie",
+		immune = "bleed, death, disable, disease, doom, exhaustion, fatigued, mindaffecting, nonlethal, paralysis, poison, sleep, stunning, zombie",
 		weakness = "holy"
 	},
 	["vermin"] = {
-		immune = "mind-affecting"
+		immune = "mindaffecting"
 	},
 };
 creaturesubtype = {
@@ -168,7 +168,7 @@ creaturesubtype = {
 		resistance = "ice 10, fire 10"
 	},
 	["behemoth"] = {
-		immune = "bleed, disease, fire, mind-affecting, paralysis, petrify, poison, polymorph",
+		immune = "bleed, disease, fire, mindaffecting, paralysis, petrify, poison, polymorph",
 		dr = "15 epic"
 	},
 	["bomb"] = {
@@ -182,7 +182,7 @@ creaturesubtype = {
 	"centaur",
 	"chaotic",
 	["cie'th"] = {
-		immune = "mind-affecting"
+		immune = "mindaffecting"
 	},
 	["clockwork"] = {
 		weakness = "lightning"
@@ -264,7 +264,7 @@ creaturesubtype = {
 		dr = "20 epic"
 	},
 	["kami"] = {
-		immune = "bleed, mind-affecting, petrify, polymorph",
+		immune = "bleed, mindaffecting, petrify, polymorph",
 		resistance = "earth 10, lightning 10, fire 10"
 	},
 	"kasatha",
@@ -307,7 +307,7 @@ creaturesubtype = {
 		resistance = "ice 10, lightning 10"
 	},
 	["qlippoth"] = {
-		immune = "ice, mind-affecting, poison",
+		immune = "ice, mindaffecting, poison",
 		resistance = "earth 10, lightning 10, fire 10"
 	},
 	"quadav",
@@ -324,7 +324,7 @@ creaturesubtype = {
 	"sasquatch",
 	"shapechanger",
 	["sin eater"] = {
-		immune = "death, doom, holy, mind-affecting, petrify",
+		immune = "death, doom, holy, mindaffecting, petrify",
 		resistance = "lightning 10, fire 10",
 		dr = "5 evil"
 	},
@@ -593,7 +593,7 @@ immunetypes = {
 	"sleep",
 	"fear",
 	"disease",
-	"mind-affecting",
+	"mindaffecting",
 };
 
 dmgtypes = {
