@@ -23,8 +23,8 @@ function insertTables(aTypeSubtype, nodeRecord)
 			DB.setValue(nodeRecord, category, "string", value);
 		else
 			local aValues = {}
-			local aSplit = StringManager.split(value, " ", true);
-			local aSourceSplit = StringManager.split(sExistingValue, " ", true);
+			local aSplit = StringManager.split(value, ",", true);
+			local aSourceSplit = StringManager.split(sExistingValue, ",", true);
 
 			for _,v in pairs(aSplit) do
 				if not string.find(table.concat(aSourceSplit), v) then
@@ -32,10 +32,9 @@ function insertTables(aTypeSubtype, nodeRecord)
 				end;
 			end
 
-			local sNewValues = table.concat(aValues);
-			if sNewValues ~= "" then
-				sNewValues = ", " .. string.gsub(sNewValues, ",", ", ");
-				DB.setValue(nodeRecord, category, "string", sExistingValue .. sNewValues);
+			if next(aValues) ~= nil then
+				local sNewValues = table.concat(aValues, ", ");
+				DB.setValue(nodeRecord, category, "string", sExistingValue .. ", " .. sNewValues);
 			end
 		end
 	end

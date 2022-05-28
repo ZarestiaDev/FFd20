@@ -172,8 +172,7 @@ creaturesubtype = {
 		dr = "15 epic"
 	},
 	["bomb"] = {
-		immune = "bleed, paralysis, poison, sleep",
-		fortification = 25
+		immune = "bleed, paralysis, poison, sleep"
 	},
 	["boss"] = {
 		immune = "banish, daze, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, stunning, petrify"
