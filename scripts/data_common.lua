@@ -159,7 +159,10 @@ creaturesubtype = {
 		immune = "lightning",
 		resistance = "ice 10"
 	},
-	"avian",
+	["avian"] = {
+		immune = "earth",
+		weakness = "wind"
+	},
 	["azata"] = {
 		immune = "lightning, petrify",
 		resistance = "ice 10, fire 10"
@@ -212,7 +215,11 @@ creaturesubtype = {
 		resistance = "earth 10, lightning 10"
 	},
 	"dwarf",
-	"earth",
+	["earth"] = {
+		immune = "earth",
+		strong = "lightning",
+		weakness = "wind"
+	},
 	"element",
 	["elemental"] = {
 		immune = "bleed, paralysis, poison, sleep, stunning, critical, flanking, precision"
@@ -224,7 +231,8 @@ creaturesubtype = {
 	"familiar",
 	["fire"] = {
 		immune = "fire",
-		weakness = "ice"
+		strong = "ice",
+		weakness = "water"
 	},
 	"giant",
 	"gnoll",
@@ -238,10 +246,17 @@ creaturesubtype = {
 	["hive"] = {
 		immune = "earth"
 	},
-	"holy",
+	["holy"] = {
+		immune = "holy",
+		weakness = "shadow"
+	},
 	"human",
 	"hume",
-	"ice",
+	["ice"] = {
+		immune = "ice",
+		strong = "wind",
+		weakness = "fire"
+	},
 	"incorporeal",
 	"inevitable",
 	["kaiju"] = {
@@ -264,7 +279,11 @@ creaturesubtype = {
 		immune = "lightning"
 	},
 	"living construct",
-	"lightning",
+	["lightning"] = {
+		immune = "lightning",
+		strong = "water",
+		weakness = "earth"
+	},
 	["machina"] = {
 		weakness = "lightning"
 	},
@@ -294,7 +313,10 @@ creaturesubtype = {
 	"quadav",
 	"rakshasa",
 	"ratfolk",
-	"reptilian",
+	["reptilian"] = {
+		immune = "water",
+		weakness = "ice"
+	},
 	["robot"] = {
 		weakness = "lightning"
 	},
@@ -310,20 +332,31 @@ creaturesubtype = {
 		immune = "banish, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, petrify"
 	},
 	"swarm",
-	"shadow",
+	["shadow"] = {
+		immune = "shadow",
+		weakness = "holy"
+	},
 	"troop",
 	"udaeus",
 	"unbreathing",
 	"vanara",
 	"vanu vanu",
 	"vishkanya",
-	"water",
+	["water"] = {
+		immune = "water",
+		strong = "fire",
+		weakness = "lightning"
+	},
 	"wayang",
 	["wild hunt"] = {
 		immune = "ice",
 		resistance = "lightning 10, fire 10"
 	},
-	"wind"
+	["wind"] = {
+		immune = "wind",
+		strong = "earth",
+		weakness = "ice"
+	}
 };
 
 -- Values supported in effect conditionals
