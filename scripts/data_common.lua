@@ -102,7 +102,7 @@ creaturetype = {
 	"aberration",
 	"animal",
 	["construct"] = {
-		immune = "bleed, blind, disease, death, doom, exhaustion, fatigued, mindaffecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
+		immune = "bleed, blind, disease, death, doom, exhausted, fatigued, mindaffecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
 	},
 	["dragon"] = {
 		immune = "paralysis, sleep"
@@ -122,7 +122,7 @@ creaturetype = {
 	},
 	["undead"] = {
 		absorb = "shadow",
-		immune = "bleed, death, disable, disease, doom, exhaustion, fatigued, mindaffecting, nonlethal, paralysis, poison, sleep, stunning, zombie",
+		immune = "bleed, death, disabled, disease, doom, exhausted, fatigued, mindaffecting, nonlethal, paralysis, poison, sleep, stunning, zombie",
 		weakness = "holy"
 	},
 	["vermin"] = {
@@ -175,7 +175,7 @@ creaturesubtype = {
 		immune = "bleed, paralysis, poison, sleep"
 	},
 	["boss"] = {
-		immune = "banish, daze, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, stunning, petrify"
+		immune = "banish, daze, gravity, frog, mini, disabled, death, doom, paralysis, sleep, stop, stunning, petrify"
 	},
 	"catfolk",
 	"centaur",
@@ -328,7 +328,7 @@ creaturesubtype = {
 		dr = "5 evil"
 	},
 	["super boss"] = {
-		immune = "banish, gravity, frog, mini, disable, death, doom, paralysis, sleep, stop, petrify"
+		immune = "banish, gravity, frog, mini, disabled, death, doom, paralysis, sleep, stop, petrify"
 	},
 	"swarm",
 	["shadow"] = {
@@ -591,13 +591,14 @@ immunetypes = {
 	"poison",		-- OTHER IMMUNITY TYPES
 	"sleep",
 	"paralysis",
-	"petrification",
+	"petrify",
 	"charm",
 	"sleep",
 	"fear",
 	"disease",
 	"mindaffecting",
-	"bleed",		-- SPECIAL DAMAGE TYPES
+	"bleed",
+	"death"		-- SPECIAL DAMAGE TYPES
 };
 
 dmgtypes = {

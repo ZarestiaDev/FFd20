@@ -58,7 +58,7 @@ function parseTypeAndSubtype()
 	DB.setValue(nodeRecord, "weakness", "string", "");
 	DB.setValue(nodeRecord, "strong", "string", "");
 	
-	if sCreatureType then
+	if sCreatureType ~= "" then
 		local aAllTypes = StringManager.split(sCreatureType, " ", true);
 		local sType = aAllTypes[#aAllTypes]:lower();
 		local aCreatureType = DataCommon.creaturetype[sType];

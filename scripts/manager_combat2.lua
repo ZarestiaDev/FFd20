@@ -228,62 +228,6 @@ function addNPC(sClass, nodeNPC, sName)
 				end
 			end
 			
-		-- IMMUNITY
-		elseif StringManager.isWord(aSQWords[i], "immunity") and StringManager.isWord(aSQWords[i+1], "to") then
-			i = i + 1;
-		
-			while aSQWords[i+1] do
-				if StringManager.isWord(aSQWords[i+1], "and") then
-					-- SKIP
-				elseif StringManager.isWord(aSQWords[i+2], "traits") then
-					-- SKIP+
-					i = i + 1;
-				-- Add exception for "magic immunity", which is also a damage type
-				elseif StringManager.isWord(aSQWords[i+1], "magic") then
-					table.insert(aEffects, "IMMUNE: spell");
-				elseif StringManager.isWord(aSQWords[i+1], "critical") and StringManager.isWord(aSQWords[i+2], "hits") then
-					table.insert(aEffects, "IMMUNE: critical");
-					i = i + 1;
-				elseif StringManager.isWord(aSQWords[i+1], "precision") and StringManager.isWord(aSQWords[i+2], "damage") then
-					table.insert(aEffects, "IMMUNE: precision");
-					i = i + 1;
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.immunetypes) then
-					table.insert(aEffects, "IMMUNE: " .. aSQWords[i+1]);
-					if StringManager.isWord(aSQWords[i+2], "effects") then
-						i = i + 1;
-					end
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.dmgtypes) and not StringManager.isWord(aSQWords[i+1], DataCommon.specialdmgtypes) then
-					table.insert(aEffects, "IMMUNE: " .. aSQWords[i+1]);
-				else
-					break;
-				end
-
-				i = i + 1;
-			end
-		elseif StringManager.isWord(aSQWords[i], "immune") then
-			while aSQWords[i+1] do
-				if StringManager.isWord(aSQWords[i+1], "and") then
-					--SKIP
-				elseif StringManager.isWord(aSQWords[i+2], "traits") then
-					-- SKIP+
-					i = i + 1;
-				-- Add exception for "magic immunity", which is also a damage type
-				elseif StringManager.isWord(aSQWords[i+1], "magic") then
-					table.insert(aEffects, "IMMUNE: spell");
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.immunetypes) then
-					table.insert(aEffects, "IMMUNE: " .. aSQWords[i+1]);
-					if StringManager.isWord(aSQWords[i+2], "effects") then
-						i = i + 1;
-					end
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.dmgtypes) then
-					table.insert(aEffects, "IMMUNE: " .. aSQWords[i+1]);
-				else
-					break;
-				end
-
-				i = i + 1;
-			end
-			
 		-- SPECIAL DEFENSES
 		elseif StringManager.isWord(aSQWords[i], "uncanny") and StringManager.isWord(aSQWords[i+1], "dodge") then
 			if StringManager.isWord(aSQWords[i-1], "improved") then
@@ -365,6 +309,24 @@ function addNPC(sClass, nodeNPC, sName)
 		end
 	end
 
+	-- DECODE IMMUNE
+	local sImmune = string.lower(DB.getValue(nodeNPC, "immune", ""));
+	local aImmuneWords = StringManager.parseWords(sImmune);
+	local l = 1;
+	while aImmuneWords[l] do
+		if StringManager.isWord(aImmuneWords[l], "magic") then
+			table.insert(aEffects, "IMMUNE: spell");
+		elseif StringManager.isWord(aImmuneWords[l], DataCommon.immunetypes) then
+			table.insert(aEffects, "IMMUNE: " .. aImmuneWords[l]);
+		elseif StringManager.isWord(aImmuneWords[l], DataCommon.dmgtypes) and not StringManager.isWord(aImmuneWords[l], DataCommon.specialdmgtypes) then
+			table.insert(aEffects, "IMMUNE: " .. aImmuneWords[l]);		
+		else
+			table.insert(aEffects, "IMMUNE: " .. aImmuneWords[l]);
+		end
+
+		l = l + 1;
+	end
+
 	-- DECODE RESISTANCE
 	local sResistance = string.lower(DB.getValue(nodeNPC, "resistance", ""));
 	local aResistanceWords = StringManager.parseWords(sResistance);
@@ -406,6 +368,13 @@ function addNPC(sClass, nodeNPC, sName)
 		end
 
 		o = o + 1;
+	end
+
+	-- DECODE SR
+	local nSR = DB.getValue(nodeNPC, "sr", 0);
+	if nSR > 0 then
+		local sSR = tostring(nSR);
+		table.insert(aEffects, "SR: " .. sSR);
 	end
 
 	-- FINISH ADDING EXTRA DAMAGE TYPES
