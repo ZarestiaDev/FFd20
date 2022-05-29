@@ -376,11 +376,8 @@ function addNPC(sClass, nodeNPC, sName)
 	local sDR = string.lower(DB.getValue(nodeNPC, "dr", ""));
 	local aDR = StringManager.parseWords(sDR);
 	local k = 1;
-	
-	-- 1 = DR Amount
-	-- 2 = DR Type
 
-	while aDR[k] do	
+	while aDR[k] do
 		if StringManager.isNumberString(aDR[k]) then
 			local sDRAmount = aDR[k];
 			local aDRTypes = {};
