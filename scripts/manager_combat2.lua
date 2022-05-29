@@ -153,7 +153,6 @@ function addNPC(sClass, nodeNPC, sName)
 	if not sCreatureType then
 		sCreatureType = sType;
 	end
-	local aTypes = StringManager.split(sCreatureType, " ", true);
 	local aSubTypes = {};
 	if sSubTypes then
 		aSubTypes = StringManager.split(sSubTypes, ",", true);
@@ -171,55 +170,6 @@ function addNPC(sClass, nodeNPC, sName)
 	if StringManager.contains(aSubTypes, "evil") then
 		table.insert(aAddDamageTypes, "evil");
 	end
-	
-	local bImmuneNonlethal = false;
-	local bImmuneCritical = false;
-	local bImmunePrecision = false;
-	local bElemental = false;
-	
-	if StringManager.contains(aTypes, "construct") then
-		table.insert(aEffects, "Construct traits");
-		bImmuneNonlethal = true;
-	elseif StringManager.contains(aTypes, "elemental") then
-		bElemental = true;
-	elseif StringManager.contains(aTypes, "ooze") then
-		table.insert(aEffects, "Ooze traits");
-		bImmuneCritical = true;
-		bImmunePrecision = true;
-	elseif StringManager.contains(aTypes, "undead") then
-		table.insert(aEffects, "Undead traits");
-		bImmuneNonlethal = true;
-	end
-		
-	if StringManager.contains(aSubTypes, "aeon") then
-		table.insert(aEffects, "Aeon traits");
-		bImmuneCritical = true;
-	end
-	if StringManager.contains(aSubTypes, "elemental") then
-		bElemental = true;
-	end
-	if StringManager.contains(aSubTypes, "incorporeal") then
-		bImmunePrecision = true;
-	end
-	if StringManager.contains(aSubTypes, "swarm") then
-		table.insert(aEffects, "Swarm traits");
-		bImmuneCritical = true;
-	end
-		
-	if bElemental then
-		table.insert(aEffects, "Elemental traits");
-		bImmuneCritical = true;
-		bImmunePrecision = true;
-	end
-	if bImmuneNonlethal then
-		table.insert(aEffects, "IMMUNE: nonlethal");
-	end
-	if bImmuneCritical then
-		table.insert(aEffects, "IMMUNE: critical");
-	end
-	if bImmunePrecision then
-		table.insert(aEffects, "IMMUNE: precision");
-	end
 
 	-- DECODE SPECIAL QUALITIES
 	local sSpecialQualities = string.lower(DB.getValue(nodeNPC, "specialqualities", ""));
@@ -235,53 +185,6 @@ function addNPC(sClass, nodeNPC, sName)
 				table.insert(aEffects, "DR: " .. sHardnessAmount .. " adamantine; RESIST: " .. sHardnessAmount .. " " .. table.concat(DataCommon.energytypes, "; RESIST: " .. sHardnessAmount .. " "));
 			else
 				table.insert(aEffects, "DR: " .. sHardnessAmount .. " all; RESIST: " .. sHardnessAmount .. " " .. table.concat(DataCommon.energytypes, "; RESIST: " .. sHardnessAmount .. " "));
-			end
-
-		-- DAMAGE REDUCTION
-		elseif StringManager.isWord(aSQWords[i], "dr") or (StringManager.isWord(aSQWords[i], "damage") and StringManager.isWord(aSQWords[i+1], "reduction")) then
-			if aSQWords[i] ~= "dr" then
-				i = i + 1;
-			end
-			
-			if StringManager.isNumberString(aSQWords[i+1]) then
-				i = i + 1;
-				local sDRAmount = aSQWords[i];
-				local aDRTypes = {};
-				
-				while aSQWords[i+1] do
-					if StringManager.isWord(aSQWords[i+1], { "and", "or" }) then
-						table.insert(aDRTypes, aSQWords[i+1]);
-					elseif StringManager.isWord(aSQWords[i+1], { "epic", "magic" }) then
-						table.insert(aDRTypes, aSQWords[i+1]);
-						table.insert(aAddDamageTypes, aSQWords[i+1]);
-					elseif StringManager.isWord(aSQWords[i+1], "cold") and StringManager.isWord(aSQWords[i+2], "iron") then
-						table.insert(aDRTypes, "cold iron");
-						i = i + 1;
-					elseif StringManager.isWord(aSQWords[i+1], DataCommon.dmgtypes) then
-						table.insert(aDRTypes, aSQWords[i+1]);
-					else
-						break;
-					end
-
-					i = i + 1;
-				end
-				
-				local sDREffect = "DR: " .. sDRAmount;
-				if #aDRTypes > 0 then
-					sDREffect = sDREffect .. " " .. table.concat(aDRTypes, " ");
-				end
-				table.insert(aEffects, sDREffect);
-			end
-
-		-- SPELL RESISTANCE
-		elseif StringManager.isWord(aSQWords[i], "sr") or (StringManager.isWord(aSQWords[i], "spell") and StringManager.isWord(aSQWords[i+1], "resistance")) then
-			if aSQWords[i] ~= "sr" then
-				i = i + 1;
-			end
-			
-			if StringManager.isNumberString(aSQWords[i+1]) then
-				i = i + 1;
-				DB.setValue(nodeEntry, "sr", "number", tonumber(aSQWords[i]) or 0);
 			end
 		
 		-- FAST HEALING
@@ -453,6 +356,62 @@ function addNPC(sClass, nodeNPC, sName)
 	
 		-- ITERATE SPECIAL QUALITIES DECODE
 		i = i + 1;
+	end
+
+	-- DECODE ABSORB
+	local sAbsorb = string.lower(DB.getValue(nodeNPC, "absorb", ""));
+	local aAbsorbWords = StringManager.parseWords(sAbsorb);
+	local j = 1;
+	while aAbsorbWords[j] do
+		if StringManager.isWord(aAbsorbWords[j], DataCommon.energytypes) then
+			table.insert(aEffects, "ABSORB: " .. aAbsorbWords[j]);
+		else
+			break;
+		end
+
+		j = j + 1;
+	end
+
+	-- DECODE DR
+	local sDR = string.lower(DB.getValue(nodeNPC, "dr", ""));
+	local aDR = StringManager.parseWords(sDR);
+	local k = 1;
+	
+	-- 1 = DR Amount
+	-- 2 = DR Type
+
+	while aDR[k] do	
+		if StringManager.isNumberString(aDR[k]) then
+			local sDRAmount = aDR[k];
+			local aDRTypes = {};
+
+ 			while aDR[k+1] do
+				if StringManager.isWord(aDR[k+1], { "and", "or" }) then
+					table.insert(aDRTypes, aDR[k+1]);
+				elseif StringManager.isWord(aDR[k+1], { "epic", "magic" }) then
+					table.insert(aDRTypes, aDR[k+1]);
+					table.insert(aAddDamageTypes, aDR[k+1]);
+				elseif StringManager.isWord(aDR[k+1], "cold") and StringManager.isWord(aDR[k+2], "iron") then
+					table.insert(aDRTypes, "cold iron");
+					k = k + 1;
+				elseif StringManager.isWord(aDR[k+1], DataCommon.dmgtypes) then
+					table.insert(aDRTypes, aDR[k+1]);
+				else
+					break;
+				end
+
+				k = k + 1;
+			end
+			
+			local sDREffect = "DR: " .. sDRAmount;
+			if #aDRTypes > 0 then
+				sDREffect = sDREffect .. " " .. table.concat(aDRTypes, " ");
+			end
+			table.insert(aEffects, sDREffect);
+			k = k + 1;
+		else
+			k = k + 1;
+		end
 	end
 
 	-- FINISH ADDING EXTRA DAMAGE TYPES
