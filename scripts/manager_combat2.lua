@@ -374,25 +374,24 @@ function addNPC(sClass, nodeNPC, sName)
 
 	-- DECODE DR
 	local sDR = string.lower(DB.getValue(nodeNPC, "dr", ""));
-	local aDR = StringManager.parseWords(sDR);
+	local aDRWords = StringManager.parseWords(sDR);
 	local k = 1;
-
-	while aDR[k] do
-		if StringManager.isNumberString(aDR[k]) then
-			local sDRAmount = aDR[k];
+	while aDRWords[k] do
+		if StringManager.isNumberString(aDRWords[k]) then
+			local sDRAmount = aDRWords[k];
 			local aDRTypes = {};
 
- 			while aDR[k+1] do
-				if StringManager.isWord(aDR[k+1], { "and", "or" }) then
-					table.insert(aDRTypes, aDR[k+1]);
-				elseif StringManager.isWord(aDR[k+1], { "epic", "magic" }) then
-					table.insert(aDRTypes, aDR[k+1]);
-					table.insert(aAddDamageTypes, aDR[k+1]);
-				elseif StringManager.isWord(aDR[k+1], "cold") and StringManager.isWord(aDR[k+2], "iron") then
+ 			while aDRWords[k+1] do
+				if StringManager.isWord(aDRWords[k+1], { "and", "or" }) then
+					table.insert(aDRTypes, aDRWords[k+1]);
+				elseif StringManager.isWord(aDRWords[k+1], { "epic", "magic" }) then
+					table.insert(aDRTypes, aDRWords[k+1]);
+					table.insert(aAddDamageTypes, aDRWords[k+1]);
+				elseif StringManager.isWord(aDRWords[k+1], "cold") and StringManager.isWord(aDRWords[k+2], "iron") then
 					table.insert(aDRTypes, "cold iron");
 					k = k + 1;
-				elseif StringManager.isWord(aDR[k+1], DataCommon.dmgtypes) then
-					table.insert(aDRTypes, aDR[k+1]);
+				elseif StringManager.isWord(aDRWords[k+1], DataCommon.dmgtypes) then
+					table.insert(aDRTypes, aDRWords[k+1]);
 				else
 					break;
 				end
@@ -409,6 +408,34 @@ function addNPC(sClass, nodeNPC, sName)
 		else
 			k = k + 1;
 		end
+	end
+
+	-- DECODE WEAKNESS
+	local sWeakness = string.lower(DB.getValue(nodeNPC, "weakness", ""));
+	local aWeaknessWords = StringManager.parseWords(sWeakness);
+	local n = 1;
+	while aWeaknessWords[n] do
+		if StringManager.isWord(aWeaknessWords[n], DataCommon.energytypes) then
+			table.insert(aEffects, "WEAK: " .. aWeaknessWords[n]);
+		else
+			break;
+		end
+
+		n = n + 1;
+	end
+
+	-- DECODE STRONG
+	local sStrong = string.lower(DB.getValue(nodeNPC, "strong", ""));
+	local aStrongWords = StringManager.parseWords(sStrong);
+	local o = 1;
+	while aStrongWords[o] do
+		if StringManager.isWord(aStrongWords[o], DataCommon.energytypes) then
+			table.insert(aEffects, "STRONG: " .. aStrongWords[o]);
+		else
+			break;
+		end
+
+		o = o + 1;
 	end
 
 	-- FINISH ADDING EXTRA DAMAGE TYPES
