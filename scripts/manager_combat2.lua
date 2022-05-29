@@ -228,51 +228,6 @@ function addNPC(sClass, nodeNPC, sName)
 				end
 			end
 			
-		-- RESISTANCE
-		elseif StringManager.isWord(aSQWords[i], "resistance") and StringManager.isWord(aSQWords[i+1], "to") then
-			i = i + 1;
-		
-			while aSQWords[i+1] do
-				if StringManager.isWord(aSQWords[i+1], "and") then
-					-- SKIP
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.energytypes) and StringManager.isNumberString(aSQWords[i+2]) then
-					i = i + 1;
-					table.insert(aEffects, "RESIST: " .. aSQWords[i+1] .. " " .. aSQWords[i]);
-				else
-					break;
-				end
-
-				i = i + 1;
-			end
-
-		elseif StringManager.isWord(aSQWords[i], "resist") then
-			while aSQWords[i+1] do
-				if StringManager.isWord(aSQWords[i+1], DataCommon.energytypes) and StringManager.isNumberString(aSQWords[i+2]) then
-					i = i + 1;
-					table.insert(aEffects, "RESIST: " .. aSQWords[i+1] .. " " .. aSQWords[i]);
-				elseif not StringManager.isWord(aSQWords[i+1], "and") then
-					break;
-				end
-				
-				i = i + 1;
-			end
-			
-		-- VULNERABILITY
-		elseif StringManager.isWord(aSQWords[i], {"vulnerability", "vulnerable"}) and StringManager.isWord(aSQWords[i+1], "to") then
-			i = i + 1;
-		
-			while aSQWords[i+1] do
-				if StringManager.isWord(aSQWords[i+1], "and") then
-					-- SKIP
-				elseif StringManager.isWord(aSQWords[i+1], DataCommon.energytypes) then
-					table.insert(aEffects, "VULN: " .. aSQWords[i+1]);
-				else
-					break;
-				end
-
-				i = i + 1;
-			end
-			
 		-- IMMUNITY
 		elseif StringManager.isWord(aSQWords[i], "immunity") and StringManager.isWord(aSQWords[i+1], "to") then
 			i = i + 1;
@@ -408,6 +363,21 @@ function addNPC(sClass, nodeNPC, sName)
 		else
 			k = k + 1;
 		end
+	end
+
+	-- DECODE RESISTANCE
+	local sResistance = string.lower(DB.getValue(nodeNPC, "resistance", ""));
+	local aResistanceWords = StringManager.parseWords(sResistance);
+	local m = 1;
+	while aResistanceWords[m] do
+		if StringManager.isWord(aResistanceWords[m], DataCommon.energytypes) and StringManager.isNumberString(aResistanceWords[m+1]) then
+			table.insert(aEffects, "RESIST: " .. aResistanceWords[m+1] .. " " .. aResistanceWords[m]);
+			m = m + 1;
+		else
+			break;
+		end
+
+		m = m + 1;
 	end
 
 	-- DECODE WEAKNESS
