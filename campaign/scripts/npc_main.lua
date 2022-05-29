@@ -43,7 +43,20 @@ end
 function parseTypeAndSubtype()
 	local nodeRecord = getDatabaseNode();
 	local sRecord = DB.getValue(nodeRecord, "type", "");
-	local sCreatureType, sSubTypes = string.match(sRecord, "([^(]+) %(([^)]+)%)");
+	local sCreatureType, sSubTypes;
+	if string.match(sRecord, "%(") then
+		sCreatureType, sSubTypes = string.match(sRecord, "([^(]+) %(([^)]+)%)");
+	else
+		sCreatureType = sRecord;
+	end
+
+	-- Cleanup DB nodes
+	DB.setValue(nodeRecord, "absorb", "string", "");
+	DB.setValue(nodeRecord, "dr", "string", "");
+	DB.setValue(nodeRecord, "immune", "string", "");
+	DB.setValue(nodeRecord, "resistance", "string", "");
+	DB.setValue(nodeRecord, "weakness", "string", "");
+	DB.setValue(nodeRecord, "strong", "string", "");
 	
 	if sCreatureType then
 		local aAllTypes = StringManager.split(sCreatureType, " ", true);
