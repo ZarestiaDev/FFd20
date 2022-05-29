@@ -154,10 +154,40 @@
 					<values>half</values>
 				</parameters>
 			</button_stringcycler>
-			<label_fieldtop>
+			<label_fieldtop name="onmissdamage_labeltop">
 				<anchored to="onmissdamage" />
 				<static textres="power_label_onmissdamage" />
 			</label_fieldtop>
+			<button_stringcycler name="school">
+				<anchored to="onmissdamage" position="righthigh" width="100" height="20" offset="20" />
+				<parameters>
+					<defaultlabelres>power_label_savetypenone</defaultlabelres>
+					<labelsres>power_label_chronomancy|power_label_dark|power_label_elemental|power_label_enfeebling|power_label_enhancing|power_label_healing|power_label_illusion|power_label_light|power_label_necromancy|power_label_nonelemental|power_label_summoning</labelsres>
+					<values>chronomancy|dark|elemental|enfeebling|enhancing|healing|illusion|light|necromancy|nonelemental|summoning</values>
+				</parameters>
+			</button_stringcycler>
+			<label_fieldtop name="school_labeltop">
+				<anchored to="school" />
+				<static textres="power_label_school" />
+			</label_fieldtop>
+			<button_stringcycler name="spelltype">
+				<anchored to="school" position="righthigh" width="60" height="20" offset="20" />
+				<parameters>
+					<defaultlabelres>dash</defaultlabelres>
+					<labelsres>power_label_spell|power_label_spellike</labelsres>
+					<values>spell|spelllike|none</values>
+				</parameters>
+			</button_stringcycler>
+			<label_fieldtop name="spelltype_labeltop">
+				<anchored to="spelltype" />
+				<static textres="type" />
+			</label_fieldtop>
+
+			<header_column name="header_tags">
+				<static textres="power_header_tags" />
+				<center />
+			</header_column>
+			<string_column_full name="tags" />
 		</sheetdata>
 	</windowclass>
 

@@ -534,9 +534,12 @@ targetableeffectcomps = {
 	"ATK",
 	"CMB",
 	"DMG",
+	"DMGS",
 	"IMMUNE",
 	"VULN",
-	"RESIST"
+	"RESIST",
+	"SR",
+	"SIMMUNE"
 };
 
 connectors = {
@@ -566,7 +569,8 @@ energytypes = {
 	"wind",
 	"force",  		-- OTHER SPELL DAMAGE TYPES
 	"positive",
-	"negative"
+	"negative",
+	"bleed",		-- SPECIAL DAMAGE TYPES
 };
 
 immunetypes = {
@@ -593,6 +597,7 @@ immunetypes = {
 	"fear",
 	"disease",
 	"mindaffecting",
+	"bleed",		-- SPECIAL DAMAGE TYPES
 };
 
 dmgtypes = {
@@ -627,6 +632,13 @@ dmgtypes = {
 	"spell",
 	"critical",
 	"precision",
+	"bleed",		-- SPECIAL DAMAGE TYPES
+	"immunebypass",
+	"vorpal",
+	"resistbypass",
+	"resisthalved",
+	"drbypass",
+	"bypass"
 };
 
 basicdmgtypes = {
@@ -655,6 +667,13 @@ specialdmgtypes = {
 	"spell",
 	"critical",
 	"precision",
+	"bleed",		-- SPECIAL DAMAGE TYPES
+	"immunebypass",
+	"vorpal",
+	"resistbypass",
+	"resisthalved",
+	"drbypass",
+	"bypass"
 };
 
 -- Bonus types supported in power descriptions
