@@ -885,13 +885,17 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	-- SETUP
 	local nDamageAdjust = 0;
 	local nNonlethal = 0;
-	local bVulnerable = false;
+	local nAbsorb = 0;
+	local bWeakness = false;
+	local bStrong = false;
 	local bResist = false;
-	local aWords;
+	local bAbsorb = false;
 	
 	-- GET THE DAMAGE ADJUSTMENT EFFECTS
 	local aImmune = EffectManagerFFd20.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource);
-	local aVuln = EffectManagerFFd20.getEffectsBonusByType(rTarget, "VULN", false, {}, rSource);
+	local aAbsorb = EffectManagerFFd20.getEffectsBonusByType(rTarget, "ABSORB", false, {}, rSource);
+	local aWeak = EffectManagerFFd20.getEffectsBonusByType(rTarget, "WEAK", false, {}, rSource);
+	local aStrong = EffectManagerFFd20.getEffectsBonusByType(rTarget, "STRONG", false, {}, rSource);
 	local aResist = EffectManagerFFd20.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource);
 	local aDR = EffectManagerFFd20.getEffectsByType(rTarget, "DR", {}, rSource);
 	
@@ -912,7 +916,6 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	end
 	
 	-- ITERATE THROUGH EACH DAMAGE TYPE ENTRY
-	local nVulnApplied = 0;
 	for k, v in pairs(rDamageOutput.aDamageTypes) do
 		-- GET THE INDIVIDUAL DAMAGE TYPES FOR THIS ENTRY (EXCLUDING UNTYPED DAMAGE TYPE)
 		local aSrcDmgClauseTypes = {};
@@ -927,7 +930,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 			end
 		end
 
-		-- HANDLE IMMUNITY, VULNERABILITY AND RESISTANCE
+		-- HANDLE IMMUNITY, ABSORB, WEAKNESS, STRONG AND RESISTANCE
 		local nLocalDamageAdjust = 0;
 		if #aSrcDmgClauseTypes > 0 then
 			-- CHECK FOR IMMUNITY (Must be immune to all damage types in damage source)
@@ -952,24 +955,47 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 				nLocalDamageAdjust = nLocalDamageAdjust - v;
 				bResist = true;
 			else
-				-- CHECK VULN TO DAMAGE TYPES
+				-- CHECK ABSORB TO DAMAGE TYPES
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
-					if not aImmune[sDmgType] and aVuln[sDmgType] and not aVuln[sDmgType].nApplied then
-						local nVulnAmount = 0;
-						if aVuln[sDmgType].mod == 0 then
-							nVulnAmount = math.floor(v / 2);
+					if aAbsorb[sDmgType] then
+						nLocalDamageAdjust = nLocalDamageAdjust - v;
+						bAbsorb = true;
+					end
+				end
+
+				-- CHECK WEAK TO DAMAGE TYPES
+				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
+					if not aImmune[sDmgType] and aWeak[sDmgType] and not aWeak[sDmgType].nApplied then
+						local nWeakAmount = 0;
+						if aWeak[sDmgType].mod == 0 then
+							nWeakAmount = math.floor(v / 2);
 						else
-							nVulnAmount = aVuln[sDmgType].mod;
+							nWeakAmount = aWeak[sDmgType].mod;
 						end
-						nLocalDamageAdjust = nLocalDamageAdjust + nVulnAmount;
-						aVuln[sDmgType].nApplied = nVulnAmount;
-						bVulnerable = true;
+						nLocalDamageAdjust = nLocalDamageAdjust + nWeakAmount;
+						aWeak[sDmgType].nApplied = nWeakAmount;
+						bWeakness = true;
 					end
 				end
 				
+				-- CHECK STRONG TO DAMAGE TYPES
+				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
+					if not aImmune[sDmgType] and aStrong[sDmgType] and not aStrong[sDmgType].nApplied then
+						local nStrongAmount = 0;
+						if aStrong[sDmgType].mod == 0 then
+							nStrongAmount = math.floor(v / 2);
+						else
+							nStrongAmount = aStrong[sDmgType].mod;
+						end
+						nLocalDamageAdjust = nLocalDamageAdjust - nStrongAmount;
+						aStrong[sDmgType].nApplied = nStrongAmount;
+						bStrong = true;
+					end
+				end
+
 				-- CHECK RESISTANCE TO DAMAGE TYPE
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
-					if aResist[sDmgType] then
+					if aResist[sDmgType] and not aAbsorb[sDmgType] then
 						local nApplied = aResist[sDmgType].nApplied or 0;
 						if nApplied < aResist[sDmgType].mod then
 							local nChange = math.min((aResist[sDmgType].mod - nApplied), v + nLocalDamageAdjust);
@@ -1050,7 +1076,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 		local nNonlethalAdjust = 0;
 		if (v + nLocalDamageAdjust) > 0 then
 			local bNonlethal = false;
-			for keyDmgType, sDmgType in pairs(aSrcDmgClauseTypes) do
+			for _,sDmgType in pairs(aSrcDmgClauseTypes) do
 				if sDmgType == "nonlethal" then
 					bNonlethal = true;
 					break;
@@ -1067,7 +1093,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	end
 
 	-- RESULTS
-	return nDamageAdjust, nNonlethal, bVulnerable, bResist;
+	return nDamageAdjust, nNonlethal, bWeakness, bStrong, bResist, bAbsorb;
 end
 
 -- Collapse damage clauses by damage type (in the original order, if possible)
@@ -1216,7 +1242,9 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	local nWounds = 0;
 
 	local bRemoveTarget = false;
-	
+	local rRollHeal = {};
+	local rRollDamage = {};
+
 	-- Get health fields
 	local sTargetNodeType, nodeTarget = ActorManager.getTypeAndNode(rTarget);
 	if not nodeTarget then
@@ -1341,7 +1369,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		end
 		
 		-- Apply damage type adjustments
-		local nDamageAdjust, nNonlethalDmgAmount, bVulnerable, bResist = getDamageAdjust(rSource, rTarget, rDamageOutput.nVal, rDamageOutput);
+		local nDamageAdjust, nNonlethalDmgAmount, bWeakness, bStrong, bResist, bAbsorb = getDamageAdjust(rSource, rTarget, rDamageOutput.nVal, rDamageOutput);
 		local nAdjustedDamage = rDamageOutput.nVal + nDamageAdjust;
 		if nAdjustedDamage < 0 then
 			nAdjustedDamage = 0;
@@ -1353,8 +1381,14 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 				table.insert(rDamageOutput.tNotifications, "[PARTIALLY RESISTED]");
 			end
 		end
-		if bVulnerable then
-			table.insert(rDamageOutput.tNotifications, "[VULNERABLE]");
+		if bWeakness then
+			table.insert(rDamageOutput.tNotifications, "[WEAKNESS]");
+		end
+		if bStrong then
+			table.insert(rDamageOutput.tNotifications, "[STRONG]");
+		end
+		if bAbsorb then
+			table.insert(rDamageOutput.tNotifications, "[ABSORBED]");
 		end
 		
 		-- Reduce damage by temporary hit points
@@ -1362,11 +1396,11 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 			if nAdjustedDamage > nTempHP then
 				nAdjustedDamage = nAdjustedDamage - nTempHP;
 				nTempHP = 0;
-				table.insert(rDamageOutput.tNotifications, "[PARTIALLY ABSORBED]");
+				table.insert(rDamageOutput.tNotifications, "[PARTIALLY TEMP HP ABSORBED]");
 			else
 				nTempHP = nTempHP - nAdjustedDamage;
 				nAdjustedDamage = 0;
-				table.insert(rDamageOutput.tNotifications, "[ABSORBED]");
+				table.insert(rDamageOutput.tNotifications, "[TEMP HP ABSORBED]");
 			end
 		end
 

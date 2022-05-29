@@ -516,7 +516,7 @@ othercomps = {
 	["NLVL"] = "cond_penalty",
 	["IMMUNE"] = "cond_immune",
 	["RESIST"] = "cond_resistance",
-	["VULN"] = "cond_vulnerable",
+	["WEAK"] = "cond_weakness",
 	["REGEN"] = "cond_regeneration",
 	["FHEAL"] = "cond_regeneration",
 	["DMGO"] = "cond_bleed",
@@ -536,7 +536,7 @@ targetableeffectcomps = {
 	"DMG",
 	"DMGS",
 	"IMMUNE",
-	"VULN",
+	"WEAKNESS",
 	"RESIST",
 	"SR",
 	"SIMMUNE"
