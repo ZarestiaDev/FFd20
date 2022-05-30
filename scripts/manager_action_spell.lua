@@ -270,7 +270,9 @@ end
 
 function onCastCLC(rSource, rTarget, rRoll)
 	if rTarget then
-		local nSR = ActorManagerFFd20.getSpellDefense(rTarget);
+		local nSRMod = EffectManagerFFd20.getEffectsBonus(rTarget, {"SR"}, true, nil, rSource, false);
+
+		local nSR = math.max(ActorManagerFFd20.getSpellDefense(rTarget), nSRMod);
 		if nSR > 0 then
 			if not string.match(rRoll.sDesc, "%[SR NOT ALLOWED%]") then
 				local rRoll = { sType = "clc", sDesc = rRoll.sDesc, aDice = {"d20"}, nMod = rRoll.nMod, bRemoveOnMiss = rRoll.bRemoveOnMiss };
@@ -303,10 +305,11 @@ function onCLC(rSource, rTarget, rRoll)
 	local bSRAllowed = not string.match(rRoll.sDesc, "%[SR NOT ALLOWED%]");
 	
 	if rTarget then
+		local nSRMod = EffectManagerFFd20.getEffectsBonus(rTarget, {"SR"}, true, nil, rSource, false);
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
 		
 		if bSRAllowed then
-			local nSR = ActorManagerFFd20.getSpellDefense(rTarget);
+			local nSR = math.max(ActorManagerFFd20.getSpellDefense(rTarget), nSRMod);
 			if nSR > 0 then
 				if nTotal >= nSR then
 					rMessage.text = rMessage.text .. " [SUCCESS]";
