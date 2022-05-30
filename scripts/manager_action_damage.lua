@@ -958,6 +958,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 				-- CHECK ABSORB TO DAMAGE TYPES
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
 					if aAbsorb[sDmgType] then
+						nAbsorb = v;
 						nLocalDamageAdjust = nLocalDamageAdjust - v;
 						bAbsorb = true;
 					end
@@ -1093,7 +1094,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 	end
 
 	-- RESULTS
-	return nDamageAdjust, nNonlethal, bWeakness, bStrong, bResist, bAbsorb;
+	return nDamageAdjust, nNonlethal, bWeakness, bStrong, bResist, bAbsorb, nAbsorb;
 end
 
 -- Collapse damage clauses by damage type (in the original order, if possible)
@@ -1242,8 +1243,8 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	local nWounds = 0;
 
 	local bRemoveTarget = false;
-	local rRollHeal = {};
-	local rRollDamage = {};
+
+	local rRollAbsorb = {};
 
 	-- Get health fields
 	local sTargetNodeType, nodeTarget = ActorManager.getTypeAndNode(rTarget);
@@ -1369,7 +1370,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		end
 		
 		-- Apply damage type adjustments
-		local nDamageAdjust, nNonlethalDmgAmount, bWeakness, bStrong, bResist, bAbsorb = getDamageAdjust(rSource, rTarget, rDamageOutput.nVal, rDamageOutput);
+		local nDamageAdjust, nNonlethalDmgAmount, bWeakness, bStrong, bResist, bAbsorb, nAbsorb = getDamageAdjust(rSource, rTarget, rDamageOutput.nVal, rDamageOutput);
 		local nAdjustedDamage = rDamageOutput.nVal + nDamageAdjust;
 		if nAdjustedDamage < 0 then
 			nAdjustedDamage = 0;
@@ -1472,6 +1473,16 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 		else
 			rDamageOutput.sVal = "0";
 		end
+
+		-- Absorb
+		if nAbsorb > 0 then
+			rRollAbsorb.sType = "heal";
+			rRollAbsorb.aDice = {nil, {resukt=0}};
+			rRollAbsorb.nMod = nAbsorb;
+			rRollAbsorb.sDesc = "[HEAL] [ABSORB] Absorbed Damage";
+			rRollAbsorb.clauses = { dice = { }, dmgtype = "", modifier = nAbsorb };
+			ActionHeal.encodeHealClauses(rRollAbsorb);
+		end
 	end
 
 	-- Set health fields
@@ -1529,6 +1540,10 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	
 	-- Output results
 	ActionDamage.messageDamage(rSource, rTarget, bSecret, rDamageOutput.sTypeOutput, sDamage, rDamageOutput.sVal, table.concat(rDamageOutput.tNotifications, " "));
+
+	if rRollAbsorb.nMod and ( rRollAbsorb.nMod > 0 ) then
+		ActionDamage.onDamage(rSource, rTarget, rRollAbsorb);
+	end
 
 	-- Remove target after applying damage
 	if bRemoveTarget and rSource and rTarget then
