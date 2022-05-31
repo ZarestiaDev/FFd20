@@ -1067,6 +1067,8 @@ function addInfoDB(nodeChar, sClass, sRecord, nodeTargetList)
 		addFeat(nodeChar, sRecord, nodeTargetList);
 	elseif sClass == "referencedeity" then
 		addDeity(nodeChar, sClass, sRecord);
+	elseif sClass == "spelldesc" then
+		addSpell(nodeChar, sClass, sRecord, nodeTargetList);
 	else
 		return false;
 	end
@@ -1132,6 +1134,25 @@ function getClassNode(nodeChar, sClassName)
 		end
 	end
 	return nil;
+end
+
+function addSpell(nodeChar, sClass, sRecord, nodeTargetList)
+	local nodeSource = resolveRefNode(sRecord);
+	if not nodeSource then
+		return false;
+	end
+
+	if not nodeTargetList then
+		nodeTargetList = nodeChar.createChild("blulist");
+		if not nodeTargetList then
+			return false;
+		end
+	end
+	local nodeEntry = nodeTargetList.createChild();
+	DB.copyNode(nodeSource, nodeEntry);
+	DB.setValue(nodeEntry, "source", "string", DB.getValue(nodeSource, "...name", ""));
+	DB.setValue(nodeEntry, "locked", "number", 1);
+	return true;
 end
 
 function addDeity(nodeChar, sClass, sRecord)

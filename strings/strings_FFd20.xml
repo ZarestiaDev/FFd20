@@ -506,6 +506,10 @@
 	<string name="npc_label_weakness">Weakness</string>
 	<string name="npc_label_strong">Strong</string>
 	<string name="npc_label_sr">SR</string>
+
+	<string name="npc_header_blu">Bluemage Spells</string>
+	<string name="npc_label_knowledge">Knowledge DC</string>
+	<string name="npc_label_spell">Spell</string>
 	
 	<!-- Encounters -->
 	<string name="enc_message_refreshxp_missingnpclink">[ERROR] Link for NPC '%s' is not working. Make sure the correct modules have been opened in the Library.</string>

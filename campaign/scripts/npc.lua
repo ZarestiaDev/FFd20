@@ -26,6 +26,8 @@ function onLockChanged()
 end
 
 function StateChanged()
+	local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+
 	if header.subwindow then
 		header.subwindow.update();
 	end
@@ -41,11 +43,12 @@ function StateChanged()
 	if spells.subwindow then
 		spells.subwindow.update();
 	end
-
-	local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+	if other.subwindow then
+		other.subwindow.text.setReadOnly(bReadOnly);
+		other.subwindow.blu.subwindow.blulist.setReadOnly(bReadOnly)
+	end
 	
 	npctype.setReadOnly(bReadOnly);
-	text.setReadOnly(bReadOnly);
 end
 
 function onIDChanged()
