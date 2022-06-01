@@ -545,6 +545,15 @@
 
 	<string name="spell_error_dropclassmissing">Unable to determine class for moved spell, please drop within a class.</string>
 	<string name="spell_error_dropclasslevelmissing">Unable to determine class or level for new spell, please drop within a class level.</string>
+
+	<string name="actionlist_actions_effects">Actions / Effects</string>
+	<string name="actionlist_add">Add</string>
+	<string name="actionlist_add_cast">Cast</string>
+	<string name="actionlist_add_damage">Damage</string>
+	<string name="actionlist_add_heal">Heal</string>
+	<string name="actionlist_add_effect">Effect</string>
+	<string name="actionlist_clear">Clear</string>
+	<string name="actionlist_parse">Parse</string>
 	
 	<!-- Feats -->
 	<string name="feat_grouped_label_prereq">Prerequisites</string>

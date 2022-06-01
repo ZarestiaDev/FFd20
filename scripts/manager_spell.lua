@@ -509,6 +509,79 @@ function parseSpell(nodeSpell)
 		end
 	end
 	
+	-- Always add an effect for tracking if a duration is specified
+	local sSpellDur = DB.getValue(nodeSpell, "duration", "");
+	local aDurWords = StringManager.parseWords(sSpellDur);
+
+	i = 1;
+	if StringManager.isNumberString(aDurWords[i]) then
+		local nSpellDur = tonumber(aDurWords[i]);
+
+		i = i + 1;
+		if StringManager.isWord(aDurWords[i], { "round", "rounds", "min", "minute", "minutes", "hour", "hours", "day", "days"}) then
+			nodeActions = nodeSpell.createChild("actions");
+			if not nodeActions then
+				return nil;
+			end
+			
+			local nodeAction = nodeActions.createChild();
+			if not nodeAction then
+				return nil;
+			end
+			
+			DB.setValue(nodeAction, "type", "string", "effect");
+
+			local sEffect = DB.getValue(nodeSpell, "effect", ""):lower();
+			local sRange = DB.getValue(nodeSpell, "range", ""):lower();
+			local sName = DB.getValue(nodeSpell, "name", "");
+			
+			DB.setValue(nodeAction, "label", "string", sName);
+			
+			if sEffect:match("personal") or sRange:match("personal") then
+				DB.setValue(nodeAction, "targeting", "string", "self");
+			end			
+
+			local sUnits = nil;
+			if StringManager.isWord(aDurWords[i], { "round", "rounds" }) then
+				sUnits = "";
+			elseif StringManager.isWord(aDurWords[i], { "min", "minute", "minutes" }) then
+				sUnits = "minute";
+			elseif StringManager.isWord(aDurWords[i], { "hour", "hours" }) then
+				sUnits = "hour";
+			elseif StringManager.isWord(aDurWords[i], { "day", "days" }) then
+				sUnits = "day";
+			end
+
+			if sUnits then
+				i = i + 1;
+				local sStat = "cl";
+
+				if StringManager.isWord(aDurWords[i], "per") then
+					i = i + 1;
+					if StringManager.isWord(aDurWords[i], "two") then
+						i = i + 1;
+						sStat = "oddcl";
+					elseif StringManager.isWord(aDurWords[i], "three") then
+						i = i + 1;
+					end
+				end
+
+				local bUseCL = false;
+				if StringManager.isWord(aDurWords[i], { "level", "levels" }) then
+					bUseCL = true;
+				end
+
+				if bUseCL then
+					DB.setValue(nodeAction, "durmult", "number", nSpellDur);
+					DB.setValue(nodeAction, "durstat", "string", sStat);
+				else
+					DB.setValue(nodeAction, "durmod", "number", nSpellDur);
+				end
+				DB.setValue(nodeAction, "durunit", "string", sUnits);
+			end
+		end
+	end
+
 	-- Add the Effects
 	for i = 1, #aFinalEffects do
 		local rRoll = aFinalEffects[i];
@@ -526,57 +599,6 @@ function parseSpell(nodeSpell)
 				DB.setValue(nodeAction, "durmult", "number", rRoll.nMod);
 			else
 				DB.setValue(nodeAction, "durmod", "number", rRoll.nMod);
-			end
-
-		-- Otherwise, use the spell duration (if available), or permanent (if not)
-		else
-			local sSpellDur = DB.getValue(nodeAction, "...duration", "");
-			local aDurWords = StringManager.parseWords(sSpellDur);
-			
-			i = 1;
-			if StringManager.isNumberString(aDurWords[i]) then
-				local nSpellDur = tonumber(aDurWords[i]);
-				i = i + 1;
-				
-				local sUnits = nil;
-				if StringManager.isWord(aDurWords[i], { "round", "rounds" }) then
-					sUnits = "";
-				elseif StringManager.isWord(aDurWords[i], { "min", "minute", "minutes" }) then
-					sUnits = "minute";
-				elseif StringManager.isWord(aDurWords[i], { "hour", "hours" }) then
-					sUnits = "hour";
-				elseif StringManager.isWord(aDurWords[i], { "day", "days" }) then
-					sUnits = "day";
-				end
-				
-				if sUnits then
-					i = i + 1;
-					
-					local nMult = 1;
-					if StringManager.isWord(aDurWords[i], "per") then
-						i = i + 1;
-						if StringManager.isWord(aDurWords[i], "two") then
-							nMult = 0.5;
-							i = i + 1;
-						elseif StringManager.isWord(aDurWords[i], "three") then
-							nMult = 0.34;
-							i = i + 1;
-						end
-					end
-					
-					local bUseCL = false;
-					if StringManager.isWord(aDurWords[i], { "level", "levels" }) then
-						bUseCL = true;
-					end
-					
-					if bUseCL then
-						local nFinalDur = math.max(math.floor(nSpellDur * nMult), nMult);
-						DB.setValue(nodeAction, "durmult", "number", nFinalDur);
-					else
-						DB.setValue(nodeAction, "durmod", "number", nSpellDur);
-					end
-					DB.setValue(nodeAction, "durunit", "string", sUnits);
-				end
 			end
 		end
 	end
@@ -814,13 +836,17 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 end
 
 function getActionAbilityBonus(nodeAction)
-	local nodeSpellClass = nodeAction.getChild(".......");
-	local nodeCreature = nodeSpellClass.getChild("...");
-
-	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
-
-	local rActor = ActorManager.resolveActor(nodeCreature);
-	return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
+	if string.find(nodeAction.getNodeName(), "charsheet") then
+		local nodeSpellClass = nodeAction.getChild(".......");
+		local nodeCreature = nodeSpellClass.getChild("...");
+	
+		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
+	
+		local rActor = ActorManager.resolveActor(nodeCreature);
+		return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
+	else
+		return 0;
+	end
 end
 
 function getActionCLC(nodeAction)

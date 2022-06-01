@@ -126,7 +126,7 @@
 		<buttoncontrol>
 			<anchored width="20" height="20">
 				<top />
-				<right parent="" offset="-5" />
+				<right parent="" offset="-20" />
 			</anchored>
 			<state icon="button_details" pressed="button_details_down" />
 			<script>
