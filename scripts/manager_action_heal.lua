@@ -8,11 +8,12 @@ function onInit()
 	ActionsManager.registerResultHandler("heal", onHeal);
 end
 
-function getRoll(rActor, rAction)
+function getRoll(rActor, rAction, tag)
 	local rRoll = {};
 	rRoll.sType = "heal";
 	rRoll.aDice = {};
 	rRoll.nMod = 0;
+	rRoll.tags = tag;
 	
 	rRoll.sDesc = "[HEAL";
 	if rAction.order and rAction.order > 1 then

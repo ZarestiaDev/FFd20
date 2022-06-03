@@ -36,13 +36,15 @@ function handleApplyDamage(msgOOB)
 	ActionDamage.applyDamage(rSource, rTarget, (tonumber(msgOOB.nSecret) == 1), msgOOB.sRollType, msgOOB.sDamage, nTotal);
 end
 
-function notifyApplyDamage(rSource, rTarget, bSecret, sRollType, sDesc, nTotal)
+function notifyApplyDamage(rSource, rTarget, bSecret, sRollType, sDesc, nTotal, sAttackFilter, tag)
 	if not rTarget then
 		return;
 	end
 
 	local msgOOB = {};
 	msgOOB.type = OOB_MSGTYPE_APPLYDMG;
+	msgOOB.sFilter = sAttackFilter;
+	msgOOB.tags = tag;
 	
 	if bSecret then
 		msgOOB.nSecret = 1;
@@ -66,11 +68,12 @@ function performStabilizationRoll(rActor)
 	ActionsManager.performAction(nil, rActor, rRoll);
 end
 
-function getRoll(rActor, rAction)
+function getRoll(rActor, rAction, tag)
 	local rRoll = {};
 	rRoll.sType = "damage";
 	rRoll.aDice = {};
 	rRoll.nMod = 0;
+	rRoll.tags = tag;
 	
 	rRoll.sDesc = "[DAMAGE";
 	if rAction.order and rAction.order > 1 then
@@ -228,8 +231,19 @@ function onDamage(rSource, rTarget, rRoll)
 		Comm.deliverChatMessage(rMessage);
 	end
 
+	local aAttackFilter = "";
+	if rRoll.range == "R" then
+		aAttackFilter = "ranged"
+	elseif rRoll.range == "M" then
+		aAttackFilter = "melee";
+	end
+	local tag = nil;
+	if rRoll.tags then
+		tag = rRoll.tags;
+	end
+
 	-- Apply damage to the PC or CT entry referenced
-	ActionDamage.notifyApplyDamage(rSource, rTarget, rRoll.bTower, rRoll.sType, rMessage.text, nTotal);
+	ActionDamage.notifyApplyDamage(rSource, rTarget, rRoll.bTower, rRoll.sType, rMessage.text, nTotal, aAttackFilter, tag);
 end
 
 function onStabilization(rSource, rTarget, rRoll)

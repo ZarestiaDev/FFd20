@@ -571,6 +571,7 @@ energytypes = {
 	"positive",
 	"negative",
 	"bleed",		-- SPECIAL DAMAGE TYPES
+	"non-elemental"
 };
 
 immunetypes = {
@@ -598,7 +599,8 @@ immunetypes = {
 	"disease",
 	"mindaffecting",
 	"bleed",
-	"death"		-- SPECIAL DAMAGE TYPES
+	"death",		-- SPECIAL DAMAGE TYPES
+	"non-elemental"
 };
 
 dmgtypes = {
@@ -639,7 +641,8 @@ dmgtypes = {
 	"resistbypass",
 	"resisthalved",
 	"drbypass",
-	"bypass"
+	"bypass",
+	"non-elemental"
 };
 
 basicdmgtypes = {
@@ -661,6 +664,7 @@ basicdmgtypes = {
 	"bludgeoning", 	-- WEAPON PROPERTY DAMAGE TYPES
 	"piercing",
 	"slashing",
+	"non-elemental"
 };
 
 specialdmgtypes = {

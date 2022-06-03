@@ -33,12 +33,12 @@ function handleApplySave(msgOOB)
 	if sSaveShort then
 		local sSave = DataCommon.save_stol[sSaveShort];
 		if sSave then
-			ActionSave.performVsRoll(nil, rTarget, sSave, msgOOB.nDC, (tonumber(msgOOB.nSecret) == 1), rSource, msgOOB.bRemoveOnMiss, msgOOB.sDesc);
+			ActionSave.performVsRoll(nil, rTarget, sSave, msgOOB.nDC, (tonumber(msgOOB.nSecret) == 1), rSource, msgOOB.bRemoveOnMiss, msgOOB.sDesc, msgOOB.tags);
 		end
 	end
 end
 
-function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss)
+function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss, tags)
 	if not rTarget then
 		return;
 	end
@@ -53,6 +53,7 @@ function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss)
 	end
 	msgOOB.sDesc = sDesc;
 	msgOOB.nDC = nDC;
+	msgOOB.tags = tags;
 
 	msgOOB.sSourceNode = ActorManager.getCreatureNodeName(rSource);
 	msgOOB.sTargetNode = ActorManager.getCreatureNodeName(rTarget);
@@ -112,26 +113,32 @@ function onSpellTargeting(rSource, aTargeting, rRolls)
 	return aTargeting;
 end
 
-function getSpellCastRoll(rActor, rAction)
+function getSpellCastRoll(rActor, rAction, tag)
 	local rRoll = {};
 	rRoll.sType = "cast";
 	rRoll.aDice = {};
 	rRoll.nMod = 0;
+	rRoll.tags = tag;
 	
 	rRoll.sDesc = "[CAST";
 	if rAction.order and rAction.order > 1 then
 		rRoll.sDesc = rRoll.sDesc .. " #" .. rAction.order;
 	end
 	rRoll.sDesc = rRoll.sDesc .. "] " .. rAction.label;
+
+	if rRoll.tags then
+		rRoll.sDesc = rRoll.sDesc .. " [TAGS: " .. rRoll.tags .. "]";
+	end
 	
 	return rRoll;
 end
 
-function getCLCRoll(rActor, rAction)
+function getCLCRoll(rActor, rAction, tag)
 	local rRoll = {};
 	rRoll.sType = "clc";
 	rRoll.aDice = { "d20" };
 	rRoll.nMod = rAction.clc or 0;
+	rRoll.tags = tag;
 	
 	rRoll.sDesc = "[CL CHECK";
 	if rAction.order and rAction.order > 1 then
@@ -145,10 +152,14 @@ function getCLCRoll(rActor, rAction)
 	return rRoll;
 end
 
-function getSaveVsRoll(rActor, rAction)
+function getSaveVsRoll(rActor, rAction, tag)
 	local rRoll = {};
 	rRoll.sType = "spellsave";
 	rRoll.aDice = {};
+	rRoll.tags = tag;
+
+	local nDCMod = EffectManagerFFd20.getEffectsBonus(rActor, {"DC"}, true, nil, nil, false, rRoll.tags);
+	rAction.savemod = rAction.savemod + nDCMod;
 	rRoll.nMod = rAction.savemod or 0;
 	
 	rRoll.sDesc = "[SAVE VS";
@@ -185,7 +196,7 @@ function modCastSave(rSource, rTarget, rRoll)
 			sActionStat = DataCommon.ability_stol[sModStat];
 		end
 		if sActionStat then
-			local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
+			local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat, rRoll.tags);
 			if nBonusEffects > 0 then
 				local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
 				rRoll.sDesc = rRoll.sDesc .. " " .. string.format(sFormat, nBonusStat);
@@ -201,14 +212,14 @@ function modCLC(rSource, rTarget, rRoll)
 		local nAddMod = 0;
 		
 		-- Get CLC modifier effects
-		local nCLCMod, nCLCCount = EffectManagerFFd20.getEffectsBonus(rSource, {"CLC"}, true, nil, rTarget);
+		local nCLCMod, nCLCCount = EffectManagerFFd20.getEffectsBonus(rSource, {"CLC"}, true, nil, rTarget, false, rRoll.tags);
 		if nCLCCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod + nCLCMod;
 		end
 		
 		-- Get negative levels
-		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true);
+		local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rSource, {"NLVL"}, true, nil, nil, false, rRoll.tags);
 		if nNegLevelCount > 0 then
 			bEffects = true;
 			nAddMod = nAddMod - nNegLevelMod;
@@ -263,6 +274,11 @@ function onSpellCast(rSource, rTarget, rRoll)
 
 	if rTarget then
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
+		local spellImmunity = EffectManagerFFd20.hasEffect(rTarget, "IMMUNE", rSource, false, false, rRoll.tags);
+		if spellImmunity then
+			rMessage.text = rMessage.text .. " [IMMUNE]";
+			rMessage.icon = "spell_cast_fail";
+		end
 	end
 	
 	Comm.deliverChatMessage(rMessage);
@@ -289,7 +305,7 @@ function onCastSave(rSource, rTarget, rRoll)
 		if sSaveShort then
 			local sSave = DataCommon.save_stol[sSaveShort];
 			if sSave then
-				notifyApplySave(rSource, rTarget, rRoll.bSecret, rRoll.sDesc, rRoll.nMod, rRoll.bRemoveOnMiss);
+				notifyApplySave(rSource, rTarget, rRoll.bSecret, rRoll.sDesc, rRoll.nMod, rRoll.bRemoveOnMiss, rRoll.tags);
 				return true;
 			end
 		end

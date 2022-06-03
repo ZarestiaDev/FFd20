@@ -104,9 +104,20 @@ function onEffectActorStartTurn(nodeActor, nodeEffect)
 		-- Conditionals
 		if rEffectComp.type == "IFT" then
 			break;
+		elseif rEffectComp.type == "NIFT" then
+			break;
+		elseif rEffectComp.type == "IFTAG" then
+			break;
+		elseif rEffectComp.type == "NIFTAG" then
+			break;
 		elseif rEffectComp.type == "IF" then
 			local rActor = ActorManager.resolveActor(nodeActor);
 			if not checkConditional(rActor, nodeEffect, rEffectComp.remainder) then
+				break;
+			end
+		elseif rEffectComp.type == "NIF" then
+			local rActor = ActorManager.resolveActor(nodeActor);
+			if checkConditional(rActor, nodeEffect, rEffectComp.remainder) then
 				break;
 			end
 		
@@ -352,7 +363,7 @@ function evalEffect(rActor, s, nodeSpellClass)
 	return sOutput;
 end
 
-function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedOnly)
+function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedOnly, rEffectSpell)
 	if not rActor then
 		return {};
 	end
@@ -393,17 +404,43 @@ function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedO
 					local rEffectComp = parseEffectComp(sEffectComp);
 					-- Handle conditionals
 					if rEffectComp.type == "IF" then
-						if not checkConditional(rActor, v, rEffectComp.remainder) then
+						if not checkConditional(rActor, v, rEffectComp.remainder, rFilterActor, false, rEffectSpell) then
+							break;
+						end
+					elseif rEffectComp.type == "NIF" then
+						if checkConditional(rActor, v, rEffectComp.remainder, rFilterActor, false, rEffectSpell) then
+							break;
+						end
+					elseif rEffectComp.type == "IFTAG" then
+						if not rEffectSpell then
+							break;
+						elseif not checkTagConditional(rEffectComp.remainder, rEffectSpell) then
+							break;
+						end
+					elseif rEffectComp.type == "NIFTAG" then
+						if checkTagConditional(rEffectComp.remainder, rEffectSpell) then
 							break;
 						end
 					elseif rEffectComp.type == "IFT" then
 						if not rFilterActor then
 							break;
 						end
-						if not checkConditional(rFilterActor, v, rEffectComp.remainder, rActor) then
+						if not checkConditional(rFilterActor, v, rEffectComp.remainder, rActor, false, rEffectSpell) then
 							break;
 						end
 						bTargeted = true;
+					elseif rEffectComp.type == "NIFT" then
+						if rActor.aTargets and not rFilterActor then
+							-- if ( #rActor.aTargets[1] > 0 ) and not rFilterActor then
+							break;
+							-- end
+						end
+						if checkConditional(rFilterActor, v, rEffectComp.remainder, rActor, false, rEffectSpell) then
+							break;
+						end
+						if rFilterActor then
+							bTargeted = true;
+						end
 					
 					-- Compare other attributes
 					else
@@ -537,7 +574,7 @@ function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedO
 	return results;
 end
 
-function getEffectsBonusByType(rActor, aEffectType, bAddEmptyBonus, aFilter, rFilterActor, bTargetedOnly)
+function getEffectsBonusByType(rActor, aEffectType, bAddEmptyBonus, aFilter, rFilterActor, bTargetedOnly, rEffectSpell)
 	if not rActor or not aEffectType then
 		return {}, 0;
 	end
@@ -555,7 +592,7 @@ function getEffectsBonusByType(rActor, aEffectType, bAddEmptyBonus, aFilter, rFi
 	
 	for k, v in pairs(aEffectType) do
 		-- LOOK FOR EFFECTS THAT MATCH BONUSTYPE
-		local aEffectsByType = getEffectsByType(rActor, v, aFilter, rFilterActor, bTargetedOnly);
+		local aEffectsByType = getEffectsByType(rActor, v, aFilter, rFilterActor, bTargetedOnly, rEffectSpell);
 
 		-- ITERATE THROUGH EFFECTS THAT MATCHED
 		for k2,v2 in pairs(aEffectsByType) do
@@ -639,7 +676,7 @@ function getEffectsBonusByType(rActor, aEffectType, bAddEmptyBonus, aFilter, rFi
 	return results, nEffectCount;
 end
 
-function getEffectsBonus(rActor, aEffectType, bModOnly, aFilter, rFilterActor, bTargetedOnly)
+function getEffectsBonus(rActor, aEffectType, bModOnly, aFilter, rFilterActor, bTargetedOnly, rEffectSpell)
 	if not rActor or not aEffectType then
 		if bModOnly then
 			return 0, 0;
@@ -662,7 +699,7 @@ function getEffectsBonus(rActor, aEffectType, bModOnly, aFilter, rFilterActor, b
 	local masterpenalties = {};
 	for k, v in pairs(aEffectType) do
 		-- GET THE MODIFIERS FOR THIS MODIFIER TYPE
-		local effbonusbytype, nEffectSubCount = getEffectsBonusByType(rActor, v, true, aFilter, rFilterActor, bTargetedOnly);
+		local effbonusbytype, nEffectSubCount = getEffectsBonusByType(rActor, v, true, aFilter, rFilterActor, bTargetedOnly, rEffectSpell);
 		
 		-- ITERATE THROUGH THE MODIFIERS
 		for k2, v2 in pairs(effbonusbytype) do
@@ -703,11 +740,11 @@ function getEffectsBonus(rActor, aEffectType, bModOnly, aFilter, rFilterActor, b
 	return aTotalDice, nTotalMod, nEffectCount;
 end
 
-function hasEffectCondition(rActor, sEffect)
-	return hasEffect(rActor, sEffect, nil, false, true);
+function hasEffectCondition(rActor, sEffect, rEffectSpell)
+	return hasEffect(rActor, sEffect, nil, false, true, rEffectSpell);
 end
 
-function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets)
+function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets, rEffectSpell)
 	if not sEffect or not rActor then
 		return false;
 	end
@@ -721,22 +758,61 @@ function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets
 			-- Parse each effect label
 			local sLabel = DB.getValue(v, "label", "");
 			local bTargeted = EffectManager.isTargetedEffect(v);
+			local bIFT = false;
 			local aEffectComps = EffectManager.parseEffect(sLabel);
 
 			-- Iterate through each effect component looking for a type match
 			local nMatch = 0;
 			for kEffectComp, sEffectComp in ipairs(aEffectComps) do
 				local rEffectComp = parseEffectComp(sEffectComp);
+				-- Check for immunity
+				if rEffectComp.type == "IMMUNE" then
+					if not rEffectSpell then
+						break;
+					elseif checkTagConditional(rEffectComp.remainder, rEffectSpell) then
+						rEffectComp.original = sLowerEffect;
+					else
+						break;
+					end
+				end
+
 				-- Check conditionals
 				if rEffectComp.type == "IF" then
-					if not checkConditional(rActor, v, rEffectComp.remainder) then
+					if not checkConditional(rActor, v, rEffectComp.remainder, rTarget, false, rEffectSpell) then
+						break;
+					end
+				elseif rEffectComp.type == "NIF" then
+					if checkConditional(rActor, v, rEffectComp.remainder, rTarget, false, rEffectSpell) then
 						break;
 					end
 				elseif rEffectComp.type == "IFT" then
 					if not rTarget then
 						break;
 					end
-					if not checkConditional(rTarget, v, rEffectComp.remainder, rActor) then
+					if not checkConditional(rTarget, v, rEffectComp.remainder, rActor, false, rEffectSpell) then
+						break;
+					end
+					bIFT = true;
+				elseif rEffectComp.type == "NIFT" then
+					if rActor.aTargets and not rTarget then
+						-- if ( #rActor.aTargets[1] > 0 ) and not rTarget then
+						break;
+						-- end
+					end
+					if checkConditional(rTarget, v, rEffectComp.remainder, rActor, false, rEffectSpell) then
+						break;
+					end
+					if rTarget then
+						bIFT = true;
+					end
+				elseif rEffectComp.type == "IFTAG" then
+					if not rEffectSpell then
+						break;
+					elseif not checkTagConditional(rEffectComp.remainder, rEffectSpell) then
+						break;
+					end
+				elseif rEffectComp.type == "NIFTAG" then
+					if checkTagConditional(rEffectComp.remainder, rEffectSpell) then
 						break;
 					end
 				
@@ -746,13 +822,15 @@ function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets
 						if EffectManager.isEffectTarget(v, rTarget) then
 							nMatch = kEffectComp;
 						end
+					elseif bTargetedOnly and bIFT then
+						nMatch = kEffectComp;
 					elseif not bTargetedOnly then
 						nMatch = kEffectComp;
 					end
 				end
 				
 			end
-			
+
 			-- If matched, then remove one-off effects
 			if nMatch > 0 then
 				if nActive == 2 then
@@ -778,7 +856,7 @@ function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets
 	return false;
 end
 
-function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
+function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore, rEffectSpell)
 	local bReturn = true;
 	
 	if not aIgnore then
@@ -789,30 +867,30 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
 	for _,v in ipairs(aConditions) do
 		local sLower = v:lower();
 		if sLower == DataCommon.healthstatusfull then
-			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor, true);
 			if nPercentLethal > 0 then
 				bReturn = false;
 				break;
 			end
 		elseif sLower == DataCommon.healthstatushalf then
-			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor, true);
 			if nPercentLethal < .5 then
 				bReturn = false;
 				break;
 			end
 		elseif sLower == DataCommon.healthstatuswounded then
-			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor);
+			local _,_,nPercentLethal = ActorManagerFFd20.getWoundPercent(rActor, true);
 			if nPercentLethal == 0 then
 				bReturn = false;
 				break;
 			end
 		elseif StringManager.contains(DataCommon.conditions, sLower) then
-			if not checkConditionalHelper(rActor, sLower, rTarget, aIgnore) then
+			if not checkConditionalHelper(rActor, sLower, rTarget, aIgnore, rEffectSpell) then
 				bReturn = false;
 				break;
 			end
 		elseif StringManager.contains(DataCommon.conditionaltags, sLower) then
-			if not checkConditionalHelper(rActor, sLower, rTarget, aIgnore) then
+			if not checkConditionalHelper(rActor, sLower, rTarget, aIgnore, rEffectSpell) then
 				bReturn = false;
 				break;
 			end
@@ -837,7 +915,7 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
 					break;
 				end
 			elseif sCustomCheck then
-				if not checkConditionalHelper(rActor, sCustomCheck, rTarget, aIgnore) then
+				if not checkConditionalHelper(rActor, sCustomCheck, rTarget, aIgnore, rEffectSpell) then
 					bReturn = false;
 					break;
 				end
@@ -850,7 +928,7 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore)
 	return bReturn;
 end
 
-function checkConditionalHelper(rActor, sEffect, rTarget, aIgnore)
+function checkConditionalHelper(rActor, sEffect, rTarget, aIgnore, rEffectSpell)
 	if not rActor then
 		return false;
 	end
@@ -868,19 +946,36 @@ function checkConditionalHelper(rActor, sEffect, rTarget, aIgnore)
 				
 				--Check conditionals
 				if rEffectComp.type == "IF" then
-					if not checkConditional(rActor, v, rEffectComp.remainder, nil, aIgnore) then
+					if not checkConditional(rActor, v, rEffectComp.remainder, rTarget, aIgnore, rEffectSpell) then
 						break;
 					end
+				elseif rEffectComp.type == "NIF" then
+					if checkConditional(rActor, v, rEffectComp.remainder, rTarget, aIgnore, rEffectSpell) then
+						break;
+					end
+				elseif rEffectComp.type == "IFTAG" then
+					break;
+				elseif rEffectComp.type == "NIFTAG" then
+					break;
 				elseif rEffectComp.type == "IFT" then
 					if not rTarget then
 						break;
 					end
-					if not checkConditional(rTarget, v, rEffectComp.remainder, rActor, aIgnore) then
+					if not checkConditional(rTarget, v, rEffectComp.remainder, rActor, aIgnore, rEffectSpell) then
+						break;
+					end
+				elseif rEffectComp.type == "NIFT" then
+					if rActor.aTargets and not rTarget then
+						-- if ( #rActor.aTargets[1] > 0 ) and not rTarget then
+						break;
+						-- end
+					end
+					if checkConditional(rTarget, v, rEffectComp.remainder, rActor, aIgnore, rEffectSpell) then
 						break;
 					end
 				
 				-- Check for match
-				elseif rEffectComp.original:lower() == sEffect then
+				elseif rEffectComp.original:lower() == sEffect and nActive == 1 then
 					if EffectManager.isTargetedEffect(v) then
 						if EffectManager.isEffectTarget(v, rTarget) then
 							return true;
@@ -893,5 +988,28 @@ function checkConditionalHelper(rActor, sEffect, rTarget, aIgnore)
 		end
 	end
 	
+	return false;
+end
+
+function checkTagConditional(aConditions, rEffectSpell)
+	if rEffectSpell then
+		local tagshelp = StringManager.parseWords(rEffectSpell);
+		
+		if not tagshelp[1] then
+			return false;
+		end
+		
+		local i = 1;
+		
+		for _,v in ipairs(aConditions) do	
+			while tagshelp[i] do
+				if tagshelp[i] == v then
+					return true;
+				end
+				i = i + 1;
+			end
+			i = 1;
+		end
+	end
 	return false;
 end

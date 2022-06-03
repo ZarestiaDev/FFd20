@@ -24,6 +24,7 @@ function handleApplySave(msgOOB)
 	rAction.nTarget = tonumber(msgOOB.nTarget) or 0;
 	rAction.bRemoveOnMiss = (tonumber(msgOOB.nRemoveOnMiss) == 1);
 	rAction.sSaveResult = msgOOB.sSaveResult;
+	rAction.tags = msgOOB.tags;
 	
 	applySave(rSource, rOrigin, rAction);
 end
@@ -42,6 +43,7 @@ function notifyApplySave(rSource, rRoll)
 	msgOOB.sSaveDesc = rRoll.sSaveDesc;
 	msgOOB.nTarget = rRoll.nTarget;
 	msgOOB.sSaveResult = rRoll.sSaveResult;
+	msgOOB.tags = rRoll.tags;
 	if rRoll.bRemoveOnMiss then msgOOB.nRemoveOnMiss = 1; end
 
 	msgOOB.sSourceNode = ActorManager.getCreatureNodeName(rSource);
@@ -68,8 +70,8 @@ function performPartySheetRoll(draginfo, rActor, sSave)
 	ActionsManager.performAction(draginfo, rActor, rRoll);
 end
 
-function performVsRoll(draginfo, rActor, sSave, nTargetDC, bSecretRoll, rSource, bRemoveOnMiss, sSaveDesc)
-	local rRoll = getRoll(rActor, sSave);
+function performVsRoll(draginfo, rActor, sSave, nTargetDC, bSecretRoll, rSource, bRemoveOnMiss, sSaveDesc, tags)
+	local rRoll = getVsRoll(rActor, sSave, sSaveDesc, tags);
 
 	if bSecretRoll then
 		rRoll.bSecret = true;
@@ -87,6 +89,42 @@ function performVsRoll(draginfo, rActor, sSave, nTargetDC, bSecretRoll, rSource,
 	rRoll.bVsSave = true;
 
 	ActionsManager.performAction(draginfo, rActor, rRoll);
+end
+
+function getVsRoll(rActor, sSave, sSaveDesc, tags)
+	local rRoll = {};
+	rRoll.sType = "save";
+	rRoll.aDice = { "d20" };
+	rRoll.nMod = 0;
+
+	-- Look up actor specific information
+	local sAbility = nil;
+	local sNodeType, nodeActor = ActorManager.getTypeAndNode(rActor);
+	if nodeActor then
+		if sNodeType == "pc" then
+			rRoll.nMod = DB.getValue(nodeActor, "saves." .. sSave .. ".total", 0);
+			sAbility = DB.getValue(nodeActor, "saves." .. sSave .. ".ability", "");
+		else
+			rRoll.nMod = DB.getValue(nodeActor, sSave .. "save", 0);
+		end
+	end
+
+	rRoll.sDesc = "[SAVE] " .. StringManager.capitalize(sSave);
+	
+	if sAbility and sAbility ~= "" then
+		if (sSave == "fortitude" and sAbility ~= "constitution") or
+				(sSave == "reflex" and sAbility ~= "dexterity") or
+				(sSave == "will" and sAbility ~= "wisdom") then
+			local sAbilityEffect = DataCommon.ability_ltos[sAbility];
+			if sAbilityEffect then
+				rRoll.sDesc = rRoll.sDesc .. " [MOD:" .. sAbilityEffect .. "]";
+			end
+		end
+	end
+	-- KEL Add tags
+	rRoll.tags = tags;
+	
+	return rRoll;
 end
 
 function performRoll(draginfo, rActor, sSave)
@@ -184,7 +222,7 @@ function modSave(rSource, rTarget, rRoll)
 			rSaveSource = ActorManager.resolveActor(rRoll.sSource);
 		end
 		local aExistingBonusByType = {};
-		local aSaveEffects = EffectManagerFFd20.getEffectsByType(rSource, "SAVE", aSaveFilter, rSaveSource, false);
+		local aSaveEffects = EffectManagerFFd20.getEffectsByType(rSource, "SAVE", aSaveFilter, rSaveSource, false, rRoll.tags);
 		for _,v in pairs(aSaveEffects) do
 			-- Determine bonus type if any
 			local sBonusType = nil;
@@ -308,7 +346,6 @@ function onSave(rSource, rTarget, rRoll)
 		notifyApplySave(rSource, rRoll);
 	end
 end
-
 	
 function applySave(rSource, rOrigin, rAction, sUser)
 	local msgShort = {font = "msgfont"};

@@ -102,7 +102,7 @@ function performRoll(draginfo, rActor, rAction)
 	ActionsManager.performAction(draginfo, rActor, rRoll);
 end
 
-function getRoll(rActor, rAction)
+function getRoll(rActor, rAction, tag)
 	local rRoll = {};
 	if rAction.cm then
 		rRoll.sType = "grapple";
@@ -140,6 +140,9 @@ function getRoll(rActor, rAction)
 	end
 	
 	-- Add other modifiers
+	rRoll.tags = tag;
+	rRoll.crit = rAction.crit;
+
 	if rAction.crit and rAction.crit < 20 then
 		rRoll.sDesc = rRoll.sDesc .. " [CRIT " .. rAction.crit .. "]";
 	end

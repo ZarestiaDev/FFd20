@@ -44,6 +44,7 @@
 	<!-- Spells -->
 	<icon name="caster_spontaneous" file="graphics/icons/caster_spontaneous.png" />
 	<icon name="spell_cast" file="graphics/icons/spell_cast.png" />
+	<icon name="spell_cast_fail" file="graphics/icons/spell_cast_fail.png" />
 	<icon name="spell_damage" file="graphics/icons/spell_damage.png" />
 	<icon name="spell_heal" file="graphics/icons/spell_heal.png" />
 	<icon name="spell_effect" file="graphics/icons/spell_effect.png" />

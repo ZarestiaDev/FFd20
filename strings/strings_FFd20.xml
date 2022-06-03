@@ -684,21 +684,10 @@
 	<string name="power_label_onmissdamage">Damage</string>
 	<string name="power_label_onmissdamage_half">Half on Success</string>
 
-	<string name="power_label_school">School</string>
-	<string name="power_label_chronomancy">Chronomancy</string>
-	<string name="power_label_dark">Dark</string>
-	<string name="power_label_elemental">Elemental</string>
-	<string name="power_label_enfeebling">Enfeebling</string>
-	<string name="power_label_enhancing">Enhancing</string>
-	<string name="power_label_healing">Healing</string>
-	<string name="power_label_illusion">Illusion</string>
-	<string name="power_label_light">Light</string>
-	<string name="power_label_necromancy">Necromancy</string>
-	<string name="power_label_nonelemental">Nonelemental</string>
-	<string name="power_label_summoning">Summoning</string>
-
 	<string name="power_label_spell">Spell</string>
 	<string name="power_label_spellike">Spell-Like</string>
+	<string name="power_label_supernatural">Supernatural</string>
+	<string name="power_label_extraordinary">Extraordinary</string>
 	<string name="power_header_tags">TAGS</string>
 	
 	<string name="power_title_damage">Spell/Ability Damage</string>

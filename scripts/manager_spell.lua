@@ -169,12 +169,42 @@ function addSpellCastAction(nodeSpell)
 			end
 		end
 	end
+
+	-- Parse Tags
+	addTags(nodeSpell, nodeAction);
+end
+
+function addTags(nodeSpell, nodeAction)
+	local sSchool = DB.getValue(nodeSpell, "school", ""):lower();
+	local sTags = DB.getValue(nodeAction, "tags", "");
+
+	sSchool = string.gsub(sSchool, "%-", "");
+
+	local aSchools = StringManager.parseWords(sSchool);
+	local aTags = StringManager.parseWords(sTags);
+	local i = 1;
+	
+	while aSchools[i] do
+		table.insert(aTags, aSchools[i]);
+		i = i + 1;
+	end
+	
+	if DB.getValue(nodeAction, "stype", "") == "" then
+		DB.setValue(nodeAction, "stype", "string", "spell");
+	end
+	
+	for _,v in pairs(aTags) do
+		sTags = sTags .. v .. "; ";
+	end
+
+	DB.setValue(nodeAction, "tags", "string", sTags);
 end
 
 function parseSpell(nodeSpell)
 	-- Clean out old actions
 	local nodeActions = nodeSpell.createChild("actions");
-	for k, v in pairs(nodeActions.getChildren()) do
+	local nodeAction = nodeActions.getChildren();
+	for _, v in pairs(nodeAction) do
 		v.delete();
 	end
 	
@@ -641,6 +671,8 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 	rAction.type = sType;
 	rAction.label = DB.getValue(nodeAction, "...name", "");
 	rAction.order = getSpellActionOutputOrder(nodeAction);
+	rAction.stype = DB.getValue(nodeAction, "stype", "");
+	rAction.tags = DB.getValue(nodeAction, "tags", "");
 	
 	if sType == "cast" then
 		rAction.subtype = sSubRoll;
@@ -774,24 +806,43 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	if not rActor then
 		return;
 	end
+
+	local nodeSpell = DB.getChild(nodeAction, "...");
+	local nodeActions = nodeSpell.createChild("actions");
+	local tag = "";
+
+	if nodeActions then
+		local aNodeActions = nodeActions.getChildren();
+		if aNodeActions then
+			for _,v in pairs(aNodeActions) do
+				if DB.getValue(v, "type") == "cast" then
+					local rCastAction = SpellManager.getSpellAction(rActor, v);
+					tag = SpellManager.getTagsFromAction(rCastAction);
+					break;
+				end
+			end
+		end
+	end
 	
 	local rAction = getSpellAction(rActor, nodeAction, sSubRoll);
 	
 	local rRolls = {};
 	local rCustom = nil;
 	if rAction.type == "cast" then
+		local tagsSpec = SpellManager.getTagsFromAction(rAction);
 		if not rAction.subtype then
-			table.insert(rRolls, ActionSpell.getSpellCastRoll(rActor, rAction));
+			table.insert(rRolls, ActionSpell.getSpellCastRoll(rActor, rAction, tagsSpec));
 		end
 		
 		if not rAction.subtype or rAction.subtype == "atk" then
 			if rAction.range then
-				table.insert(rRolls, ActionAttack.getRoll(rActor, rAction));
+				local rRoll = ActionAttack.getRoll(rActor, rAction, tagsSpec);
+				table.insert(rRolls, rRoll);
 			end
 		end
 
 		if not rAction.subtype or rAction.subtype == "clc" then
-			local rRoll = ActionSpell.getCLCRoll(rActor, rAction);
+			local rRoll = ActionSpell.getCLCRoll(rActor, rAction, tagsSpec);
 			if not rAction.subtype then
 				rRoll.sType = "castclc";
 				rRoll.aDice = {};
@@ -801,7 +852,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 
 		if not rAction.subtype or rAction.subtype == "save" then
 			if rAction.save and rAction.save ~= "" then
-				local rRoll = ActionSpell.getSaveVsRoll(rActor, rAction);
+				local rRoll = ActionSpell.getSaveVsRoll(rActor, rAction, tagsSpec);
 				if not rAction.subtype then
 					rRoll.sType = "castsave";
 				end
@@ -810,7 +861,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 		end
 		
 	elseif rAction.type == "damage" then
-		local rRoll = ActionDamage.getRoll(rActor, rAction);
+		local rRoll = ActionDamage.getRoll(rActor, rAction, tag);
 		if rAction.bSpellDamage then
 			rRoll.sType = "spdamage";
 		else
@@ -820,12 +871,15 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 		table.insert(rRolls, rRoll);
 		
 	elseif rAction.type == "heal" then
-		table.insert(rRolls, ActionHeal.getRoll(rActor, rAction));
+		table.insert(rRolls, ActionHeal.getRoll(rActor, rAction, tag));
 
 	elseif rAction.type == "effect" then
 		local rRoll;
 		rRoll = ActionEffect.getRoll(draginfo, rActor, rAction);
 		if rRoll then
+			if tag then
+				rRoll.tags = tag;
+			end
 			table.insert(rRolls, rRoll);
 		end
 	end
@@ -833,6 +887,26 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	if #rRolls > 0 then
 		ActionsManager.performMultiAction(draginfo, rActor, rRolls[1].sType, rRolls);
 	end
+end
+
+function getTagsFromAction(rAction)
+	local tags = "";
+	local semicolon = ";";
+	
+	if not rAction then
+		return nil;
+	elseif not rAction.tags then
+		return nil;
+	end
+	
+	tags = rAction.stype .. semicolon .. rAction.tags;
+	
+	local tagshelp = StringManager.parseWords(tags);
+	if not tagshelp[1] then
+		return nil;
+	end
+	
+	return tags;
 end
 
 function getActionAbilityBonus(nodeAction)
