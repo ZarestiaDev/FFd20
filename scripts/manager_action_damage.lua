@@ -895,23 +895,24 @@ function matchAndOrClauses(aClausesOR, aMatchWords)
 	return false;
 end
 
-function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
+function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput, tags)
 	-- SETUP
 	local nDamageAdjust = 0;
 	local nNonlethal = 0;
 	local nAbsorb = 0;
+	local bAbsorb = false;
+	local bImmune = false;
 	local bWeakness = false;
 	local bStrong = false;
 	local bResist = false;
-	local bAbsorb = false;
 	
 	-- GET THE DAMAGE ADJUSTMENT EFFECTS
-	local aImmune = EffectManagerFFd20.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource);
-	local aAbsorb = EffectManagerFFd20.getEffectsBonusByType(rTarget, "ABSORB", false, {}, rSource);
-	local aWeak = EffectManagerFFd20.getEffectsBonusByType(rTarget, "WEAK", false, {}, rSource);
-	local aStrong = EffectManagerFFd20.getEffectsBonusByType(rTarget, "STRONG", false, {}, rSource);
-	local aResist = EffectManagerFFd20.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource);
-	local aDR = EffectManagerFFd20.getEffectsByType(rTarget, "DR", {}, rSource);
+	local aAbsorb = EffectManagerFFd20.getEffectsBonusByType(rTarget, "ABSORB", false, {}, rSource, false, tags);
+	local aImmune = EffectManagerFFd20.getEffectsBonusByType(rTarget, "IMMUNE", false, {}, rSource, false, tags);
+	local aWeak = EffectManagerFFd20.getEffectsBonusByType(rTarget, "WEAK", false, {}, rSource, false, tags);
+	local aStrong = EffectManagerFFd20.getEffectsBonusByType(rTarget, "STRONG", false, {}, rSource, false, tags);
+	local aResist = EffectManagerFFd20.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource, false, tags);
+	local aDR = EffectManagerFFd20.getEffectsByType(rTarget, "DR", {}, rSource, false, tags);
 	
 	local bApplyIncorporeal = false;
 	local bSourceIncorporeal = false;
@@ -944,40 +945,41 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 			end
 		end
 
-		-- HANDLE IMMUNITY, ABSORB, WEAKNESS, STRONG AND RESISTANCE
+		-- HANDLE ABSORB, IMMUNITY, WEAKNESS, STRONG AND RESISTANCE
 		local nLocalDamageAdjust = 0;
 		if #aSrcDmgClauseTypes > 0 then
-			-- CHECK FOR IMMUNITY (Must be immune to all damage types in damage source)
-			local nBasicDmgTypeMatches = 0;
-			local nSpecialDmgTypes = 0;
-			local nSpecialDmgTypeMatches = 0;
+			-- CHECK ABSORB TO DAMAGE TYPES
 			for _,sDmgType in pairs(aSrcDmgClauseTypes) do
-				if StringManager.contains(DataCommon.basicdmgtypes, sDmgType) then
-					if aImmune[sDmgType] then nBasicDmgTypeMatches = nBasicDmgTypeMatches + 1; end
-				else
-					nSpecialDmgTypes = nSpecialDmgTypes + 1;
-					if aImmune[sDmgType] then nSpecialDmgTypeMatches = nSpecialDmgTypeMatches + 1; end
+				if aAbsorb[sDmgType] then
+					nAbsorb = v;
+					bAbsorb = true;
 				end
 			end
-			local bImmune = false;
-			if (nSpecialDmgTypeMatches > 0) then
-				bImmune = true;
-			elseif (nBasicDmgTypeMatches > 0) and (nBasicDmgTypeMatches + nSpecialDmgTypes) == #aSrcDmgClauseTypes then
-				bImmune = true;
-			end
-			if bImmune then
-				nLocalDamageAdjust = nLocalDamageAdjust - v;
-				bResist = true;
-			else
-				-- CHECK ABSORB TO DAMAGE TYPES
+
+			if not bAbsorb then
+				-- CHECK FOR IMMUNITY (Must be immune to all damage types in damage source)
+				local nBasicDmgTypeMatches = 0;
+				local nSpecialDmgTypes = 0;
+				local nSpecialDmgTypeMatches = 0;
+
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
-					if aAbsorb[sDmgType] then
-						nAbsorb = v;
-						nLocalDamageAdjust = nLocalDamageAdjust - v;
-						bAbsorb = true;
+					if StringManager.contains(DataCommon.basicdmgtypes, sDmgType) then
+						if aImmune[sDmgType] then nBasicDmgTypeMatches = nBasicDmgTypeMatches + 1; end
+					else
+						nSpecialDmgTypes = nSpecialDmgTypes + 1;
+						if aImmune[sDmgType] then nSpecialDmgTypeMatches = nSpecialDmgTypeMatches + 1; end
 					end
 				end
-
+				if (nSpecialDmgTypeMatches > 0) then
+					bImmune = true;
+				elseif (nBasicDmgTypeMatches > 0) and (nBasicDmgTypeMatches + nSpecialDmgTypes) == #aSrcDmgClauseTypes then
+					bImmune = true;
+				end
+			end
+			
+			if bImmune or bAbsorb then
+				nLocalDamageAdjust = nLocalDamageAdjust - v;
+			else
 				-- CHECK WEAK TO DAMAGE TYPES
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
 					if not aImmune[sDmgType] and aWeak[sDmgType] and not aWeak[sDmgType].nApplied then
@@ -1010,7 +1012,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput)
 
 				-- CHECK RESISTANCE TO DAMAGE TYPE
 				for _,sDmgType in pairs(aSrcDmgClauseTypes) do
-					if aResist[sDmgType] and not aAbsorb[sDmgType] then
+					if aResist[sDmgType] then
 						local nApplied = aResist[sDmgType].nApplied or 0;
 						if nApplied < aResist[sDmgType].mod then
 							local nChange = math.min((aResist[sDmgType].mod - nApplied), v + nLocalDamageAdjust);
@@ -1250,7 +1252,7 @@ function decodeDamageText(nDamage, sDamageDesc)
 	return rDamageOutput;
 end
 
-function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
+function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags)
 	local nTotalHP = 0;
 	local nTempHP = 0;
 	local nNonLethal = 0;
@@ -1555,6 +1557,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal)
 	-- Output results
 	ActionDamage.messageDamage(rSource, rTarget, bSecret, rDamageOutput.sTypeOutput, sDamage, rDamageOutput.sVal, table.concat(rDamageOutput.tNotifications, " "));
 
+	Debug.console(rRollAbsorb.nMod)
 	if rRollAbsorb.nMod and ( rRollAbsorb.nMod > 0 ) then
 		ActionDamage.onDamage(rSource, rTarget, rRollAbsorb);
 	end
