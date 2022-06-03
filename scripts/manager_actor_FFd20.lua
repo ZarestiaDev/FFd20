@@ -984,7 +984,7 @@ function getCreatureTypeHelper(sTypeCheck, bUseDefaultType)
 	
 	-- Check each word combo in the creature type string against standard creature types and subtypes
 	for k = 1, #aCheckSplit do
-		for _,sMainType in ipairs(DataCommon.creaturetype) do
+		for sMainType,_ in pairs(DataCommon.creaturetype) do
 			local aMainTypeSplit = StringManager.split(sMainType, " ", true);
 			if #aMainTypeSplit > 0 then
 				local bMatch = true;
