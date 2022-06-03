@@ -121,7 +121,7 @@ function getVsRoll(rActor, sSave, sSaveDesc, tags)
 			end
 		end
 	end
-	-- KEL Add tags
+
 	rRoll.tags = tags;
 	
 	return rRoll;
