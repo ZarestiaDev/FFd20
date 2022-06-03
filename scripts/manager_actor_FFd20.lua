@@ -1000,7 +1000,7 @@ function getCreatureTypeHelper(sTypeCheck, bUseDefaultType)
 				end
 			end
 		end
-		for _,sSubType in ipairs(DataCommon.creaturesubtype) do
+		for sSubType,_ in pairs(DataCommon.creaturesubtype) do
 			local aSubTypeSplit = StringManager.split(sSubType, " ", true);
 			if #aSubTypeSplit > 0 then
 				local bMatch = true;

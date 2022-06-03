@@ -51,7 +51,7 @@ function getTypeGroup(v)
 	local sOutput = "";
 	if v then
 		local sCreatureType = StringManager.trim(v):lower();
-		for _,sListCreatureType in ipairs(DataCommon.creaturetype) do
+		for sListCreatureType,_ in pairs(DataCommon.creaturetype) do
 			if sCreatureType:match(sListCreatureType) then
 				sOutput = StringManager.capitalize(sListCreatureType);
 				break;
@@ -61,8 +61,35 @@ function getTypeGroup(v)
 	return sOutput;
 end
 
+function getSubTypeGroup(v)
+	local aOutput = {};
+	if v then
+		local aCreatureSubType = StringManager.parseWords(StringManager.trim(v):lower());
+		local i = 1;
+		while aCreatureSubType[i] do
+			for sListCreatureSubType,_ in pairs(DataCommon.creaturesubtype) do
+				if aCreatureSubType[i]:match(sListCreatureSubType) then
+					local sSubtype = StringManager.capitalize(sListCreatureSubType);
+					table.insert(aOutput, sSubtype);
+					break;
+				end
+			end
+			i = i + 1;
+		end
+	end
+	return aOutput;
+end
+
 function getNPCTypeValue(vNode)
+	Debug.console("Type")
+	Debug.console(getTypeGroup(DB.getValue(vNode, "type", "")));
 	return getTypeGroup(DB.getValue(vNode, "type", ""));
+end
+
+function getNPCSubTypeValue(vNode)
+	Debug.console("Subtype")
+	Debug.console(getSubTypeGroup(DB.getValue(vNode, "type", "")));
+	return getSubTypeGroup(DB.getValue(vNode, "type", ""));
 end
 
 function getItemRecordDisplayClass(vNode)
@@ -89,13 +116,10 @@ function isItemIdentifiable(vNode)
 end
 
 function getSpellSchoolValue(vNode)
-	local v = StringManager.trim(DB.getValue(vNode, "school", ""));
-	local sType = v:match("^%w+");
-	if sType then
-		v = StringManager.trim(sType);
-	end
-	v = StringManager.capitalize(v);
-	return v;
+	local v = DB.getValue(vNode, "school", "");
+	v = v:gsub("%b()", ""):gsub("%b[]", "");
+
+	return StringManager.split(v, "%/", true);
 end
 
 function getSpellSourceValue(vNode)
@@ -123,6 +147,7 @@ aRecordOverrides = {
 		aCustomFilters = {
 			["CR"] = { sField = "cr", sType = "number", fGetValue = getNPCCRValue },
 			["Type"] = { sField = "type", fGetValue = getNPCTypeValue },
+			["Subtype"] = { sField = "type", fGetValue = getNPCSubTypeValue }
 		},
 	},
 	["item"] = { 
@@ -164,16 +189,16 @@ aRecordOverrides = {
 	},
 	["skill"] = {
 		bExport = true,
-		aDataMap = { "skill", "reference.skills" }, 
-		sRecordDisplayClass = "referenceskill", 
+		aDataMap = { "skill", "reference.skills" },
+		sRecordDisplayClass = "referenceskill",
 		aCustomFilters = {
 			["Ability"] = { sField = "ability" },
 		},
 	},
 	["spell"] = {
 		bExport = true,
-		aDataMap = { "spell", "reference.spells", "spelldesc" }, 
-		sRecordDisplayClass = "spelldesc", 
+		aDataMap = { "spell", "reference.spells", "spelldesc" },
+		sRecordDisplayClass = "spelldesc",
 		aCustomFilters = {
 			["School"] = { sField = "school", fGetValue = getSpellSchoolValue },
 			["Source"] = { sField = "level", fGetValue = getSpellSourceValue },
@@ -181,8 +206,8 @@ aRecordOverrides = {
 	},
 	["specialability"] = {
 		bExport = true,
-		aDataMap = { "specialability", "reference.specialabilities" }, 
-		sRecordDisplayClass = "referenceclassability", 
+		aDataMap = { "specialability", "reference.specialabilities" },
+		sRecordDisplayClass = "referenceclassability",
 		aGMListButtons = { "button_specialability_type" },
 		aPlayerListButtons = { "button_specialability_type" },
 		aCustomFilters = {

@@ -99,24 +99,24 @@ creaturedefaulttype = "humanoid";
 creaturehalftype = "half-";
 creaturehalftypesubrace = "human";
 creaturetype = {
-	"aberration",
-	"animal",
+	["aberration"]  = {},
+	["animal"]  = {},
 	["construct"] = {
 		immune = "bleed, blind, disease, death, doom, exhausted, fatigued, mindaffecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
 	},
 	["dragon"] = {
 		immune = "paralysis, sleep"
 	},
-	"fey",
-	"humanoid",
-	"magical beast",
-	"monstrous humanoid",
-	"multiple",
+	["fey"] = {},
+	["humanoid"] = {},
+	["magical beast"] = {},
+	["monstrous humanoid"] = {},
+	["multiple"] = {},
 	["ooze"] = {
 		immune = "critical, flanking, gaze, illusion, mindaffecting, poison, sleep, paralysis, precision, polymorph, stunning",
 		strong = "physical"
 	},
-	"outsider",
+	["outsider"] = {},
 	["plant"] = {
 		immune = "mindaffecting, paralysis, poison, polymorph, sleep, stunning"
 	},
@@ -130,7 +130,7 @@ creaturetype = {
 	},
 };
 creaturesubtype = {
-	"adlet",
+	["adlet"] = {},
 	["aeon"] = {
 		immune = "ice, poison, critical",
 		resistance = "lightning 10, fire 10"
@@ -139,14 +139,14 @@ creaturesubtype = {
 		immune = "lightning, petrify",
 		resistance = "ice 10"
 	},
-	"air",
-	"amalj'aa",
+	["air"] = {},
+	["amalj'aa"] = {},
 	["angel"] = {
 		immune = "earth, ice, petrify",
 		resistance = "lightning 10, fire 10"
 	},
-	"aquatic",
-	"archfiend",
+	["aquatic"] = {},
+	["archfiend"] = {},
 	["archon"] = {
 		immune = "lightning, petrify"
 	},
@@ -154,7 +154,7 @@ creaturesubtype = {
 		immune = "curse, disease, poison",
 		resistance = "earth 10, lightning 10"
 	},
-	"augmented",
+	["augmented"] = {},
 	["automaton"] = {
 		immune = "lightning",
 		resistance = "ice 10"
@@ -177,9 +177,9 @@ creaturesubtype = {
 	["boss"] = {
 		immune = "banish, daze, gravity, frog, mini, disabled, death, doom, paralysis, sleep, stop, stunning, petrify"
 	},
-	"catfolk",
-	"centaur",
-	"chaotic",
+	["catfolk"] = {},
+	["centaur"] = {},
+	["chaotic"] = {},
 	["cie'th"] = {
 		immune = "mindaffecting"
 	},
@@ -190,13 +190,13 @@ creaturesubtype = {
 		immune = "ice",
 		weakness = "fire"
 	},
-	"colossus",
+	["colossus"] = {},
 	["daemon"] = {
 		immune = "earth, death, doom, disease, poison",
 		resistance = "earth 10, ice 10, fire 10"
 	},
-	"dark folk",
-	"deep one",
+	["dark folk"] = {},
+	["deep one"] = {},
 	["demodand"] = {
 		immune = "earth, poison",
 		resistance = "fire 10, ice 10"
@@ -213,35 +213,35 @@ creaturesubtype = {
 		immune = "fire, poison",
 		resistance = "earth 10, lightning 10"
 	},
-	"dwarf",
+	["dwarf"] = {},
 	["earth"] = {
 		immune = "earth",
 		strong = "lightning",
 		weakness = "wind"
 	},
-	"element",
+	["element"] = {},
 	["elemental"] = {
 		immune = "bleed, paralysis, poison, sleep, stunning, critical, flanking, precision"
 	},
-	"elf",
-	"elvaan",
-	"evil",
-	"extraplanar",
-	"familiar",
+	["elf"] = {},
+	["elvaan"] = {},
+	["evil"] = {},
+	["extraplanar"] = {},
+	["familiar"] = {},
 	["fire"] = {
 		immune = "fire",
 		strong = "ice",
 		weakness = "water"
 	},
-	"giant",
-	"gnoll",
-	"gnome",
-	"goblinoid",
-	"godspawn",
-	"good",
-	"great old one",
-	"halfling",
-	"herald",
+	["giant"] = {},
+	["gnoll"] = {},
+	["gnome"] = {},
+	["goblinoid"] = {},
+	["godspawn"] = {},
+	["good"] = {},
+	["great old one"] = {},
+	["halfling"] = {},
+	["herald"] = {},
 	["hive"] = {
 		immune = "earth"
 	},
@@ -249,15 +249,15 @@ creaturesubtype = {
 		immune = "holy",
 		weakness = "shadow"
 	},
-	"human",
-	"hume",
+	["human"] = {},
+	["hume"] = {},
 	["ice"] = {
 		immune = "ice",
 		strong = "wind",
 		weakness = "fire"
 	},
-	"incorporeal",
-	"inevitable",
+	["incorporeal"] = {},
+	["inevitable"] = {},
 	["kaiju"] = {
 		immune = "death, doom, disease, fear",
 		dr = "20 epic"
@@ -266,18 +266,18 @@ creaturesubtype = {
 		immune = "bleed, mindaffecting, petrify, polymorph",
 		resistance = "earth 10, lightning 10, fire 10"
 	},
-	"kasatha",
-	"kitsune",
-	"kobold",
-	"kojin",
+	["kasatha"] = {},
+	["kitsune"] = {},
+	["kobold"] = {},
+	["kojin"] = {},
 	["kyton"] = {
 		immune = "ice"
 	},
-	"lawful",
+	["lawful"]  = {},
 	["leshy"] = {
 		immune = "lightning"
 	},
-	"living construct",
+	["living construct"] = {},
 	["lightning"] = {
 		immune = "lightning",
 		strong = "water",
@@ -286,21 +286,21 @@ creaturesubtype = {
 	["machina"] = {
 		weakness = "lightning"
 	},
-	"merfolk",
-	"mini-boss",
-	"moogle",
-	"mortic",
-	"mythic",
-	"native",
-	"nightshade",
-	"non-elemental",
-	"oni",
-	"orc",
+	["merfolk"] = {},
+	["mini-boss"] = {},
+	["moogle"] = {},
+	["mortic"] = {},
+	["mythic"] = {},
+	["native"] = {},
+	["nightshade"] = {},
+	["non-elemental"] = {},
+	["oni"] = {},
+	["orc"] = {},
 	["protean"] = {
 		immune = "earth",
 		resistance = "lightning 10"
 	},
-	"primal",
+	["primal"] = {},
 	["psychopomp"] = {
 		immune = "death, doom, disease, poison",
 		resistance = "ice 10, lightning 10"
@@ -309,9 +309,9 @@ creaturesubtype = {
 		immune = "ice, mindaffecting, poison",
 		resistance = "earth 10, lightning 10, fire 10"
 	},
-	"quadav",
-	"rakshasa",
-	"ratfolk",
+	["quadav"] = {},
+	["rakshasa"] = {},
+	["ratfolk"] = {},
 	["reptilian"] = {
 		immune = "water",
 		weakness = "ice"
@@ -319,9 +319,9 @@ creaturesubtype = {
 	["robot"] = {
 		weakness = "lightning"
 	},
-	"samsaran",
-	"sasquatch",
-	"shapechanger",
+	["samsaran"] = {},
+	["sasquatch"] = {},
+	["shapechanger"] = {},
 	["sin eater"] = {
 		immune = "death, doom, holy, mindaffecting, petrify",
 		resistance = "lightning 10, fire 10",
@@ -330,23 +330,23 @@ creaturesubtype = {
 	["super boss"] = {
 		immune = "banish, gravity, frog, mini, disabled, death, doom, paralysis, sleep, stop, petrify"
 	},
-	"swarm",
+	["swarm"] = {},
 	["shadow"] = {
 		immune = "shadow",
 		weakness = "holy"
 	},
-	"troop",
-	"udaeus",
-	"unbreathing",
-	"vanara",
-	"vanu vanu",
-	"vishkanya",
+	["troop"] = {},
+	["udaeus"] = {},
+	["unbreathing"] = {},
+	["vanara"] = {},
+	["vanu vanu"] = {},
+	["vishkanya"] = {},
 	["water"] = {
 		immune = "water",
 		strong = "fire",
 		weakness = "lightning"
 	},
-	"wayang",
+	["wayang"] = {},
 	["wild hunt"] = {
 		immune = "ice",
 		resistance = "lightning 10, fire 10"
