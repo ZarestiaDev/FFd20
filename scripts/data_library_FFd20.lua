@@ -68,7 +68,7 @@ function getSubTypeGroup(v)
 		local i = 1;
 		while aCreatureSubType[i] do
 			for sListCreatureSubType,_ in pairs(DataCommon.creaturesubtype) do
-				if aCreatureSubType[i]:match(sListCreatureSubType) then
+				if aCreatureSubType[i] == sListCreatureSubType then
 					local sSubtype = StringManager.capitalize(sListCreatureSubType);
 					table.insert(aOutput, sSubtype);
 					break;
@@ -81,14 +81,10 @@ function getSubTypeGroup(v)
 end
 
 function getNPCTypeValue(vNode)
-	Debug.console("Type")
-	Debug.console(getTypeGroup(DB.getValue(vNode, "type", "")));
 	return getTypeGroup(DB.getValue(vNode, "type", ""));
 end
 
 function getNPCSubTypeValue(vNode)
-	Debug.console("Subtype")
-	Debug.console(getSubTypeGroup(DB.getValue(vNode, "type", "")));
 	return getSubTypeGroup(DB.getValue(vNode, "type", ""));
 end
 
