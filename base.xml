@@ -5,8 +5,12 @@
   attribution and copyright information.
 -->
 
-<root version="3.0" release="0.4">
-	<announcement text="FFd20 ruleset v0.4 (2022-May-18) for Fantasy Grounds, development by Zarestia" font="emotefont" />
+<!-- 
+	- Many thanks to Kelrugem for letting me adapt parts of his extended automation extension
+-->
+
+<root version="3.0" release="0.5">
+	<announcement text="FFd20 ruleset v0.5 (2022-June-04) for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
 	<description>
