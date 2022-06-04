@@ -517,6 +517,7 @@ othercomps = {
 	["IMMUNE"] = "cond_immune",
 	["RESIST"] = "cond_resistance",
 	["WEAK"] = "cond_weakness",
+	["STRONG"] = "cond_strong",
 	["REGEN"] = "cond_regeneration",
 	["FHEAL"] = "cond_regeneration",
 	["DMGO"] = "cond_bleed",
@@ -537,6 +538,7 @@ targetableeffectcomps = {
 	"DMGS",
 	"IMMUNE",
 	"WEAKNESS",
+	"STRONG",
 	"RESIST",
 	"SR",
 	"SIMMUNE"

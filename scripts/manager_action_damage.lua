@@ -1557,7 +1557,6 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags
 	-- Output results
 	ActionDamage.messageDamage(rSource, rTarget, bSecret, rDamageOutput.sTypeOutput, sDamage, rDamageOutput.sVal, table.concat(rDamageOutput.tNotifications, " "));
 
-	Debug.console(rRollAbsorb.nMod)
 	if rRollAbsorb.nMod and ( rRollAbsorb.nMod > 0 ) then
 		ActionDamage.onDamage(rSource, rTarget, rRollAbsorb);
 	end

@@ -85,7 +85,6 @@ function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss, t
 			end
 		end
 	end
-
 	Comm.deliverOOBMessage(msgOOB, "");
 end
 
@@ -291,6 +290,11 @@ function onCastCLC(rSource, rTarget, rRoll)
 		local nSR = math.max(ActorManagerFFd20.getSpellDefense(rTarget), nSRMod);
 		if nSR > 0 then
 			if not string.match(rRoll.sDesc, "%[SR NOT ALLOWED%]") then
+				local bWeakness = EffectManagerFFd20.hasEffect(rTarget, "WEAK", rSource, false, false, rRoll.tags);
+				if bWeakness then
+					rRoll.nMod = rRoll.nMod + 2;
+					rRoll.sDesc = "[WEAK]" .. rRoll.sDesc;
+				end
 				local rRoll = { sType = "clc", sDesc = rRoll.sDesc, aDice = {"d20"}, nMod = rRoll.nMod, bRemoveOnMiss = rRoll.bRemoveOnMiss };
 				ActionsManager.actionDirect(rSource, "clc", { rRoll }, { { rTarget } });
 				return true;
@@ -304,7 +308,7 @@ function onCastSave(rSource, rTarget, rRoll)
 		local sSaveShort, sSaveDC = string.match(rRoll.sDesc, "%[(%w+) DC (%d+)%]")
 		if sSaveShort then
 			local sSave = DataCommon.save_stol[sSaveShort];
-			if sSave then
+			if sSave then		
 				notifyApplySave(rSource, rTarget, rRoll.bSecret, rRoll.sDesc, rRoll.nMod, rRoll.bRemoveOnMiss, rRoll.tags);
 				return true;
 			end

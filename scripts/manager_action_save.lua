@@ -258,6 +258,16 @@ function modSave(rSource, rTarget, rRoll)
 			end
 		end
 
+		-- Get strong & weakness modifiers
+		if EffectManagerFFd20.hasEffect(rSource, "STRONG", rTarget, false, false, rRoll.tags) then
+			nAddMod = nAddMod + 2;
+			bEffects = true;
+		end
+		if EffectManagerFFd20.hasEffect(rSource, "WEAK", rTarget, false, false, rRoll.tags) then
+			nAddMod = nAddMod - 2;
+			bEffects = true;
+		end
+
 		-- Get condition modifiers
 		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
 				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or

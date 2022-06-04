@@ -765,13 +765,13 @@ function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets
 			local nMatch = 0;
 			for kEffectComp, sEffectComp in ipairs(aEffectComps) do
 				local rEffectComp = parseEffectComp(sEffectComp);
-				-- Check for immunity
-				if rEffectComp.type == "IMMUNE" then
+
+				-- Check for immunity, stong, and weakness
+				if (rEffectComp.type == "IMMUNE" or rEffectComp.type == "STRONG" or rEffectComp.type == "WEAK") and rEffectComp.type == sEffect then
 					if not rEffectSpell then
 						break;
 					elseif checkTagConditional(rEffectComp.remainder, rEffectSpell) then
-						rEffectComp.original = sLowerEffect;
-					else
+						nMatch = kEffectComp;
 						break;
 					end
 				end
