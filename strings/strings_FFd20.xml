@@ -300,6 +300,9 @@
 	<string name="char_label_combatatkranged">Ranged</string>
 	<string name="char_label_combatspeed">Speed</string>
 
+	<string name="char_desc_atkmelee">Melee Attack</string>
+	<string name="char_desc_atkranged">Ranged Attack</string>
+
 	<!-- Character - Skills -->
 	<string name="char_label_skillpointsspent">Points Spent</string>
 	<string name="char_label_skillranks">Ranks</string>

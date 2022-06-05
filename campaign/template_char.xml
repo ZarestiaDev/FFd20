@@ -321,6 +321,7 @@
 	</template>
 	<template name="number_charmeleetotal">
 		<number_charattacktotal>
+			<description><textres>char_desc_atkmelee</textres></description>
 			<modifierfield>attackbonus.melee.temporary</modifierfield>
 			<source><name>attackbonus.base</name><op>+</op></source>
 			<source><name>attackbonus.melee.size</name><op>+</op></source>
@@ -330,6 +331,7 @@
 	</template>
 	<template name="number_charrangedtotal">
 		<number_charattacktotal>
+			<description><textres>char_desc_atkranged</textres></description>
 			<modifierfield>attackbonus.ranged.temporary</modifierfield>
 			<source><name>attackbonus.base</name><op>+</op></source>
 			<source><name>attackbonus.ranged.size</name><op>+</op></source>
