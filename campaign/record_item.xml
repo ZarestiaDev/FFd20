@@ -8,10 +8,10 @@
 <root>
 	<windowclass name="item" merge="join">
 		<placement>
-			<size width="375" height="400" />
+			<size width="395" height="400" />
 		</placement>
 		<sizelimits>
-			<minimum width="375" height="400" />
+			<minimum width="395" height="400" />
 			<dynamic />
 		</sizelimits>
 		<sheetdata>
