@@ -260,6 +260,14 @@ function calcItemArmorClass(nodeChar)
 	DB.setValue(nodeChar, "speed.final", "number", nSpeedTotal);
 end
 
+function getSpellFailure(nodeChar)
+	local nArmorPenalty = DB.getValue(nodeChar, "encumbrance.armormaxstatbonusactive", 0);
+	if nArmorPenalty == 1 then
+		local nSpellFailure = DB.getValue(nodeChar, "encumbrance.spellfailure", 0);
+		return nSpellFailure;
+	end
+	return 0;
+end
 --
 -- WEAPON MANAGEMENT
 --

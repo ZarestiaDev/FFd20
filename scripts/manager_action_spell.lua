@@ -22,6 +22,7 @@ function onInit()
 	ActionsManager.registerResultHandler("castsave", onCastSave);
 	ActionsManager.registerResultHandler("clc", onCLC);
 	ActionsManager.registerResultHandler("spellsave", onSpellSave);
+	ActionsManager.registerResultHandler("spellfailure", onSpellFailure);
 end
 
 function handleApplySave(msgOOB)
@@ -273,13 +274,36 @@ function onSpellCast(rSource, rTarget, rRoll)
 
 	if rTarget then
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
+		
 		local spellImmunity = EffectManagerFFd20.hasEffect(rTarget, "IMMUNE", rSource, false, false, rRoll.tags);
 		if spellImmunity then
 			rMessage.text = rMessage.text .. " [IMMUNE]";
 			rMessage.icon = "spell_cast_fail";
 		end
+
+		local nSpellFailure = CharManager.getSpellFailure(ActorManager.getCreatureNode(rSource));
+		if nSpellFailure > 0 then
+			local rSpellFailureRoll = { sType = "spellfailure", sDesc = "[SPELL FAILURE " .. nSpellFailure .. "%]", aDice = { "d100" }, nMod = 0 };
+			ActionsManager.roll(rSource, rTarget, rSpellFailureRoll);
+		end
+	Comm.deliverChatMessage(rMessage);
 	end
-	
+end
+
+function onSpellFailure(rSource, rTarget, rRoll)
+	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
+
+	local nTotal = ActionsManager.total(rRoll);
+	local nSpellFailure = tonumber(string.match(rRoll.sDesc, "%[SPELL FAILURE (%d+)%%%]")) or 0;
+
+	if nTotal <= nSpellFailure then
+		rMessage.text = rMessage.text .. " [FAILURE]";
+		rMessage.icon = "spell_cast_fail";
+	else
+		rMessage.text = rMessage.text .. " [SUCCESS]";
+		rMessage.icon = "spell_cast";
+	end
+
 	Comm.deliverChatMessage(rMessage);
 end
 
