@@ -604,13 +604,11 @@
 				<anchored position="insidetopleft" offset="5,2" width="20" height="20" />
 				<target>spellclasslist,levels,spells</target>
 				<togglelevel>2</togglelevel>
-				<invisible />
 			</button_expand>
 			<button_collapse name="collapse_full">
 				<anchored position="insidetopleft" offset="35,2" width="20" height="20" />
 				<target>spellclasslist,levels,spells</target>
 				<togglelevel>2</togglelevel>
-				<invisible />
 			</button_collapse>
 			<buttoncontrol name="spellclasslist_iadd">
 				<anchored position="insidetopright" offset="35,2" width="20" height="20" />
@@ -637,7 +635,6 @@
 				<anchored position="insidetop" offset="0,30" />
 				<class>spell_class</class>
 				<npc />
-				<invisible />
 				<script>
 					function onInit()
 						super.onInit();

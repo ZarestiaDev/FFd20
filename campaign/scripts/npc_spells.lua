@@ -32,10 +32,6 @@ function update()
 	spellclasslist_iedit.setValue(0);
 	spellclasslist_iedit.setVisible(not bReadOnly);
 	spellclasslist_iadd.setVisible(not bReadOnly);
-	
-	spellclasslist.setVisible(not bReadOnly);
-	expand_full.setVisible(not bReadOnly);
-	collapse_full.setVisible(not bReadOnly);
 end
 
 function updateAbility()
