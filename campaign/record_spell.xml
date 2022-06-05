@@ -126,7 +126,11 @@
 			<label_column name="components_label">
 				<static textres="spell_label_components" />
 			</label_column>
-			<string_columnh name="components" />
+			<string_columnh name="components">
+				<default>
+					<textres>spell_text_components</textres>
+				</default>
+			</string_columnh>>
 
 			<label_column name="castingtime_label">
 				<static textres="spell_label_casttime" />

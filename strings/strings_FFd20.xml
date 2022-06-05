@@ -549,6 +549,8 @@
 	<string name="spell_label_dmg">Dmg</string>
 	<string name="spell_label_heal">Heal</string>
 
+	<string name="spell_text_components">V, S</string>
+
 	<string name="spell_error_dropclassmissing">Unable to determine class for moved spell, please drop within a class.</string>
 	<string name="spell_error_dropclasslevelmissing">Unable to determine class or level for new spell, please drop within a class level.</string>
 
