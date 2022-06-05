@@ -200,10 +200,13 @@ function modSkill(rSource, rTarget, rRoll)
 			end
 			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
 		end
+		ActionAdvantage.encodeAdvantage(rRoll);
 	end
 end
 
 function onRoll(rSource, rTarget, rRoll)
+	ActionAdvantage.decodeAdvantage(rRoll);
+
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 	rMessage.text = string.gsub(rMessage.text, " %[MOD:[^]]*%]", "");
 

@@ -14,3 +14,5 @@ The CoreRPG ruleset and all included files are copyright 2004-2021, Smiteworks U
 The 3.5E ruleset and all included files are copyright 2004-2021, Smiteworks USA LLC.
 
 The PFRPG ruleset and all included files are copyright 2004-2021, Smiteworks USA LLC.
+
+The 5E ruleset and all included files are copyright 2004-2022, Smiteworks USA LLC.

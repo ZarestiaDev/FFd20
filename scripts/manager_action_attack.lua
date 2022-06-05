@@ -382,9 +382,13 @@ function modAttack(rSource, rTarget, rRoll)
 		end
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
+
+	ActionAdvantage.encodeAdvantage(rRoll);
 end
 
 function onAttack(rSource, rTarget, rRoll)
+	ActionAdvantage.decodeAdvantage(rRoll);
+	
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 
 	local bIsSourcePC = ActorManager.isPC(rSource);

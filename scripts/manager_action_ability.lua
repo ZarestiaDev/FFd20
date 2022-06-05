@@ -122,9 +122,13 @@ function modRoll(rSource, rTarget, rRoll)
 		end
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
+
+	ActionAdvantage.encodeAdvantage(rRoll);
 end
 
 function onRoll(rSource, rTarget, rRoll)
+	ActionAdvantage.decodeAdvantage(rRoll);
+
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 
 	if rRoll.nTarget then

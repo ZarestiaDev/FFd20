@@ -102,6 +102,7 @@ function modRoll(rSource, rTarget, rRoll)
 			end
 			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
 		end
+		ActionAdvantage.encodeAdvantage(rRoll);
 	end
 end
 
@@ -154,6 +155,8 @@ function getEffectAdjustments(rActor, sActionStat)
 end
 
 function onResolve(rSource, rTarget, rRoll)
+	ActionAdvantage.decodeAdvantage(rRoll);
+
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 	Comm.deliverChatMessage(rMessage);
 	

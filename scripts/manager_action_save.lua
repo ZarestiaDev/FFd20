@@ -182,7 +182,6 @@ function modSave(rSource, rTarget, rRoll)
 		sSave = StringManager.trim(sSaveMatch):lower();
 	end
 	
-
 	if rSource then
 		local bEffects = false;
 
@@ -329,9 +328,13 @@ function modSave(rSource, rTarget, rRoll)
 		end
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
+
+	ActionAdvantage.encodeAdvantage(rRoll);
 end
 
 function onSave(rSource, rTarget, rRoll)
+	ActionAdvantage.decodeAdvantage(rRoll);
+
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 	Comm.deliverChatMessage(rMessage);
 	

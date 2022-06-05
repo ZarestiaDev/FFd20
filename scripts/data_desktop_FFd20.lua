@@ -35,9 +35,17 @@ _tModifierWindowPresets =
 			"DMG_HALF",
 		}
 	},
+	{
+		sCategory = "general",
+		tPresets = {
+			"ADV",
+			"DIS"
+		}
+	}
 };
 _tModifierExclusionSets =
 {
 	{ "DEF_PCOVER", "DEF_COVER", "DEF_SCOVER" },
 	{ "DEF_CONC", "DEF_TCONC" },
+	{ "ADV", "DIS" }
 };

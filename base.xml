@@ -128,4 +128,6 @@
 	<script name="ActionSkill" file="scripts/manager_action_skill.lua" />
 	<script name="ActionSave" file="scripts/manager_action_save.lua" />
 	<script name="ActionSpell" file="scripts/manager_action_spell.lua" />
+
+	<script name="ActionAdvantage" file="scripts/manager_action_advantage.lua" />
 </root>

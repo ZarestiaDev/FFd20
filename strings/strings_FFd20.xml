@@ -191,6 +191,9 @@
 	<string name="modifier_category_damage">Damage</string>
 	<string name="modifier_label_DMG_CRIT">Critical</string>
 	<string name="modifier_label_DMG_HALF">Half</string>
+	<string name="modifier_category_general">General</string>
+	<string name="modifier_label_ADV">Advantage</string>
+	<string name="modifier_label_DIS">Disadvantage</string>
 	
 	<!-- Skills -->
 	<string name="skill_value_acrobatics">Acrobatics</string>
