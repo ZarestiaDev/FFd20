@@ -368,7 +368,7 @@ conditions = {
 	"antagonized",
 	"banished",
 	"berserk", -- IMMUNE: fear
-	"bleed", -- use DMGO
+	"bleed",
 	"blinded",
 	"burning", -- use DNGO
 	"charmed",
