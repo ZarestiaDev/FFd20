@@ -367,7 +367,7 @@ conditionaltags = {
 conditions = {
 	"antagonized",
 	"banished",
-	"berserk", -- +2 circumstance STR, -2 AC, IMMUNE: fear
+	"berserk", -- IMMUNE: fear
 	"bleed", -- use DMGO
 	"blinded",
 	"burning", -- use DNGO
