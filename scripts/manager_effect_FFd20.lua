@@ -122,7 +122,7 @@ function onEffectActorStartTurn(nodeActor, nodeEffect)
 			end
 		
 		-- Ongoing damage, fast healing and regeneration
-		elseif rEffectComp.type == "DMGO" or rEffectComp.type == "FHEAL" or rEffectComp.type == "REGEN" or rEffectComp.type == "Bleed" then
+		elseif rEffectComp.type == "DMGO" or rEffectComp.type == "FHEAL" or rEffectComp.type == "REGEN" or rEffectComp.type == "Bleed" or rEffectComp.type == "Burning" or rEffectComp.type == "Poisoned" then
 			local nActive = DB.getValue(nodeEffect, "isactive", 0);
 			if nActive == 2 then
 				DB.setValue(nodeEffect, "isactive", "number", 1);
