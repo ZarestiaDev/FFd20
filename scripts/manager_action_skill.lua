@@ -86,6 +86,17 @@ function modSkill(rSource, rTarget, rRoll)
 		rRoll.sDesc = rRoll.sDesc .. " [ASSIST]";
 	end
 
+	local bADV = false;
+	local bDIS = false;
+	if rRoll.sDesc:match(" %[ADV%]") then
+		bADV = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[ADV%]", "");
+	end
+	if rRoll.sDesc:match(" %[DIS%]") then
+		bDIS = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[DIS%]", "");
+	end
+
 	if rSource then
 		local bEffects = false;
 
@@ -134,6 +145,20 @@ function modSkill(rSource, rTarget, rRoll)
 		end
 		
 		-- Get condition modifiers
+		if EffectManagerFFd20.hasEffectCondition(rSource, "ADVSKILL") then
+			bADV = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVSKILL", {aSkillFilter})) > 0 then
+			bADV = true;
+			bEffects = true;
+		end
+		if EffectManagerFFd20.hasEffectCondition(rSource, "DISSKILL") then
+			bDIS = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISSKILL", {aSkillFilter})) > 0 then
+			bDIS = true;
+			bEffects = true;
+		end
 		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
 				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
 				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
@@ -200,7 +225,7 @@ function modSkill(rSource, rTarget, rRoll)
 			end
 			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
 		end
-		ActionAdvantage.encodeAdvantage(rRoll);
+		ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 	end
 end
 
