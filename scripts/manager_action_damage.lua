@@ -913,6 +913,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput, tags)
 	local aStrong = EffectManagerFFd20.getEffectsBonusByType(rTarget, "STRONG", false, {}, rSource, false, tags);
 	local aResist = EffectManagerFFd20.getEffectsBonusByType(rTarget, "RESIST", false, {}, rSource, false, tags);
 	local aDR = EffectManagerFFd20.getEffectsByType(rTarget, "DR", {}, rSource, false, tags);
+	local aHardness = EffectManagerFFd20.getEffectsByType(rTarget, "HARDNESS", {}, rSource, false, tags);
 	
 	local bApplyIncorporeal = false;
 	local bSourceIncorporeal = false;
@@ -1068,6 +1069,19 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput, tags)
 						nLocalDamageAdjust = nLocalDamageAdjust - nChange;
 						bResist = true;
 					end
+				end
+			end
+		end
+
+		-- HANDLE HARDNESS
+		if next(aHardness) ~= nil and (v + nLocalDamageAdjust) > 0 then
+			for _,vHardness in pairs(aHardness) do
+				local nApplied = vHardness.nApplied or 0;
+				if nApplied < vHardness.mod then
+					local nChange = math.min((vHardness.mod - nApplied), v + nLocalDamageAdjust);
+					vHardness.nApplied = nApplied + nChange;
+					nLocalDamageAdjust = nLocalDamageAdjust - nChange;
+					bResist = true;
 				end
 			end
 		end

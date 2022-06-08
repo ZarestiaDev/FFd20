@@ -502,45 +502,58 @@
 			</label_column>
 			<string_columnh name="type" />
 			
-			<label_column name="squares_label">
-				<static textres="npc_label_squares" />
+			<label_column name="size_label">
+				<static textres="npc_label_size" />
 			</label_column>
-			<string_columnh name="squares" />
+			<string_columnh name="size" />
+
+			<label_column name="cost_label">
+				<static textres="npc_label_cost" />
+			</label_column>
+			<string_columnh name="cost" />
+
+			<label_column name="speed_label">
+				<static textres="npc_label_speed" />
+			</label_column>
+			<string_columnh name="speed" />
+
+			<label_column name="fuel_label">
+				<static textres="npc_label_fuel" />
+			</label_column>
+			<string_columnh name="fuel" />
 
 			<header_column>
 				<static textres="npc_header_defense" />
 			</header_column>
 			
-			<label_column name="ac_label">
+			<label_column name="vac_label">
 				<static textres="ac" />
 			</label_column>
-			<string_columnh name="ac" />
+			<number_columnh name="vac" />
+
+			<label_column name="cmd_label">
+				<static textres="cmd" />
+			</label_column>
+			<number_columnh name="cmd" />
+
+			<label_column name="cover_label">
+				<static textres="npc_label_cover" />
+			</label_column>
+			<string_columnh name="cover" />
 
 			<label_column name="hp_label">
 				<static textres="hp" />
 			</label_column>
 			<number_columnh name="hp" />
 
-			<label_column name="basesave_label">
-				<static textres="npc_label_basesave" />
+			<label_column name="hardness_label">
+				<static textres="npc_label_hardness" />
 			</label_column>
-			<number_columnh name="basesave" />
+			<number_columnh name="hardness" />
 
 			<header_column>
 				<static textres="npc_header_offense" />
 			</header_column>
-			
-			<label_column name="speed_label">
-				<static textres="npc_label_speed" />
-			</label_column>
-			<string_columnh name="speed" />
-
-			<label_column name="babgrp_label">
-				<static textres="npc_label_cm" />
-			</label_column>
-			<string_columnh name="babgrp">
-				<script file="campaign/scripts/npc_babgrp.lua" />
-			</string_columnh>
 			
 			<label_column name="atk_label">
 				<static textres="npc_label_atk" />
@@ -554,45 +567,15 @@
 				<static textres="npc_header_desc" />
 			</header_column>
 			
-			<label_column name="prop_label">
-				<static textres="npc_label_propulsion" />
+			<label_column name="modifiers_label">
+				<static textres="npc_label_modifiers" />
 			</label_column>
-			<string_columnh name="prop" />
-
-			<label_column name="drive_label">
-				<static textres="npc_label_drivecheck" />
-			</label_column>
-			<string_columnh name="drive" />
-
-			<label_column name="ff_label">
-				<static textres="npc_label_forwardface" />
-			</label_column>
-			<string_columnh name="ff" />
+			<string_columnh name="modifiers" />
 			
-			<label_column name="drived_label">
-				<static textres="npc_label_drivedevice" />
+			<label_column name="passengers_label">
+				<static textres="npc_label_passengers" />
 			</label_column>
-			<string_columnh name="drived" />
-			
-			<label_column name="drives_label">
-				<static textres="npc_label_drivespace" />
-			</label_column>
-			<string_columnh name="drives" />
-			
-			<label_column name="crew_label">
-				<static textres="npc_label_crew" />
-			</label_column>
-			<number_columnh name="crew" />
-			
-			<label_column name="decks_label">
-				<static textres="npc_label_decks" />
-			</label_column>
-			<string_columnh name="decks" />
-			
-			<label_column name="weapons_label">
-				<static textres="npc_label_weapons" />
-			</label_column>
-			<string_columnh name="weapons" />
+			<number_columnh name="passengers" />
 		</sheetdata>
 	</windowclass>
 

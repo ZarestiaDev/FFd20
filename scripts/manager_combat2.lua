@@ -381,6 +381,19 @@ function addNPC(sClass, nodeNPC, sName)
 	if #aAddDamageTypes > 0 then
 		table.insert(aEffects, "DMGTYPE: " .. table.concat(aAddDamageTypes, ","));
 	end
+
+	-- VEHICLE
+	local sNPCType = DB.getValue(nodeNPC, "npctype", "");
+	if sNPCType == "Vehicle" then
+		local nAC = DB.getValue(nodeNPC, "vac", 0);
+		local nHardness = DB.getValue(nodeNPC, "hardness", 0);
+
+		DB.setValue(nodeEntry, "ac_final", "number", nAC);
+		if nHardness > 0 then
+			local sHardness = tostring(nHardness);
+			table.insert(aEffects, "HARDNESS: " .. sHardness);
+		end
+	end
 	
 	-- ADD DECODED EFFECTS
 	if #aEffects > 0 then

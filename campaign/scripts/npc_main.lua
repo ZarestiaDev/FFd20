@@ -11,7 +11,7 @@ function updateControl(sControl, bReadOnly, bForceHide)
 	if not self[sControl] then
 		return false;
 	end
-		
+
 	return self[sControl].update(bReadOnly, bForceHide);
 end
 
@@ -95,17 +95,6 @@ function update()
 	end
 	divider.setVisible(bSection1);
 
-	-- Update labels based on NPC type
-	local sType = DB.getValue(nodeRecord, "npctype", "");
-	if babgrp_label then
-		if sType == "Vehicle" then
-			babgrp_label.setValue(Interface.getString("npc_label_cm"));
-			updateControl("babgrp", bReadOnly);
-		else
-			babgrp_label.setValue(Interface.getString("npc_label_babcm"));
-		end
-	end
-
 	updateControl("type", bReadOnly);
 
 	updateControl("alignment", bReadOnly, true);
@@ -145,15 +134,13 @@ function update()
 	updateControl("reset", bReadOnly);
 
 	-- Vehicle
-	updateControl("squares", bReadOnly);
-	updateControl("basesave", bReadOnly);
-	
-	updateControl("prop", bReadOnly);
-	updateControl("drive", bReadOnly);
-	updateControl("ff", bReadOnly);
-	updateControl("drived", bReadOnly);
-	updateControl("drives", bReadOnly);
-	updateControl("crew", bReadOnly);
-	updateControl("decks", bReadOnly);
-	updateControl("weapons", bReadOnly);
+	updateControl("size", bReadOnly);
+	updateControl("cost", bReadOnly);
+	updateControl("fuel", bReadOnly);
+	updateControl("vac", bReadOnly);
+	updateControl("cmd", bReadOnly);
+	updateControl("cover", bReadOnly);
+	updateControl("hardness", bReadOnly);
+	updateControl("modifiers", bReadOnly);
+	updateControl("passengers", bReadOnly);
 end

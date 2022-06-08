@@ -492,18 +492,13 @@
 	<string name="npc_label_effect2">Effect 2</string>
 	<string name="npc_label_destruction">Destruction</string>
 	
-	<string name="npc_label_squares">Squares</string>
-	<string name="npc_label_basesave">Base Save</string>
-	<string name="npc_label_cm">CM</string>
 	<string name="npc_header_desc">DESCRIPTION</string>
-	<string name="npc_label_propulsion">Propulsion</string>
-	<string name="npc_label_drivecheck">Driving Check</string>
-	<string name="npc_label_forwardface">Forward Face</string>
-	<string name="npc_label_drivedevice">Driving Dev.</string>
-	<string name="npc_label_drivespace">Driving Space</string>
-	<string name="npc_label_crew">Crew</string>
-	<string name="npc_label_decks">Decks</string>
-	<string name="npc_label_weapons">Weapons</string>
+	<string name="npc_label_cost">Cost</string>
+	<string name="npc_label_fuel">Fuel</string>
+	<string name="npc_label_cover">Cover</string>
+	<string name="npc_label_hardness">Hardness</string>
+	<string name="npc_label_modifiers">Modifiers</string>
+	<string name="npc_label_passengers">Passengers</string>
 
 	<string name="npc_label_absorb">Absorb</string>
 	<string name="npc_label_dr">DR</string>
