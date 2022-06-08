@@ -82,7 +82,7 @@ function modRoll(rSource, rTarget, rRoll)
 			sActionStat = "dexterity";
 		end
 		
-		local bEffects, aEffectDice, nEffectMod = getEffectAdjustments(rSource, sActionStat);
+		local bEffects, aEffectDice, nEffectMod, bADV, bDIS = getEffectAdjustments(rSource, sActionStat);
 		if bEffects then
 			for _,vDie in ipairs(aEffectDice) do
 				if vDie:sub(1,1) == "-" then
@@ -102,7 +102,7 @@ function modRoll(rSource, rTarget, rRoll)
 			end
 			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
 		end
-		ActionAdvantage.encodeAdvantage(rRoll);
+		ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 	end
 end
 
@@ -127,8 +127,11 @@ function getEffectAdjustments(rActor, sActionStat)
 	local bEffects = false;
 	local aEffectDice = {};
 	local nEffectMod = 0;
+	local bADV = false;
+	local bDIS = false;
 	
 	-- Determine general effect modifiers
+	local aCheckFilter = { sActionStat };
 	local aInitDice, nInitMod, nInitCount = EffectManagerFFd20.getEffectsBonus(rActor, {"INIT"});
 	if nInitCount > 0 then
 		bEffects = true;
@@ -144,6 +147,32 @@ function getEffectAdjustments(rActor, sActionStat)
 		bEffects = true;
 		nEffectMod = nEffectMod + nAbilityMod;
 	end
+
+	-- Get condition modifiers
+	if EffectManagerFFd20.hasEffectCondition(rActor, "ADVINIT") then
+		bEffects = true;
+		bADV = true;
+	end
+	if EffectManagerFFd20.hasEffectCondition(rActor, "DISINIT") then
+		bEffects = true;
+		bDIS = true;
+	end
+
+	-- Dexterity check conditions
+	if EffectManagerFFd20.hasEffectCondition(rActor, "ADVABIL") then
+		bEffects = true;
+		bADV = true;
+	elseif #(EffectManagerFFd20.getEffectsByType(rActor, "ADVABIL", aCheckFilter)) > 0 then
+		bEffects = true;
+		bADV = true;
+	end
+	if EffectManagerFFd20.hasEffectCondition(rActor, "DISABIL") then
+		bEffects = true;
+		bDIS = true;
+	elseif #(EffectManagerFFd20.getEffectsByType(rActor, "DISABIL", aCheckFilter)) > 0 then
+		bEffects = true;
+		bDIS = true;
+	end
 	
 	-- Check special conditions
 	if EffectManagerFFd20.hasEffectCondition(rActor, "Deafened") then
@@ -151,7 +180,7 @@ function getEffectAdjustments(rActor, sActionStat)
 		nEffectMod = nEffectMod - 4;
 	end
 
-	return bEffects, aEffectDice, nEffectMod;
+	return bEffects, aEffectDice, nEffectMod, bADV, bDIS;
 end
 
 function onResolve(rSource, rTarget, rRoll)
