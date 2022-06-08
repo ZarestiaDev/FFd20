@@ -282,8 +282,9 @@ function onSpellCast(rSource, rTarget, rRoll)
 		end
 
 		local nSpellFailure = CharManager.getSpellFailure(ActorManager.getCreatureNode(rSource));
-		if nSpellFailure > 0 then
-			local rSpellFailureRoll = { sType = "spellfailure", sDesc = "[SPELL FAILURE " .. nSpellFailure .. "%]", aDice = { "d100" }, nMod = 0 };
+		local nSFEffect = EffectManagerFFd20.getEffectsBonus(rSource, "SF", true);
+		if nSpellFailure > 0 or nSFEffect ~= 0 then
+			local rSpellFailureRoll = { sType = "spellfailure", sDesc = "[SPELL FAILURE " .. nSpellFailure + nSFEffect .. "%]", aDice = { "d100" }, nMod = 0 };
 			ActionsManager.roll(rSource, rTarget, rSpellFailureRoll);
 		end
 	Comm.deliverChatMessage(rMessage);
