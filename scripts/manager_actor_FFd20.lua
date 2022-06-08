@@ -810,6 +810,11 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 				nMissChance = 20;
 			end
 		end
+
+		nAttackMiss = EffectManagerFFd20.getEffectsBonus(rAttacker, "MISS", true);
+		if nAttackMiss > 0 then
+			nMissChance = nAttackMiss;
+		end
 		
 		-- ADD IN EFFECT MODIFIERS
 		nDefenseEffectMod = nBonusAC + nBonusStat + nBonusSituational;
