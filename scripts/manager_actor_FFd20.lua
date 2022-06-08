@@ -121,7 +121,7 @@ end
 --	ABILITY SCORES
 --
 
-function getAbilityEffectsBonus(rActor, sAbility)
+function getAbilityEffectsBonus(rActor, sAbility, tags)
 	if not rActor or not sAbility then
 		return 0, 0;
 	end
@@ -131,23 +131,23 @@ function getAbilityEffectsBonus(rActor, sAbility)
 		return 0, 0;
 	end
 	
-	local nEffectMod, nAbilityEffects = EffectManagerFFd20.getEffectsBonus(rActor, sAbilityEffect, true);
+	local nEffectMod, nAbilityEffects = EffectManagerFFd20.getEffectsBonus(rActor, sAbilityEffect, true, tags);
 	
 	if sAbility == "dexterity" then
-		if EffectManagerFFd20.hasEffectCondition(rActor, "Entangled") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Entangled", tags) then
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
-		if EffectManagerFFd20.hasEffectCondition(rActor, "Grappled") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Grappled", tags) then
 			nEffectMod = nEffectMod - 4;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
 	end
 	if sAbility == "dexterity" or sAbility == "strength" then
-		if EffectManagerFFd20.hasEffectCondition(rActor, "Exhausted") then
+		if EffectManagerFFd20.hasEffectCondition(rActor, "Exhausted", tags) then
 			nEffectMod = nEffectMod - 6;
 			nAbilityEffects = nAbilityEffects + 1;
-		elseif EffectManagerFFd20.hasEffectCondition(rActor, "Fatigued") then
+		elseif EffectManagerFFd20.hasEffectCondition(rActor, "Fatigued", tags) then
 			nEffectMod = nEffectMod - 2;
 			nAbilityEffects = nAbilityEffects + 1;
 		end
@@ -161,7 +161,6 @@ function getAbilityEffectsBonus(rActor, sAbility)
 	end
 
 	local nAbilityMod = 0;
-	local nAbilityScore = getAbilityScore(rActor, sAbility);
 	nAbilityMod = nEffectBonusMod;
 
 	return nAbilityMod, nAbilityEffects;
