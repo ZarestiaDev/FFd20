@@ -181,6 +181,17 @@ function modSave(rSource, rTarget, rRoll)
 	if sSaveMatch then
 		sSave = StringManager.trim(sSaveMatch):lower();
 	end
+
+	local bADV = false;
+	local bDIS = false;
+	if rRoll.sDesc:match(" %[ADV%]") then
+		bADV = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[ADV%]", "");
+	end
+	if rRoll.sDesc:match(" %[DIS%]") then
+		bDIS = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[DIS%]", "");
+	end
 	
 	if rSource then
 		local bEffects = false;
@@ -268,6 +279,20 @@ function modSave(rSource, rTarget, rRoll)
 		end
 
 		-- Get condition modifiers
+		if EffectManagerFFd20.hasEffect(rSource, "ADVSAVE", rTarget) then
+			bADV = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVSAVE", aSaveFilter, rTarget)) > 0 then
+			bADV = true;
+			bEffects = true;
+		end
+		if EffectManagerFFd20.hasEffect(rSource, "DISSAVE") then
+			bDIS = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISSAVE", aSaveFilter, rTarget)) > 0 then
+			bDIS = true;
+			bEffects = true;
+		end
 		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
 				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
 				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
@@ -329,7 +354,7 @@ function modSave(rSource, rTarget, rRoll)
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
 
-	ActionAdvantage.encodeAdvantage(rRoll);
+	ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 end
 
 function onSave(rSource, rTarget, rRoll)
