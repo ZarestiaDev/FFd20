@@ -226,6 +226,17 @@ function modAttack(rSource, rTarget, rRoll)
 	if bTotalConceal then
 		table.insert(aAddDesc, "[TOTAL CONC]");
 	end
+
+	local bADV = false;
+	local bDIS = false;
+	if rRoll.sDesc:match(" %[ADV%]") then
+		bADV = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[ADV%]", "");		
+	end
+	if rRoll.sDesc:match(" %[DIS%]") then
+		bDIS = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[DIS%]", "");
+	end
 	
 	if rSource then
 		-- Determine attack type
@@ -281,7 +292,24 @@ function modAttack(rSource, rTarget, rRoll)
 				nAddMod = nAddMod + nPFMod;
 			end
 		end
+
+		-- Get advantage effects
+		if EffectManagerFFd20.hasEffect(rSource, "ADVATK", rTarget) then
+			bEffects = true;
+			bADV = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVATK", aAttackFilter, rTarget)) > 0 then
+			bEffects = true;
+			bADV = true;
+		end
+		if EffectManagerFFd20.hasEffect(rSource, "DISATK", rTarget) then
+			bEffects = true;
+			bDIS = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISATK", aAttackFilter, rTarget)) > 0 then
+			bEffects = true;
+			bDIS = true;
+		end
 		
+
 		-- Get condition modifiers
 		if EffectManagerFFd20.hasEffect(rSource, "Invisible") then
 			bEffects = true;
@@ -383,7 +411,7 @@ function modAttack(rSource, rTarget, rRoll)
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
 
-	ActionAdvantage.encodeAdvantage(rRoll);
+	ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 end
 
 function onAttack(rSource, rTarget, rRoll)

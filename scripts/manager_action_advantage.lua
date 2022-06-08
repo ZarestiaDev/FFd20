@@ -3,9 +3,15 @@
 -- attribution and copyright information.
 --
 
-function encodeAdvantage(rRoll)
-	local bADV = ModifierManager.getKey("ADV");
-	local bDIS = ModifierManager.getKey("DIS");
+function encodeAdvantage(rRoll, bADV, bDIS)
+	local bButtonADV = ModifierManager.getKey("ADV");
+	local bButtonDIS = ModifierManager.getKey("DIS");
+	if bButtonADV then
+		bADV = true;
+	end
+	if bButtonDIS then
+		bDIS = true;
+	end
 	
 	if bADV then
 		rRoll.sDesc = rRoll.sDesc .. " [ADV]";
