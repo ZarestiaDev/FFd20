@@ -51,6 +51,17 @@ function modRoll(rSource, rTarget, rRoll)
 	local aAddDesc = {};
 	local aAddDice = {};
 	local nAddMod = 0;
+
+	local bADV = false;
+	local bDIS = false;
+	if rRoll.sDesc:match(" %[ADV%]") then
+		bADV = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[ADV%]", "");
+	end
+	if rRoll.sDesc:match(" %[DIS%]") then
+		bDIS = true;
+		rRoll.sDesc = rRoll.sDesc:gsub(" %[DIS%]", "");
+	end
 	
 	if rSource then
 		local bEffects = false;
@@ -73,6 +84,20 @@ function modRoll(rSource, rTarget, rRoll)
 		end
 		
 		-- GET CONDITION MODIFIERS
+		if EffectManagerFFd20.hasEffectCondition(rSource, "ADVABIL") then
+			bADV = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVABIL", {sAbility})) > 0 then
+			bADV = true;
+			bEffects = true;
+		end
+		if EffectManagerFFd20.hasEffectCondition(rSource, "DISABIL") then
+			bDIS = true;
+			bEffects = true;
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISABIL", {sAbility})) > 0 then
+			bDIS = true;
+			bEffects = true;
+		end
 		if EffectManagerFFd20.hasEffectCondition(rSource, "Frightened") or 
 				EffectManagerFFd20.hasEffectCondition(rSource, "Panicked") or
 				EffectManagerFFd20.hasEffectCondition(rSource, "Shaken") then
@@ -123,7 +148,7 @@ function modRoll(rSource, rTarget, rRoll)
 	end
 	rRoll.nMod = rRoll.nMod + nAddMod;
 
-	ActionAdvantage.encodeAdvantage(rRoll);
+	ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 end
 
 function onRoll(rSource, rTarget, rRoll)
