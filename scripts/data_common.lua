@@ -367,26 +367,18 @@ conditionaltags = {
 conditions = {
 	"antagonized",
 	"banished",
-	"berserk", -- IMMUNE: fear
-	"bleed",
 	"blinded",
-	"burning", -- use DNGO
+	"burning",
 	"charmed",
 	"climbing",
 	"confused",
 	"cowering",
-	"cursed", -- LB is not usable
+	"cursed",
 	"dazed",
 	"dazzled",
 	"deafened",
-	"deprotect", -- -AC
-	"deshell", -- -Saves
-	"dimmed", -- 20% concealment
 	"disabled",
 	"diseased",
-	"doom", -- -Death countdown
-	"drenched", -- more lightning damage, save vs. ice
-	"energy drained", -- Negative Levels
 	"entangled",
 	"exhausted",
 	"fascinated",
@@ -394,41 +386,31 @@ conditions = {
 	"flat-footed",
 	"float",
 	"frightened",
-	"frog", -- size change
 	"frozen",
 	"grappled",
-	"hasted", -- like haste
 	"helpless",
-	"illuminated", -- light
 	"immobilized",
-	"imperil", -- Worse elemental resistance
+	"imperil",
 	"incorporeal",
 	"invisible",
 	"kneeling",
-	"lucky", -- advantage
-	"mini", -- 10% size, 10% damage
 	"nauseated",
 	"panicked",
 	"paralyzed",
 	"petrified",
 	"pinned",
-	"poisoned", -- DMGO: 1d6
+	"poisoned",
 	"prone",
-	"protect", -- AC
 	"rebuked",
 	"reflect",
-	"regen", -- regen
-	"reraise", -- Does not die, raised on 1 HP
+	"reraise",
 	"running",
-	"sapped", -- like poisoned
 	"shaken",
-	"shell", -- Saves
 	"sickened",
 	"silenced",
 	"sitting",
 	"sleep",
 	"slowed",
-	"squalled", -- spell failure
 	"squeezing",
 	"stable",
 	"staggered",
@@ -437,9 +419,8 @@ conditions = {
 	"stunned",
 	"turned",
 	"unconscious",
-	"unlucky", -- disadvantage
 	"weighted",
-	"zombie" -- change to undead
+	"zombie"
 };
 
 -- Bonus/penalty effect types for token widgets

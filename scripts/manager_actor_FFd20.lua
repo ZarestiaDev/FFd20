@@ -152,10 +152,6 @@ function getAbilityEffectsBonus(rActor, sAbility)
 			nAbilityEffects = nAbilityEffects + 1;
 		end
 	end
-	if sAbility == "strength" and EffectManagerFFd20.hasEffectCondition(rActor, "Berserk") then
-		nEffectMod = nEffectMod + 2;
-		nAbilityEffects = nAbilityEffects + 1;
-	end
 	
 	local nEffectBonusMod = 0;
 	if nEffectMod > 0 then
@@ -673,9 +669,6 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		if EffectManagerFFd20.hasEffect(rDefender, "Invisible", rAttacker) then
 			bTotalConceal = true;
-		end
-		if EffectManagerFFd20.hasEffect(rDefender, "Berserk", rAttacker) then
-			nBonusSituational = nBonusSituational - 2;
 		end
 		
 		-- DETERMINE EXISTING AC MODIFIER TYPES
