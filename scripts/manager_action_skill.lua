@@ -148,14 +148,14 @@ function modSkill(rSource, rTarget, rRoll)
 		if EffectManagerFFd20.hasEffectCondition(rSource, "ADVSKILL") then
 			bADV = true;
 			bEffects = true;
-		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVSKILL", {aSkillFilter})) > 0 then
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "ADVSKILL", aSkillFilter)) > 0 then
 			bADV = true;
 			bEffects = true;
 		end
 		if EffectManagerFFd20.hasEffectCondition(rSource, "DISSKILL") then
 			bDIS = true;
 			bEffects = true;
-		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISSKILL", {aSkillFilter})) > 0 then
+		elseif #(EffectManagerFFd20.getEffectsByType(rSource, "DISSKILL", aSkillFilter)) > 0 then
 			bDIS = true;
 			bEffects = true;
 		end
