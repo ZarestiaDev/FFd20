@@ -281,6 +281,35 @@ end
 
 function evalAbilityHelper(rActor, sEffectAbility, nodeSpellClass)
 	local sSign, sModifier, sShortAbility = sEffectAbility:match("^%[([%+%-]?)([HTQ%d]?)([A-Z][A-Z][A-Z]?)%]$");
+	local sDie = sEffectAbility:match("%[(%-?%d*d%d*.*)%]");
+	local aDice, nMod = StringManager.convertStringToDice(sDie);
+	local bDie = StringManager.isDiceString(sDie)
+
+	if bDie then
+		for _,v in ipairs(aDice) do
+			local aSign, sDieSides = v:match("^([%-%+]?)[dD]([%dF]+)");
+			if sDieSides then
+				local nResult = 0;
+				if sDieSides == "F" then
+					local nRandom = math.random(3);
+					if nRandom == 1 then
+						nResult = -1;
+					elseif nRandom == 3 then
+						nResult = 1;
+					end
+				else
+					local nDieSides = tonumber(sDieSides) or 0;
+					nResult = math.random(nDieSides);
+				end
+				
+				if aSign == "-" then
+					nResult = 0 - nResult;
+				end
+				
+				nMod = nMod + nResult;
+			end
+		end
+	end
 
 	local nAbility = nil;
 	if sShortAbility == "STR" then
@@ -303,32 +332,33 @@ function evalAbilityHelper(rActor, sEffectAbility, nodeSpellClass)
 		if nodeSpellClass then
 			nAbility = DB.getValue(nodeSpellClass, "cl", 0);
 		end
+	elseif bDie then
+		nAbility = nMod;
 	end
 	
-	if nAbility then
+	if nAbility and not IsDie then
+		if sModifier == "H" then
+			nAbility = nAbility / 2;
+		elseif sModifier == "T" then
+			nAbility = nAbility / 3;
+		elseif sModifier == "Q" then
+			nAbility = nAbility / 4;
+		end
+
+		if sNumber and not (sModifier == "d") then
+			nAbility = nAbility * (tonumber(sNumber) or 1);
+		elseif ((sNumber or 0) ~= 0) and (sModifier == "d") then
+			nAbility = nAbility / (tonumber(sNumber) or 1);
+		end
+
 		if sSign == "-" then
 			nAbility = 0 - nAbility;
 		end
-		if sModifier == "H" then
-			if nAbility > 0 then
-				nAbility = math.floor(nAbility / 2);
-			else
-				nAbility = math.ceil(nAbility / 2);
-			end
-		elseif sModifier == "T" then
-			if nAbility > 0 then
-				nAbility = math.floor(nAbility / 3);
-			else
-				nAbility = math.ceil(nAbility / 3);
-			end
-		elseif sModifier == "Q" then
-			if nAbility > 0 then
-				nAbility = math.floor(nAbility / 4);
-			else
-				nAbility = math.ceil(nAbility / 4);
-			end
-		elseif sModifier then
-			nAbility = nAbility * (tonumber(sModifier) or 1);
+
+		if nAbility > 0 then
+			nAbility = math.floor(nAbility);
+		else
+			nAbility = math.ceil(nAbility);
 		end
 	end
 	
@@ -348,7 +378,8 @@ function evalEffect(rActor, s, nodeSpellClass)
 	for _,sComp in ipairs(aEffectComps) do
 		local rEffectComp = parseEffectComp(sComp);
 		for i = #(rEffectComp.remainder), 1, -1 do
-			if rEffectComp.remainder[i]:match("^%[([%+%-]?)([HTQ%d]?)([A-Z][A-Z][A-Z]?)%]$") then
+			local sDie = rEffectComp.remainder[i]:match("%[(%-?%d*d%d*.*)%]");
+			if rEffectComp.remainder[i]:match("^%[([%+%-]?)([HTQd]?)([%d]?)([A-Z][A-Z][A-Z]?)(%d*)%]$") or StringManager.isDiceString(sDie) then
 				local nAbility = evalAbilityHelper(rActor, rEffectComp.remainder[i], nodeSpellClass);
 				if nAbility then
 					rEffectComp.mod = rEffectComp.mod + nAbility;
