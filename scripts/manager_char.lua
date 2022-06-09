@@ -1693,22 +1693,30 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 		local nHDSides = tonumber(sHDSides) or 8;
 
 		local nHP = DB.getValue(nodeChar, "hp.total", 0);
+		local nCHP = DB.getValue(nodeChar, "hp.class", 0);
+		local nAHP = DB.getValue(nodeChar, "hp.ability", 0);
 		local nConBonus = DB.getValue(nodeChar, "abilities.constitution.bonus", 0);
 		if nTotalLevel == 1 then
 			local nAddHP = (nHDMult * nHDSides);
-			nHP = nHP + nAddHP + nConBonus;
+			nCHP = nCHP + nAddHP;
+			nAHP = nAHP + nConBonus;
+			nHP = nCHP + nAHP;
 
 			local sFormat = Interface.getString("char_message_classhpaddmax");
 			local sMsg = string.format(sFormat, DB.getValue(nodeClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. nAddHP .. "+" .. nConBonus .. ")";
 			ChatManager.SystemMessage(sMsg);
 		else
 			local nAddHP = math.floor(((nHDMult * (nHDSides + 1)) / 2) + 0.5);
-			nHP = nHP + nAddHP + nConBonus;
+			nCHP = nCHP + nAddHP;
+			nAHP = nAHP + nConBonus;
+			nHP = nCHP + nAHP;
 
 			local sFormat = Interface.getString("char_message_classhpaddavg");
 			local sMsg = string.format(sFormat, DB.getValue(nodeClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. nAddHP .. "+" .. nConBonus .. ")";
 			ChatManager.SystemMessage(sMsg);
 		end
+		DB.setValue(nodeChar, "hp.class", "number", nCHP);
+		DB.setValue(nodeChar, "hp.ability", "number", nAHP);
 		DB.setValue(nodeChar, "hp.total", "number", nHP);
 	end
 	

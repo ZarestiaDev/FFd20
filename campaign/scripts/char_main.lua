@@ -3,6 +3,20 @@
 -- attribution and copyright information.
 --
 
+function onConChanged()
+	local nodeChar = getDatabaseNode();
+	local nAbilityMod = DB.getValue(nodeChar, "abilities.constitution.bonus", 0);
+	local nHD = DB.getValue(nodeChar, "level", 0);
+	local nAHP = DB.getValue(nodeChar, "hp.ability", 0);
+	local nCHP = DB.getValue(nodeChar, "hp.class", 0);
+	nAHP = nAbilityMod * nHD;
+
+	DB.setValue(nodeChar, "hp.ability", "number", nAHP);
+
+	local nHP = nAHP + nCHP;
+	DB.setValue(nodeChar, "hp.total", "number", nHP);
+end
+
 function onHealthChanged()
 	local nodeChar = getDatabaseNode();
 	local sColor = ActorManagerFFd20.getPCSheetWoundColor(nodeChar);
