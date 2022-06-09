@@ -63,6 +63,7 @@
 	<string name="dc">DC</string>
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
+	<string name="misc">Misc</string>
 	
 	<string name="menu_dieclear">Clear Dice</string>
 	<string name="menu_rest">Rest</string>

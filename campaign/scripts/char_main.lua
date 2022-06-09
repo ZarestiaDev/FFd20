@@ -9,11 +9,12 @@ function onConChanged()
 	local nHD = DB.getValue(nodeChar, "level", 0);
 	local nAHP = DB.getValue(nodeChar, "hp.ability", 0);
 	local nCHP = DB.getValue(nodeChar, "hp.class", 0);
+	local nMHP = DB.getValue(nodeChar, "hp.misc", 0);
 	nAHP = nAbilityMod * nHD;
 
 	DB.setValue(nodeChar, "hp.ability", "number", nAHP);
 
-	local nHP = nAHP + nCHP;
+	local nHP = nAHP + nCHP + nMHP;
 	DB.setValue(nodeChar, "hp.total", "number", nHP);
 end
 

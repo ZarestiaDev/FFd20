@@ -6,6 +6,13 @@
 -->
 
 <root>
+	<template name="button_chardetails">
+		<buttoncontrol>
+			<anchored width="20" height="20" />
+			<state icon="button_details" pressed="button_details_down" />
+		</buttoncontrol>
+	</template>
+
 	<template name="windowtitlebar_char">
 		<windowtitlebar>
 			<bounds merge="replace">0,10,-1,40</bounds>
