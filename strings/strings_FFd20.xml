@@ -534,10 +534,13 @@
 	<string name="spell_label_baseability">Ability</string>
 	<string name="spell_label_sp">Spell Penetration</string>
 	<string name="spell_label_ccdetail">Conc. Check</string>
-	<string name="spell_label_mpbonus">Bonus MP</string>
-	<string name="spell_label_mpclass">Class MP</string>
-	<string name="spell_label_classlevel">Class Level</string>
-	<string name="spell_label_maxlevel">Max Level</string>
+	<string name="spell_label_mp">MP</string>
+	<string name="spell_label_level">Level</string>
+	<string name="spell_label_mpbonus">Bonus</string>
+	<string name="spell_label_mpclass">Class</string>
+	<string name="spell_label_mpmisc">Misc</string>
+	<string name="spell_label_classlevel">Class</string>
+	<string name="spell_label_maxlevel">Max</string>
 	
 	<string name="spell_label_cast">Cast</string>
 	<string name="spell_label_atk">Atk</string>

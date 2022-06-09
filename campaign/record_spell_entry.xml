@@ -637,54 +637,83 @@
 				</anchored>
 				<frame name="groupbox3" />
 			</genericcontrol>
-			<label name="label_mpbonus">
-				<anchored to="frame_mp" position="insidetopleft" offset="128,80" />
-				<static textres="spell_label_mpbonus" />
-			</label>
-			<number_spell name="mpbonus" source="mp.bonus">
-				<anchored to="label_mpbonus" position="righthigh" offset="11" />
-				<script>
-					function onValueChanged()
-						window.calcMaxMP();
-					end
-				</script>
-			</number_spell>
-			<label name="label_mpclass">
-				<anchored to="frame_mp" position="insidetopleft" offset="15,80" />
-				<static textres="spell_label_mpclass" />
-			</label>
-			<number_spell name="mpclass" source="mp.class">
-				<anchored to="label_mpclass" position="righthigh" offset="23" />
-				<script>
-					function onValueChanged()
-						window.calcMaxMP();
-					end
-				</script>
-			</number_spell>
+
 			<label name="label_classlevel">
 				<anchored to="frame_mp" position="insidetopleft" offset="15,25" />
-				<static textres="spell_label_classlevel" />
+				<static textres="spell_label_level" />
 			</label>
 			<number_spell name="classlevel" source="classlevel">
 				<anchored to="label_classlevel" position="righthigh" offset="10" />
 				<script>
+					function onInit()
+						onValueChanged();
+					end
 					function onValueChanged()
 						window.calcClassMP();
 					end
 				</script>
 			</number_spell>
-			<label name="label_maxlevel">
-				<anchored to="frame_mp" position="insidetopleft" offset="128,25" />
-				<static textres="spell_label_maxlevel" />
-			</label>
+			<label_fieldtop name="classlevel_label">
+				<anchored to="classlevel" />
+				<static textres="spell_label_mpclass" />
+			</label_fieldtop>
+
 			<number_spell name="maxlevel" source="availablelevel">
-				<anchored to="label_maxlevel" position="righthigh" offset="10" />
+				<anchored to="classlevel" position="righthigh" offset="20" />
 				<script>
 					function onValueChanged()
 						window.onClassLevelChanged();
 					end
 				</script>
 			</number_spell>
+			<label_fieldtop name="maxlevel_label">
+				<anchored to="maxlevel" />
+				<static textres="spell_label_maxlevel" />
+			</label_fieldtop>
+
+			<label name="label_mpclass">
+				<anchored to="frame_mp" position="insidetopleft" offset="15,80" />
+				<static textres="spell_label_mp" />
+			</label>
+			<number_spell name="mpclass" source="mp.class">
+				<anchored to="label_mpclass" position="righthigh" offset="23" />
+				<script>
+					function onValueChanged()
+						window.calcMP();
+					end
+				</script>
+			</number_spell>
+			<label_fieldtop name="mpclass_label">
+				<anchored to="mpclass" />
+				<static textres="spell_label_mpclass" />
+			</label_fieldtop>
+
+			<number_spell name="mpbonus" source="mp.bonus">
+				<anchored to="mpclass" position="righthigh" offset="20" />
+				<script>
+					function onValueChanged()
+						window.calcMP();
+					end
+				</script>
+			</number_spell>
+			<label_fieldtop name="mpbonus_label">
+				<anchored to="mpbonus" />
+				<static textres="spell_label_mpbonus" />
+			</label_fieldtop>
+
+			<number_spell name="mpmisc" source="mp.misc">
+				<anchored to="mpbonus" position="righthigh" offset="20" />
+				<script>
+					function onValueChanged()
+						window.calcMP();
+					end
+				</script>
+				<delaykeyupdate />
+			</number_spell>
+			<label_fieldtop name="mpmisc_label">
+				<anchored to="mpmisc" />
+				<static textres="spell_label_mpmisc" />
+			</label_fieldtop>
 
 			<genericcontrol name="classframe">
 				<anchored>

@@ -74,7 +74,7 @@ function onStatUpdate()
 		local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
 		dcstatmod.setValue(nValue);
-		calcAbilityBonusMP(nodeSpellClass, nValue);
+		--calcAbilityBonusMP(nodeSpellClass, nValue);
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
@@ -108,17 +108,33 @@ function calcClassMP()
 	local node = getDatabaseNode();
 	local sType = DB.getValue(node, "type", "");
 	local nLevel = DB.getValue(node, "classlevel", 0);
-
-	DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
+	if sType ~= "" then
+		DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
+	end
 end
 
-function calcMaxMP()
+function calcMP()
 	local node = getDatabaseNode();
 	local nBonus = DB.getValue(node, "mp.bonus", 0);
 	local nClass = DB.getValue(node, "mp.class", 0);
+	local nMisc = DB.getValue(node, "mp.misc", 0);
+	
+	local nCurrent = DB.getValue(node, "mp.current", 0);
+	local nMax = nBonus + nClass + nMisc;
+	local nOriginalMax = DB.getValue(node, "mp.max", 0);
+	local nDelta = nOriginalMax - nMax;
 
-	local nMax = nBonus + nClass
 	DB.setValue(node, "mp.max", "number", nMax);
+
+	if nDelta ~= 0 then
+		if nOriginalMax < nMax then
+			nDelta = math.abs(nDelta);
+		elseif nOriginalMax > nMax then
+			nDelta = math.abs(nDelta)*-1;
+		end
+		nCurrent = nCurrent + nDelta;
+		DB.setValue(node, "mp.current", "number", nCurrent);
+	end
 end
 
 function onMenuSelection(selection, subselection)
@@ -168,14 +184,13 @@ function toggleDetail()
 	updateControl("ccmisc", status);
 
 	frame_mp.setVisible(status);
-	label_mpbonus.setVisible(status);
-	label_mpclass.setVisible(status);
 	label_classlevel.setVisible(status);
-	label_maxlevel.setVisible(status);
+	label_mpclass.setVisible(status);
 	updateControl("mpbonus", status);
 	updateControl("mpclass", status);
 	updateControl("classlevel", status);
 	updateControl("maxlevel", status);
+	updateControl("mpmisc", status);
 end
 
 function setFilter(bFilter)

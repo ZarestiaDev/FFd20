@@ -161,7 +161,7 @@
 	</template>
 	<template name="number_spell">
 		<basicnumber>
-			<anchored width="25" height="20" />
+			<anchored width="26" height="20" />
 		</basicnumber>
 	</template>
 	
