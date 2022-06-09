@@ -143,6 +143,37 @@ function modSkill(rSource, rTarget, rRoll)
 		if (nEffectCount > 0) then
 			bEffects = true;
 		end
+
+		-- Handle effects for fly
+		for _,name in pairs(aSkillWordsLower) do
+			if name == "fly" then
+				local rActor = ActorManager.getCreatureNode(rSource)
+				local nCreatureSize = ActorManagerFFd20.getSize(rActor);
+				if nCreatureSize ~= 0 then
+					nAddMod = nAddMod + (nCreatureSize*-2);
+					bEffects = true;
+				end
+				local aSpecialSpeed = StringManager.parseWords(DB.getValue(rActor, "speed.special", ""));
+				for k,v in pairs(aSpecialSpeed) do
+					if v:lower() == "fly" then
+						local sManeuverability = aSpecialSpeed[k+2]:lower();
+						if sManeuverability == "clumsy" then
+							nAddMod = nAddMod - 8;
+							bEffects = true;
+						elseif sManeuverability == "poor" then
+							nAddMod = nAddMod - 4;
+							bEffects = true;
+						elseif sManeuverability == "good" then
+							nAddMod = nAddMod + 4;
+							bEffects = true;
+						elseif sManeuverability == "perfect" then
+							nAddMod = nAddMod + 8;
+							bEffects = true;
+						end
+					end
+				end
+			end
+		end
 		
 		-- Get condition modifiers
 		if EffectManagerFFd20.hasEffectCondition(rSource, "ADVSKILL") then
