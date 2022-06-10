@@ -37,6 +37,8 @@ function registerOptions()
 			{ labels = "option_val_all|option_val_friendly", values = "all|on", baselabel = "option_val_off", baseval = "off", default = "on" });
 	OptionsManager.registerOption2("HRFC", false, "option_header_houserule", "option_label_HRFC", "option_entry_cycler", 
 			{ labels = "option_val_fumbleandcrit|option_val_fumble|option_val_crit", values = "both|fumble|criticalhit", baselabel = "option_val_off", baseval = "", default = "" });
+	OptionsManager.registerOption2("HRXP", false, "option_header_houserule", "option_label_HRXP", "option_entry_cycler", 
+			{ labels = "option_val_slow|option_val_medium|option_val_fast", values = "slow|medium|fast", baselabel = "option_val_off", baseval = "off", default = "off" });
 
 	OptionsManager.registerOption2("GFP", false, "option_header_optional", "option_label_GFP", "option_entry_cycler",
 			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });

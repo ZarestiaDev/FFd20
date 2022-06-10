@@ -468,17 +468,7 @@
 		</sizelimits>
 		<nodelete />
 		<playercontrol />
-		<script>
-			function onDrop(x, y, draginfo)
-				if draginfo.isType("shortcut") then
-					local sClass, sRecord = draginfo.getShortcutData();
-					if sClass == "referenceclass" then
-						CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
-						return true;
-					end
-				end
-			end
-		</script>
+		<script file="campaign/scripts/char_classes.lua" />
 		<sheetdata>
 			<windowtitlebar_char name="title">
 				<prefix>char_classes_title</prefix>
@@ -502,6 +492,15 @@
 				<anchored to="level" offset="15,1" />
 				<static textres="char_label_totallevel" />
 			</label_fieldtop>
+			<label name="advancement_label">
+				<anchored to="level" position="righthigh" offset="30,0" width="70" />
+				<static textres="off" />
+				<center />
+			</label>
+			<label_fieldtop name="advancement_top">
+				<anchored to="advancement_label" />
+				<static textres="char_label_advancement" />
+			</label_fieldtop>
 			<number_dropadd name="exp">
 				<anchored to="levelframe" position="insidetopright" offset="110,25" width="60" height="20"/>
 			</number_dropadd>
@@ -511,26 +510,6 @@
 			</label_fieldtop>
 			<basicnumber name="expneeded">
 				<anchored to="levelframe" position="insidetopright" offset="30,25" width="60" height="20"/>
-				<script>
-					function onHover(oncontrol)
-						if oncontrol then
-							local draginfo = Input.getDragData();
-							if draginfo and draginfo.isType("number") and draginfo.getNumberData() &lt; getValue() then
-								setColor("BB0000");
-							end
-						else
-							setColor(nil);
-						end
-					end
-					
-					function onDrop(x, y, draginfo)
-						if draginfo.isType("number") and draginfo.getNumberData() &gt; getValue() then
-							setValue(draginfo.getNumberData());
-						end
-
-						return true;
-					end
-				</script>
 			</basicnumber>
 			<label_fieldtop>
 				<anchored to="expneeded" />

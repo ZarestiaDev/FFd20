@@ -64,6 +64,7 @@
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 	<string name="misc">Misc</string>
+	<string name="off">Off</string>
 	
 	<string name="menu_dieclear">Clear Dice</string>
 	<string name="menu_rest">Rest</string>
@@ -112,6 +113,11 @@
 	<string name="option_label_SHP">Static Hit Points</string>
 	<string name="option_label_VMP">Variable MP</string>
 	<string name="option_label_VM">Variant Multiclassing</string>
+
+	<string name="option_label_HRXP">XP Advancement</string>
+	<string name="option_val_slow">Slow</string>
+	<string name="option_val_medium">Medium</string>
+	<string name="option_val_fast">Fast</string>
 	
 	<!-- Combat Tracker -->
 	<string name="ct_label_hptemp">Tmp</string>
@@ -219,6 +225,7 @@
 	
 	<!-- Character - Main -->
 	<string name="char_label_classlevelsummary">CLASS &amp; LEVEL</string>
+	<string name="char_label_advancement">Advancement</string>
 
 	<string name="char_label_abilityscore">Score</string>
 	<string name="char_label_abilitybonus">Bonus</string>
