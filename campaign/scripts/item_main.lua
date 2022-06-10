@@ -268,6 +268,7 @@ function update()
 	-- Gun Arms
 	updateControl("gdamage", bReadOnly, bID and bGunArms);
 	updateControl("gdamagetype", bReadOnly, bID and bGunArms);
+	updateControl("gcritical", bReadOnly, bID and bGunArms);
 
 	-- Alchemical
 	updateControl("usage", bReadOnly, bID and bAlchemical);

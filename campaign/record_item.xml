@@ -227,25 +227,30 @@
 			</label_column>
 			<string_columnh_wide name="damage" />
 
-			<label_column name="gdamage_label">
-				<static textres="item_label_gdamage" />
-			</label_column>
-			<string_columnh_wide name="gdamage" />
-			
 			<label_column name="damagetype_label">
 				<static textres="item_label_dmgtype" />
 			</label_column>
 			<string_columnh_wide name="damagetype" />
 
-			<label_column name="gdamagetype_label">
-				<static textres="item_label_gdmgtype" />
-			</label_column>
-			<string_columnh_wide name="gdamagetype" />
-			
 			<label_column name="critical_label">
 				<static textres="item_label_critical" />
 			</label_column>
 			<string_columnh_wide name="critical" />
+
+			<label_column name="gdamage_label">
+				<static textres="item_label_gdamage" />
+			</label_column>
+			<string_columnh_wide name="gdamage" />
+
+			<label_column name="gdamagetype_label">
+				<static textres="item_label_gdmgtype" />
+			</label_column>
+			<string_columnh_wide name="gdamagetype" />
+
+			<label_column name="gcritical_label">
+				<static textres="item_label_gcritical" />
+			</label_column>
+			<string_columnh_wide name="gcritical" />
 			
 			<label_column name="range_label">
 				<static textres="item_label_range" />

@@ -455,6 +455,7 @@
 	<string name="item_label_craftdc">Craft DC</string>
 	<string name="item_label_gdamage">Gun Damage</string>
 	<string name="item_label_gdmgtype">Gun Damage Type</string>
+	<string name="item_label_gcritical">Gun Critical</string>
 	<string name="item_label_usage">Usage</string>
 	<string name="item_label_royalarms_type">Royal Arms Type</string>
 
