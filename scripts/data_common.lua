@@ -517,8 +517,7 @@ targetableeffectcomps = {
 	"WEAKNESS",
 	"STRONG",
 	"RESIST",
-	"SR",
-	"SIMMUNE"
+	"SR"
 };
 
 connectors = {
@@ -534,36 +533,24 @@ rangetypes = {
 
 -- Damage types supported
 energytypes = {
-	"acid",  		-- ENERGY DAMAGE TYPES
-	"cold",
 	"earth",
-	"electricity",
 	"fire",
 	"holy",
 	"ice",
 	"lightning",
 	"shadow",
-	"sonic",
 	"water",
 	"wind",
-	"force",  		-- OTHER SPELL DAMAGE TYPES
-	"positive",
-	"negative",
-	"bleed",		-- SPECIAL DAMAGE TYPES
 	"non-elemental"
 };
 
-immunetypes = {
-	"acid",  		-- ENERGY DAMAGE TYPES
-	"cold",
-	"earth",
-	"electricity",
+immunetypes = {  		
+	"earth",		-- ENERGY DAMAGE TYPES
 	"fire",
 	"holy",
 	"ice",
 	"lightning",
 	"shadow",
-	"sonic",
 	"water",
 	"wind",
 	"nonlethal",	-- SPECIAL DAMAGE TYPES
@@ -577,27 +564,19 @@ immunetypes = {
 	"fear",
 	"disease",
 	"mindaffecting",
-	"bleed",
 	"death",		-- SPECIAL DAMAGE TYPES
 	"non-elemental"
 };
 
 dmgtypes = {
-	"acid",  		-- ENERGY DAMAGE TYPES
-	"cold",
-	"earth",
-	"electricity",
+	"earth",		-- ENERGY DAMAGE TYPES
 	"fire",
 	"holy",
 	"ice",
 	"lightning",
 	"shadow",
-	"sonic",
 	"water",
 	"wind",
-	"force",  		-- OTHER SPELL DAMAGE TYPES
-	"positive",
-	"negative",
 	"adamantine", 	-- WEAPON PROPERTY DAMAGE TYPES
 	"bludgeoning",
 	"cold iron",
@@ -613,8 +592,7 @@ dmgtypes = {
 	"nonlethal",	-- MISC DAMAGE TYPE
 	"spell",
 	"critical",
-	"precision",
-	"bleed",		-- SPECIAL DAMAGE TYPES
+	"precision",		-- SPECIAL DAMAGE TYPES
 	"immunebypass",
 	"vorpal",
 	"resistbypass",
@@ -624,22 +602,15 @@ dmgtypes = {
 	"non-elemental"
 };
 
-basicdmgtypes = {
-	"acid",  		-- ENERGY DAMAGE TYPES
-	"cold",
+basicdmgtypes = {  		-- ENERGY DAMAGE TYPES
 	"earth",
-	"electricity",
 	"fire",
 	"holy",
 	"ice",
 	"lightning",
 	"shadow",
-	"sonic",
 	"water",
 	"wind",
-	"force",  		-- OTHER SPELL DAMAGE TYPES
-	"positive",
-	"negative",
 	"bludgeoning", 	-- WEAPON PROPERTY DAMAGE TYPES
 	"piercing",
 	"slashing",
@@ -650,8 +621,7 @@ specialdmgtypes = {
 	"nonlethal",
 	"spell",
 	"critical",
-	"precision",
-	"bleed",		-- SPECIAL DAMAGE TYPES
+	"precision",		-- SPECIAL DAMAGE TYPES
 	"immunebypass",
 	"vorpal",
 	"resistbypass",
