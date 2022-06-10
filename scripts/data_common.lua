@@ -972,7 +972,7 @@ skilldata = {
 }
 
 -- Coin labels
-currency = { "Cactuar", "Goldie", "Silvie", "Single" };
+currency = { "Cactuar", "Gil", "Silvie", "Single" };
 
 -- Party sheet drop down list data
 psabilitydata = {

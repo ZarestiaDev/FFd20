@@ -45,11 +45,11 @@ targetactions = {
 
 currencies = { 
 	{ name = "Cactuar", weight = 0.02, value = 10 },
-	{ name = "Goldie", weight = 0.02, value = 1 },
+	{ name = "Gil", weight = 0.02, value = 1 },
 	{ name = "Silvie", weight = 0.02, value = 0.1 },
 	{ name = "Single", weight = 0.02, value = 0.01 },
 };
-currencyDefault = "Goldie";
+currencyDefault = "Gil";
 
 tokenLightDefaults = {
 	["candle"] = {
