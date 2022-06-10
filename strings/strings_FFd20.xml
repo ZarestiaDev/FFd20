@@ -244,6 +244,7 @@
 	<string name="char_label_ranged">Ranged</string>
 	<string name="char_label_defense">Defense</string>
 	<string name="char_label_attack">Attack</string>
+	<string name="char_label_favored">Favored</string>
 
 	<string name="char_label_skillperception">Percept.</string>
 	

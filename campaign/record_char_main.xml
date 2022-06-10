@@ -73,7 +73,7 @@
 					end
 
 					function onValueChanged()
-						window.onConChanged();
+						window.recalculateHP();
 					end
 				</script>
 			</number_charabilitybonus>
@@ -715,10 +715,10 @@
 		<script file="campaign/scripts/char_main.lua" />
 		<frame>charsheethelper</frame>
 		<placement>
-			<size width="330" height="130" />
+			<size width="380" height="130" />
 		</placement>
 		<sizelimits>
-            <minimum width="330" height="130" />
+            <minimum width="380" height="130" />
 			<dynamic />
         </sizelimits>
 		<nodelete />
@@ -745,33 +745,35 @@
 				<static textres="hp" />
 			</label>
 
-			<basicnumber name="hp_class" source="hp.class">
+			<number_chartotalnomod name="hp_class" source="hp.class">
 				<anchored to="hp_label" position="right" offset="23,0" width="36" />
-				<readonly />
-			</basicnumber>
+			</number_chartotalnomod>
 			<label_fieldtop name="hp_class_label">
 				<anchored to="hp_class" />
 				<static textres="char_label_class" />
 			</label_fieldtop>
 
-			<basicnumber name="hp_ability" source="hp.ability">
+			<number_chartotalnomod name="hp_ability" source="hp.ability">
 				<anchored to="hp_class" position="right" offset="23,0" width="36" />
-				<readonly />
-			</basicnumber>
+			</number_chartotalnomod>
 			<label_fieldtop name="hp_ability_label">
 				<anchored to="hp_ability" />
 				<static textres="con" />
 			</label_fieldtop>
 
-			<basicnumber name="hp_misc" source="hp.misc">
+			<number_chartotalnomod name="hp_favored" source="hp.favored">
 				<anchored to="hp_ability" position="right" offset="23,0" width="36" />
-				<script>
-					function onInit()
-						onValueChanged();
-					end
+			</number_chartotalnomod>
+			<label_fieldtop name="hp_favored_label">
+				<anchored to="hp_favored" />
+				<static textres="char_label_favored" />
+			</label_fieldtop>
 
+			<basicnumber name="hp_misc" source="hp.misc">
+				<anchored to="hp_favored" position="right" offset="23,0" width="36" />
+				<script>
 					function onValueChanged()
-						window.onConChanged();
+						window.recalculateHP();
 					end
 				</script>
 			</basicnumber>

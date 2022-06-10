@@ -2291,7 +2291,7 @@ function onFavoredClassBonusSelect(aSelection, rFavoredClassBonusSelect)
 		return;
 	end
 	if aSelection[1] == Interface.getString("char_value_favoredclasshpbonus") then
-		DB.setValue(rFavoredClassBonusSelect.nodeChar, "hp.total", "number", DB.getValue(rFavoredClassBonusSelect.nodeChar, "hp.total", 0) + 1);
+		DB.setValue(rFavoredClassBonusSelect.nodeChar, "hp.favored", "number", DB.getValue(rFavoredClassBonusSelect.nodeChar, "hp.favored", 0) + 1);
 		
 		local sMsg = string.format(Interface.getString("char_message_favoredclasshpadd"), DB.getValue(rFavoredClassBonusSelect.nodeChar, "name", ""));
 		ChatManager.SystemMessage(sMsg);
@@ -2304,6 +2304,7 @@ function onFavoredClassBonusSelect(aSelection, rFavoredClassBonusSelect)
 		local sMsg = string.format(Interface.getString("char_message_favoredclassskilladd"), DB.getValue(rFavoredClassBonusSelect.nodeChar, "name", ""));
 		ChatManager.SystemMessage(sMsg);
 	end
+	DB.setValue(rFavoredClassBonusSelect.nodeChar, "hp.total", "number", DB.getValue(rFavoredClassBonusSelect.nodeChar, "hp.favored", 0) + DB.getValue(rFavoredClassBonusSelect.nodeChar, "hp.total", 0));
 end
 
 function addFeat(nodeChar, sRecord, nodeTargetList)
