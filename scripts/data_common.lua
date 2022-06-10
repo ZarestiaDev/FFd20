@@ -1029,22 +1029,6 @@ psskilldata = {
 	"Use Magic Device"
 };
 
--- PC/NPC Class properties
-
-class_stol = {
-	["brb"] = "barbarian",
-	["brd"] = "bard",
-	["clr"] = "cleric",
-	["drd"] = "druid",
-	["ftr"] = "fighter",
-	["mnk"] = "monk",
-	["pal"] = "paladin",
-	["rgr"] = "ranger",
-	["rog"] = "rogue",
-	["sor"] = "sorcerer",
-	["wiz"] = "wizard",
-};
-
 languages = {
 	"Aegyllan",
 	"Albhedian",

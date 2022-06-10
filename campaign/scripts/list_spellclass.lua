@@ -72,57 +72,6 @@ function onDrop(x, y, draginfo)
 			
 			return true;
 		end
-
-	-- Spell link with no level information
-	elseif draginfo.isType("shortcut") then
-		local sDropClass, sSource = draginfo.getShortcutData();
-
-		if sDropClass == "spelldesc" then
-			local winClass = getWindowAt(x, y);
-			if winClass then
-				local aSelections = {};
-				for i = 0,9 do
-					table.insert(aSelections, tostring(i));
-				end
-				local nodeSource = DB.findNode(sSource);
-				
-				local nSuggestedLevel = nil;
-				local sSpellLevelField = DB.getValue(nodeSource, "level", "");
-				if sSpellLevelField ~= "" then
-					local sCurrentSpellClassLower = StringManager.trim(winClass.label.getValue()):lower();
-					local aSpellClassChoices = StringManager.split(sSpellLevelField, ",");
-					for _, sSpellClassChoice in ipairs(aSpellClassChoices) do
-						local sComboClassName, sSpellClassLevel = sSpellClassChoice:match("(.*) (%d)");
-						if sComboClassName then
-							local aClassChoices = StringManager.split(sComboClassName, "/", true);
-							for _,sClassChoice in ipairs(aClassChoices) do
-								if sClassChoice:lower() == sCurrentSpellClassLower then
-									nSuggestedLevel = tonumber(sSpellClassLevel);
-									break;
-								elseif #sClassChoice == 3 and DataCommon.class_stol[sClassChoice:lower()] == sCurrentSpellClassLower then
-									nSuggestedLevel = tonumber(sSpellClassLevel);
-									break;
-								end
-							end
-						end
-						if nSuggestedLevel then
-							break;
-						end
-					end
-				end
-				if nSuggestedLevel and (nSuggestedLevel >= 0) and (nSuggestedLevel <= 9) then
-					aSelections[nSuggestedLevel + 1] = { text = tostring(nSuggestedLevel), selected = "true" };
-				end
-				
-				-- Display dialog to choose spell level
-				local wSelect = Interface.openWindow("select_dialog", "");
-				local sTitle = Interface.getString("char_spell_title_selectlevel");
-				local sMessage = string.format(Interface.getString("char_spell_message_selectlevel"), DB.getValue(nodeSource, "name", ""), winClass.label.getValue());
-				wSelect.requestSelection (sTitle, sMessage, aSelections, onSpellAddToLevel, { nodeSource = nodeSource, nodeClass = winClass.getDatabaseNode() } );
-				
-				return true;
-			end
-		end
 	end
 end
 
