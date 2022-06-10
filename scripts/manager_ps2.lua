@@ -295,6 +295,9 @@ function awardXP(nXP)
 	msg.icon = "portrait_gm_token";
 	msg.text = Interface.getString("ps_message_xpaward") .. " (" .. nXP .. ")";
 	Comm.deliverChatMessage(msg);
+
+	msg.text = "Please distribute Materia XP if needed!"
+	Comm.deliverChatMessage(msg);
 end
 
 function awardXPtoPC(nXP, nodePC)
