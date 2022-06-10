@@ -15,7 +15,7 @@
 			</frame_char>
 
 			<number_chartotalac name="ac" source="ac.totals.general">
-				<anchored to="acframe" position="insidetopleft" offset="105,28" width="32" height="20" />
+				<anchored to="acframe" position="insidetopleft" offset="115,28" width="32" height="20" />
 			</number_chartotalac>
 			<label name="ac_label">
 				<anchored to="acframe" position="insidetopleft" offset="20,28" width="80" />
@@ -25,7 +25,7 @@
 				<anchored to="ac" position="belowleft" offset="0,28" width="32" height="20" />
 			</number_charflatfootedac>
 			<label name="flatfootedac_label">
-				<anchored to="ac_label" position="belowleft" offset="0,28" width="80" />
+				<anchored to="ac_label" position="belowleft" offset="0,28" width="85" />
 				<static textres="armorclassff" />
 			</label>
 			<number_chartouchac name="touchac" source="ac.totals.touch">
@@ -256,11 +256,11 @@
 
 			<!-- Defenses - Saves -->
 			<frame_char name="saveframe">
-				<bounds>15,210,370,120</bounds>
+				<bounds>15,210,380,120</bounds>
 			</frame_char>
 
 			<number_charsavefort name="fortitude" source="saves.fortitude.total">
-				<anchored to="saveframe" position="insidetopleft" offset="105,28" width="32" height="20" />
+				<anchored to="saveframe" position="insidetopleft" offset="115,28" width="32" height="20" />
 			</number_charsavefort>
 			<label name="fortitude_label">
 				<anchored to="saveframe" position="insidetopleft" offset="20,28" width="80" />
@@ -350,7 +350,7 @@
 
 			<!-- Attacks -->
 			<frame_char name="attackframe">
-				<bounds>15,330,370,150</bounds>
+				<bounds>15,330,380,150</bounds>
 			</frame_char>
 
 			<label name="baseattackbonus_label">
@@ -358,12 +358,12 @@
 				<static textres="char_label_combatatkbase" />
 			</label>
 			<basicnumber name="baseattackbonus" source="attackbonus.base">
-				<anchored to="attackframe" position="insidetopleft" offset="145,16" width="32" height="20" />
+				<anchored to="attackframe" position="insidetopleft" offset="162,16" width="32" height="20" />
 				<displaysign />
 			</basicnumber>
 
 			<number_charmeleetotal name="meleeattackbonus" source="attackbonus.melee.total">
-				<anchored to="attackframe" position="insidetopleft" offset="105,56" width="32" height="20" />
+				<anchored to="attackframe" position="insidetopleft" offset="115,56" width="32" height="20" />
 			</number_charmeleetotal>
 			<label name="meleeattackbonus_label">
 				<anchored to="attackframe" position="insidetopleft" offset="20,56" width="80" />
@@ -462,7 +462,7 @@
 
 			<!-- Defenses - Spell -->
 			<frame_char name="srframe">
-				<bounds>385,210,130,90</bounds>
+				<bounds>395,210,130,90</bounds>
 			</frame_char>
 			
 			<number_charsr name="srfinal" source="defenses.sr.total">
@@ -498,7 +498,7 @@
 
 			<!-- Speed -->
 			<frame_char name="speedframe">
-				<bounds>385,300,130,90</bounds>
+				<bounds>395,300,130,90</bounds>
 			</frame_char>
 			
 			<number_charspeed name="speedfinal" source="speed.total">
@@ -538,7 +538,7 @@
 
 			<!-- INITIATIVE -->
 			<frame_char name="initiativeframe">
-				<bounds>385,390,130,90</bounds>
+				<bounds>395,390,130,90</bounds>
 			</frame_char>
 			<number_charinit name="initiative" source="initiative.total">
 				<anchored to="initiativeframe" position="insidetopleft" offset="78,16" width="32" height="20" />

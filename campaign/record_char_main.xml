@@ -552,7 +552,7 @@
 				<static textres="char_label_classfavored" />
 			</label>
 			<label name="classlevel_label">
-				<anchored to="labelanchor" width="30">
+				<anchored to="labelanchor" width="32">
 					<top />
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
