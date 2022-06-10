@@ -9,10 +9,7 @@ function onClose()
 	DB.removeHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", CalculateSkills)
 end
 
---[[
-    This function iterates through all classes of the player character and reads
-    the skillranks of every class out. At the end a new db node is set to store the total value.
-]]
+-- Add all class skills together
 function CalculateSkills()
     local nodeChar = getDatabaseNode()
     local tClasses = DB.getChildren(nodeChar.getChild("classes"))
@@ -23,5 +20,5 @@ function CalculateSkills()
         nTotalSkillRanks = nTotalSkillRanks + nSkillRanks
     end
 
-    DB.setValue(nodeChar, "skillpoints.spent", "number", nTotalSkillRanks)
+    DB.setValue(nodeChar, "skillpoints.total", "number", nTotalSkillRanks)
 end
