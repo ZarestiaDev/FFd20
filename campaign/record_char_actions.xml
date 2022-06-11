@@ -54,15 +54,6 @@
 					end
 				</script>
 			</buttoncontrol>
-			<buttoncontrol name="weapon_iadd">
-				<anchored to="spellclass_iadd" position="lefthigh" offset="5,0" width="20" height="20" />
-				<icon normal="button_weapon" pressed="button_weapon_down" />
-				<script>
-					function onButtonPress()
-						window.actions.subwindow.addWeapon();
-					end
-				</script>
-			</buttoncontrol>
 		</sheetdata>
 	</windowclass>
 

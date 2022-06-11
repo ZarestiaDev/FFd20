@@ -16,8 +16,6 @@
 	
 	<icon name="button_star" file="graphics/buttons/button_star.png" />
 	<icon name="button_star_down" file="graphics/buttons/button_star_down.png" />
-	<icon name="button_weapon" file="graphics/buttons/button_weapon.png" />
-	<icon name="button_weapon_down" file="graphics/buttons/button_weapon_down.png" />
 	<icon name="button_skillcr" file="graphics/buttons/button_skillcr.png" />
 	<icon name="button_skillcr_down" file="graphics/buttons/button_skillcr_down.png" />
 	<icon name="button_skillkn" file="graphics/buttons/button_skillkn.png" />
