@@ -74,7 +74,7 @@ function onStatUpdate()
 		local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
 		dcstatmod.setValue(nValue);
-		--calcAbilityBonusMP(nodeSpellClass, nValue);
+		calcAbilityBonusMP(nodeSpellClass, nValue);
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
