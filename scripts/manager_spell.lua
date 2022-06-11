@@ -825,7 +825,6 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	end
 	
 	local rAction = getSpellAction(rActor, nodeAction, sSubRoll);
-	Debug.console("SPELL", rAction)
 	
 	local rRolls = {};
 	local rCustom = nil;
