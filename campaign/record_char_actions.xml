@@ -304,6 +304,31 @@
 			<state_charammocounter name="ammocounter">
 				<anchored to="maxammo" position="righthigh" offset="3,0" />
 			</state_charammocounter>
+
+			<!-- Explosives specific fields -->
+			<label name="label_radius">
+				<anchored width="60">
+					<top parent="label_ammo" />
+					<left offset="225" />
+				</anchored>
+				<static textres="char_label_weaponradius" />
+			</label>
+			<basicnumber name="radius">
+				<anchored to="label_radius" position="righthigh" width="30" height="20" />
+				<min>0</min>
+			</basicnumber>
+
+			<label name="saveviewlabel">
+				<anchored width="40">
+					<top parent="label_radius" />
+					<left offset="330" />
+				</anchored>
+				<static textres="save" />
+			</label>
+			<string_weaponactionview name="saveview">
+				<anchored to="saveviewlabel" position="righthigh" offset="7,0" width="100" />
+				<subroll>save</subroll>
+			</string_weaponactionview>
 		</sheetdata>
 	</windowclass>
 	
@@ -337,6 +362,7 @@
 			<close_recordsheet />
 		</sheetdata>
 	</windowclass>
+
 	<windowclass name="char_weapon_editor_main">
 		<script>
 			function onDrop(x, y, draginfo)

@@ -54,6 +54,17 @@ function onDataChanged()
 	label_ammo.setVisible(bRanged);
 	maxammo.setVisible(bRanged);
 	ammocounter.setVisible(bRanged);
+
+	nodeWeapon = getDatabaseNode();
+	bExplosives = (DB.getValue(nodeWeapon, "subtype", "") == "explosive");
+	label_radius.setVisible(bExplosives);
+	radius.setVisible(bExplosives);
+	saveviewlabel.setVisible(bExplosives);
+	saveview.setVisible(bExplosives);
+	local nReflex = DB.getValue(nodeWeapon, "reflexdc", 0);
+	if nReflex > 0 then
+		saveview.setValue("Ref DC " .. tostring(nReflex) .. " (H)");
+	end
 end
 
 function onDamageChanged()

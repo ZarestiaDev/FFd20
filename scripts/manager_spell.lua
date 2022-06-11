@@ -825,6 +825,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	end
 	
 	local rAction = getSpellAction(rActor, nodeAction, sSubRoll);
+	Debug.console("SPELL", rAction)
 	
 	local rRolls = {};
 	local rCustom = nil;
@@ -1249,4 +1250,30 @@ function getActionEffectDurationText(nodeAction)
 	end
 	
 	return sDuration;
+end
+
+function onExplosiveSpellAction(draginfo, nodeAction, sSubRoll)
+	if not nodeAction then
+		return;
+	end
+	local rActor = ActorManager.resolveActor(nodeAction.getChild("..."));
+	if not rActor then
+		return;
+	end
+	
+	local rAction = {};
+	rAction.subtype = sSubRoll;
+	rAction.save = "reflex";
+	rAction.onmissdamage = "half";
+	rAction.savemod = DB.getValue(nodeAction, "reflexdc", 0);
+	rAction.sr = "no";
+	rAction.label = DB.getValue(nodeAction, "name", "");
+	
+	local rRolls = {};
+	local rRoll = ActionSpell.getSaveVsRoll(rActor, rAction);
+	table.insert(rRolls, rRoll);
+	
+	if #rRolls > 0 then
+		ActionsManager.performMultiAction(draginfo, rActor, rRolls[1].sType, rRolls);
+	end
 end

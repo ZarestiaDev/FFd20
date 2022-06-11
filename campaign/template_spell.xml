@@ -205,4 +205,35 @@
 			</script>
 		</basicdice>
 	</template>
+
+	<template name="string_weaponactionview">
+		<simplestringc>
+			<anchored height="20" />
+			<frame name="fieldlight" offset="7,5,7,5" />
+			<center />
+			<nodrag />
+			<readonly />
+			<cursor hover="hand" />
+			<script>
+				function action(draginfo)
+					local sSubRoll = nil;
+					if subroll then
+						sSubRoll = subroll[1];
+					end
+					
+					SpellManager.onExplosiveSpellAction(draginfo, window.getDatabaseNode(), sSubRoll);
+				end
+
+				function onDoubleClick(x, y)
+					action();
+					return true;
+				end
+				
+				function onDragStart(button, x, y, draginfo)
+					action(draginfo);
+					return true;
+				end
+			</script>
+		</simplestringc>
+	</template>
 </root>

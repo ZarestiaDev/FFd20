@@ -331,12 +331,15 @@ function addToWeaponDB(nodeItem)
 	end
 
 	local nRange = DB.getValue(nodeItem, "range", 0);
+	local nRadius = tonumber(string.match(DB.getValue(nodeItem, "burstradius", ""), "(%d+)") or 0);
+	local nReflex = DB.getValue(nodeItem, "reflexdc", 0);
 	local nAtkBonus = nBonus;
 
 	local sType = string.lower(DB.getValue(nodeItem, "subtype", ""));
 	local bMelee = true;
 	local bRanged = false;
 	local bGunArms = false;
+	local bExplosives = false;
 	if string.find(sType, "melee") then
 		bMelee = true;
 		if nRange > 0 then
@@ -345,6 +348,10 @@ function addToWeaponDB(nodeItem)
 	elseif string.find(sType, "ranged") then
 		bMelee = false;
 		bRanged = true;
+	elseif sType == "explosives" then
+		bMelee = false;
+		bRanged = true;
+		bExplosives = true;
 	end
 	if sType == "gun arms" then
 		bGunArms = true;
@@ -443,6 +450,11 @@ function addToWeaponDB(nodeItem)
 				DB.setValue(nodeWeapon, "type", "number", 1);
 				DB.setValue(nodeWeapon, "attackstat", "string", sRangedAttackStat);
 				DB.setValue(nodeWeapon, "rangeincrement", "number", nRange);
+			end
+			if bExplosives then
+				DB.setValue(nodeWeapon, "subtype", "string", "explosive");
+				DB.setValue(nodeWeapon, "radius", "number", nRadius);
+				DB.setValue(nodeWeapon, "reflexdc", "number", nReflex);
 			end
 			DB.setValue(nodeWeapon, "properties", "string", sProps);
 			
