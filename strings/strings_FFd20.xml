@@ -359,7 +359,6 @@
 	<string name="char_label_weaponrange">Range</string>
 	<string name="char_label_weaponammo">Ammo</string>
 	<string name="char_label_weaponradius">Radius</string>
-	<string name="char_label_reflex">Reflex DC</string>
 	<string name="char_label_spells">Spells</string>
 	
 	<string name="char_label_weaponmelee1h">Melee One-Handed</string>
