@@ -259,7 +259,7 @@ function onStabilization(rSource, rTarget, rRoll)
 	Comm.deliverChatMessage(rMessage);
 
 	if bSuccess then
-		ActorManagerFFd20.applyStableEffect(rSource);
+		EffectManager.addCondition(rSource, "Stable");
 	else
 		ActionDamage.applyFailedStabilization(rSource);
 	end
@@ -1558,12 +1558,12 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags
 	-- Manage Stable effect add/remove when healed
 	if ActorHealthManager.isDyingOrDeadStatus(sOriginalStatus) then
 		if not ActorHealthManager.isDyingOrDeadStatus(sNewStatus) then
-			ActorManagerFFd20.removeStableEffect(rTarget);
+			EffectManager.removeCondition(rTarget, "Stable");
 		else
 			if ((rDamageOutput.sType == "heal") or (rDamageOutput.sType == "fheal") or (rDamageOutput.sType == "regen")) and (rDamageOutput.nVal > 0) then
-				ActorManagerFFd20.applyStableEffect(rTarget);
+				EffectManager.addCondition(rTarget, "Stable");
 			elseif (rDamageOutput.sType == "damage") and (rDamageOutput.nVal > 0) then
-				ActorManagerFFd20.removeStableEffect(rTarget);
+				EffectManager.removeCondition(rTarget, "Stable");
 			end
 		end
 	end

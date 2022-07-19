@@ -48,7 +48,7 @@ function onEncumbranceLimitChanged()
 	local nLiftOff = nHeavy * 2;
 	local nPushDrag = nHeavy * 5;
 	
-	local nSize = ActorManagerFFd20.getSize(ActorManager.resolveActor(nodeChar));
+	local nSize = ActorCommonManager.getCreatureSizeDnD3(ActorManager.resolveActor(nodeChar));
 	if (nSize < 0) then
 		local nMult = 0;
 		if (nSize == -1) then

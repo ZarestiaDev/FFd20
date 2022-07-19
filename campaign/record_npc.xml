@@ -16,7 +16,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_npc</minimize>
-		<nodelete />
 		<gmexport>npc</gmexport>
 		<script file="campaign/scripts/npc.lua" />
 		<sheetdata>

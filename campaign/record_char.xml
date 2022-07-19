@@ -16,28 +16,90 @@
 			<dynamic />
         </sizelimits>
 		<softclose />
-		<nodelete />
-		<playercontrol />
 		<export>character</export>
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
+			<sub_charsheet_overview name="overview" />
+
+			<!-- Subwindows -->
+			<sub_charsheet name="main">
+				<class>charsheet_main</class>
+			</sub_charsheet>
+			<sub_charsheet name="combat">
+				<class>charsheet_combat</class>
+			</sub_charsheet>
+			<sub_charsheet name="skills">
+				<class>charsheet_skills</class>
+			</sub_charsheet>
+			<sub_charsheet name="abilities">
+				<class>charsheet_abilities</class>
+			</sub_charsheet>
+			<sub_charsheet name="inventory">
+				<class>charsheet_inventory</class>
+			</sub_charsheet>
+			<sub_charsheet name="notes">
+				<class>charsheet_notes</class>
+			</sub_charsheet>
+			<sub_charsheet name="actions">
+				<class>charsheet_actions</class>
+			</sub_charsheet>
+
+			<tabs_charsheet name="tabs">
+				<tab>
+					<icon>tab_main</icon>
+					<subwindow>main</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_combat</icon>
+					<subwindow>combat</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_skills</icon>
+					<subwindow>skills</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_abilities</icon>
+					<subwindow>abilities</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_inventory</icon>
+					<subwindow>inventory</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>notes</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_actions</icon>
+					<subwindow>actions</subwindow>
+				</tab>
+				<activate>1</activate>
+			</tabs_charsheet>
+
+			<resize_charsheet />
+			<close_charsheet />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="charsheet_overview">
+		<script file="campaign/scripts/char_overview.lua" />
+		<sheetdata>
 			<genericcontrol name="portraitbase">
-				<bounds>25,24,148,148</bounds>
+				<anchored position="insidetopleft" offset="5,3" width="148" height="148" />
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<bounds>25,24,148,148</bounds>
+				<anchored position="insidetopleft" offset="5,3" width="148" height="148" />
 			</portrait_char>
-
-			<token_char name="token">
-				<bounds>-86,30,50,50</bounds>
-				<invisible />
-			</token_char>
 			
 			<!-- Notes Information -->
 			<frame_char name="overviewframe">
-				<bounds>173,20,-29,97</bounds>
+				<anchored height="97">
+					<top />
+					<left anchor="portrait" />
+					<right />
+				</anchored>
 			</frame_char>
 			<string_labeled name="name">
 				<anchored to="overviewframe" position="insidetopleft" offset="19,15" width="205" height="20" />
@@ -94,13 +156,16 @@
 				</script>
 			</linkfield>
 			<string_labeled name="deity">
-				<anchored to="alignment" position="right" offset="15,0" width="150" />
+				<anchored to="alignment" position="right" offset="15,0" width="145" />
 				<labelres>char_label_deity</labelres>
 			</string_labeled>
 			
 			<!-- Race -->
 			<frame_char name="raceframe">
-				<bounds>173,117,171,57</bounds>
+				<anchored height="57" width="156">
+					<top parent="overviewframe" anchor="bottom" />
+					<left anchor="portrait" />
+				</anchored>
 			</frame_char>
 			<button_iadd_creation name="race_add">
 				<anchored to="raceframe" position="insidetopright" offset="10,18" />
@@ -136,7 +201,11 @@
 
 			<!-- Class / Level  -->
 			<frame_char name="classframe">
-				<bounds>344,117,-29,57</bounds>
+				<anchored height="57">
+					<top parent="overviewframe" anchor="bottom" />
+					<left parent="raceframe" anchor="right" />
+					<right />
+				</anchored>
 			</frame_char>
 			<stringc_charclasslevel name="classlevel">
 				<anchored to="classframe" position="insidetopleft" offset="14,17">
@@ -155,71 +224,7 @@
 			<button_charclasslevel name="button_classlevel">
 				<anchored to="classframe" position="insidetopright" offset="30,18" />
 			</button_charclasslevel>
-
-			<!-- Subwindows -->
-			<subwindow name="main">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_main</class>
-			</subwindow>
-			<subwindow name="combat">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_combat</class>
-			</subwindow>
-			<subwindow name="skills">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_skills</class>
-			</subwindow>
-			<subwindow name="abilities">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_abilities</class>
-			</subwindow>
-			<subwindow name="inventory">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_inventory</class>
-			</subwindow>
-			<subwindow name="notes">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_notes</class>
-			</subwindow>
-			<subwindow name="actions">
-				<bounds>0,174,-1,-20</bounds>
-				<class>charsheet_actions</class>
-			</subwindow>
-
-			<tabs_charsheet name="tabs">
-				<tab>
-					<icon>tab_main</icon>
-					<subwindow>main</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_combat</icon>
-					<subwindow>combat</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_skills</icon>
-					<subwindow>skills</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_abilities</icon>
-					<subwindow>abilities</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_inventory</icon>
-					<subwindow>inventory</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_notes</icon>
-					<subwindow>notes</subwindow>
-				</tab>
-				<tab>
-					<icon>tab_actions</icon>
-					<subwindow>actions</subwindow>
-				</tab>
-				<activate>1</activate>
-			</tabs_charsheet>
-
-			<resize_charsheet />
-			<close_charsheet />
 		</sheetdata>
 	</windowclass>
+
 </root>

@@ -15,8 +15,6 @@
 			<minimum width="400" height="350" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_cast</resource>
@@ -188,8 +186,6 @@
 			<minimum width="560" height="350" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_damage</resource>
@@ -455,8 +451,6 @@
 			<minimum width="560" height="350" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_heal</resource>
@@ -710,8 +704,6 @@
 			<minimum width="470" height="370" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>power_title_effect</resource>

@@ -90,14 +90,7 @@
 	<string name="menu_addspelleffect">Add Effect</string>
 	<string name="menu_reparsespell">Reparse spell actions</string>
 	<string name="menu_deletespellaction">Delete Spell Action</string>
-	
 	<string name="message_rollbab">Base Attack</string>
-	
-	<!-- Desktop -->
-	<string name="help_tool_ct">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643207/</string>
-	<string name="help_tool_ps">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643222/</string>
-	<string name="help_tool_effects">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643237/</string>
-	<string name="help_tool_options">https://fantasygroundsunity.atlassian.net/wiki/spaces/FGCP/pages/996643248/</string>
 	
 	<!-- Options -->
 	<string name="option_label_ANPC">Chat: Anonymize NPC attacks</string>

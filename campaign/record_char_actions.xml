@@ -332,8 +332,6 @@
 			<minimum width="400" height="350" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>weapon_title</resource>

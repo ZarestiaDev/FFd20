@@ -4,52 +4,42 @@
 --
 
 function getItemType(vRecord, sClass)
-	local nodeItem;
-	if type(vRecord) == "string" then
-		nodeItem = DB.findNode(vRecord);
-	elseif type(vRecord) == "databasenode" then
-		nodeItem = vRecord;
-	end
-	if not nodeItem then
-		return "", "";
-	end
+	ItemManager.isArmor = isArmor;
+	ItemManager.isShield = isShield;
+	ItemManager.isWeapon = isWeapon;
 	
-	local sTypeLower = "";
-	local sSubtypeLower = "";
+	ItemManager.registerCleanupTransferHandler(handleItemCleanupOnTransfer);
+end
 
-	sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
+function isArmor(nodeItem)
+	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
+	return StringManager.contains({"armor", "shield", "shields"}, sTypeLower);
+end
+
+function isShield(nodeItem)
+	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
+	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
+
+	local bIsShield = false;
 
 	if StringManager.contains({"shield", "shields"}, sTypeLower) then
-		sTypeLower = "armor";
-		sSubtypeLower = "shield";
+		bIsShield = true;
 	elseif sSubtypeLower == "shields" then
-		sSubtypeLower = "shield";
+		bIsShield = true;
 	end
-
-	return sTypeLower, sSubtypeLower;
+	return bIsShield;
 end
 
-function isArmor(vRecord, sClass)
-	local sTypeLower, sSubtypeLower = getItemType(vRecord, sClass);
-	local bIsArmor = (sTypeLower == "armor");
-
-	return bIsArmor, sTypeLower, sSubtypeLower;
-end
-
-function isWeapon(vRecord, sClass)
-	local sTypeLower, sSubtypeLower = getItemType(vRecord, sClass);
+function isWeapon(nodeItem)
+	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
+	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
 	local bIsWeapon = ((sTypeLower == "weapon") and (sSubtypeLower ~= "ammunition")) or (sSubtypeLower == "weapon");
 
-	return bIsWeapon, sTypeLower, sSubtypeLower;
+	return bIsWeapon;
 end
 
-function addItemToList2(sClass, nodeSource, nodeTarget)
-	if LibraryData.isRecordDisplayClass("item", sClass) then
-		DB.copyNode(nodeSource, nodeTarget);
-		DB.setValue(nodeTarget, "isidentified", "number", 1);
-		return true;
+function handleItemCleanupOnTransfer(rSourceItem, rTempItem, rTargetItem)
+	if rSourceItem.sClass ~= "item" then
+		DB.setValue(rTempItem.node, "isidentified", "number", 1);
 	end
-
-	return false;
 end

@@ -149,8 +149,6 @@
 			<minimum width="300" height="150" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar_char name="title">
 				<prefix>char_encumbrance_title</prefix>

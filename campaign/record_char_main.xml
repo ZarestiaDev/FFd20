@@ -466,8 +466,6 @@
 			<minimum width="400" height="350" />
 			<dynamic />
 		</sizelimits>
-		<nodelete />
-		<playercontrol />
 		<script file="campaign/scripts/char_classes.lua" />
 		<sheetdata>
 			<windowtitlebar_char name="title">
@@ -721,8 +719,6 @@
             <minimum width="380" height="130" />
 			<dynamic />
         </sizelimits>
-		<nodelete />
-		<playercontrol />
 		<sheetdata>
 			<windowtitlebar_char name="title">
 				<prefix>hitpoints</prefix>

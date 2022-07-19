@@ -16,7 +16,6 @@
 			<dynamic />
 		</sizelimits>
 		<softclose />
-		<nodelete />
 		<sheetdata>
 			<windowtitlebar name="title">
 				<resource>ps_window_title</resource>
@@ -71,7 +70,6 @@
 			<dynamic />
 		</sizelimits>
 		<softclose />
-		<nodelete />
 		<script file="ps/scripts/ps_client.lua" />
 		<sheetdata>
 			<windowtitlebar name="title">

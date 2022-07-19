@@ -16,7 +16,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<nodelete />
 		<sheetdata>
 			<sub_ref_header name="header">
 				<class>ref_weapon_header</class>
@@ -136,7 +135,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<nodelete />
 		<sheetdata>
 			<sub_ref_header name="header">
 				<class>ref_armor_header</class>
@@ -273,7 +271,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<nodelete />
 		<sheetdata>
 			<sub_ref_header name="header">
 				<class>ref_equipment_header</class>

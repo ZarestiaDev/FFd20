@@ -238,7 +238,6 @@
 		<margins control="0,0,0,10" />
 		<frame>partysheetentry</frame>
 		<sheetdata>
-			<htoken name="token" />
 			<hlink name="link">
 				<script>
 					function onValueChanged()

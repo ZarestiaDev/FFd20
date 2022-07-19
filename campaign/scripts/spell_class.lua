@@ -63,7 +63,13 @@ function registerMenuItems()
 	end
 end
 
+local bStatUpdateLock = false;
 function onStatUpdate()
+	if bStatUpdateLock then
+		return;
+	end
+	bStatUpdateLock = true;
+
 	if dcstatmod then
 		local nodeSpellClass = getDatabaseNode();
 		local nodeCreature = nodeSpellClass.getChild("...");
@@ -87,6 +93,7 @@ function onStatUpdate()
 			end
 		end
 	end
+	bStatUpdateLock = false;
 end
 
 function calcAbilityBonusMP(node, nValue)

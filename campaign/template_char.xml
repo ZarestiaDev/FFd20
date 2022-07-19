@@ -6,6 +6,21 @@
 -->
 
 <root>
+	 <!-- Change height to compensate portrait changes -->
+	 <template name="sub_charsheet_overview">
+		<subwindow>
+			<bounds>15,20,-30,162</bounds>
+			<activate />
+			<fastinit />
+			<class>charsheet_overview</class>
+		</subwindow>
+	</template>
+	<template name="sub_charsheet">
+		<subwindow>
+			<bounds>0,175,-1,-20</bounds>
+		</subwindow>
+	</template>
+
 	<template name="button_chardetails">
 		<buttoncontrol>
 			<anchored width="20" height="20" />

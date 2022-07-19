@@ -148,7 +148,7 @@ function modSkill(rSource, rTarget, rRoll)
 		for _,name in pairs(aSkillWordsLower) do
 			if name == "fly" then
 				local rActor = ActorManager.getCreatureNode(rSource)
-				local nCreatureSize = ActorManagerFFd20.getSize(rActor);
+				local nCreatureSize = ActorCommonManager.getCreatureSizeDnD3(rActor);
 				if nCreatureSize ~= 0 then
 					nAddMod = nAddMod + (nCreatureSize*-2);
 					bEffects = true;

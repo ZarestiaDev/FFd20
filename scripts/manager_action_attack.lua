@@ -357,7 +357,7 @@ function modAttack(rSource, rTarget, rRoll)
 			bEffects = true;
 			nAddMod = nAddMod - 4;
 		end
-		if EffectManagerFFd20.hasEffectCondition(rSource, "Prone") then
+		if EffectManagerFFd20.hasCondition(rSource, "Prone") then
 			if sAttackType == "M" then
 				bEffects = true;
 				nAddMod = nAddMod - 4;
@@ -430,31 +430,30 @@ function onAttack(rSource, rTarget, rRoll)
 	rRoll.aMessages = {};
 	
 	-- If we have a target, then calculate the defense we need to exceed
-	local nDefenseVal, nAtkEffectsBonus, nDefEffectsBonus, nMissChance;
 	if rRoll.sType == "critconfirm" then
 		local sDefenseVal = rRoll.sDesc:match(" %[AC (%d+)%]");
 		if sDefenseVal then
-			nDefenseVal = tonumber(sDefenseVal);
+			rRoll.nDefenseVal = tonumber(sDefenseVal);
 		end
-		nMissChance = tonumber(rRoll.sDesc:match("%[MISS CHANCE (%d+)%%%]")) or 0;
+		rRoll.nMissChance = tonumber(rRoll.sDesc:match("%[MISS CHANCE (%d+)%%%]")) or 0;
 		rMessage.text = rMessage.text:gsub(" %[AC %d+%]", "");
 		rMessage.text = rMessage.text:gsub(" %[MISS CHANCE %d+%%%]", "");
 	else
-		nDefenseVal, nAtkEffectsBonus, nDefEffectsBonus, nMissChance = ActorManagerFFd20.getDefenseValue(rSource, rTarget, rRoll);
-		if nAtkEffectsBonus ~= 0 then
-			rRoll.nTotal = rRoll.nTotal + nAtkEffectsBonus;
+		rRoll.nDefenseVal, rRoll.nAtkEffectsBonus, rRoll.nDefEffectsBonus, rRoll.nMissChance = ActorManagerFFd20.getDefenseValue(rSource, rTarget, rRoll);
+		if rRoll.nAtkEffectsBonus ~= 0 then
+			rRoll.nTotal = rRoll.nTotal + rRoll.nAtkEffectsBonus;
 			local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
-			table.insert(rRoll.aMessages, string.format(sFormat, nAtkEffectsBonus));
+			table.insert(rRoll.aMessages, string.format(sFormat, rRoll.nAtkEffectsBonus));
 		end
-		if nDefEffectsBonus ~= 0 then
-			nDefenseVal = nDefenseVal + nDefEffectsBonus;
+		if rRoll.nDefEffectsBonus ~= 0 then
+			rRoll.nDefenseVal = rRoll.nDefenseVal + rRoll.nDefEffectsBonus;
 			local sFormat = "[" .. Interface.getString("effects_def_tag") .. " %+d]";
-			table.insert(rRoll.aMessages, string.format(sFormat, nDefEffectsBonus));
+			table.insert(rRoll.aMessages, string.format(sFormat, rRoll.nDefEffectsBonus));
 		end
 	end
 
 	-- Get the crit threshold
-	rRoll.nCrit = 20;	
+	rRoll.nCrit = 20;
 	local sAltCritRange = string.match(rRoll.sDesc, "%[CRIT (%d+)%]");
 	if sAltCritRange then
 		rRoll.nCrit = tonumber(sAltCritRange) or 20;
@@ -494,8 +493,8 @@ function onAttack(rSource, rTarget, rRoll)
 			table.insert(rRoll.aMessages, "[AUTOMATIC MISS]");
 			rRoll.sResult = "fumble";
 		end
-	elseif nDefenseVal then
-		if rRoll.nTotal >= nDefenseVal then
+	elseif rRoll.nDefenseVal then
+		if rRoll.nTotal >= rRoll.nDefenseVal then
 			if rRoll.sType == "critconfirm" then
 				rRoll.sResult = "crit";
 				table.insert(rRoll.aMessages, "[CRITICAL HIT]");
@@ -533,10 +532,20 @@ function onAttack(rSource, rTarget, rRoll)
 		table.insert(rRoll.aMessages, "[CHECK FOR CRITICAL]");
 	end
 	
-	if ((rRoll.sType == "critconfirm") or not rRoll.bCritThreat) and (nMissChance > 0) then
-		table.insert(rRoll.aMessages, "[MISS CHANCE " .. nMissChance .. "%]");
+	if ((rRoll.sType == "critconfirm") or not rRoll.bCritThreat) and (rRoll.nMissChance > 0) then
+		table.insert(rRoll.aMessages, "[MISS CHANCE " .. rRoll.nMissChance .. "%]");
 	end
 
+	ActionAttack.onPreAttackResolve(rSource, rTarget, rRoll, rMessage);
+	ActionAttack.onAttackResolve(rSource, rTarget, rRoll, rMessage);
+	ActionAttack.onPostAttackResolve(rSource, rTarget, rRoll, rMessage);
+end
+
+function onPreAttackResolve(rSource, rTarget, rRoll, rMessage)
+	-- Do nothing; location to override
+end
+
+function onAttackResolve(rSource, rTarget, rRoll, rMessage)
 	Comm.deliverChatMessage(rMessage);
 
 	if rRoll.sResult == "crit" then
@@ -556,18 +565,18 @@ function onAttack(rSource, rTarget, rRoll)
 			else
 				rCritConfirmRoll.sDesc = rRoll.sDesc .. " [CONFIRM]";
 			end
-			if nMissChance > 0 then
-				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " [MISS CHANCE " .. nMissChance .. "%]";
+			if rRoll.nMissChance > 0 then
+				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " [MISS CHANCE " .. rRoll.nMissChance .. "%]";
 			end
 			rCritConfirmRoll.nMod = rRoll.nMod + nCCMod;
 			
-			if nDefenseVal then
-				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " [AC " .. nDefenseVal .. "]";
+			if rRoll.nDefenseVal then
+				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " [AC " .. rRoll.nDefenseVal .. "]";
 			end
 
-			if nAtkEffectsBonus and nAtkEffectsBonus ~= 0 then
+			if (rRoll.nAtkEffectsBonus or 0) ~= 0 then
 				local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
-				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " " .. string.format(sFormat, nAtkEffectsBonus);
+				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " " .. string.format(sFormat, rRoll.nAtkEffectsBonus);
 			end
 			
 			ActionsManager.roll(rSource, { rTarget }, rCritConfirmRoll, true);
@@ -575,12 +584,10 @@ function onAttack(rSource, rTarget, rRoll)
 			bRollMissChance = true;
 		end
 	end
-	if bRollMissChance and (nMissChance > 0) then
+	if bRollMissChance and (rRoll.nMissChance > 0) then
 		local aMissChanceDice = { "d100" };
-		local sMissChanceText;
-		sMissChanceText = string.gsub(rMessage.text, " %[CRIT %d+%]", "");
-		sMissChanceText = string.gsub(sMissChanceText, " %[CONFIRM%]", "");
-		local rMissChanceRoll = { sType = "misschance", sDesc = sMissChanceText .. " [MISS CHANCE " .. nMissChance .. "%]", aDice = aMissChanceDice, nMod = 0 };
+		local sMissChanceText = rMessage.text:gsub(" %[CRIT %d+%]", ""):gsub(" %[CONFIRM%]", "");
+		local rMissChanceRoll = { sType = "misschance", sDesc = sMissChanceText .. " [MISS CHANCE " .. rRoll.nMissChance .. "%]", aDice = aMissChanceDice, nMod = 0 };
 		ActionsManager.roll(rSource, rTarget, rMissChanceRoll);
 	end
 
@@ -601,12 +608,9 @@ function onAttack(rSource, rTarget, rRoll)
 			end
 		end
 	end
-
-	ActionAttack.onPostAttackResolve(rRoll);
 end
 
-function onPostAttackResolve(rRoll)
-	
+function onPostAttackResolve(rSource, rTarget, rRoll, rMessage)
 	-- HANDLE FUMBLE/CRIT HOUSE RULES
 	local sOptionHRFC = OptionsManager.getOption("HRFC");
 	if rRoll.sResult == "fumble" and ((sOptionHRFC == "both") or (sOptionHRFC == "fumble")) then

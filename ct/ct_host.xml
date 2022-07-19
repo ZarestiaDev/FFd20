@@ -16,7 +16,6 @@
 			<dynamic />
 		</sizelimits>
 		<softclose />
-		<nodelete />
 		<sheetdata>
 			<windowtitlebar>
 				<resource>ct_window_title</resource>

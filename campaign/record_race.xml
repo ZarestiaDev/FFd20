@@ -17,8 +17,6 @@
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
-		<nodelete />
-		<playercontrol />
 		<sharable />
 		<script file="common/scripts/record_window.lua" />
 		<sheetdata>

@@ -46,21 +46,21 @@ end
 
 function onIDChanged(nodeField)
 	local nodeItem = DB.getChild(nodeField, "..");
-	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager2.isArmor(nodeItem) then
+	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager.isArmor(nodeItem) then
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."));
 	end
 end
 
 function onBonusChanged(nodeField)
 	local nodeItem = DB.getChild(nodeField, "..");
-	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager2.isArmor(nodeItem) then
+	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager.isArmor(nodeItem) then
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."));
 	end
 end
 
 function onArmorChanged(nodeField)
 	local nodeItem = DB.getChild(nodeField, "..");
-	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager2.isArmor(nodeItem) then
+	if (DB.getValue(nodeItem, "carried", 0) == 2) and ItemManager.isArmor(nodeItem) then
 		CharManager.calcItemArmorClass(DB.getChild(nodeItem, "..."));
 	end
 end
@@ -83,7 +83,7 @@ function onCarriedChanged(nodeField)
 			end
 		end
 		
-		if ItemManager2.isArmor(nodeItem) then
+		if ItemManager.isArmor(nodeItem) then
 			CharManager.calcItemArmorClass(nodeChar);
 		end
 	end

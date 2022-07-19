@@ -139,7 +139,7 @@ aRecordOverrides = {
 	},
 	["npc"] = { 
 		aDataMap = { "npc", "reference.npcdata" }, 
-		aGMListButtons = { "button_npc_letter", "button_npc_cr", "button_npc_type" },
+		aGMListButtons = { "button_npc_byletter", "button_npc_bycr", "button_npc_bytype" },
 		aCustomFilters = {
 			["CR"] = { sField = "cr", sType = "number", fGetValue = getNPCCRValue },
 			["Type"] = { sField = "type", fGetValue = getNPCTypeValue },
@@ -151,8 +151,8 @@ aRecordOverrides = {
 		aDataMap = { "item", "reference.equipment", "reference.weapon", "reference.armor", "reference.magicitems" }, 
 		fRecordDisplayClass = getItemRecordDisplayClass,
 		aRecordDisplayClasses = { "item", "referencearmor", "referenceweapon", "referenceequipment" },
-		aGMListButtons = { "button_item_armor", "button_item_weapons" },
-		aPlayerListButtons = { "button_item_armor", "button_item_weapons" },
+		aGMListButtons = { "button_item_armor", "button_item_weapon" },
+		aPlayerListButtons = { "button_item_armor", "button_item_weapon" },
 		aCustomFilters = {
 			["Type"] = { sField = "type" },
 			["Subtype"] = {sField = "subtype" },

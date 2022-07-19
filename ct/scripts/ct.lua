@@ -7,7 +7,7 @@ local enableglobaltoggle = true;
 local enablevisibilitytoggle = true;
 
 function onInit()
-	Interface.onHotkeyActivated = onHotkey;
+	CombatManager.registerStandardCombatHotKeys();
 	
 	registerMenuItem(Interface.getString("list_menu_createitem"), "insert", 5);
 
@@ -71,17 +71,6 @@ end
 
 function onSortCompare(w1, w2)
 	return CombatManager.onSortCompare(w1.getDatabaseNode(), w2.getDatabaseNode());
-end
-
-function onHotkey(draginfo)
-	local sDragType = draginfo.getType();
-	if sDragType == "combattrackernextactor" then
-		CombatManager.nextActor();
-		return true;
-	elseif sDragType == "combattrackernextround" then
-		CombatManager.nextRound(1);
-		return true;
-	end
 end
 
 function toggleVisibility()
@@ -208,16 +197,6 @@ function onEntrySectionToggle()
 end
 
 function onDrop(x, y, draginfo)
-	if draginfo.isType("shortcut") then
-		return CampaignDataManager.handleDrop("combattracker", draginfo);
-	end
-	
-	-- Capture any drops meant for specific CT entries
-	local win = getWindowAt(x,y);
-	if win then
-		local nodeWin = win.getDatabaseNode();
-		if nodeWin then
-			return CombatManager.onDrop("ct", nodeWin.getPath(), draginfo);
-		end
-	end
+	local sCTNode = UtilityManager.getWindowDatabasePath(getWindowAt(x,y));
+	return CombatDropManager.handleAnyDrop(draginfo, sCTNode);
 end

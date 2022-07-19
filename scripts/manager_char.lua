@@ -117,7 +117,7 @@ end
 
 function removeFromArmorDB(nodeItem)
 	-- Parameter validation
-	if not ItemManager2.isArmor(nodeItem) then
+	if not ItemManager.isArmor(nodeItem) then
 		return;
 	end
 	
@@ -129,11 +129,10 @@ end
 
 function addToArmorDB(nodeItem)
 	-- Parameter validation
-	local bIsArmor, _, sSubtypeLower = ItemManager2.isArmor(nodeItem);
-	if not bIsArmor then
+	if not ItemManager.isArmor(nodeItem) then
 		return;
 	end
-	local bIsShield = (sSubtypeLower == "shield");
+	local bIsShield = ItemManager.isShield(nodeItem);
 	
 	-- Determine whether to auto-equip armor
 	local bArmorAllowed = true;
@@ -144,9 +143,8 @@ function addToArmorDB(nodeItem)
 		local bShieldEquipped = false;
 		for _,v in pairs(DB.getChildren(nodeItem, "..")) do
 			if DB.getValue(v, "carried", 0) == 2 then
-				local bIsItemArmor, _, sItemSubtypeLower = ItemManager2.isArmor(v);
-				if bIsItemArmor then
-					if (sItemSubtypeLower == "shield") then
+				if ItemManager.isArmor(v) then
+					if ItemManager.isShield(v) then
 						bShieldEquipped = true;
 					else
 						bArmorEquipped = true;
@@ -173,12 +171,10 @@ function calcItemArmorClass(nodeChar)
 
 	for _,vNode in pairs(DB.getChildren(nodeChar, "inventorylist")) do
 		if DB.getValue(vNode, "carried", 0) == 2 then
-			local bIsArmor, _, sSubtypeLower = ItemManager2.isArmor(vNode);
-			if bIsArmor then
+			if ItemManager.isArmor(vNode) then
 				local bID = LibraryData.getIDState("item", vNode, true);
 				
-				local bIsShield = (sSubtypeLower == "shield");
-				if bIsShield then
+				if ItemManager.isShield(vNode) then
 					if bID then
 						nMainShieldTotal = nMainShieldTotal + DB.getValue(vNode, "ac", 0) + DB.getValue(vNode, "bonus", 0);
 					else
@@ -741,11 +737,12 @@ function onActionDrop(draginfo, nodeChar)
 		return true;
 	elseif draginfo.isType("shortcut") then
 		local sClass, sRecord = draginfo.getShortcutData();
+		local nodeSource = draginfo.getDatabaseNode();
 		
 		if sClass == "spelldesc" then
 			ChatManager.Message(Interface.getString("spell_error_dropclasslevelmissing"));
 			return true;
-		elseif LibraryData.isRecordDisplayClass("item", sClass) and ItemManager2.isWeapon(sRecord) then
+		elseif LibraryData.isRecordDisplayClass("item", sClass) and ItemManager.isWeapon(nodeSource) then
 			return ItemManager.handleAnyDrop(nodeChar, draginfo);
 		end
 	end
@@ -765,7 +762,6 @@ function resetHealth(nodeChar)
 	DB.setValue(nodeChar, "hp.temporary", "number", 0);
 	
 	-- Heal hit points equal to character level
-	local nHP = DB.getValue(nodeChar, "hp.total", 0);
 	local nLevel = DB.getValue(nodeChar, "level", 0);
 	
 	local nWounds = DB.getValue(nodeChar, "hp.wounds", 0);
@@ -784,7 +780,7 @@ function resetHealth(nodeChar)
 	
 	-- Heal ability damage
 	local nAbilityDamage;
-	for kAbility, vAbility in pairs(DataCommon.abilities) do
+	for _,vAbility in pairs(DataCommon.abilities) do
 		nAbilityDamage = DB.getValue(nodeChar, "abilities." .. vAbility .. ".damage", 0);
 		if nAbilityDamage > 0 then
 			DB.setValue(nodeChar, "abilities." .. vAbility .. ".damage", "number", nAbilityDamage - 1);
@@ -794,7 +790,7 @@ function resetHealth(nodeChar)
 	-- Remove Stable effect if not dead/dying
 	local rActor = ActorManager.resolveActor(nodeChar);
 	if not ActorHealthManager.isDyingOrDead(rActor) then
-		ActorManagerFFd20.removeStableEffect(rActor);
+		EffectManager.removeCondition(rActor, "Stable");
 	end
 end
 
@@ -956,7 +952,8 @@ function updateSkillPoints(nodeChar)
 end
 
 function updateEncumbrance(nodeChar)
-	Debug.console("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01");
+	Debug.console("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01 - Use CharEncumbranceManager.updateEncumbrance");
+	ChatManager.SystemMessage("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01 - Contact forge/extension author");
 	CharEncumbranceManager.updateEncumbrance(nodeChar);
 end
 
@@ -1556,14 +1553,9 @@ function addClass(nodeChar, sClass, sRecord)
 		local aClasses = {};
 			
 		local sRootMapping = LibraryData.getRootMapping("class");
-		local bCloseCampaign = false;
-		local wCampaign = Interface.findWindow("masterindex", sRootMapping);
-		if not wCampaign then
-			wCampaign = Interface.openWindow("masterindex", sRootMapping);
-			bCloseCampaign = true;
-		end
+		local wIndex, bWasIndexOpen = RecordManager.openRecordIndex(sRootMapping);
 			
-		if wCampaign then
+		if wIndex then
 			local aMappings = LibraryData.getMappings("class");
 			for _,vMapping in ipairs(aMappings) do
 				for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
@@ -1574,8 +1566,8 @@ function addClass(nodeChar, sClass, sRecord)
 				end
 			end
 
-			if bCloseCampaign then
-				wCampaign.close();
+			if not bWasIndexOpen then
+				wIndex.close();
 			end
 		end
 			
