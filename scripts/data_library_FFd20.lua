@@ -379,7 +379,7 @@ aListViews = {
 		["byclass"] = {
 			aColumns = {
 				{ sName = "name", sType = "string", sHeadingRes = "name", nWidth=170 },
-				{ sName = "advance", sType = "string", sHeadingRes = "talents_label_advance", nWidth=100 },
+				{ sName = "talent_type", sType = "string", sHeadingRes = "talents_label_type", nWidth=100 },
 				{ sName = "prerequisites", sType = "string", sHeadingRes = "feat_grouped_label_prereq", nWidth=240, bWrapped = true },
 				{ sName = "benefit", sType = "formattedtext", sHeadingRes = "feat_grouped_label_benefit", nWidth=280, bWrapped = true },
 			},

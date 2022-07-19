@@ -611,7 +611,7 @@
 	<string name="deity_label_relic">Relic</string>
 
 	<!-- Talents -->
-	<string name="talents_label_advance">Advance</string>
+	<string name="talents_label_type">Type</string>
 	<string name="talents_label_class">Class</string>
 
 	<!-- Reference -->

@@ -64,7 +64,7 @@
                     class_biglabel.setVisible(false);
 					class.update(bReadOnly);
 				end
-				advance.update(bReadOnly);
+				talent_type.update(bReadOnly);
                 prerequisites.update(bReadOnly);
                 benefit.update(bReadOnly);
 			end
@@ -87,10 +87,10 @@
 				<delaykeyupdate />
 			</string_columnh>
 			
-			<label_column name="advance_label">
-				<static textres="talents_label_advance" />
+			<label_column name="talent_type_label">
+				<static textres="talents_label_type" />
 			</label_column>
-			<string_columnh name="advance" />
+			<string_columnh name="talent_type" />
 
             <label_column name="prerequisites_label">
 				<static textres="feat_label_prereq" />
