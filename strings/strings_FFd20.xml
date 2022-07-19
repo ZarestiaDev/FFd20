@@ -603,8 +603,10 @@
 	<string name="deity_label_powerlevel">Power Level</string>
 	<string name="deity_label_alignment">Alignment</string>
 	<string name="deity_label_allied">Allied Deities</string>
+	<string name="deity_label_rival">Rival Deities</string>
 	<string name="deity_label_portfolio">Portfolio</string>
 	<string name="deity_label_domains">Domains</string>
+	<string name="deity_label_subdomains">Subdomains</string>
 	<string name="deity_label_favored">Fav. Weapon</string>
 	<string name="deity_label_relic">Relic</string>
 
