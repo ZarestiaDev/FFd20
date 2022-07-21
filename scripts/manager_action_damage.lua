@@ -1269,7 +1269,7 @@ end
 function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags)
 	local nTotalHP = 0;
 	local nTempHP = 0;
-	local nNonLethal = 0;
+	local nNonlethal = 0;
 	local nWounds = 0;
 
 	local bRemoveTarget = false;

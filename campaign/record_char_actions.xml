@@ -359,7 +359,7 @@
 				
 				if sDragType == "dice" then
 					local w = list.addEntry(true);
-					for _, vDie in ipairs(draginfo.getDieList()) do
+					for _, vDie in ipairs(draginfo.getDiceData()) do
 						w.dice.addDie(vDie.type);
 					end
 					return true;
