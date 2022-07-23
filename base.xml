@@ -130,4 +130,8 @@
 	<script name="ActionSpell" file="scripts/manager_action_spell.lua" />
 
 	<script name="ActionAdvantage" file="scripts/manager_action_advantage.lua" />
+
+	<!-- Import -->
+	<includefile source="campaign/import_spell.xml" />
+	<script name="ImportSpellManager" file="scripts/manager_import_spell.lua" />
 </root>

@@ -753,4 +753,13 @@
 	<string name="library_recordview_label_trait_bytype">By Type</string>
 	<string name="library_recordview_label_deity_bytype">By Type</string>
 	<string name="library_recordview_label_talent_byclass">By Class</string>
+
+	<!-- Import -->
+	<string name="import_spell_title">Import - Spell</string>
+	
+	<string name="import_spell_mode_2022">2022 - FFd20 Website</string>
+	
+	<string name="ft_empty_import_description_spell">Paste the spell text here.
+
+		Formatting is NOT preserved.</string>
 </root>

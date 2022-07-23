@@ -13,42 +13,6 @@
 		</buttoncontrol>
 	</template>
 
-	<template name="button_specialability_type">
-		<button_masterindex_option_view>
-			<recordtype>specialability</recordtype>
-			<recordview>bytype</recordview>
-			<recordpath>reference.specialabilitiesbytype</recordpath>
-		</button_masterindex_option_view>
-	</template>
-	<template name="button_feat_type">
-		<button_masterindex_option_view>
-			<recordtype>feat</recordtype>
-			<recordview>bytype</recordview>
-			<recordpath>reference.featsbytype</recordpath>
-		</button_masterindex_option_view>
-	</template>
-	<template name="button_trait_type">
-		<button_masterindex_option_view>
-			<recordtype>trait</recordtype>
-			<recordview>bytype</recordview>
-			<recordpath>reference.traitsbytype</recordpath>
-		</button_masterindex_option_view>
-	</template>
-	<template name="button_deity_type">
-		<button_masterindex_option_view>
-			<recordtype>deity</recordtype>
-			<recordview>bytype</recordview>
-			<recordpath>reference.deitiesbytype</recordpath>
-		</button_masterindex_option_view>
-	</template>
-	<template name="button_talent_class">
-		<button_masterindex_option_view>
-			<recordtype>talent</recordtype>
-			<recordview>byclass</recordview>
-			<recordpath>reference.talentsbyclass</recordpath>
-		</button_masterindex_option_view>
-	</template>
-
 	<template name="frame_record_editor">
 		<genericcontrol name="contentframe">
 			<anchored>
@@ -252,5 +216,74 @@
 				end
 			</script>
 		</windowlist>
+	</template>
+
+	<!-- List templates -->
+	<template name="button_specialability_type">
+		<button_masterindex_option_view>
+			<recordtype>specialability</recordtype>
+			<recordview>bytype</recordview>
+			<recordpath>reference.specialabilitiesbytype</recordpath>
+		</button_masterindex_option_view>
+	</template>
+	<template name="button_feat_type">
+		<button_masterindex_option_view>
+			<recordtype>feat</recordtype>
+			<recordview>bytype</recordview>
+			<recordpath>reference.featsbytype</recordpath>
+		</button_masterindex_option_view>
+	</template>
+	<template name="button_trait_type">
+		<button_masterindex_option_view>
+			<recordtype>trait</recordtype>
+			<recordview>bytype</recordview>
+			<recordpath>reference.traitsbytype</recordpath>
+		</button_masterindex_option_view>
+	</template>
+	<template name="button_deity_type">
+		<button_masterindex_option_view>
+			<recordtype>deity</recordtype>
+			<recordview>bytype</recordview>
+			<recordpath>reference.deitiesbytype</recordpath>
+		</button_masterindex_option_view>
+	</template>
+	<template name="button_talent_class">
+		<button_masterindex_option_view>
+			<recordtype>talent</recordtype>
+			<recordview>byclass</recordview>
+			<recordpath>reference.talentsbyclass</recordpath>
+		</button_masterindex_option_view>
+	</template>
+
+	<!-- Import templates -->
+	<template name="button_add_spell_import_text">
+		<button_add_record_import_text>
+			<script>
+				function onButtonPress()
+					Interface.openWindow("import_spell", "");
+				end
+			</script>
+		</button_add_record_import_text>
+	</template>
+
+	<template name="contentarea_import">
+		<genericcontrol name="contentframe">
+			<anchored to="contentanchor">
+				<top anchor="bottom" relation="current" offset="20" />
+				<left offset="5" />
+				<right offset="-10" />
+				<bottom parent="bottomanchor" anchor="top" offset="-10" />
+			</anchored>
+			<disabled />
+		</genericcontrol>
+	</template>
+	<template name="button_import_window">
+		<button_text name="button_import">
+			<anchored to="contentanchor" height="20" width="120">
+				<top parent="bottomanchor" anchor="bottom" offset="5" />
+				<left anchor="center" offset="-60" />
+			</anchored>
+			<state textres="button_import" />
+		</button_text>
 	</template>
 </root>

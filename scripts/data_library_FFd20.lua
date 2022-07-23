@@ -195,6 +195,7 @@ aRecordOverrides = {
 		bExport = true,
 		aDataMap = { "spell", "reference.spells", "spelldesc" },
 		sRecordDisplayClass = "spelldesc",
+		aGMEditButtons = { "button_add_spell_import_text" },
 		aCustomFilters = {
 			["School"] = { sField = "school", fGetValue = getSpellSchoolValue },
 			["Source"] = { sField = "level", fGetValue = getSpellSourceValue },
