@@ -37,7 +37,23 @@ function import2022(sStats)
 	ImportSpellManager.importHelperSchoolLevel();
 
 	-- Assume Casting on Line 3 and 4
-	--ImportSpellManager.importHelperCasting();
+	ImportSpellManager.importHelperCasting();
+
+	-- Assume the following optional fields in the following order:
+	-- Range
+	-- Area
+	-- Target(s)
+	-- Effect
+	-- Duration
+	-- Saving Throw
+	-- Spell Resistance
+	ImportSpellManager.importHelperOptionalFields();
+
+	-- Assume Description on last Lines
+	ImportSpellManager.importHelperDescription();
+
+	-- Open new record window and matching campaign list
+	ImportUtilityManager.showRecord("spell", _tImportState.node);
 end
 
 --
@@ -47,8 +63,8 @@ end
 -- Assumes name is on next line
 function importHelperName()
 	ImportSpellManager.nextImportLine();
-	_tImportState.sSpellName = _tImportState.sActiveLine
-	DB.setValue(_tImportState.node, "name", "string", _tImportState.sSpellName);
+	local sName = _tImportState.sActiveLine;
+	DB.setValue(_tImportState.node, "name", "string", sName);
 end
 
 -- Assumes school and level is on next line
@@ -66,6 +82,100 @@ function importHelperSchoolLevel()
 	DB.setValue(_tImportState.node, "level", "string", StringManager.capitalizeAll(sLevel));
 end
 
+-- Assumes casting is on next next line
+function importHelperCasting()
+	ImportSpellManager.nextImportLine();
+	if not _tImportState.sActiveLine == "CASTING" then
+		return;
+	end
+
+	ImportSpellManager.nextImportLine();
+	local sCasting = _tImportState.sActiveLine;
+	sCasting = StringManager.trim(sCasting:gsub("Casting Time", ""));
+
+	DB.setValue(_tImportState.node, "castingtime", "string", sCasting)
+end
+
+-- Assume the following optional fields in the following order:
+-- Range
+-- Area
+-- Target(s)
+-- Effect
+-- Duration
+-- Saving Throw
+-- Spell Resistance
+function importHelperOptionalFields()
+	ImportSpellManager.nextImportLine();
+	if not _tImportState.sActiveLine == "EFFECT" then
+		return;
+	end
+
+	ImportSpellManager.nextImportLine();
+	local sLine = _tImportState.sActiveLine;
+
+	if sLine and sLine:match("^Range") then
+		local sRange = _tImportState.sActiveLine;
+		sRange = StringManager.trim(sRange:gsub("Range", ""));
+
+		DB.setValue(_tImportState.node, "range", "string", StringManager.capitalize(sRange));
+		
+		ImportSpellManager.nextImportLine();
+		sLine = _tImportState.sActiveLine;
+	end
+
+	if sLine and (sLine:match("^Area") or sLine:match("^Target") or sLine:match("^Effect")) then
+		local sEffect = _tImportState.sActiveLine;
+		sEffect = StringManager.trim(sEffect:gsub("Effect", ""));
+		sEffect = StringManager.trim(sEffect:gsub("Area", ""));
+		sEffect = StringManager.trim(sEffect:gsub("Targets", ""));
+		sEffect = StringManager.trim(sEffect:gsub("Target", ""));
+
+		DB.setValue(_tImportState.node, "effect", "string", StringManager.capitalize(sEffect));
+		
+		ImportSpellManager.nextImportLine();
+		sLine = _tImportState.sActiveLine;
+	end
+
+	if sLine and sLine:match("^Duration") then
+		local sDuration = _tImportState.sActiveLine;
+		sDuration = StringManager.trim(sDuration:gsub("Duration", ""));
+
+		DB.setValue(_tImportState.node, "duration", "string", sDuration);
+		
+		ImportSpellManager.nextImportLine();
+		sLine = _tImportState.sActiveLine;
+	end
+
+	if sLine and sLine:match("^Saving Throw") then
+		local tSegments = StringManager.splitByPattern(_tImportState.sActiveLine, ";", true);
+
+		local sSavingThrow = tSegments[1] or "";
+		local sSpellResistance = tSegments[2] or "";
+
+		sSavingThrow = StringManager.trim(sSavingThrow:gsub("Saving Throw", ""));
+		sSpellResistance = StringManager.trim(sSpellResistance:gsub("Spell Resistance", ""));
+
+		DB.setValue(_tImportState.node, "save", "string", StringManager.capitalize(sSavingThrow));
+		DB.setValue(_tImportState.node, "sr", "string", StringManager.capitalize(sSpellResistance));
+	end
+end
+
+-- Assume description is on the next line
+function importHelperDescription()
+	ImportSpellManager.nextImportLine();
+	if not _tImportState.sActiveLine == "DESCRIPTION" then
+		return;
+	end
+
+	ImportSpellManager.nextImportLine();
+	local sDescription = _tImportState.sActiveLine;
+	while _tImportState.sActiveLine ~= "" do
+		ImportSpellManager.nextImportLine();
+		sDescription = sDescription .. "<p />" .. _tImportState.sActiveLine;
+	end
+	DB.setValue(_tImportState.node, "description", "formattedtext", sDescription);
+end
+
 --
 --	Import state identification and tracking
 --
@@ -78,12 +188,8 @@ function initImportState(sStatBlock)
 	_tImportState.tLines = ImportUtilityManager.parseFormattedTextToLines(sCleanStats);
 	_tImportState.sActiveLine = "";
 
-	_tImportState.tStatOutput = {};
-
 	local sRootMapping = LibraryData.getRootMapping("spell");
 	_tImportState.node = DB.createChild(sRootMapping);
-
-    --Debug.chat(_tImportState.tLines)
 end
 
 function nextImportLine(nAdvance)
