@@ -31,8 +31,44 @@ function import2022(sStats)
     ImportSpellManager.initImportState(sStats);
 
     -- Assume Name on Line 1
-    
+    ImportSpellManager.importHelperName();
+
+	-- Assume School & Level on Line 2
+	ImportSpellManager.importHelperSchoolLevel();
+
+	-- Assume Casting on Line 3 and 4
+	--ImportSpellManager.importHelperCasting();
 end
+
+--
+--	Import section helper functions
+--
+
+-- Assumes name is on next line
+function importHelperName()
+	ImportSpellManager.nextImportLine();
+	_tImportState.sSpellName = _tImportState.sActiveLine
+	DB.setValue(_tImportState.node, "name", "string", _tImportState.sSpellName);
+end
+
+-- Assumes school and level is on next line
+function importHelperSchoolLevel()
+	ImportSpellManager.nextImportLine();
+	local tSegments = StringManager.splitByPattern(_tImportState.sActiveLine, ";", true);
+
+	local sSchool = tSegments[1] or "";
+	local sLevel = tSegments[2] or "";
+
+	sSchool = StringManager.trim(sSchool:gsub("School", ""));
+	sLevel = StringManager.trim(sLevel:gsub("Level", ""));
+
+	DB.setValue(_tImportState.node, "school", "string", StringManager.capitalizeAll(sSchool));
+	DB.setValue(_tImportState.node, "level", "string", StringManager.capitalizeAll(sLevel));
+end
+
+--
+--	Import state identification and tracking
+--
 
 function initImportState(sStatBlock)
 	_tImportState = {};
@@ -47,5 +83,10 @@ function initImportState(sStatBlock)
 	local sRootMapping = LibraryData.getRootMapping("spell");
 	_tImportState.node = DB.createChild(sRootMapping);
 
-    Debug.chat(_tImportState.tLines)
+    --Debug.chat(_tImportState.tLines)
+end
+
+function nextImportLine(nAdvance)
+	_tImportState.nLine = _tImportState.nLine + (nAdvance or 1);
+	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
 end
