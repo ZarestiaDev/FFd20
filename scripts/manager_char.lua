@@ -94,13 +94,6 @@ end
 
 function onCharItemAdd(nodeItem)
 	DB.setValue(nodeItem, "carried", "number", 1);
-
-	if DB.getValue(nodeItem, "type", "") == "Goods and Services" then
-		local sSubType = DB.getValue(nodeItem, "subtype", "");
-		if (sType == "Goods and Services") and StringManager.contains({"Mounts and Related Gear", "Transport", "Spellcasting and Services"}, sSubType) then
-			DB.setValue(nodeItem, "carried", "number", 0);
-		end
-	end
 	
 	addToArmorDB(nodeItem);
 	addToWeaponDB(nodeItem);

@@ -3,7 +3,7 @@
 -- attribution and copyright information.
 --
 
-function getItemType(vRecord, sClass)
+function onInit()
 	ItemManager.isArmor = isArmor;
 	ItemManager.isShield = isShield;
 	ItemManager.isWeapon = isWeapon;
@@ -12,30 +12,47 @@ function getItemType(vRecord, sClass)
 end
 
 function isArmor(nodeItem)
-	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	return StringManager.contains({"armor", "shield", "shields"}, sTypeLower);
+	local bArmor = false;
+	local sType = DB.getValue(nodeItem, "type", "");
+	local sSubType = DB.getValue(nodeItem, "subtype", "");
+
+	if sType == "Armor" or sSubType == "Magical Armor" then
+		bArmor = true;
+	else
+		bArmor = false;
+	end
+
+	return bArmor;
 end
 
 function isShield(nodeItem)
-	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
-
-	local bIsShield = false;
-
-	if StringManager.contains({"shield", "shields"}, sTypeLower) then
-		bIsShield = true;
-	elseif sSubtypeLower == "shields" then
-		bIsShield = true;
+	bShield = false;
+	local sSubType = DB.getValue(nodeItem, "subtype", "");
+	
+	if sSubType == "Shield" then
+		bShield = true;
+	else
+		bShield = false;
 	end
-	return bIsShield;
+
+	return bShield;
 end
 
 function isWeapon(nodeItem)
-	local sTypeLower = StringManager.trim(DB.getValue(nodeItem, "type", "")):lower();
-	local sSubtypeLower = StringManager.trim(DB.getValue(nodeItem, "subtype", "")):lower();
-	local bIsWeapon = ((sTypeLower == "weapon") and (sSubtypeLower ~= "ammunition")) or (sSubtypeLower == "weapon");
+	bWeapon = false;
+	local sType = DB.getValue(nodeItem, "type", "");
+	local sSubType = DB.getValue(nodeItem, "subtype", "");
 
-	return bIsWeapon;
+	if sType == "Weapon" or sSubType == "Magical Weapon" then
+		if string.find(sSubType, "Ammunition") then
+			bWeapon = false;
+		end
+		bWeapon = true;
+	else
+		bWeapon = false;
+	end
+
+	return bWeapon;
 end
 
 function handleItemCleanupOnTransfer(rSourceItem, rTempItem, rTargetItem)
