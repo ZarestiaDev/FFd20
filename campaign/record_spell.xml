@@ -128,7 +128,7 @@
 				<default>
 					<textres>spell_text_components</textres>
 				</default>
-			</string_columnh>>
+			</string_columnh>
 
 			<label_column name="castingtime_label">
 				<static textres="spell_label_casttime" />
@@ -275,5 +275,4 @@
 			</list_text>
 		</sheetdata>
 	</windowclass>
-
 </root>
