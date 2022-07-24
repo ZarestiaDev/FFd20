@@ -82,18 +82,17 @@ function importHelperSchoolLevel()
 	DB.setValue(_tImportState.node, "level", "string", StringManager.capitalizeAll(sLevel));
 end
 
--- Assumes casting is on next next line
+-- Assumes casting is on next next line, some spells do not have a casting parameter
 function importHelperCasting()
-	ImportSpellManager.nextImportLine();
-	if not _tImportState.sActiveLine == "CASTING" then
+	local sHeading = "CASTING";
+	if not correctHeading(sHeading) then
 		return;
 	end
 
-	ImportSpellManager.nextImportLine();
 	local sCasting = _tImportState.sActiveLine;
 	sCasting = StringManager.trim(sCasting:gsub("Casting Time", ""));
 
-	DB.setValue(_tImportState.node, "castingtime", "string", sCasting)
+	DB.setValue(_tImportState.node, "castingtime", "string", sCasting);
 end
 
 -- Assume the following optional fields in the following order:
@@ -105,12 +104,11 @@ end
 -- Saving Throw
 -- Spell Resistance
 function importHelperOptionalFields()
-	ImportSpellManager.nextImportLine();
-	if not _tImportState.sActiveLine == "EFFECT" then
+	local sHeading = "EFFECT";
+	if not correctHeading(sHeading) then
 		return;
 	end
 
-	ImportSpellManager.nextImportLine();
 	local sLine = _tImportState.sActiveLine;
 
 	if sLine and sLine:match("^Range") then
@@ -140,7 +138,7 @@ function importHelperOptionalFields()
 		local sDuration = _tImportState.sActiveLine;
 		sDuration = StringManager.trim(sDuration:gsub("Duration", ""));
 
-		DB.setValue(_tImportState.node, "duration", "string", sDuration);
+		DB.setValue(_tImportState.node, "duration", "string", StringManager.capitalize(sDuration));
 		
 		ImportSpellManager.nextImportLine();
 		sLine = _tImportState.sActiveLine;
@@ -162,12 +160,11 @@ end
 
 -- Assume description is on the next line
 function importHelperDescription()
-	ImportSpellManager.nextImportLine();
-	if not _tImportState.sActiveLine == "DESCRIPTION" then
+	local sHeading = "DESCRIPTION";
+	if not correctHeading(sHeading) then
 		return;
 	end
 
-	ImportSpellManager.nextImportLine();
 	local sDescription = _tImportState.sActiveLine;
 	while _tImportState.sActiveLine ~= "" do
 		ImportSpellManager.nextImportLine();
@@ -195,4 +192,27 @@ end
 function nextImportLine(nAdvance)
 	_tImportState.nLine = _tImportState.nLine + (nAdvance or 1);
 	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
+end
+
+function previousImportLine()
+	_tImportState.nLine = _tImportState.nLine - 1;
+	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
+end
+
+function correctHeading(sHeading)
+	local bHeading = true;
+	if _tImportState.sActiveLine == sHeading then
+		ImportSpellManager.nextImportLine();
+		return bHeading;
+	end
+
+	ImportSpellManager.nextImportLine();
+	if _tImportState.sActiveLine ~= sHeading then
+		ImportSpellManager.previousImportLine();
+		bHeading = false;
+	else
+		ImportSpellManager.nextImportLine();
+	end
+
+	return bHeading;
 end
