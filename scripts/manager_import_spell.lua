@@ -54,6 +54,9 @@ function import2022(sStats)
 
 	-- Open new record window and matching campaign list
 	ImportUtilityManager.showRecord("spell", _tImportState.node);
+
+	-- Parse the spell info for effects
+	SpellManager.parseSpell(_tImportState.node);
 end
 
 --
