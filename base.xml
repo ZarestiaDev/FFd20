@@ -133,5 +133,8 @@
 
 	<!-- Import -->
 	<includefile source="campaign/import_spell.xml" />
+	<includefile source="campaign/import_npc.xml" />
+
 	<script name="ImportSpellManager" file="scripts/manager_import_spell.lua" />
+	<script name="ImportNPCManager" file="scripts/manager_import_npc.lua" />
 </root>

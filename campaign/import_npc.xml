@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="import_npc">
+		<frame>utilitybox</frame>
+		<placement>
+			<size width="1000" height="600"/>
+		</placement>
+		<sizelimits>
+			<minimum width="800" height="600"/>
+			<dynamic/>
+		</sizelimits>
+		<script>
+			function onInit()
+				ImportUtilityManager.populateImportModes("npc", mode);
+			end
+		</script>
+		<sheetdata>
+			<windowtitlebar name="title">
+				<resource>import_npc_title</resource>
+			</windowtitlebar>
+ 			<anchor_title_utilitybox name="contentanchor" />
+
+			<anchor_bottom_utilitybox_buttons name="bottomanchor" />
+
+			<contentarea_import name="contentframe" />
+
+			<simpleftc name="statblock">
+				<anchored to="contentframe" position="over">
+					<right anchor="center" offset="-20" />
+					<bottom offset="-40" />
+				</anchored>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<empty textres="ft_empty_import_statblock_npc" />
+			</simpleftc>
+			<scrollbar>
+				<anchored to="statblock" />
+				<target>statblock</target>
+			</scrollbar>		
+			
+			<simpleftc name="description">
+				<anchored to="contentframe" position="over">
+					<left anchor="center" offset="20" />
+					<bottom offset="-40" />
+				</anchored>
+				<frame name="groupbox" offset="15,15,20,15" />
+				<empty textres="ft_empty_import_description_npc" />
+			</simpleftc>		
+			<scrollbar>
+				<anchored to="description" />
+				<target>description</target>
+			</scrollbar>		
+
+			<label name="mode_label">
+				<anchored to="contentframe" position="insidebottomleft" offset="10,0" />
+				<frame>
+					<name>fieldlight</name>
+					<offset>17,5,17,5</offset>
+				</frame>
+				<static textres="import_label_mode" />
+			</label>
+			<comboboxc name="mode">
+				<anchored to="contentframe" position="insidebottom" height="20">
+					<left parent="mode_label" anchor="right" offset="20" />
+				</anchored>
+			</comboboxc>
+
+			<button_import_window name="button_import">
+				<script>
+					function onButtonPress()
+						ImportNPCManager.performImport(window);
+					end
+				</script>
+			</button_import_window>			
+
+			<resize_utilitybox />
+			<close_utilitybox />
+		</sheetdata>
+	</windowclass>
+</root>

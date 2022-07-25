@@ -9,7 +9,7 @@ function onInit()
 	Interface.onDesktopInit = onDesktopInit;
 end
 function onDesktopInit()
-	local sLabel = Interface.getString("import_spell_mode_2022");
+	local sLabel = Interface.getString("import_mode_2022");
 	ImportUtilityManager.registerImportMode("spell", "2022", sLabel, ImportSpellManager.import2022);
 end
 

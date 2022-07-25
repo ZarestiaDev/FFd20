@@ -266,6 +266,16 @@
 		</button_add_record_import_text>
 	</template>
 
+	<template name="button_add_npc_import_text">
+		<button_add_record_import_text>
+			<script>
+				function onButtonPress()
+					Interface.openWindow("import_npc", "");
+				end
+			</script>
+		</button_add_record_import_text>
+	</template>
+
 	<template name="contentarea_import">
 		<genericcontrol name="contentframe">
 			<anchored to="contentanchor">
