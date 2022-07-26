@@ -34,33 +34,100 @@ function import2022(sStats, sDesc)
 	-- Assume name/cr on Line 1
 	ImportNPCManager.importHelperNameCR();
 
-    -- Assume XP on Line 2
-    ImportNPCManager.importHelperXP();
-
     -- Assume alignment/size/type on Line 3
     ImportNPCManager.importHelperAlignmentSizeType();
 
     -- Assume initiative/senses on Line 4
     ImportNPCManager.importHelperInitiativeSenses();
 
+    -- Assume optional aura on Line 5
+    ImportNPCManager.importHelperAura();
+
     -- Assume defense on Line 5-8, maybe more
-    ImportNPCManager.importHelperDefense();
+    --ImportNPCManager.importHelperDefense();
 
     -- Assume optional tactics
-    ImportNPCManager.importHelperOptionalTactics();
+    --ImportNPCManager.importHelperOptionalTactics();
 
     -- Assume offense next
-    ImportNPCManager.importHelperOffense();
+    --ImportNPCManager.importHelperOffense();
 
     -- Assume optional spells next
-    ImportNPCManager.importHelperSpells();
+    --ImportNPCManager.importHelperSpells();
 
     -- Assume Statistics next
-    ImportNPCManager.importHelperStatistics();
+    --ImportNPCManager.importHelperStatistics();
 
     -- Assume special abilities next
-    ImportNPCManager.importHelperSpecialAbilities();
+    --ImportNPCManager.importHelperSpecialAbilities();
 
     -- Open new record window and matching campaign list
 	ImportUtilityManager.showRecord("npc", _tImportState.node);
+end
+
+--
+--	Import section helper functions
+--
+
+function importHelperNameCR()
+	ImportNPCManager.nextImportLine();
+    local sLine = _tImportState.sActiveLine;
+    local sName = sLine:gsub(" %(CR.+", "");
+    local nCR = tonumber(sLine:match("CR%s(%d+)"));
+
+    DB.setValue(_tImportState.node, "name", "string", sName);
+	DB.setValue(_tImportState.node, "cr", "number", nCR);
+end
+
+function importHelperAlignmentSizeType()
+    -- skip xp line
+	ImportNPCManager.nextImportLine(2);
+    DB.setValue(_tImportState.node, "type", "string", _tImportState.sActiveLine);
+end
+
+function importHelperInitiativeSenses()
+    ImportNPCManager.nextImportLine();
+    local sLine = _tImportState.sActiveLine;
+    local nInit = tonumber(sLine:match("Init%s(.?%d+)"));
+    local sSenses = sLine:match("Senses (.*)");
+
+    DB.setValue(_tImportState.node, "init", "number", nInit);
+    DB.setValue(_tImportState.node, "senses", "string", sSenses);
+end
+
+function importHelperAura()
+    ImportNPCManager.nextImportLine();
+
+    if _tImportState.sActiveLine:match("^Aura") then
+        local sAura = _tImportState.sActiveLine:gsub("Aura ", "")
+        DB.setValue(_tImportState.node, "aura", "string", sAura);
+    else
+        ImportNPCManager.previousImportLine();
+    end
+end
+
+--
+--	Import state identification and tracking
+--
+
+function initImportState(sStatBlock)
+	_tImportState = {};
+
+	local sCleanStats = ImportUtilityManager.cleanUpText(sStatBlock);
+	_tImportState.nLine = 0;
+	_tImportState.tLines = ImportUtilityManager.parseFormattedTextToLines(sCleanStats);
+	_tImportState.sActiveLine = "";
+
+	local sRootMapping = LibraryData.getRootMapping("npc");
+	_tImportState.node = DB.createChild(sRootMapping);
+end
+
+function nextImportLine(nAdvance)
+	_tImportState.nLine = _tImportState.nLine + (nAdvance or 1);
+	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
+end
+
+function previousImportLine()
+	_tImportState.nLine = _tImportState.nLine - 1;
+	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
 end
