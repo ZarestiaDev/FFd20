@@ -43,17 +43,13 @@ function import2022(sStats, sDesc)
 	-- Assume optional aura on Line 5
 	ImportNPCManager.importHelperAura();
 
-	-- Assume defense on Line 5-8, maybe more
-	ImportNPCManager.importHelperDefense();
+	-- EXTRACT optional tactics first
 
-	-- Assume optional tactics
-	--ImportNPCManager.importHelperOptionalTactics();
+	-- Assume defensive values
+	ImportNPCManager.importHelperDefense();
 
 	-- Assume offense next
 	--ImportNPCManager.importHelperOffense();
-
-	-- Assume optional spells next
-	--ImportNPCManager.importHelperSpells();
 
 	-- Assume Statistics next
 	--ImportNPCManager.importHelperStatistics();
@@ -107,32 +103,69 @@ function importHelperAura()
 end
 
 function importHelperDefense()
-	-- skip DEFENSE
-	ImportNPCManager.nextImportLine(2);
-	-- AC / HP / MP
-	local sLine = _tImportState.sActiveLine;
-	if sLine:match("^AC") then
-		local tSegments = StringManager.splitByPattern(sLine, "hp");
-		local sAC = StringManager.trim(tSegments[1]:gsub("AC", ""));
-		local sHPLine = tSegments[2];
+	ImportNPCManager.nextImportLine();
+	local sDiffDefOff;
+	-- Get all data between DEFENSE and OFFENSE
+	sDiffDefOff = ImportNPCManager.importHelperDiff("DEFENSE", "OFFENSE");
+	-- Assume every NPC has AC/HP/Saves and save the data without them in "sDiffDefOff"
+	sDiffDefOff = ImportNPCManager.importHelperDefStats(sDiffDefOff);
+	-- Assume optional values in the order:
+	-- MP
+	-- Defensive Abilities
+	-- DR
+	-- Immune
+	-- Resist
+	-- SR
+	-- Strong
+	-- Weakness
+	--ImportNPCManager.importHelperDefStatsOptional(sDiffDefOff);
+end
 
-		-- handle MP
-		if sHPLine:match("mp") then
-			local tMPSegments = StringManager.splitByPattern(sHPLine, "mp");
-			-- Handle MP and Spellclass creation here
+function importHelperDefStats(sLines)
+	local sAC, sHPLine, sHD, nHP, sSaveLine, nFort, nRef, nWill, sRemainder;
+	-- Extract AC
+	sAC, sRemainder = StringManager.extractPattern(sLines:lower(), "^ac.-%)");
+	sAC = StringManager.trim(sAC:gsub("ac", "")) or "";
+	-- Extract HP
+	sHPLine, sRemainder = StringManager.extractPattern(sRemainder, "^%s?hp.-%)");
+	nHP = sHPLine:match("%d+") or 0;
+	sHD = sHPLine:match("%((.-)%)") or "";
+	-- Extract Fort
+	sSaveLine, sRemainder = StringManager.extractPattern(sRemainder, "fort%s.?%d+,%sref%s.?%d+,%swill%s.?%d+%s?");
+	nFort = tonumber(sSaveLine:match("fort%s(.?%d+)")) or 0;
+	nRef = tonumber(sSaveLine:match("ref%s(.?%d+)")) or 0;
+	nWill = tonumber(sSaveLine:match("will%s(.?%d+)")) or 0;
+
+	DB.setValue(_tImportState.node, "ac", "string", sAC);
+	DB.setValue(_tImportState.node, "hp", "number", nHP);
+	DB.setValue(_tImportState.node, "hd", "string", sHD);
+	DB.setValue(_tImportState.node, "fortitudesave", "number", nFort);
+	DB.setValue(_tImportState.node, "reflexsave", "number", nRef);
+	DB.setValue(_tImportState.node, "willsave", "number", nWill);
+
+	--ImportNPCManager.importHelperDefStatsOptional(sRemainder);
+end
+
+--
+--	General helper
+--
+
+function importHelperDiff(sHeadingStart, sHeadingEnd)
+	local tDefense = {};
+
+	if _tImportState.sActiveLine:match(sHeadingStart) then
+		while not _tImportState.sActiveLine:match(sHeadingEnd) do
+			ImportNPCManager.nextImportLine();
+			local sLine = _tImportState.sActiveLine;
+
+			if not sLine or sLine == "" or sLine:match(sHeadingEnd) then
+				break;
+			end
+
+			table.insert(tDefense, sLine);
 		end
 
-		-- handle things like fast healing
-		if sHPLine:match(";") then
-			local tSQSegments = StringManager.splitByPattern(sHPLine, ";");
-		end
-
-		sHD = sHPLine:match("%((.-)%)");
-		sHP = tonumber(sHPLine:match("%d+"));
-
-		DB.setValue(_tImportState.node, "hd", "string", sHD);
-		DB.setValue(_tImportState.node, "hp", "number", sHP);
-		DB.setValue(_tImportState.node, "ac", "string", sAC);
+		return table.concat(tDefense);
 	end
 end
 
