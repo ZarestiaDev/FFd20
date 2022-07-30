@@ -43,7 +43,7 @@ function import2022(sStats, sDesc)
 	-- Assume optional aura on Line 5
 	ImportNPCManager.importHelperAura();
 
-	-- EXTRACT optional tactics first
+	-- EXTRACT optional tactics first?
 
 	-- Assume defensive values
 	ImportNPCManager.importHelperDefense();
@@ -118,7 +118,7 @@ function importHelperDefense()
 	-- SR
 	-- Strong
 	-- Weakness
-	--ImportNPCManager.importHelperDefStatsOptional(sDiffDefOff);
+	ImportNPCManager.importHelperDefStatsOptional(sDiffDefOff);
 end
 
 function importHelperDefStats(sLines)
@@ -143,7 +143,53 @@ function importHelperDefStats(sLines)
 	DB.setValue(_tImportState.node, "reflexsave", "number", nRef);
 	DB.setValue(_tImportState.node, "willsave", "number", nWill);
 
-	--ImportNPCManager.importHelperDefStatsOptional(sRemainder);
+	return sRemainder;
+end
+
+function importHelperDefStatsOptional(sLines)
+	local nMP, sDA, sAbsorb, sDR, sImmune, sResist, nSR, sStrong, sWeakness;
+
+	sLines = sLines:gsub(";?%s?defensive%sabilities", ";defensive abilities");
+	sLines = sLines:gsub(";?%s?absorb", ";absorb");
+	sLines = sLines:gsub(";?%s?dr", ";dr");
+	sLines = sLines:gsub(";?%s?immune", ";immune");
+	sLines = sLines:gsub(";?%s?resist", ";resist");
+	sLines = sLines:gsub(";?%s?sr", ";sr");
+	sLines = sLines:gsub(";?%s?strong", ";strong");
+	sLines = sLines:gsub(";?%s?weakness", ";weakness");
+
+	tDefOptional = StringManager.splitByPattern(sLines, ";");
+
+	for _,sDefOption in ipairs(tDefOptional) do
+		if sDefOption:match("mp") then
+			nMP = tonumber(sDefOption:match("%d+"));
+		elseif sDefOption:match("defensive abilities") then
+			sDA = sDefOption:gsub("defensive abilities%s?", "");
+		elseif sDefOption:match("absorb") then
+			sAbsorb = sDefOption:gsub("absorb%s?", "");
+		elseif sDefOption:match("dr") then
+			sDR = sDefOption:gsub("dr%s?", "");
+		elseif sDefOption:match("immune") then
+			sImmune = sDefOption:gsub("immune%s?", "");
+		elseif sDefOption:match("resist") then
+			sResist = sDefOption:gsub("resist%s?", "");
+		elseif sDefOption:match("sr") then
+			nSR = tonumber(sDefOption:match("%d+"));
+		elseif sDefOption:match("strong") then
+			sWeakness = sDefOption:gsub("strong%s?", "");
+		elseif sDefOption:match("weakness") then
+			sWeakness = sDefOption:gsub("weakness%s?", "");
+		end
+	end
+
+	DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
+	DB.setValue(_tImportState.node, "absorb", "string", sAbsorb);
+	DB.setValue(_tImportState.node, "dr", "string", sDR);
+	DB.setValue(_tImportState.node, "immune", "string", sImmune);
+	DB.setValue(_tImportState.node, "resistance", "string", sResist);
+	DB.setValue(_tImportState.node, "sr", "number", nSR);
+	DB.setValue(_tImportState.node, "strong", "string", sStrong);
+	DB.setValue(_tImportState.node, "weakness", "string", sWeakness);
 end
 
 --
