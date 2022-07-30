@@ -53,7 +53,7 @@ function import2022(sStats, sDesc)
 	ImportNPCManager.importHelperOffense();
 
 	-- Assume Statistics next
-	--ImportNPCManager.importHelperStatistics();
+	ImportNPCManager.importHelperStatistics();
 
 	-- Assume special abilities next
 	--ImportNPCManager.importHelperSpecialAbilities();
@@ -219,6 +219,21 @@ function importHelperOffense()
 	DB.setValue(_tImportState.node, "fullatk", "string", sAttack);
 	DB.setValue(_tImportState.node, "spacereach", "string", sSpaceReach);
 	DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
+end
+
+function importHelperStatistics()
+	-- Skip "STATISTICS"
+	ImportNPCManager.nextImportLine(2);
+
+	local nStr, nDex, nCon, nInt, nWis, nCha = _tImportState.sActiveLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
+	-- BAB/CMB/CMD
+
+	DB.setValue(_tImportState.node, "strength", "number", nStr);
+	DB.setValue(_tImportState.node, "dexterity", "number", nDex);
+	DB.setValue(_tImportState.node, "constitution", "number", nCon);
+	DB.setValue(_tImportState.node, "intelligence", "number", nInt);
+	DB.setValue(_tImportState.node, "wisdom", "number", nWis);
+	DB.setValue(_tImportState.node, "charisma", "number", nCha);
 end
 
 --
