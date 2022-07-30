@@ -50,7 +50,7 @@ function import2022(sStats, sDesc)
 	--ImportNPCManager.importHelperTacticsOptional();
 
 	-- Assume offense next
-	--ImportNPCManager.importHelperOffense();
+	ImportNPCManager.importHelperOffense();
 
 	-- Assume Statistics next
 	--ImportNPCManager.importHelperStatistics();
@@ -195,6 +195,30 @@ function importHelperDefStatsOptional(sLines)
 	DB.setValue(_tImportState.node, "sr", "number", nSR);
 	DB.setValue(_tImportState.node, "strong", "string", sStrong);
 	DB.setValue(_tImportState.node, "weakness", "string", sWeakness);
+end
+
+function importHelperOffense()
+	ImportNPCManager.nextImportLine();
+	-- Speed
+	local sSpeed = _tImportState.sActiveLine:gsub("Speed%s?", "");
+	ImportNPCManager.nextImportLine();
+	-- Melee
+	local sAttack = _tImportState.sActiveLine:gsub("Melee%s?", "");
+	ImportNPCManager.nextImportLine();
+	-- Optional Space/Reach
+	local sSpaceReach = "5 ft./5 ft.";
+	if _tImportState.sActiveLine:match("Space") then
+		local sSpace, sReach = _tImportState.sActiveLine:match("(%d+).-(%d+)");
+		sSpaceReach = sSpace .. " ft./" .. sReach .. " ft.";
+		ImportNPCManager.nextImportLine();
+	end
+	-- Special Attack
+	local sSpecialAttack = _tImportState.sActiveLine:gsub("Special%sAttacks%s?", "");
+
+	DB.setValue(_tImportState.node, "speed", "string", sSpeed);
+	DB.setValue(_tImportState.node, "fullatk", "string", sAttack);
+	DB.setValue(_tImportState.node, "spacereach", "string", sSpaceReach);
+	DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
 end
 
 --
