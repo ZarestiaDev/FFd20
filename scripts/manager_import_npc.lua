@@ -43,10 +43,11 @@ function import2022(sStats, sDesc)
 	-- Assume optional aura on Line 5
 	ImportNPCManager.importHelperAura();
 
-	-- EXTRACT optional tactics first?
-
 	-- Assume defensive values
 	ImportNPCManager.importHelperDefense();
+
+	-- Assume optional tactics
+	--ImportNPCManager.importHelperTacticsOptional();
 
 	-- Assume offense next
 	--ImportNPCManager.importHelperOffense();
@@ -147,6 +148,10 @@ function importHelperDefStats(sLines)
 end
 
 function importHelperDefStatsOptional(sLines)
+	if not sLines or sLines == "" then
+		return;
+	end
+
 	local nMP, sDA, sAbsorb, sDR, sImmune, sResist, nSR, sStrong, sWeakness;
 
 	sLines = sLines:gsub(";?%s?defensive%sabilities", ";defensive abilities");
@@ -158,7 +163,7 @@ function importHelperDefStatsOptional(sLines)
 	sLines = sLines:gsub(";?%s?strong", ";strong");
 	sLines = sLines:gsub(";?%s?weakness", ";weakness");
 
-	tDefOptional = StringManager.splitByPattern(sLines, ";");
+	local tDefOptional = StringManager.splitByPattern(sLines, ";");
 
 	for _,sDefOption in ipairs(tDefOptional) do
 		if sDefOption:match("mp") then
@@ -204,7 +209,7 @@ function importHelperDiff(sHeadingStart, sHeadingEnd)
 			ImportNPCManager.nextImportLine();
 			local sLine = _tImportState.sActiveLine;
 
-			if not sLine or sLine == "" or sLine:match(sHeadingEnd) then
+			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:match("TACTICS") then
 				break;
 			end
 
