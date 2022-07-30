@@ -357,7 +357,7 @@ function modAttack(rSource, rTarget, rRoll)
 			bEffects = true;
 			nAddMod = nAddMod - 4;
 		end
-		if EffectManagerFFd20.hasCondition(rSource, "Prone") then
+		if EffectManager.hasCondition(rSource, "Prone") then
 			if sAttackType == "M" then
 				bEffects = true;
 				nAddMod = nAddMod - 4;
