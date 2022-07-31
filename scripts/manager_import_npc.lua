@@ -187,6 +187,11 @@ function importHelperDefStatsOptional(sLines)
 		end
 	end
 
+	-- Create Spellclass and save nMP for later here
+	if nMP and nMP > 0 then
+		importHelperSpellClass(nMP);
+	end
+
 	DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
 	DB.setValue(_tImportState.node, "absorb", "string", sAbsorb);
 	DB.setValue(_tImportState.node, "dr", "string", sDR);
@@ -199,12 +204,15 @@ end
 
 function importHelperOffense()
 	ImportNPCManager.nextImportLine();
+
 	-- Speed
 	local sSpeed = _tImportState.sActiveLine:gsub("Speed%s?", "");
 	ImportNPCManager.nextImportLine();
+
 	-- Melee
 	local sAttack = _tImportState.sActiveLine:gsub("Melee%s?", "");
 	ImportNPCManager.nextImportLine();
+
 	-- Optional Space/Reach
 	local sSpaceReach = "5 ft./5 ft.";
 	if _tImportState.sActiveLine:match("Space") then
@@ -212,8 +220,18 @@ function importHelperOffense()
 		sSpaceReach = sSpace .. " ft./" .. sReach .. " ft.";
 		ImportNPCManager.nextImportLine();
 	end
-	-- Special Attack
-	local sSpecialAttack = _tImportState.sActiveLine:gsub("Special%sAttacks%s?", "");
+
+	-- Optional Special Attack
+	local sSpecialAttack = "";
+	if _tImportState.sActiveLine:match("Special") then
+		sSpecialAttack = _tImportState.sActiveLine:gsub("Special%sAttacks%s?", "");
+		ImportNPCManager.nextImportLine();
+	end
+
+	-- Optional Spells
+	if _tImportState.sActiveLine:match("Spells") then
+		ImportNPCManager.importHelperSpellcasting();
+	end
 
 	DB.setValue(_tImportState.node, "speed", "string", sSpeed);
 	DB.setValue(_tImportState.node, "fullatk", "string", sAttack);
@@ -222,8 +240,7 @@ function importHelperOffense()
 end
 
 function importHelperStatistics()
-	-- Skip "STATISTICS"
-	ImportNPCManager.nextImportLine(2);
+	ImportNPCManager.nextImportLine();
 
 	local nStr, nDex, nCon, nInt, nWis, nCha = _tImportState.sActiveLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
 	-- BAB/CMB/CMD
@@ -234,6 +251,44 @@ function importHelperStatistics()
 	DB.setValue(_tImportState.node, "intelligence", "number", nInt);
 	DB.setValue(_tImportState.node, "wisdom", "number", nWis);
 	DB.setValue(_tImportState.node, "charisma", "number", nCha);
+end
+
+function importHelperSpellcasting()
+	local nodeSpellset = _tImportState.node.getChild("spellset");
+	if not nodeSpellset then
+		return;
+	end
+
+	local sType;
+	if _tImportState.sActiveLine:match("FC") then
+		sType = "Full";
+	elseif _tImportState.sActiveLine:match("SC") then
+		sType = "Semi";
+	elseif _tImportState.sActiveLine:match("PC") then
+		sType = "Partial";
+	end
+	local nCL = tonumber(_tImportState.sActiveLine:match("CL%s(%d+)"));
+	
+	while not _tImportState.sActiveLine:match("STATISTICS") do
+		ImportNPCManager.nextImportLine();
+		local sLine = _tImportState.sActiveLine;
+		if not sLine or sLine == "" or sLine:match("STATISTICS") then
+			break;
+		end
+
+		local nSpellLevel = tonumber(sLine:match("%d+"));
+		if sLine:match("At%swill") then
+			nSpellLevel = 0;
+		end
+
+		local sSpells = sLine:match("%).-(%w+.*)");
+		Debug.console(nSpellLevel, sSpells);
+	end
+
+	-- Only one spellset child is possible
+	local nodeSpellClass = nodeSpellset.getChild("id-00001");
+	DB.setValue(nodeSpellClass, "type", "string", sType);
+	DB.setValue(nodeSpellClass, "cl", "number", nCL);
 end
 
 --
@@ -256,6 +311,16 @@ function importHelperDiff(sHeadingStart, sHeadingEnd)
 		end
 
 		return table.concat(tDefense);
+	end
+end
+
+function importHelperSpellClass(nMP)
+	local nodeNPC = _tImportState.node;
+	local nodeNewSpellClass = nodeNPC.createChild("spellset").createChild();
+
+	if nodeNewSpellClass then
+		DB.setValue(nodeNewSpellClass, "label", "string", "Spellcasting");
+		DB.setValue(nodeNewSpellClass, "mp.misc", "number", nMP);
 	end
 end
 
