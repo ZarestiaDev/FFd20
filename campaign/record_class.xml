@@ -87,6 +87,15 @@
 		<script>
 			function onInit()
 				update();
+
+				-- DB change check
+				local sSpellcasting = DB.getValue(getDatabaseNode(), "spellcasting", "");
+				if sSpellcasting == "Half" then
+					DB.setValue(getDatabaseNode(), "spellcasting", "string", "Semi");
+				elseif sSpellcasting == "Third" then
+					DB.setValue(getDatabaseNode(), "spellcasting", "string", "Partial");
+				end
+				
 			end
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
@@ -119,8 +128,8 @@
 			</label_column>
 			<cycler_column_classstat name="spellcasting">
 				<parameters>
-					<labelsres>class_label_spellcasting_third|class_label_spellcasting_half|class_label_spellcasting_full</labelsres>
-					<values>Third|Half|Full</values>
+					<labelsres>class_label_spellcasting_partial|class_label_spellcasting_semi|class_label_spellcasting_full</labelsres>
+					<values>Partial|Semi|Full</values>
 				</parameters>
 			</cycler_column_classstat>
 

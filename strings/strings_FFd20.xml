@@ -373,8 +373,8 @@
 	<string name="class_label_hitdie">Hit Die</string>
 	<string name="class_label_stat">Stat</string>
 	<string name="class_label_spellcasting">Spellcasting</string>
-	<string name="class_label_spellcasting_third">Third</string>
-	<string name="class_label_spellcasting_half">Half</string>
+	<string name="class_label_spellcasting_partial">Partial</string>
+	<string name="class_label_spellcasting_semi">Semi</string>
 	<string name="class_label_spellcasting_full">Full</string>
 	<string name="class_label_bab">Base Attack</string>
 	<string name="class_label_bab_fast">Fast</string>
@@ -548,8 +548,8 @@
 
 	<string name="spell_label_none">None</string>
 	<string name="spell_label_full">Full</string>
-	<string name="spell_label_half">Half</string>
-	<string name="spell_label_third">Third</string>
+	<string name="spell_label_semi">Semi</string>
+	<string name="spell_label_partial">Partial</string>
 	<string name="spell_label_type">Caster</string>
 	
 	<string name="spell_label_cast">Cast</string>

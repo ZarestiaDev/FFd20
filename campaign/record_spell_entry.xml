@@ -675,8 +675,8 @@
 				<anchored to="maxlevel" position="righthigh" offset="20" width="44" height="20" />
 				<parameters>
 					<defaultlabelres>spell_label_none</defaultlabelres>
-					<labelsres>spell_label_full|spell_label_half|spell_label_third</labelsres>
-					<values>Full|Half|Third</values>
+					<labelsres>spell_label_full|spell_label_semi|spell_label_partial</labelsres>
+					<values>Full|Semi|Partial</values>
 				</parameters>
 				<script>
 					function onValueChanged()
