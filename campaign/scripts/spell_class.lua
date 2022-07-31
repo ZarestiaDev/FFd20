@@ -77,10 +77,10 @@ function onStatUpdate()
 		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
 		local rActor = ActorManager.resolveActor(nodeCreature);
-		local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
+		local nAbilityMod = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 		
-		dcstatmod.setValue(nValue);
-		calcAbilityBonusMP(nodeSpellClass, nValue);
+		dcstatmod.setValue(nAbilityMod);
+		calcAbilityBonusMP(nodeSpellClass, nAbilityMod);
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
@@ -96,37 +96,13 @@ function onStatUpdate()
 	bStatUpdateLock = false;
 end
 
-function calcAbilityBonusMP(node, nValue)
-	if nValue < 0 or nValue > 17 then
-		return;
-	end
-
-	local sType = DB.getValue(node, "type", "");
-	local nLevel = DB.getValue(node, "classlevel", 0);
-
-	if sType ~= "" then
-		local nSpellLevel = tClassSpellLvl[sType][nLevel];
-
-		DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nValue][nSpellLevel]);
-	end
-end
-
-function calcClassMP()
-	local node = getDatabaseNode();
-	local sType = DB.getValue(node, "type", "");
-	local nLevel = DB.getValue(node, "classlevel", 0);
-	if sType ~= "" then
-		DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
-	end
-end
-
 function calcMP()
 	local node = getDatabaseNode();
 	local nBonus = DB.getValue(node, "mp.bonus", 0);
 	local nClass = DB.getValue(node, "mp.class", 0);
 	local nMisc = DB.getValue(node, "mp.misc", 0);
-	
 	local nCurrent = DB.getValue(node, "mp.current", 0);
+
 	local nMax = nBonus + nClass + nMisc;
 	local nOriginalMax = DB.getValue(node, "mp.max", 0);
 	local nDelta = nOriginalMax - nMax;
@@ -142,6 +118,50 @@ function calcMP()
 		nCurrent = nCurrent + nDelta;
 		DB.setValue(node, "mp.current", "number", nCurrent);
 	end
+end
+
+function calcAbilityBonusMP(node, nAbilityMod)
+	if nAbilityMod < 0 or nAbilityMod > 17 then
+		return;
+	end
+
+	local sType = DB.getValue(node, "type", "");
+	local nLevel = DB.getValue(node, "classlevel", 0);
+
+	if sType and sType ~= "" then
+		local nSpellLevel = tClassSpellLvl[sType][nLevel];
+
+		DB.setValue(node, "mp.bonus", "number", tAbilityBonusMP[nAbilityMod][nSpellLevel]);
+	end
+end
+
+function calcClassMP()
+	local node = getDatabaseNode();
+	local sType = DB.getValue(node, "type", "");
+	local nLevel = DB.getValue(node, "classlevel", 0);
+	if sType and sType ~= "" then
+		DB.setValue(node, "mp.class", "number", tClassMP[sType][nLevel]);
+	end
+end
+
+function onTypeChanged()
+	local nodeSpellClass = getDatabaseNode();
+	local nodeCreature = nodeSpellClass.getChild("...");
+
+	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
+
+	local rActor = ActorManager.resolveActor(nodeCreature);
+	local nAbilityMod = ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
+	
+	calcAbilityBonusMP(nodeSpellClass, nAbilityMod);
+
+	local nLevel = DB.getValue(nodeSpellClass, "classlevel", 0);
+	local sType = DB.getValue(nodeSpellClass, "type", "");
+	if sType and sType ~= "" then
+		DB.setValue(nodeSpellClass, "availablelevel", "number", tClassSpellLvl[sType][nLevel]);
+	end
+
+	calcClassMP();
 end
 
 function onMenuSelection(selection, subselection)
@@ -198,6 +218,7 @@ function toggleDetail()
 	updateControl("classlevel", status);
 	updateControl("maxlevel", status);
 	updateControl("mpmisc", status);
+	updateControl("type", status);
 end
 
 function setFilter(bFilter)

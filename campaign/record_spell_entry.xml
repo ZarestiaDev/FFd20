@@ -671,6 +671,24 @@
 				<static textres="spell_label_maxlevel" />
 			</label_fieldtop>
 
+			<button_stringcycler name="type">
+				<anchored to="maxlevel" position="righthigh" offset="20" width="44" height="20" />
+				<parameters>
+					<defaultlabelres>spell_label_none</defaultlabelres>
+					<labelsres>spell_label_full|spell_label_half|spell_label_third</labelsres>
+					<values>Full|Half|Third</values>
+				</parameters>
+				<script>
+					function onValueChanged()
+						window.onTypeChanged();
+					end
+				</script>
+			</button_stringcycler>
+			<label_fieldtop name="type_label">
+				<anchored to="type" />
+				<static textres="spell_label_type" />
+			</label_fieldtop>
+
 			<label name="label_mpclass">
 				<anchored to="frame_mp" position="insidetopleft" offset="15,80" />
 				<static textres="spell_label_mp" />

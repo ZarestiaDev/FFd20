@@ -545,6 +545,12 @@
 	<string name="spell_label_mpmisc">Misc</string>
 	<string name="spell_label_classlevel">Class</string>
 	<string name="spell_label_maxlevel">Max</string>
+
+	<string name="spell_label_none">None</string>
+	<string name="spell_label_full">Full</string>
+	<string name="spell_label_half">Half</string>
+	<string name="spell_label_third">Third</string>
+	<string name="spell_label_type">Caster</string>
 	
 	<string name="spell_label_cast">Cast</string>
 	<string name="spell_label_atk">Atk</string>
