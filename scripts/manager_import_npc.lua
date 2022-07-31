@@ -268,6 +268,12 @@ function importHelperSpellcasting()
 		sType = "Partial";
 	end
 	local nCL = tonumber(_tImportState.sActiveLine:match("CL%s(%d+)"));
+	local tSpells = DB.findNode("spell").getChildren();
+
+	-- Only one spellset child is possible
+	local nodeSpellClass = nodeSpellset.getChild("id-00001");
+	DB.setValue(nodeSpellClass, "type", "string", sType);
+	DB.setValue(nodeSpellClass, "cl", "number", nCL);
 	
 	while not _tImportState.sActiveLine:match("STATISTICS") do
 		ImportNPCManager.nextImportLine();
@@ -282,13 +288,11 @@ function importHelperSpellcasting()
 		end
 
 		local sSpells = sLine:match("%).-(%w+.*)");
-		Debug.console(nSpellLevel, sSpells);
+		local tSegments = StringManager.splitByPattern(sSpells, ",");
+		for _,sSpellName in ipairs(tSegments) do
+			ImportNPCManager.importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName);
+		end
 	end
-
-	-- Only one spellset child is possible
-	local nodeSpellClass = nodeSpellset.getChild("id-00001");
-	DB.setValue(nodeSpellClass, "type", "string", sType);
-	DB.setValue(nodeSpellClass, "cl", "number", nCL);
 end
 
 --
@@ -321,7 +325,25 @@ function importHelperSpellClass(nMP)
 	if nodeNewSpellClass then
 		DB.setValue(nodeNewSpellClass, "label", "string", "Spellcasting");
 		DB.setValue(nodeNewSpellClass, "mp.misc", "number", nMP);
+		-- change later
+		DB.setValue(nodeNewSpellClass, "availablelevel", "number", 9);
 	end
+end
+
+function importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName)
+	for _,nodeSource in pairs(tSpells) do
+		local sExistingSpellName = DB.getValue(nodeSource, "name", ""):lower();
+		if sSpellName == sExistingSpellName then
+			ImportNPCManager.importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel)
+		end
+	end
+end
+
+function importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel)
+	local nodeTargetLevelSpells = nodeSpellClass.createChild("levels.level" .. nSpellLevel .. ".spells");
+	local nodeNewSpell = nodeTargetLevelSpells.createChild();
+
+	DB.copyNode(nodeSource, nodeNewSpell);
 end
 
 --
