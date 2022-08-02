@@ -97,7 +97,7 @@ function importHelperInitiativeSenses()
 	ImportNPCManager.nextImportLine();
 	local sLine = _tImportState.sActiveLine;
 	local nInit = tonumber(sLine:match("Init%s(.?%d+)"));
-	local sSenses = sLine:match("Senses (.*)");
+	local sSenses = sLine:match("Senses%s(.*)");
 
 	DB.setValue(_tImportState.node, "init", "number", nInit);
 	DB.setValue(_tImportState.node, "senses", "string", sSenses);
@@ -106,7 +106,7 @@ end
 function importHelperAura()
 	ImportNPCManager.nextImportLine();
 
-	if _tImportState.sActiveLine:match("^Aura") then
+	if _tImportState.sActiveLine:match("Aura") then
 		local sAura = _tImportState.sActiveLine:gsub("Aura ", "");
 		DB.setValue(_tImportState.node, "aura", "string", sAura);
 	else
@@ -278,6 +278,7 @@ function importHelperSpellcasting()
 	elseif _tImportState.sActiveLine:match("PC") then
 		sType = "Partial";
 	end
+
 	local nCL = tonumber(_tImportState.sActiveLine:match("CL%s(%d+)"));
 	local tSpells = DB.findNode("spell").getChildren();
 
@@ -297,6 +298,7 @@ function importHelperSpellcasting()
 		if sLine:match("At%swill") then
 			nSpellLevel = 0;
 		end
+		DB.setValue(nodeSpellClass, "availablelevel", "number", nSpellLevel);
 
 		local sSpells = sLine:match("%).-(%w+.*)");
 		local tSegments = StringManager.splitByPattern(sSpells, ",");
@@ -336,8 +338,6 @@ function importHelperSpellClass(nMP)
 	if nodeNewSpellClass then
 		DB.setValue(nodeNewSpellClass, "label", "string", "Spellcasting");
 		DB.setValue(nodeNewSpellClass, "mp.misc", "number", nMP);
-		-- change later
-		DB.setValue(nodeNewSpellClass, "availablelevel", "number", 9);
 	end
 end
 
@@ -345,7 +345,8 @@ function importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellNam
 	for _,nodeSource in pairs(tSpells) do
 		local sExistingSpellName = DB.getValue(nodeSource, "name", ""):lower();
 		if sSpellName == sExistingSpellName then
-			ImportNPCManager.importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel)
+			ImportNPCManager.importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel);
+			break;
 		end
 	end
 end
