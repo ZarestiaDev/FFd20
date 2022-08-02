@@ -69,8 +69,19 @@ end
 function importHelperNameCR()
 	ImportNPCManager.nextImportLine();
 	local sLine = _tImportState.sActiveLine;
-	local sName = sLine:gsub(" %(CR.+", "");
+	local sName = sLine:gsub("%s%(CR.+", "");
 	local nCR = tonumber(sLine:match("CR%s(%d+)"));
+	if sLine:match("1/8") then
+		nCR = 0.125;
+	elseif sLine:match("1/6") then
+		nCR = 0.166;
+	elseif sLine:match("1/4") then
+		nCR = 0.25;
+	elseif sLine:match("1/3") then
+		nCR = 0.333;
+	elseif sLine:match("1/2") then
+		nCR = 0.5;
+	end
 
 	DB.setValue(_tImportState.node, "name", "string", sName);
 	DB.setValue(_tImportState.node, "cr", "number", nCR);
