@@ -134,19 +134,19 @@ function importHelperDefense()
 end
 
 function importHelperDefStats(sLines)
-	local sAC, sHPLine, sHD, nHP, sSaveLine, nFort, nRef, nWill, sRemainder;
+	local sACLine, sHPLine, sSaveLine, sRemainder;
 	-- Extract AC
-	sAC, sRemainder = StringManager.extractPattern(sLines:lower(), "^ac.-%)");
-	sAC = StringManager.trim(sAC:gsub("ac", "")) or "";
+	sACLine, sRemainder = StringManager.extractPattern(sLines:lower(), "^ac.-%)");
+	local sAC = StringManager.trim(sACLine:gsub("ac", "")) or "";
 	-- Extract HP
 	sHPLine, sRemainder = StringManager.extractPattern(sRemainder, "^%s?hp.-%)");
-	nHP = sHPLine:match("%d+") or 0;
-	sHD = sHPLine:match("%((.-)%)") or "";
+	local nHP = sHPLine:match("%d+") or 0;
+	local sHD = sHPLine:match("%((.-)%)") or "";
 	-- Extract Fort
 	sSaveLine, sRemainder = StringManager.extractPattern(sRemainder, "fort%s.?%d+,%sref%s.?%d+,%swill%s.?%d+%s?");
-	nFort = tonumber(sSaveLine:match("fort%s(.?%d+)")) or 0;
-	nRef = tonumber(sSaveLine:match("ref%s(.?%d+)")) or 0;
-	nWill = tonumber(sSaveLine:match("will%s(.?%d+)")) or 0;
+	local nFort = tonumber(sSaveLine:match("fort%s(.?%d+)")) or 0;
+	local nRef = tonumber(sSaveLine:match("ref%s(.?%d+)")) or 0;
+	local nWill = tonumber(sSaveLine:match("will%s(.?%d+)")) or 0;
 
 	DB.setValue(_tImportState.node, "ac", "string", sAC);
 	DB.setValue(_tImportState.node, "hp", "number", nHP);
@@ -252,9 +252,13 @@ end
 
 function importHelperStatistics()
 	ImportNPCManager.nextImportLine();
-
 	local nStr, nDex, nCon, nInt, nWis, nCha = _tImportState.sActiveLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
-	-- BAB/CMB/CMD
+	
+	ImportNPCManager.nextImportLine();
+	local sBABCMBCMD = _tImportState.sActiveLine:gsub("Base%sAtk%s", "");
+	sBABCMBCMD = sBABCMBCMD:gsub("%sCMB%s", "");
+	sBABCMBCMD = sBABCMBCMD:gsub("%sCMD%s", "");
+	sBABCMBCMD = sBABCMBCMD:gsub(";", "/");
 
 	DB.setValue(_tImportState.node, "strength", "number", nStr);
 	DB.setValue(_tImportState.node, "dexterity", "number", nDex);
@@ -262,6 +266,7 @@ function importHelperStatistics()
 	DB.setValue(_tImportState.node, "intelligence", "number", nInt);
 	DB.setValue(_tImportState.node, "wisdom", "number", nWis);
 	DB.setValue(_tImportState.node, "charisma", "number", nCha);
+	DB.setValue(_tImportState.node, "babgrp", "string", sBABCMBCMD);
 end
 
 function importHelperSpellcasting()
