@@ -31,29 +31,44 @@ function import2022(sStats, sDesc)
 	-- Track state information
 	ImportNPCManager.initImportState(sStats, sDesc);
 
-	-- Assume name/cr on Line 1
+	-- Assume Name/CR next
 	ImportNPCManager.importHelperNameCR();
 
-	-- Assume alignment/size/type on Line 3
+	-- Assume Alignment/Size/Type next
 	ImportNPCManager.importHelperAlignmentSizeType();
 
-	-- Assume initiative/senses on Line 4
+	-- Assume Initiative/Senses next
 	ImportNPCManager.importHelperInitiativeSenses();
 
-	-- Assume optional aura on Line 5
+	-- Assume aura next (optional)
 	ImportNPCManager.importHelperAura();
 
-	-- Assume defensive values
+	-- Assume Defense next
 	ImportNPCManager.importHelperDefense();
 
-	-- Assume optional tactics
+	-- Assume Tactics next (optional)
 	--ImportNPCManager.importHelperTacticsOptional();
 
-	-- Assume offense next
+	-- Assume Offense next
 	ImportNPCManager.importHelperOffense();
 
-	-- Assume Statistics next
-	ImportNPCManager.importHelperStatistics();
+	-- Assume Ability Scores next
+	ImportNPCManager.importHelperAbilityScores();
+
+	-- Assume BAB/CMB/CMD next
+	ImportNPCManager.importHelperBabCmbCmd();
+
+	-- Assume Feats next
+	ImportNPCManager.importHelperFeats();
+
+	-- Assume Skills next
+	ImportNPCManager.importHelperSkills();
+
+	-- Assume Languages next (optional)
+	ImportNPCManager.importHelperLanguage();
+
+	-- Assume SQ next (optional)
+	ImportNPCManager.importHelperSQ();
 
 	-- Assume special abilities next
 	--ImportNPCManager.importHelperSpecialAbilities();
@@ -192,7 +207,7 @@ function importHelperDefStatsOptional(sLines)
 		elseif sDefOption:match("sr") then
 			nSR = tonumber(sDefOption:match("%d+"));
 		elseif sDefOption:match("strong") then
-			sWeakness = sDefOption:gsub("strong%s?", "");
+			sStrong = sDefOption:gsub("strong%s?", "");
 		elseif sDefOption:match("weakness") then
 			sWeakness = sDefOption:gsub("weakness%s?", "");
 		end
@@ -250,15 +265,10 @@ function importHelperOffense()
 	DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
 end
 
-function importHelperStatistics()
+function importHelperAbilityScores()
 	ImportNPCManager.nextImportLine();
+
 	local nStr, nDex, nCon, nInt, nWis, nCha = _tImportState.sActiveLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
-	
-	ImportNPCManager.nextImportLine();
-	local sBABCMBCMD = _tImportState.sActiveLine:gsub("Base%sAtk%s", "");
-	sBABCMBCMD = sBABCMBCMD:gsub("%sCMB%s", "");
-	sBABCMBCMD = sBABCMBCMD:gsub("%sCMD%s", "");
-	sBABCMBCMD = sBABCMBCMD:gsub(";", "/");
 
 	DB.setValue(_tImportState.node, "strength", "number", nStr);
 	DB.setValue(_tImportState.node, "dexterity", "number", nDex);
@@ -266,7 +276,54 @@ function importHelperStatistics()
 	DB.setValue(_tImportState.node, "intelligence", "number", nInt);
 	DB.setValue(_tImportState.node, "wisdom", "number", nWis);
 	DB.setValue(_tImportState.node, "charisma", "number", nCha);
-	DB.setValue(_tImportState.node, "babgrp", "string", sBABCMBCMD);
+end
+
+function importHelperBabCmbCmd()
+	ImportNPCManager.nextImportLine();
+
+	local sBabCmbCmd = _tImportState.sActiveLine:gsub("Base%sAtk%s", "");
+	sBabCmbCmd = sBabCmbCmd:gsub("%sCMB%s", "");
+	sBabCmbCmd = sBabCmbCmd:gsub("%sCMD%s", "");
+	sBabCmbCmd = sBabCmbCmd:gsub(";", "/");
+
+	DB.setValue(_tImportState.node, "babgrp", "string", sBabCmbCmd);
+end
+
+function importHelperFeats()
+	ImportNPCManager.nextImportLine();
+
+	local sFeats = _tImportState.sActiveLine:gsub("Feats%s", "");
+
+	DB.setValue(_tImportState.node, "feats", "string", sFeats);
+end
+
+function importHelperSkills()
+	ImportNPCManager.nextImportLine();
+
+	local sSkills = _tImportState.sActiveLine:gsub("Skills%s", "");
+	sSkills = sSkills:gsub(";.-", "");
+
+	DB.setValue(_tImportState.node, "skills", "string", sSkills);
+end
+
+function importHelperLanguage()
+	ImportNPCManager.nextImportLine();
+	if _tImportState.sActiveLine:match("Languages") then
+		local sLanguages = _tImportState.sActiveLine:gsub("Languages%s", "");
+		DB.setValue(_tImportState.node, "languages", "string", sLanguages);
+	else
+		ImportNPCManager.previousImportLine();
+	end
+end
+
+function importHelperSQ()
+	ImportNPCManager.nextImportLine();
+	if _tImportState.sActiveLine:match("SQ") then
+		local sSQ = _tImportState.sActiveLine:gsub("SQ%s", "");
+		DB.setValue(_tImportState.node, "specialqualities", "string", sSQ);
+	else
+		ImportNPCManager.previousImportLine();
+	end
 end
 
 function importHelperSpellcasting()
