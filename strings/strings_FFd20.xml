@@ -476,7 +476,6 @@
 	<string name="npc_label_sa">SA</string>
 	<string name="npc_header_statistics">STATISTICS</string>
 	<string name="npc_label_abilities">Abilities</string>
-	<string name="npc_label_babgrp">BAB/Grp</string>
 	<string name="npc_label_babcm">BAB/CM</string>
 	<string name="npc_label_cm">CM</string>
 	<string name="npc_label_feats">Feats</string>

@@ -357,7 +357,7 @@
 			</label_fieldtop>
 			
 			<label_column name="babgrp_label">
-				<static textres="npc_label_babgrp" />
+				<static textres="npc_label_babcm" />
 			</label_column>
 			<string_columnh name="babgrp">
 				<script file="campaign/scripts/npc_babgrp.lua" />
