@@ -65,15 +65,15 @@
 				<modifierfield>abilities.constitution.bonusmodifier</modifierfield>
 				<script>
 					function onInit()
-					if super and super.onInit then
-					super.onInit();
-					end
+						if super and super.onInit then
+							super.onInit();
+						end
 					
-					onValueChanged();
+						onValueChanged();
 					end
 					
 					function onValueChanged()
-					window.recalculateHP();
+						window.recalculateHP();
 					end
 				</script>
 			</number_charabilitybonus>
@@ -182,7 +182,7 @@
 				<anchored to="languages" position="aboveleft" offset="10,3" />
 				<script>
 					function onButtonPress()
-					Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
+						Interface.openWindow("charsheet_main_languages", window.getDatabaseNode());
 					end
 				</script>
 			</button_iadd_creation>
@@ -207,7 +207,7 @@
 				<description textres="char_label_max" />
 				<script>
 					function onValueChanged()
-					window.onHealthChanged();
+						window.onHealthChanged();
 					end
 				</script>
 			</number_dropadd>
@@ -221,7 +221,7 @@
 				<hideonvalue>0</hideonvalue>
 				<script>
 					function onValueChanged()
-					window.onHealthChanged();
+						window.onHealthChanged();
 					end
 				</script>
 			</number_dropadd>
@@ -241,7 +241,7 @@
 				<hideonvalue>0</hideonvalue>
 				<script>
 					function onValueChanged()
-					window.onHealthChanged();
+						window.onHealthChanged();
 					end
 				</script>
 			</number_dropadd>
@@ -259,7 +259,7 @@
 				<anchored to="hpframe" position="insidebottomright" offset="10,15" />
 				<script>
 					function onButtonPress()
-					Interface.openWindow("charsheet_hp", window.getDatabaseNode());
+						Interface.openWindow("charsheet_hp", window.getDatabaseNode());
 					end
 				</script>
 			</button_chardetails>
@@ -626,20 +626,20 @@
 		</sizelimits>
 		<script>
 			function action(draginfo)
-			local nodeChar = getDatabaseNode().getChild("...")
-			local rActor = ActorManager.resolveActor(nodeChar);
-			
-			ActionRecovery.performRoll(draginfo, rActor, getDatabaseNode());
+				local nodeChar = getDatabaseNode().getChild("...")
+				local rActor = ActorManager.resolveActor(nodeChar);
+				
+				ActionRecovery.performRoll(draginfo, rActor, getDatabaseNode());
 			end
 			
 			function onDragStart(button, x, y, draginfo)
-			action(draginfo);
-			return true;
+				action(draginfo);
+				return true;
 			end
 			
 			function onDoubleClick(x, y)
-			action();
-			return true;
+				action();
+				return true;
 			end
 		</script>
 		<sheetdata>
@@ -661,10 +661,11 @@
 				</anchored>
 				<script>
 					function onInit()
-					onValueChanged();
+						onValueChanged();
 					end
+					
 					function onValueChanged()
-					setVisible(not isEmpty());
+						setVisible(not isEmpty());
 					end
 				</script>
 			</linkfield>
@@ -769,7 +770,7 @@
 				<anchored to="hp_favored" position="right" offset="23,0" width="36" />
 				<script>
 					function onValueChanged()
-					window.recalculateHP();
+						window.recalculateHP();
 					end
 				</script>
 			</basicnumber>

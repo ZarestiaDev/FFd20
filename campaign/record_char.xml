@@ -134,7 +134,7 @@
 				<anchored to="overviewframe" position="insidetopright" offset="10,58" />
 				<script>
 					function onButtonPress()
-					Interface.openWindow("masterindex", "deity")
+						Interface.openWindow("masterindex", "deity")
 					end
 				</script>
 			</button_iadd_creation>
@@ -144,14 +144,15 @@
 				<invisible />
 				<script>
 					function onInit()
-					onValueChanged();
+						onValueChanged();
 					end
+
 					function onValueChanged()
-					if isEmpty() then
-					setVisible(false);
-					else
-					setVisible(true);
-					end
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
 					end
 				</script>
 			</linkfield>
@@ -171,7 +172,7 @@
 				<anchored to="raceframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
-					Interface.openWindow("masterindex", "race")
+						Interface.openWindow("masterindex", "race")
 					end
 				</script>
 			</button_iadd_creation>
@@ -181,14 +182,15 @@
 				<invisible />
 				<script>
 					function onInit()
-					onValueChanged();
+						onValueChanged();
 					end
+
 					function onValueChanged()
-					if isEmpty() then
-					setVisible(false);
-					else
-					setVisible(true);
-					end
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
 					end
 				</script>
 			</linkfield>
@@ -217,7 +219,7 @@
 				<anchored to="classframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
-					Interface.openWindow("masterindex", "class")
+						Interface.openWindow("masterindex", "class")
 					end
 				</script>
 			</button_iadd_creation>

@@ -51,22 +51,24 @@
 	<windowclass name="ref_talent_stats">
 		<script>
 			function onInit()
-			update();
+				update();
 			end
+
 			function update()
-			local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-			if bReadOnly then
-			class_biglabel.setValue("[" .. class.getValue() .. "]");
-			class_biglabel.setVisible(true);
-			
-			class.update(bReadOnly, true);
-			else
-			class_biglabel.setVisible(false);
-			class.update(bReadOnly);
-			end
-			talent_type.update(bReadOnly);
-			prerequisites.update(bReadOnly);
-			benefit.update(bReadOnly);
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				if bReadOnly then
+					class_biglabel.setValue("[" .. class.getValue() .. "]");
+					class_biglabel.setVisible(true);
+					
+					class.update(bReadOnly, true);
+				else
+					class_biglabel.setVisible(false);
+					class.update(bReadOnly);
+				end
+				
+				talent_type.update(bReadOnly);
+				prerequisites.update(bReadOnly);
+				benefit.update(bReadOnly);
 			end
 		</script>
 		

@@ -51,31 +51,33 @@
 	<windowclass name="ref_deity_stats">
 		<script>
 			function onInit()
-			update();
+				update();
 			end
+
 			function update()
-			local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-			if bReadOnly then
-			type_biglabel.setValue("[" .. type.getValue() .. "]");
-			type_biglabel.setVisible(true);
-			
-			type.update(bReadOnly, true);
-			else
-			type_biglabel.setVisible(false);
-			type.update(bReadOnly);
-			end
-			titles.update(bReadOnly);
-			homeplane.update(bReadOnly);
-			powerlevel.update(bReadOnly);
-			alignment.update(bReadOnly);
-			allied.update(bReadOnly);
-			rival.update(bReadOnly);
-			portfolio.update(bReadOnly);
-			domains.update(bReadOnly);
-			subdomains.update(bReadOnly);
-			favored.update(bReadOnly);
-			relic.update(bReadOnly);
-			description.update(bReadOnly);
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				if bReadOnly then
+					type_biglabel.setValue("[" .. type.getValue() .. "]");
+					type_biglabel.setVisible(true);
+					
+					type.update(bReadOnly, true);
+				else
+					type_biglabel.setVisible(false);
+					type.update(bReadOnly);
+				end
+				
+				titles.update(bReadOnly);
+				homeplane.update(bReadOnly);
+				powerlevel.update(bReadOnly);
+				alignment.update(bReadOnly);
+				allied.update(bReadOnly);
+				rival.update(bReadOnly);
+				portfolio.update(bReadOnly);
+				domains.update(bReadOnly);
+				subdomains.update(bReadOnly);
+				favored.update(bReadOnly);
+				relic.update(bReadOnly);
+				description.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
