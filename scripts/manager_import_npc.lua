@@ -86,6 +86,9 @@ function import2022(sStats, sDesc)
 	-- Assume special abilities next
 	ImportNPCManager.importHelperSpecialAbilities();
 
+	-- Update Spellclass information
+	ImportNPCManager.finalizeSpellclass();
+
 	-- Update Description by adding the statblock text as well
 	ImportNPCManager.finalizeDescription();
 
@@ -378,6 +381,7 @@ end
 
 function importHelperSpellcasting()
 	local nodeSpellset = _tImportState.node.getChild("spellset");
+	
 	if not nodeSpellset then
 		return;
 	end
@@ -574,6 +578,32 @@ end
 
 function addStatOutput(s)
 	table.insert(_tImportState.tStatOutput, s);
+end
+
+function finalizeSpellclass()
+	local nodeSpellset = _tImportState.node.getChild("spellset");
+	
+	if not nodeSpellset then
+		return;
+	end
+
+	local nInt = DB.getValue(_tImportState.node, "intelligence", 0);
+	local nWis = DB.getValue(_tImportState.node, "wisdom", 0);
+	local nCha = DB.getValue(_tImportState.node, "charisma", 0);
+
+	local nHighest = math.max(nInt, nWis, nCha);
+
+	local nodeSpellClass = nodeSpellset.getChild("id-00001");
+
+	if nHighest == nWis then
+		DB.setValue(nodeSpellClass, "dc.ability", "string", "wisdom");
+	end
+	if nHighest == nCha then
+		DB.setValue(nodeSpellClass, "dc.ability", "string", "charisma");
+	end
+	if nHighest == nInt then
+		DB.setValue(nodeSpellClass, "dc.ability", "string", "intelligence");
+	end
 end
 
 function finalizeDescription()
