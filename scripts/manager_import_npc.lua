@@ -166,6 +166,26 @@ function importHelperDefense()
 	ImportNPCManager.importHelperDefStatsOptional(sDiffDefOff);
 end
 
+function importHelperDiff(sHeadingStart, sHeadingEnd)
+	local tDefense = {};
+
+	if _tImportState.sActiveLine:match(sHeadingStart) then
+		while not _tImportState.sActiveLine:match(sHeadingEnd) do
+			ImportNPCManager.nextImportLine();
+
+			local sLine = _tImportState.sActiveLine;
+			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:upper():match("TACTICS") then
+				ImportNPCManager.previousImportLine();
+				break;
+			end
+
+			table.insert(tDefense, sLine);
+		end
+
+		return table.concat(tDefense);
+	end
+end
+
 function importHelperDefStats(sLines)
 	local sACLine, sHPLine, sSaveLine, sRemainder;
 	-- Extract AC
@@ -340,6 +360,78 @@ function importHelperSpells()
 	end
 end
 
+function importHelperSpellClass(nMP)
+	local nodeNPC = _tImportState.node;
+	local nodeNewSpellClass = nodeNPC.createChild("spellset").createChild();
+
+	if nodeNewSpellClass then
+		DB.setValue(nodeNewSpellClass, "label", "string", "Spellcasting");
+		DB.setValue(nodeNewSpellClass, "mp.misc", "number", nMP);
+	end
+end
+
+function importHelperSpellcasting()
+	local nodeSpellset = _tImportState.node.getChild("spellset");
+	if not nodeSpellset then
+		return;
+	end
+
+	local sType;
+	if _tImportState.sActiveLine:match("FC") then
+		sType = "Full";
+	elseif _tImportState.sActiveLine:match("SC") then
+		sType = "Semi";
+	elseif _tImportState.sActiveLine:match("PC") then
+		sType = "Partial";
+	end
+
+	local nCL = tonumber(_tImportState.sActiveLine:match("CL%s(%d+)"));
+	local tSpells = DB.findNode("spell").getChildren();
+
+	-- Only one spellset child is possible
+	local nodeSpellClass = nodeSpellset.getChild("id-00001");
+	DB.setValue(nodeSpellClass, "type", "string", sType);
+	DB.setValue(nodeSpellClass, "cl", "number", nCL);
+	
+	while not _tImportState.sActiveLine:match("STATISTICS") do
+		ImportNPCManager.nextImportLine();
+		local sLine = _tImportState.sActiveLine;
+		if not sLine or sLine == "" or sLine:match("STATISTICS") then
+			ImportNPCManager.previousImportLine();
+			break;
+		end
+
+		local nSpellLevel = tonumber(sLine:match("%d+"));
+		if sLine:match("At%swill") then
+			nSpellLevel = 0;
+		end
+		DB.setValue(nodeSpellClass, "availablelevel", "number", nSpellLevel);
+
+		local sSpells = sLine:match("%).-(%w+.*)");
+		local tSegments = StringManager.splitByPattern(sSpells, ",");
+		for _,sSpellName in ipairs(tSegments) do
+			ImportNPCManager.importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName);
+		end
+	end
+end
+
+function importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName)
+	for _,nodeSource in pairs(tSpells) do
+		local sExistingSpellName = DB.getValue(nodeSource, "name", ""):lower();
+		if sSpellName == sExistingSpellName then
+			ImportNPCManager.importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel);
+			break;
+		end
+	end
+end
+
+function importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel)
+	local nodeTargetLevelSpells = nodeSpellClass.createChild("levels.level" .. nSpellLevel .. ".spells");
+	local nodeNewSpell = nodeTargetLevelSpells.createChild();
+
+	DB.copyNode(nodeSource, nodeNewSpell);
+end
+
 function importHelperAbilityScores()
 	-- skip Statistics
 	ImportNPCManager.nextImportLine(2);
@@ -416,102 +508,6 @@ function importHelperSQ()
 	else
 		ImportNPCManager.previousImportLine();
 	end
-end
-
-function importHelperSpellcasting()
-	local nodeSpellset = _tImportState.node.getChild("spellset");
-	if not nodeSpellset then
-		return;
-	end
-
-	local sType;
-	if _tImportState.sActiveLine:match("FC") then
-		sType = "Full";
-	elseif _tImportState.sActiveLine:match("SC") then
-		sType = "Semi";
-	elseif _tImportState.sActiveLine:match("PC") then
-		sType = "Partial";
-	end
-
-	local nCL = tonumber(_tImportState.sActiveLine:match("CL%s(%d+)"));
-	local tSpells = DB.findNode("spell").getChildren();
-
-	-- Only one spellset child is possible
-	local nodeSpellClass = nodeSpellset.getChild("id-00001");
-	DB.setValue(nodeSpellClass, "type", "string", sType);
-	DB.setValue(nodeSpellClass, "cl", "number", nCL);
-	
-	while not _tImportState.sActiveLine:match("STATISTICS") do
-		ImportNPCManager.nextImportLine();
-		local sLine = _tImportState.sActiveLine;
-		if not sLine or sLine == "" or sLine:match("STATISTICS") then
-			ImportNPCManager.previousImportLine();
-			break;
-		end
-
-		local nSpellLevel = tonumber(sLine:match("%d+"));
-		if sLine:match("At%swill") then
-			nSpellLevel = 0;
-		end
-		DB.setValue(nodeSpellClass, "availablelevel", "number", nSpellLevel);
-
-		local sSpells = sLine:match("%).-(%w+.*)");
-		local tSegments = StringManager.splitByPattern(sSpells, ",");
-		for _,sSpellName in ipairs(tSegments) do
-			ImportNPCManager.importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName);
-		end
-	end
-end
-
---
---	General helper
---
-
-function importHelperDiff(sHeadingStart, sHeadingEnd)
-	local tDefense = {};
-
-	if _tImportState.sActiveLine:match(sHeadingStart) then
-		while not _tImportState.sActiveLine:match(sHeadingEnd) do
-			ImportNPCManager.nextImportLine();
-
-			local sLine = _tImportState.sActiveLine;
-			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:upper():match("TACTICS") then
-				ImportNPCManager.previousImportLine();
-				break;
-			end
-
-			table.insert(tDefense, sLine);
-		end
-
-		return table.concat(tDefense);
-	end
-end
-
-function importHelperSpellClass(nMP)
-	local nodeNPC = _tImportState.node;
-	local nodeNewSpellClass = nodeNPC.createChild("spellset").createChild();
-
-	if nodeNewSpellClass then
-		DB.setValue(nodeNewSpellClass, "label", "string", "Spellcasting");
-		DB.setValue(nodeNewSpellClass, "mp.misc", "number", nMP);
-	end
-end
-
-function importHelperSearchSpell(nodeSpellClass, tSpells, nSpellLevel, sSpellName)
-	for _,nodeSource in pairs(tSpells) do
-		local sExistingSpellName = DB.getValue(nodeSource, "name", ""):lower();
-		if sSpellName == sExistingSpellName then
-			ImportNPCManager.importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel);
-			break;
-		end
-	end
-end
-
-function importHelperAddSpell(nodeSource, nodeSpellClass, nSpellLevel)
-	local nodeTargetLevelSpells = nodeSpellClass.createChild("levels.level" .. nSpellLevel .. ".spells");
-	local nodeNewSpell = nodeTargetLevelSpells.createChild();
-
-	DB.copyNode(nodeSource, nodeNewSpell);
 end
 
 --
