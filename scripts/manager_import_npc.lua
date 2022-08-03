@@ -208,6 +208,7 @@ function importHelperDefStatsOptional(sLines)
 	sLines = sLines:gsub(";?%s?weakness", ";weakness");
 
 	local tDefOptional = StringManager.splitByPattern(sLines, ";");
+	Debug.console(tDefOptional)
 
 	for _,sDefOption in ipairs(tDefOptional) do
 		if sDefOption:match("mp") then
@@ -249,7 +250,7 @@ end
 function importHelperTactics()
 	ImportNPCManager.nextImportLine();
 
-	if _tImportState.sActiveLine:match("TACTICS") then
+	if _tImportState.sActiveLine:upper():match("TACTICS")  then
 		ImportNPCManager.nextImportLine();
 		local sDesc = _tImportState.sActiveLine;
 		Debug.console(sDesc)
@@ -474,7 +475,7 @@ function importHelperDiff(sHeadingStart, sHeadingEnd)
 			ImportNPCManager.nextImportLine();
 
 			local sLine = _tImportState.sActiveLine;
-			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:match("TACTICS") then
+			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:upper():match("TACTICS") then
 				ImportNPCManager.previousImportLine();
 				break;
 			end
