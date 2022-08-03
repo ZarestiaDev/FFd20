@@ -563,7 +563,7 @@
 				<min>0</min>
 			</basicnumber>
 			<label name="statmaxparen2">
-				<anchored to="statmax" position="righthigh" offset="5,0"  />
+				<anchored to="statmax" position="righthigh" offset="5,0" />
 				<static>)</static>
 			</label>
 			<label name="label_plus2">

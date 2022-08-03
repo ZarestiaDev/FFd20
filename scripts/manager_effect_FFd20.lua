@@ -211,7 +211,7 @@ function parseEffectComp(s)
 		end
 	end
 
-	return  {
+	return {
 		type = sType or "", 
 		mod = nMod, 
 		dice = aDice, 
@@ -599,8 +599,8 @@ function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedO
 					end
 				end
 			end -- END TARGET CHECK
-		end  -- END ACTIVE CHECK
-	end  -- END EFFECT LOOP
+		end -- END ACTIVE CHECK
+	end -- END EFFECT LOOP
 	
 	return results;
 end

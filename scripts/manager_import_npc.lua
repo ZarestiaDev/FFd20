@@ -269,9 +269,10 @@ end
 function importHelperTactics()
 	ImportNPCManager.nextImportLine();
 
-	if _tImportState.sActiveLine:upper():match("TACTICS")  then
+	if _tImportState.sActiveLine:upper():match("TACTICS") then
 		ImportNPCManager.nextImportLine();
 		local sDesc = _tImportState.sActiveLine;
+		DB.setValue(_tImportState.node, "text", "formattedtext", sDesc)
 	else
 		ImportNPCManager.previousImportLine();
 	end

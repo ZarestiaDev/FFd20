@@ -1043,7 +1043,7 @@ function getDamageAdjust(rSource, rTarget, nDamage, rDamageOutput, tags)
 			end
 		end
 		
-		-- HANDLE DR  (FORM: <type> and <type> or <type> and <type>)
+		-- HANDLE DR (FORM: <type> and <type> or <type> and <type>)
 		if not bHasEnergyType and (v + nLocalDamageAdjust) > 0 then
 			local bMatchAND, nMatchAND, bMatchDMG, aClausesOR;
 			

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- 
-  Please see the LICENSE.md file included with this distribution for 
-  attribution and copyright information.
+	Please see the LICENSE.md file included with this distribution for 
+	attribution and copyright information.
 -->
 
 <root>
@@ -12,15 +12,15 @@
 			<size width="640" height="670" />
 		</placement>
 		<sizelimits>
-            <minimum width="640" height="670" />
+			<minimum width="640" height="670" />
 			<dynamic />
-        </sizelimits>
+		</sizelimits>
 		<softclose />
 		<export>character</export>
 		<script file="campaign/scripts/char.lua" />
 		<sheetdata>
 			<sub_charsheet_overview name="overview" />
-
+			
 			<!-- Subwindows -->
 			<sub_charsheet name="main">
 				<class>charsheet_main</class>
@@ -43,7 +43,7 @@
 			<sub_charsheet name="actions">
 				<class>charsheet_actions</class>
 			</sub_charsheet>
-
+			
 			<tabs_charsheet name="tabs">
 				<tab>
 					<icon>tab_main</icon>
@@ -75,12 +75,12 @@
 				</tab>
 				<activate>1</activate>
 			</tabs_charsheet>
-
+			
 			<resize_charsheet />
 			<close_charsheet />
 		</sheetdata>
 	</windowclass>
-
+	
 	<windowclass name="charsheet_overview">
 		<script file="campaign/scripts/char_overview.lua" />
 		<sheetdata>
@@ -129,12 +129,12 @@
 				<anchored to="size" position="right" offset="15,0" width="75" />
 				<labelres>char_label_alignment</labelres>
 			</string_labeled>
-
+			
 			<button_iadd_creation name="deity_add">
 				<anchored to="overviewframe" position="insidetopright" offset="10,58" />
 				<script>
 					function onButtonPress()
-						Interface.openWindow("masterindex", "deity")
+					Interface.openWindow("masterindex", "deity")
 					end
 				</script>
 			</button_iadd_creation>
@@ -144,14 +144,14 @@
 				<invisible />
 				<script>
 					function onInit()
-						onValueChanged();
+					onValueChanged();
 					end
 					function onValueChanged()
-						if isEmpty() then
-							setVisible(false);
-						else
-							setVisible(true);
-						end
+					if isEmpty() then
+					setVisible(false);
+					else
+					setVisible(true);
+					end
 					end
 				</script>
 			</linkfield>
@@ -171,7 +171,7 @@
 				<anchored to="raceframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
-						Interface.openWindow("masterindex", "race")
+					Interface.openWindow("masterindex", "race")
 					end
 				</script>
 			</button_iadd_creation>
@@ -181,14 +181,14 @@
 				<invisible />
 				<script>
 					function onInit()
-						onValueChanged();
+					onValueChanged();
 					end
 					function onValueChanged()
-						if isEmpty() then
-							setVisible(false);
-						else
-							setVisible(true);
-						end
+					if isEmpty() then
+					setVisible(false);
+					else
+					setVisible(true);
+					end
 					end
 				</script>
 			</linkfield>
@@ -198,8 +198,8 @@
 				</anchored>
 				<labelres>char_label_race</labelres>
 			</string_labeled>
-
-			<!-- Class / Level  -->
+			
+			<!-- Class / Level -->
 			<frame_char name="classframe">
 				<anchored height="57">
 					<top parent="overviewframe" anchor="bottom" />
@@ -217,7 +217,7 @@
 				<anchored to="classframe" position="insidetopright" offset="10,18" />
 				<script>
 					function onButtonPress()
-						Interface.openWindow("masterindex", "class")
+					Interface.openWindow("masterindex", "class")
 					end
 				</script>
 			</button_iadd_creation>
@@ -226,5 +226,5 @@
 			</button_charclasslevel>
 		</sheetdata>
 	</windowclass>
-
+	
 </root>

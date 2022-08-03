@@ -42,12 +42,12 @@ end
 
 function createWidgets(name)
 	sIdentity = name;
-
+	
 	portraitwidget = addBitmapWidget("portrait_" .. name .. "_charlist");
-    -- OVERWRITE of CoreRPG to fix the connected character portraits in the upper left
-    portraitwidget.setSize(72,72);
-    -- OVERWRITE END
-
+	-- OVERWRITE of CoreRPG to fix the connected character portraits in the upper left
+	portraitwidget.setSize(72,72);
+	-- OVERWRITE END
+	
 	namewidget = addTextWidget("mini_name", "- Unnamed -");
 	namewidget.setPosition("center", 0, 36);
 	namewidget.setFrame("mini_name", 5, 2, 5, 2);
@@ -88,7 +88,7 @@ function onClickRelease(button, x, y)
 	else
 		if User.isOwnedIdentity(sIdentity) then
 			setCurrentIdentity(sIdentity);
-
+			
 			local aOwned = User.getOwnedIdentities();
 			if #aOwned == 1 then
 				bringCharacterToTop();
@@ -115,11 +115,11 @@ function onDragStart(button, x, y, draginfo)
 		draginfo.setTokenData(sToken);
 		draginfo.setShortcutData("charsheet", sPath);
 		draginfo.setStringData(sName);
-
+		
 		local base = draginfo.createBaseData();
 		base.setType("token");
 		base.setTokenData(sToken);
-	
+		
 		return true;
 	end
 end
@@ -154,7 +154,7 @@ end
 
 function setCurrentIdentity(sCurrentIdentity)
 	User.setCurrentIdentity(sCurrentIdentity);
-
+	
 	if CampaignRegistry and CampaignRegistry.colortables and CampaignRegistry.colortables[sCurrentIdentity] then
 		local colortable = CampaignRegistry.colortables[sCurrentIdentity];
 		User.setCurrentIdentityColors(colortable.color or "000000", colortable.blacktext or false);

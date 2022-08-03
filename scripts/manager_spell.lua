@@ -9,7 +9,7 @@ function resetMP(nodeCaster)
 		local nStat = DB.getValue(nodeSpellClass, "dc.abilitymod", 0);
 		local nMPCurrent = DB.getValue(nodeSpellClass, "mp.current", 0);
 		local nMPRested = nCL + nStat + nMPCurrent;
-
+		
 		DB.setValue(nodeSpellClass, "mp.current", "number", nMPRested);
 	end
 end
@@ -21,7 +21,7 @@ function convertSpellDescToFormattedText(nodeSpell)
 		if sDescType == "string" then
 			local sValue = "<p>" .. nodeDesc.getValue() .. "</p>";
 			sValue = sValue:gsub("\r", "</p><p>");
-
+			
 			local nodeLinkedSpells = nodeSpell.getChild("linkedspells");
 			if nodeLinkedSpells then
 				if nodeLinkedSpells.getChildCount() > 0 then
@@ -34,7 +34,7 @@ function convertSpellDescToFormattedText(nodeSpell)
 					sValue = sValue .. "</linklist>";
 				end
 			end
-
+			
 			nodeDesc.delete();
 			DB.setValue(nodeSpell, "description", "formattedtext", sValue);
 		end
@@ -48,7 +48,7 @@ function convertSpellDescToString(nodeSpell)
 		if sDescType == "formattedtext" then
 			local sDesc = nodeDesc.getText();
 			local sValue = nodeDesc.getValue();
-
+			
 			DB.setValue(nodeSpell, "descparse", "string", sDesc);
 			
 			local nodeLinkedSpells = nodeSpell.createChild("linkedspells");
@@ -96,7 +96,7 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	
 	-- Copy the spell details over
 	DB.copyNode(nodeSource, nodeNewSpell);
-
+	
 	local nodeParent = nodeTargetLevelSpells.getParent();
 	if nodeParent then
 		-- If spell level not visible, then make it so.
@@ -111,9 +111,9 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	if DB.getChildCount(nodeNewSpell, "actions") == 0 then
 		parseSpell(nodeNewSpell);
 	end
-
+	
 	DB.setValue(nodeNewSpell, "locked", "number", 1);
-
+	
 	return nodeNewSpell;
 end
 
@@ -126,7 +126,7 @@ function addSpellCastAction(nodeSpell)
 	if not nodeAction then
 		return nil;
 	end
-
+	
 	DB.setValue(nodeAction, "type", "string", "cast");
 	
 	local sSave = DB.getValue(nodeSpell, "save", ""):lower();
@@ -169,7 +169,7 @@ function addSpellCastAction(nodeSpell)
 			end
 		end
 	end
-
+	
 	-- Parse Tags
 	addTags(nodeSpell, nodeAction);
 end
@@ -177,9 +177,9 @@ end
 function addTags(nodeSpell, nodeAction)
 	local sSchool = DB.getValue(nodeSpell, "school", ""):lower();
 	local sTags = DB.getValue(nodeAction, "tags", "");
-
+	
 	sSchool = string.gsub(sSchool, "%-", "");
-
+	
 	local aSchools = StringManager.parseWords(sSchool);
 	local aTags = StringManager.parseWords(sTags);
 	local i = 1;
@@ -196,7 +196,7 @@ function addTags(nodeSpell, nodeAction)
 	for _,v in pairs(aTags) do
 		sTags = sTags .. v .. "; ";
 	end
-
+	
 	DB.setValue(nodeAction, "tags", "string", sTags);
 end
 
@@ -210,7 +210,7 @@ function parseSpell(nodeSpell)
 	
 	-- Always create a cast action
 	addSpellCastAction(nodeSpell);
-
+	
 	-- Get the description as temporary string
 	convertSpellDescToString(nodeSpell);
 	
@@ -220,20 +220,20 @@ function parseSpell(nodeSpell)
 	sDesc = string.gsub(sDesc, "–", "-");
 	
 	local aWords = StringManager.parseWords(sDesc);
-
+	
 	-- Delete the temporary string
 	nodeSpell.getChild("descparse").delete();
 	
 	-- Damage/Heal setup
 	local aDamages = {};
 	local aHeals = {};
-
-  	local i = 1;
-  	while aWords[i] do
+	
+	local i = 1;
+	while aWords[i] do
 		-- Main trigger ("damage")
 		if StringManager.isWord(aWords[i], "damage") then
 			local j = i - 1;
-
+			
 			-- Get damage type
 			local sDamageType = "";
 			if j > 0 and StringManager.isWord(aWords[j], DataCommon.dmgtypes) then
@@ -259,7 +259,7 @@ function parseSpell(nodeSpell)
 				
 				if StringManager.isDiceString(aWords[j]) then
 					sRollDice = aWords[j];
-
+					
 					j = j - 1;
 					if StringManager.isWord(aWords[j], { "deal", "deals", "take", "takes", "dealt", "dealing", "taking", "causes" }) then
 						sRollType = "damage";
@@ -310,9 +310,9 @@ function parseSpell(nodeSpell)
 						if StringManager.isWord(aWords[k], "maximum") then
 							sMaxRollDice = aWords[k + 1];
 						elseif StringManager.isWord(aWords[k], "to") and
-								StringManager.isWord(aWords[k+1], "a") and
-								StringManager.isWord(aWords[k+2], "maximum") and
-								StringManager.isWord(aWords[k+3], "of") then
+						StringManager.isWord(aWords[k+1], "a") and
+						StringManager.isWord(aWords[k+2], "maximum") and
+						StringManager.isWord(aWords[k+3], "of") then
 							sMaxRollDice = aWords[k + 4];
 						end
 					end
@@ -354,11 +354,11 @@ function parseSpell(nodeSpell)
 				end
 			end
 		end
-			
+		
 		-- Increment word counter
 		i = i + 1;
 	end	
-
+	
 	-- Add the Damage and Heal rolls
 	for i = 1, #aDamages do
 		local rRoll = aDamages[i];
@@ -368,7 +368,7 @@ function parseSpell(nodeSpell)
 		
 		local nodeDmgList = DB.createChild(nodeAction, "damagelist");
 		local nodeDmgEntry = DB.createChild(nodeDmgList);
-
+		
 		DB.setValue(nodeDmgEntry, "dice", "dice", rRoll.aDice);
 		if rRoll.sDiceStat then
 			DB.setValue(nodeDmgEntry, "dicestat", "string", rRoll.sDiceStat);
@@ -397,7 +397,7 @@ function parseSpell(nodeSpell)
 		
 		local nodeHealList = DB.createChild(nodeAction, "heallist");
 		local nodeHealEntry = DB.createChild(nodeHealList);
-
+		
 		DB.setValue(nodeHealEntry, "dice", "dice", rRoll.aDice);
 		if rRoll.sDiceStat then
 			DB.setValue(nodeHealEntry, "dicestat", "string", rRoll.sDiceStat);
@@ -419,9 +419,9 @@ function parseSpell(nodeSpell)
 	
 	-- Effects setup
 	local aEffects = {};
-
-  	i = 1;
-  	while aWords[i] do
+	
+	i = 1;
+	while aWords[i] do
 		if StringManager.isWord(aWords[i], DataCommon.spelleffects) then
 			local k = i;
 			while StringManager.isWord(aWords[k + 1], DataCommon.spelleffects) or StringManager.isWord(aWords[k + 1], "and") do
@@ -448,7 +448,7 @@ function parseSpell(nodeSpell)
 			elseif StringManager.isWord(aWords[j], { "be", "and", "or", "then", "remains", "subject" }) then
 				bValidEffect = true;
 			end
-
+			
 			if bValidEffect then
 				local rEffect = {};
 				
@@ -464,9 +464,9 @@ function parseSpell(nodeSpell)
 				
 				local m = k + 1;
 				if StringManager.isWord(aWords[m], "as") and
-						StringManager.isWord(aWords[m + 1], "by") and
-						StringManager.isWord(aWords[m + 2], "the") and
-						StringManager.isWord(aWords[m + 4], "spell") then
+				StringManager.isWord(aWords[m + 1], "by") and
+				StringManager.isWord(aWords[m + 2], "the") and
+				StringManager.isWord(aWords[m + 4], "spell") then
 					m = m + 5;
 				end
 				if StringManager.isWord(aWords[m], "for") then
@@ -492,11 +492,11 @@ function parseSpell(nodeSpell)
 							rEffect.aDice, rEffect.nMod = StringManager.convertStringToDice(sDiceMod);
 							
 							if StringManager.isWord(aWords[m], "per") and
-									StringManager.isWord(aWords[m + 1], "caster") and
-									StringManager.isWord(aWords[m + 2], "level") then
+							StringManager.isWord(aWords[m + 1], "caster") and
+							StringManager.isWord(aWords[m + 2], "level") then
 								rEffect.bCLMult = true;
 							end
-
+							
 							rEffect.sUnits = sUnits;
 						end
 					end
@@ -504,19 +504,19 @@ function parseSpell(nodeSpell)
 				
 				table.insert(aEffects, rEffect);
 			end
-
+			
 			i = k;
 			
 		elseif StringManager.isWord(aWords[i], { "daze", "dazes" }) and 
-				StringManager.isWord(aWords[i+1], "one") and 
-				StringManager.isWord(aWords[i+2], "living") and
-				StringManager.isWord(aWords[i+3], "creature") then
+		StringManager.isWord(aWords[i+1], "one") and 
+		StringManager.isWord(aWords[i+2], "living") and
+		StringManager.isWord(aWords[i+3], "creature") then
 			
 			local rEffect = {};
 			rEffect.sName = "Dazed";
 			
 			table.insert(aEffects, rEffect);
-
+			
 			i = i + 3;
 		end
 		
@@ -542,11 +542,11 @@ function parseSpell(nodeSpell)
 	-- Always add an effect for tracking if a duration is specified
 	local sSpellDur = DB.getValue(nodeSpell, "duration", "");
 	local aDurWords = StringManager.parseWords(sSpellDur);
-
+	
 	i = 1;
 	if StringManager.isNumberString(aDurWords[i]) then
 		local nSpellDur = tonumber(aDurWords[i]);
-
+		
 		i = i + 1;
 		if StringManager.isWord(aDurWords[i], { "round", "rounds", "min", "minute", "minutes", "hour", "hours", "day", "days"}) then
 			nodeActions = nodeSpell.createChild("actions");
@@ -560,7 +560,7 @@ function parseSpell(nodeSpell)
 			end
 			
 			DB.setValue(nodeAction, "type", "string", "effect");
-
+			
 			local sEffect = DB.getValue(nodeSpell, "effect", ""):lower();
 			local sRange = DB.getValue(nodeSpell, "range", ""):lower();
 			local sName = DB.getValue(nodeSpell, "name", "");
@@ -570,7 +570,7 @@ function parseSpell(nodeSpell)
 			if sEffect:match("personal") or sRange:match("personal") then
 				DB.setValue(nodeAction, "targeting", "string", "self");
 			end			
-
+			
 			local sUnits = nil;
 			if StringManager.isWord(aDurWords[i], { "round", "rounds" }) then
 				sUnits = "";
@@ -581,11 +581,11 @@ function parseSpell(nodeSpell)
 			elseif StringManager.isWord(aDurWords[i], { "day", "days" }) then
 				sUnits = "day";
 			end
-
+			
 			if sUnits then
 				i = i + 1;
 				local sStat = "cl";
-
+				
 				if StringManager.isWord(aDurWords[i], "per") then
 					i = i + 1;
 					if StringManager.isWord(aDurWords[i], "two") then
@@ -595,12 +595,12 @@ function parseSpell(nodeSpell)
 						i = i + 1;
 					end
 				end
-
+				
 				local bUseCL = false;
 				if StringManager.isWord(aDurWords[i], { "level", "levels" }) then
 					bUseCL = true;
 				end
-
+				
 				if bUseCL then
 					DB.setValue(nodeAction, "durmult", "number", nSpellDur);
 					DB.setValue(nodeAction, "durstat", "string", sStat);
@@ -611,7 +611,7 @@ function parseSpell(nodeSpell)
 			end
 		end
 	end
-
+	
 	-- Add the Effects
 	for i = 1, #aFinalEffects do
 		local rRoll = aFinalEffects[i];
@@ -702,7 +702,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 			end
 			rAction.modifier = DB.getValue(nodeAction, "atkmod", 0);
 			rAction.crit = 20;
-
+			
 			local sNodeType, nodeActor = ActorManager.getTypeAndNode(rActor);
 			if sNodeType == "pc" then
 				if rAction.range == "R" then
@@ -764,7 +764,7 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 		
 		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
 		rAction.meta = DB.getValue(nodeAction, "meta", "");
-
+		
 		rAction.bSpellDamage = (DB.getValue(nodeAction, "dmgnotspell", 0) == 0);
 		if rAction.bSpellDamage then
 			for _,vClause in ipairs(rAction.clauses) do
@@ -778,20 +778,20 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 		
 	elseif sType == "heal" then
 		rAction.clauses = getActionHeal(rActor, nodeAction);
-
+		
 		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
 		rAction.subtype = DB.getValue(nodeAction, "healtype", "");
 		rAction.meta = DB.getValue(nodeAction, "meta", "");
-	
+		
 	elseif sType == "effect" then
 		local nodeSpellClass = DB.getChild(nodeAction, ".......");
 		rAction.sName = EffectManagerFFd20.evalEffect(rActor, DB.getValue(nodeAction, "label", ""), nodeSpellClass);
-
+		
 		rAction.sApply = DB.getValue(nodeAction, "apply", "");
 		rAction.sTargeting = DB.getValue(nodeAction, "targeting", "");
 		
 		rAction.aDice, rAction.nDuration = getActionEffectDuration(rActor, nodeAction);
-
+		
 		rAction.sUnits = DB.getValue(nodeAction, "durunit", "");
 	end
 	
@@ -806,11 +806,11 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	if not rActor then
 		return;
 	end
-
+	
 	local nodeSpell = DB.getChild(nodeAction, "...");
 	local nodeActions = nodeSpell.createChild("actions");
 	local tag = "";
-
+	
 	if nodeActions then
 		local aNodeActions = nodeActions.getChildren();
 		if aNodeActions then
@@ -840,7 +840,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 				table.insert(rRolls, rRoll);
 			end
 		end
-
+		
 		if not rAction.subtype or rAction.subtype == "clc" then
 			local rRoll = ActionSpell.getCLCRoll(rActor, rAction, tagsSpec);
 			if not rAction.subtype then
@@ -849,7 +849,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 			end
 			table.insert(rRolls, rRoll);
 		end
-
+		
 		if not rAction.subtype or rAction.subtype == "save" then
 			if rAction.save and rAction.save ~= "" then
 				local rRoll = ActionSpell.getSaveVsRoll(rActor, rAction, tagsSpec);
@@ -872,7 +872,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 		
 	elseif rAction.type == "heal" then
 		table.insert(rRolls, ActionHeal.getRoll(rActor, rAction, tag));
-
+		
 	elseif rAction.type == "effect" then
 		local rRoll;
 		rRoll = ActionEffect.getRoll(draginfo, rActor, rAction);
@@ -913,9 +913,9 @@ function getActionAbilityBonus(nodeAction)
 	if string.find(nodeAction.getNodeName(), "charsheet") then
 		local nodeSpellClass = nodeAction.getChild(".......");
 		local nodeCreature = nodeSpellClass.getChild("...");
-	
+		
 		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
-	
+		
 		local rActor = ActorManager.resolveActor(nodeCreature);
 		return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 	else
@@ -936,13 +936,13 @@ function getActionSaveDC(nodeAction)
 	
 	if DB.getValue(nodeAction, "savedctype", "") == "fixed" then
 		nTotal = DB.getValue(nodeAction, "savedcmod", 0);
-    elseif DB.getValue(nodeAction, "savedctype", "") == "casterlevel" then
+	elseif DB.getValue(nodeAction, "savedctype", "") == "casterlevel" then
 		local nClassStat = getActionAbilityBonus(nodeAction);
 		local nClassMisc = DB.getValue(nodeAction, ".......dc.misc", 0);
-        local nCasterLevel = math.floor(DB.getValue(nodeAction, ".......cl", 0)/2);
-        local nMod = DB.getValue(nodeAction, "savedcmod", 0);
-
-        nTotal = 10 + nClassStat + nClassMisc + nCasterLevel + nMod;
+		local nCasterLevel = math.floor(DB.getValue(nodeAction, ".......cl", 0)/2);
+		local nMod = DB.getValue(nodeAction, "savedcmod", 0);
+		
+		nTotal = 10 + nClassStat + nClassMisc + nCasterLevel + nMod;
 	else
 		local nClassStat = getActionAbilityBonus(nodeAction);
 		local nClassMisc = DB.getValue(nodeAction, ".......dc.misc", 0);
@@ -1003,7 +1003,7 @@ function getActionDamage(rActor, nodeAction)
 		end
 		
 		local nDmgMod = DB.getValue(v, "bonus", 0);
-
+		
 		local sDmgStat = DB.getValue(v, "stat", "");
 		local nDmgStatMult = 1;
 		local nDmgStatMax = 0;
@@ -1014,19 +1014,19 @@ function getActionDamage(rActor, nodeAction)
 			local nDmgStat = getActionMod(rActor, nodeAction, sDmgStat, nDmgStatMax);
 			nDmgMod = nDmgMod + math.floor(nDmgStat * nDmgStatMult);
 		end
-
+		
 		local sDmgSpellMod = DB.getValue(v, "spellmod", "");
 		if sDmgSpellMod ~= "" then
 			local nDmgSpellMod = getActionAbilityBonus(nodeAction);
 			nDmgMod = nDmgMod + nDmgSpellMod;
 		end
-
+		
 		local aDamageTypes = ActionDamage.getDamageTypesFromString(DB.getValue(v, "type", ""));
 		local sDmgType = table.concat(aDamageTypes, ",");
 		
 		table.insert(clauses, { dice = aDmgDice, modifier = nDmgMod, mult = 2, stat = sDmgStat, statmax = nDmgStatMax, statmult = nDmgStatMult, dmgtype = sDmgType });
 	end
-
+	
 	return clauses;
 end
 
@@ -1055,7 +1055,7 @@ function getActionHeal(rActor, nodeAction)
 		end
 		
 		local nMod = DB.getValue(v, "bonus", 0);
-
+		
 		local sStat = DB.getValue(v, "stat", "");
 		local nStatMult = 1;
 		local nStatMax = 0;
@@ -1066,16 +1066,16 @@ function getActionHeal(rActor, nodeAction)
 			local nStat = getActionMod(rActor, nodeAction, sStat, nStatMax);
 			nMod = nMod + math.floor(nStat * nStatMult);
 		end
-
+		
 		local sDmgSpellMod = DB.getValue(v, "spellmod", "");
 		if sDmgSpellMod ~= "" then
 			local nDmgSpellMod = getActionAbilityBonus(nodeAction);
 			nMod = nMod + nDmgSpellMod;
 		end
-
+		
 		table.insert(clauses, { dice = aDice, modifier = nMod, mult = 2, stat = sStat, statmax = nStatMax, statmult = nStatMult });
 	end
-
+	
 	return clauses;
 end
 
@@ -1112,7 +1112,7 @@ function getActionEffectDuration(rActor, nodeAction)
 		local nStat = getActionMod(rActor, nodeAction, sStat, nStatMax);
 		nMod = nMod + math.floor(nStat * nStatMult);
 	end
-
+	
 	return aDice, nMod;
 end
 
@@ -1145,10 +1145,10 @@ end
 
 function getActionSaveText(nodeAction)
 	local sSave = "";
-
+	
 	local sSaveType = DB.getValue(nodeAction, "savetype", "");
 	local nDC = SpellManager.getActionSaveDC(nodeAction);
-
+	
 	if sSaveType ~= "" and nDC ~= 0 then
 		if sSaveType == "fortitude" then
 			sSave = Interface.getString("power_label_savetypefort");
@@ -1170,7 +1170,7 @@ end
 function getActionDamageText(nodeAction)
 	local nodeActor = nodeAction.getChild(".........")
 	local rActor = ActorManager.resolveActor(nodeActor);
-
+	
 	local clauses = SpellManager.getActionDamage(rActor, nodeAction);
 	
 	local aOutput = {};
@@ -1200,7 +1200,7 @@ end
 function getActionHealText(nodeAction)
 	local nodeActor = nodeAction.getChild(".........")
 	local rActor = ActorManager.resolveActor(nodeActor);
-
+	
 	local clauses = SpellManager.getActionHeal(rActor, nodeAction);
 	
 	local aHealDice = {};
@@ -1211,7 +1211,7 @@ function getActionHealText(nodeAction)
 		end
 		nHealMod = nHealMod + vClause.modifier;
 	end
-
+	
 	local sHeal = StringManager.convertDiceToString(aHealDice, nHealMod);
 	if DB.getValue(nodeAction, "healtype", "") == "temp" then
 		sHeal = sHeal .. " temporary";
@@ -1230,9 +1230,9 @@ end
 function getActionEffectDurationText(nodeAction)
 	local nodeActor = nodeAction.getChild(".........")
 	local rActor = ActorManager.resolveActor(nodeActor);
-
+	
 	local aDice, nMod = getActionEffectDuration(rActor, nodeAction);
-
+	
 	local sDuration = StringManager.convertDiceToString(aDice, nMod);
 	
 	local sUnits = DB.getValue(nodeAction, "durunit", "");

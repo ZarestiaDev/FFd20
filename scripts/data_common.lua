@@ -103,8 +103,8 @@ creaturedefaulttype = "humanoid";
 creaturehalftype = "half-";
 creaturehalftypesubrace = "human";
 creaturetype = {
-	["aberration"]  = {},
-	["animal"]  = {},
+	["aberration"] = {},
+	["animal"] = {},
 	["construct"] = {
 		immune = "bleed, blind, disease, death, doom, exhausted, fatigued, mindaffecting, necromancy, nonlethal, paralysis, poison, sleep, stunning"
 	},
@@ -277,7 +277,7 @@ creaturesubtype = {
 	["kyton"] = {
 		immune = "ice"
 	},
-	["lawful"]  = {},
+	["lawful"] = {},
 	["leshy"] = {
 		immune = "lightning"
 	},
@@ -548,7 +548,7 @@ energytypes = {
 	"non-elemental"
 };
 
-immunetypes = {  		
+immunetypes = {
 	"earth",		-- ENERGY DAMAGE TYPES
 	"fire",
 	"holy",
@@ -606,7 +606,7 @@ dmgtypes = {
 	"non-elemental"
 };
 
-basicdmgtypes = {  		-- ENERGY DAMAGE TYPES
+basicdmgtypes = {		-- ENERGY DAMAGE TYPES
 	"earth",
 	"fire",
 	"holy",
@@ -803,8 +803,8 @@ naturaldmgtypes = {
 	["arm"] = "bludgeoning",
 	["bite"] = "piercing,slashing,bludgeoning",
 	["butt"] = "bludgeoning",
-	["claw"] =  "bludgeoning,slashing",
-	["foreclaw"] =  "bludgeoning,slashing",
+	["claw"] = "bludgeoning,slashing",
+	["foreclaw"] = "bludgeoning,slashing",
 	["gore"] = "piercing",
 	["hoof"] = "bludgeoning",
 	["hoove"] = "bludgeoning",
@@ -820,7 +820,7 @@ naturaldmgtypes = {
 	["sting"] = "piercing",
 	["swarm"] = "piercing,slashing,bludgeoning",
 	["tail"] = "bludgeoning",
-	["talon"] =  "slashing",
+	["talon"] = "slashing",
 	["tendril"] = "bludgeoning",
 	["tentacle"] = "bludgeoning",
 	["wing"] = "bludgeoning",

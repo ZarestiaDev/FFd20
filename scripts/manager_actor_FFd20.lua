@@ -736,12 +736,12 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		nBonusStat = nBonusStat + nBonusStat1;
 		local nBonusStat2 = getAbilityEffectsBonus(rDefender, sDefenseStat2);
-		if not bFlatFooted and not bCombatAdvantage  and sDefenseStat2 == "dexterity" then
+		if not bFlatFooted and not bCombatAdvantage and sDefenseStat2 == "dexterity" then
 			nFlatFootedMod = nFlatFootedMod + nBonusStat2;
 		end
 		nBonusStat = nBonusStat + nBonusStat2;
 		local nBonusStat3 = getAbilityEffectsBonus(rDefender, sDefenseStat3);
-		if not bFlatFooted and not bCombatAdvantage  and sDefenseStat3 == "dexterity" then
+		if not bFlatFooted and not bCombatAdvantage and sDefenseStat3 == "dexterity" then
 			nFlatFootedMod = nFlatFootedMod + nBonusStat3;
 		end
 		nBonusStat = nBonusStat + nBonusStat3;

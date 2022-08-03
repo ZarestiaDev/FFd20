@@ -9,7 +9,7 @@
 	<template name="anchor_partysheet_main_header">
 		<genericcontrol name="headeranchor">
 			<anchored height="45">
-				<top  />
+				<top />
 				<left offset="10" />
 				<right offset="-20" />
 			</anchored>
@@ -51,7 +51,7 @@
 	<template name="anchor_partysheet_xp_header">
 		<genericcontrol name="headeranchor">
 			<anchored height="30">
-				<top  />
+				<top />
 				<left offset="10" />
 				<right offset="-20" />
 			</anchored>
@@ -122,7 +122,7 @@
 	<template name="anchor_partysheet_skills_header">
 		<genericcontrol name="headeranchor">
 			<anchored height="45">
-				<top  />
+				<top />
 				<left offset="10" />
 				<right offset="-20" />
 			</anchored>
