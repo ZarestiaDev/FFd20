@@ -293,20 +293,20 @@ function importHelperSpecialAbilAtt()
 
 	local sLine1 = _tImportState.sActiveLine;
 	if sLine1:match("Special") then
-		local sAbilAtt1 = "";
-		local sAbilAtt2 = "";
-		sAbilAtt1 = sLine1;
+		local sSpecialAttack = "";
+		local sSpecialAttack2 = "";
+		sSpecialAttack = sLine1;
 
 		ImportNPCManager.nextImportLine();
 
 		local sLine2 = _tImportState.sActiveLine;
 		if sLine2:match("Special") then
-			sAbilAtt2 = sLine2;
+			sSpecialAttack2 = sLine2;
+			sSpecialAttack = sSpecialAttack .. ", " .. sSpecialAttack2;
 		else
 			ImportNPCManager.previousImportLine();
 		end
 
-		local sSpecialAttack = sAbilAtt1 .. ", " .. sAbilAtt2;
 		sSpecialAttack = sSpecialAttack:gsub("Special%sAbilities%s", "");
 		sSpecialAttack = sSpecialAttack:gsub("Special%sAttacks%s", "");
 		DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
@@ -327,9 +327,12 @@ function importHelperSpells()
 end
 
 function importHelperAbilityScores()
-	ImportNPCManager.nextImportLine();
+	-- skip Statistics
+	ImportNPCManager.nextImportLine(2);
 
-	local nStr, nDex, nCon, nInt, nWis, nCha = _tImportState.sActiveLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
+	local sLine = _tImportState.sActiveLine:gsub("-", "0");
+	sLine = sLine:gsub("—", "0");
+	local nStr, nDex, nCon, nInt, nWis, nCha = sLine:match("(%d+).-(%d+).-(%d+).-(%d+).-(%d+).-(%d+)");
 
 	DB.setValue(_tImportState.node, "strength", "number", nStr);
 	DB.setValue(_tImportState.node, "dexterity", "number", nDex);
@@ -369,8 +372,8 @@ end
 
 function importHelperLanguage()
 	ImportNPCManager.nextImportLine();
-	if _tImportState.sActiveLine:match("Languages") then
-		local sLanguages = _tImportState.sActiveLine:gsub("Languages%s", "");
+	if _tImportState.sActiveLine:match("Language") then
+		local sLanguages = _tImportState.sActiveLine:gsub("Languages?%s", "");
 		DB.setValue(_tImportState.node, "languages", "string", sLanguages);
 	else
 		ImportNPCManager.previousImportLine();
@@ -381,6 +384,11 @@ function importHelperSQ()
 	ImportNPCManager.nextImportLine();
 	if _tImportState.sActiveLine:match("SQ") then
 		local sSQ = _tImportState.sActiveLine:gsub("SQ%s", "");
+		local sExistingSQ = DB.getValue(_tImportState.node, "specialqualities", "");
+		if sExistingSQ ~= "" then
+			sSQ = sExistingSQ .. ", " .. sSQ;
+		end
+
 		DB.setValue(_tImportState.node, "specialqualities", "string", sSQ);
 	else
 		ImportNPCManager.previousImportLine();
@@ -414,6 +422,7 @@ function importHelperSpellcasting()
 		ImportNPCManager.nextImportLine();
 		local sLine = _tImportState.sActiveLine;
 		if not sLine or sLine == "" or sLine:match("STATISTICS") then
+			ImportNPCManager.previousImportLine();
 			break;
 		end
 
