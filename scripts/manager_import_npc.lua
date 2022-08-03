@@ -273,6 +273,8 @@ function importHelperAttack()
 	if sAttacks:match(",") then
 		local tAttacks = StringManager.splitByPattern(sAttacks, ",");
 		local sSingleAttack = tAttacks[1];
+		sSingleAttack = sSingleAttack:gsub("^%d+%s", "");
+		sSingleAttack = sSingleAttack:gsub("s%s%+", " +");
 		local sFullAttack = sAttacks:gsub(",", " and");
 
 		DB.setValue(_tImportState.node, "atk", "string", sSingleAttack);
