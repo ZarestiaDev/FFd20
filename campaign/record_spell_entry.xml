@@ -722,6 +722,10 @@
 			<number_spell name="mpmisc" source="mp.misc">
 				<anchored to="mpbonus" position="righthigh" offset="20" />
 				<script>
+					function onInit()
+						onValueChanged();
+					end
+
 					function onValueChanged()
 						window.calcMP();
 					end
