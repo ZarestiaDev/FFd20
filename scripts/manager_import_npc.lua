@@ -31,8 +31,9 @@ function import2022(sStats, sDesc)
 	-- Track state information
 	ImportNPCManager.initImportState(sStats, sDesc);
 
+	-- GENERAL
 	-- Assume Name/CR next
-	ImportNPCManager.importHelperNameCR();
+	ImportNPCManager.importHelperNameCr();
 
 	-- Assume Alignment/Size/Type next
 	ImportNPCManager.importHelperAlignmentSizeType();
@@ -49,8 +50,20 @@ function import2022(sStats, sDesc)
 	-- Assume Tactics next (optional)
 	--ImportNPCManager.importHelperTacticsOptional();
 
-	-- Assume Offense next
-	ImportNPCManager.importHelperOffense();
+	-- Assume Speed next
+	ImportNPCManager.importHelperSpeed();
+
+	-- Assume Attacks next
+	ImportNPCManager.importHelperAttack();
+
+	-- Assume Space/Reach next
+	ImportNPCManager.importHelperSpaceReach();
+
+	-- Assume Special Abilities/Special Attack next (optional)
+	ImportNPCManager.importHelperSpecialAbilAtt();
+
+	-- Assume Spells next (optional)
+	ImportNPCManager.importHelperSpells();
 
 	-- Assume Ability Scores next
 	ImportNPCManager.importHelperAbilityScores();
@@ -81,8 +94,9 @@ end
 --	Import section helper functions
 --
 
-function importHelperNameCR()
+function importHelperNameCr()
 	ImportNPCManager.nextImportLine();
+
 	local sLine = _tImportState.sActiveLine;
 	local sName = sLine:gsub("%s%(CR.+", "");
 	local nCR = tonumber(sLine:match("CR%s(%d+)"));
@@ -105,11 +119,13 @@ end
 function importHelperAlignmentSizeType()
 	-- skip xp line
 	ImportNPCManager.nextImportLine(2);
+
 	DB.setValue(_tImportState.node, "type", "string", _tImportState.sActiveLine);
 end
 
 function importHelperInitiativeSenses()
 	ImportNPCManager.nextImportLine();
+
 	local sLine = _tImportState.sActiveLine;
 	local nInit = tonumber(sLine:match("Init%s(.?%d+)"));
 	local sSenses = sLine:match("Senses%s(.*)");
@@ -121,8 +137,9 @@ end
 function importHelperAura()
 	ImportNPCManager.nextImportLine();
 
-	if _tImportState.sActiveLine:match("Aura") then
-		local sAura = _tImportState.sActiveLine:gsub("Aura ", "");
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Aura") then
+		local sAura = sLine:gsub("Aura%s", "");
 		DB.setValue(_tImportState.node, "aura", "string", sAura);
 	else
 		ImportNPCManager.previousImportLine();
@@ -131,6 +148,7 @@ end
 
 function importHelperDefense()
 	ImportNPCManager.nextImportLine();
+
 	local sDiffDefOff;
 	-- Get all data between DEFENSE and OFFENSE
 	sDiffDefOff = ImportNPCManager.importHelperDiff("DEFENSE", "OFFENSE");
@@ -162,7 +180,7 @@ function importHelperDefStats(sLines)
 	local nFort = tonumber(sSaveLine:match("fort%s(.?%d+)")) or 0;
 	local nRef = tonumber(sSaveLine:match("ref%s(.?%d+)")) or 0;
 	local nWill = tonumber(sSaveLine:match("will%s(.?%d+)")) or 0;
-
+	
 	DB.setValue(_tImportState.node, "ac", "string", sAC);
 	DB.setValue(_tImportState.node, "hp", "number", nHP);
 	DB.setValue(_tImportState.node, "hd", "string", sHD);
@@ -228,41 +246,84 @@ function importHelperDefStatsOptional(sLines)
 	DB.setValue(_tImportState.node, "weakness", "string", sWeakness);
 end
 
-function importHelperOffense()
+function importHelperSpeed()
 	ImportNPCManager.nextImportLine();
 
-	-- Speed
 	local sSpeed = _tImportState.sActiveLine:gsub("Speed%s?", "");
-	ImportNPCManager.nextImportLine();
-
-	-- Melee
-	local sAttack = _tImportState.sActiveLine:gsub("Melee%s?", "");
-	ImportNPCManager.nextImportLine();
-
-	-- Optional Space/Reach
-	local sSpaceReach = "5 ft./5 ft.";
-	if _tImportState.sActiveLine:match("Space") then
-		local sSpace, sReach = _tImportState.sActiveLine:match("(%d+).-(%d+)");
-		sSpaceReach = sSpace .. " ft./" .. sReach .. " ft.";
-		ImportNPCManager.nextImportLine();
-	end
-
-	-- Optional Special Attack
-	local sSpecialAttack = "";
-	if _tImportState.sActiveLine:match("Special") then
-		sSpecialAttack = _tImportState.sActiveLine:gsub("Special%sAttacks%s?", "");
-		ImportNPCManager.nextImportLine();
-	end
-
-	-- Optional Spells
-	if _tImportState.sActiveLine:match("Spells") then
-		ImportNPCManager.importHelperSpellcasting();
-	end
 
 	DB.setValue(_tImportState.node, "speed", "string", sSpeed);
-	DB.setValue(_tImportState.node, "fullatk", "string", sAttack);
+end
+
+function importHelperAttack()
+	ImportNPCManager.nextImportLine();
+
+	local sAttacks = _tImportState.sActiveLine:gsub("Melee%s?", "");
+	if sAttacks:match(",") then
+		local tAttacks = StringManager.splitByPattern(sAttacks, ",");
+		local sSingleAttack = tAttacks[1];
+		local sFullAttack = sAttacks:gsub(",", " and");
+
+		DB.setValue(_tImportState.node, "atk", "string", sSingleAttack);
+		DB.setValue(_tImportState.node, "fullatk", "string", sFullAttack);
+	else
+		DB.setValue(_tImportState.node, "atk", "string", sAttacks);
+	end
+end
+
+function importHelperSpaceReach()
+	ImportNPCManager.nextImportLine();
+
+	local sSpaceReach = "5 ft./5 ft.";
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Space") and sLine:match(";") then
+		local tSegments = StringManager.splitByPattern(sLine, ";");
+
+		local sSpace = tSegments[1]:match("%d+.*");
+		local sReach = tSegments[2]:match("%d+.*");
+		sSpaceReach = sSpace .. "/" .. sReach;
+	elseif not sLine:match("Space") then
+		ImportNPCManager.previousImportLine();
+	end
+
 	DB.setValue(_tImportState.node, "spacereach", "string", sSpaceReach);
-	DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
+end
+
+function importHelperSpecialAbilAtt()
+	ImportNPCManager.nextImportLine();
+
+	local sLine1 = _tImportState.sActiveLine;
+	if sLine1:match("Special") then
+		local sAbilAtt1 = "";
+		local sAbilAtt2 = "";
+		sAbilAtt1 = sLine1;
+
+		ImportNPCManager.nextImportLine();
+
+		local sLine2 = _tImportState.sActiveLine;
+		if sLine2:match("Special") then
+			sAbilAtt2 = sLine2;
+		else
+			ImportNPCManager.previousImportLine();
+		end
+
+		local sSpecialAttack = sAbilAtt1 .. ", " .. sAbilAtt2;
+		sSpecialAttack = sSpecialAttack:gsub("Special%sAbilities%s", "");
+		sSpecialAttack = sSpecialAttack:gsub("Special%sAttacks%s", "");
+		DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
+	else
+		ImportNPCManager.previousImportLine();
+	end
+end
+
+function importHelperSpells()
+	ImportNPCManager.nextImportLine();
+
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Spells") then
+		ImportNPCManager.importHelperSpellcasting();
+	else
+		ImportNPCManager.previousImportLine();
+	end
 end
 
 function importHelperAbilityScores()
@@ -301,7 +362,7 @@ function importHelperSkills()
 	ImportNPCManager.nextImportLine();
 
 	local sSkills = _tImportState.sActiveLine:gsub("Skills%s", "");
-	sSkills = sSkills:gsub(";.-", "");
+	sSkills = sSkills:gsub(";.*", "");
 
 	DB.setValue(_tImportState.node, "skills", "string", sSkills);
 end
