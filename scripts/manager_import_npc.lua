@@ -198,17 +198,16 @@ function importHelperDefStatsOptional(sLines)
 
 	local nMP, sDA, sAbsorb, sDR, sImmune, sResist, nSR, sStrong, sWeakness;
 
-	sLines = sLines:gsub(";?%s?defensive%sabilities", ";defensive abilities");
-	sLines = sLines:gsub(";?%s?absorb", ";absorb");
-	sLines = sLines:gsub(";?%s?dr", ";dr");
-	sLines = sLines:gsub(";?%s?immune", ";immune");
-	sLines = sLines:gsub(";?%s?resist", ";resist");
-	sLines = sLines:gsub(";?%s?sr", ";sr");
-	sLines = sLines:gsub(";?%s?strong", ";strong");
-	sLines = sLines:gsub(";?%s?weakness", ";weakness");
+	sLines = sLines:gsub(";?%s?defensive%sabilities%s", ";defensive abilities ");
+	sLines = sLines:gsub(";?%s?absorb%s", ";absorb ");
+	sLines = sLines:gsub(";?%s?dr%s", ";dr ");
+	sLines = sLines:gsub(";?%s?immune%s", ";immune ");
+	sLines = sLines:gsub(";?%s?resist%s", ";resist ");
+	sLines = sLines:gsub(";?%s?sr%s", ";sr ");
+	sLines = sLines:gsub(";?%s?strong%s", ";strong ");
+	sLines = sLines:gsub(";?%s?weakness%s", ";weakness ");
 
 	local tDefOptional = StringManager.splitByPattern(sLines, ";");
-	Debug.console(tDefOptional)
 
 	for _,sDefOption in ipairs(tDefOptional) do
 		if sDefOption:match("mp") then
@@ -253,7 +252,6 @@ function importHelperTactics()
 	if _tImportState.sActiveLine:upper():match("TACTICS")  then
 		ImportNPCManager.nextImportLine();
 		local sDesc = _tImportState.sActiveLine;
-		Debug.console(sDesc)
 	else
 		ImportNPCManager.previousImportLine();
 	end
