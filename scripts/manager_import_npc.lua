@@ -48,7 +48,7 @@ function import2022(sStats, sDesc)
 	ImportNPCManager.importHelperDefense();
 
 	-- Assume Tactics next (optional)
-	--ImportNPCManager.importHelperTacticsOptional();
+	ImportNPCManager.importHelperTactics();
 
 	-- Assume Speed next
 	ImportNPCManager.importHelperSpeed();
@@ -71,10 +71,10 @@ function import2022(sStats, sDesc)
 	-- Assume BAB/CMB/CMD next
 	ImportNPCManager.importHelperBabCmbCmd();
 
-	-- Assume Feats next
+	-- Assume Feats next (optional)
 	ImportNPCManager.importHelperFeats();
 
-	-- Assume Skills next
+	-- Assume Skills next (optional)
 	ImportNPCManager.importHelperSkills();
 
 	-- Assume Languages next (optional)
@@ -246,8 +246,21 @@ function importHelperDefStatsOptional(sLines)
 	DB.setValue(_tImportState.node, "weakness", "string", sWeakness);
 end
 
-function importHelperSpeed()
+function importHelperTactics()
 	ImportNPCManager.nextImportLine();
+
+	if _tImportState.sActiveLine:match("TACTICS") then
+		ImportNPCManager.nextImportLine();
+		local sDesc = _tImportState.sActiveLine;
+		Debug.console(sDesc)
+	else
+		ImportNPCManager.previousImportLine();
+	end
+end
+
+function importHelperSpeed()
+	-- skip Offense
+	ImportNPCManager.nextImportLine(2);
 
 	local sSpeed = _tImportState.sActiveLine:gsub("Speed%s?", "");
 
@@ -356,18 +369,27 @@ end
 function importHelperFeats()
 	ImportNPCManager.nextImportLine();
 
-	local sFeats = _tImportState.sActiveLine:gsub("Feats%s", "");
-
-	DB.setValue(_tImportState.node, "feats", "string", sFeats);
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Feats?%s") then
+		local sFeats = sLine:gsub("Feats?%s", "");
+		DB.setValue(_tImportState.node, "feats", "string", sFeats);
+	else
+		ImportNPCManager.previousImportLine();
+	end
 end
 
 function importHelperSkills()
 	ImportNPCManager.nextImportLine();
 
-	local sSkills = _tImportState.sActiveLine:gsub("Skills%s", "");
-	sSkills = sSkills:gsub(";.*", "");
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Skills?%s") then
+		local sSkills = sLine:gsub("Skills?%s", "");
+		sSkills = sSkills:gsub(";.*", "");
 
-	DB.setValue(_tImportState.node, "skills", "string", sSkills);
+		DB.setValue(_tImportState.node, "skills", "string", sSkills);
+	else
+		ImportNPCManager.previousImportLine();
+	end
 end
 
 function importHelperLanguage()
@@ -450,9 +472,10 @@ function importHelperDiff(sHeadingStart, sHeadingEnd)
 	if _tImportState.sActiveLine:match(sHeadingStart) then
 		while not _tImportState.sActiveLine:match(sHeadingEnd) do
 			ImportNPCManager.nextImportLine();
-			local sLine = _tImportState.sActiveLine;
 
+			local sLine = _tImportState.sActiveLine;
 			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:match("TACTICS") then
+				ImportNPCManager.previousImportLine();
 				break;
 			end
 
