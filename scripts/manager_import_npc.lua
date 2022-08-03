@@ -84,7 +84,10 @@ function import2022(sStats, sDesc)
 	ImportNPCManager.importHelperSQ();
 
 	-- Assume special abilities next
-	--ImportNPCManager.importHelperSpecialAbilities();
+	ImportNPCManager.importHelperSpecialAbilities();
+
+	-- Update Description by adding the statblock text as well
+	ImportNPCManager.finalizeDescription();
 
 	-- Open new record window and matching campaign list
 	ImportUtilityManager.showRecord("npc", _tImportState.node);
@@ -271,8 +274,10 @@ function importHelperTactics()
 
 	if _tImportState.sActiveLine:upper():match("TACTICS") then
 		ImportNPCManager.nextImportLine();
-		local sDesc = _tImportState.sActiveLine;
-		DB.setValue(_tImportState.node, "text", "formattedtext", sDesc)
+		
+		local sTactics = _tImportState.sActiveLine:gsub("During%sCombat%s", "");
+		ImportNPCManager.addStatOutput("<h>Tactics</h>")
+		ImportNPCManager.addStatOutput(string.format("<p>%s</p>", sTactics));
 	else
 		ImportNPCManager.previousImportLine();
 	end
@@ -511,17 +516,47 @@ function importHelperSQ()
 	end
 end
 
+function importHelperSpecialAbilities()
+	ImportNPCManager.nextImportLine();
+
+	if not _tImportState.sActiveLine or _tImportState.sActiveLine == "" then
+		return;
+	end
+
+	ImportNPCManager.addStatOutput("<h>Special Abilities</h>")
+
+	while _tImportState.sActiveLine:match("%w") do
+		ImportNPCManager.nextImportLine();
+
+		local sLine = _tImportState.sActiveLine;
+
+		if not sLine or sLine == "" then
+			break;
+		end
+
+		if sLine:match("Ex") or sLine:match("Su") then
+			sLine = sLine:gsub("Copy link to clipboard%s?", "")
+			ImportNPCManager.addStatOutput(string.format("<p><b>%s</b></p>", sLine));
+		else
+			ImportNPCManager.addStatOutput(string.format("<p>%s</p>" ,sLine));
+		end
+	end
+end
+
 --
 --	Import state identification and tracking
 --
 
-function initImportState(sStatBlock)
+function initImportState(sStatBlock, sDesc)
 	_tImportState = {};
 
 	local sCleanStats = ImportUtilityManager.cleanUpText(sStatBlock);
 	_tImportState.nLine = 0;
 	_tImportState.tLines = ImportUtilityManager.parseFormattedTextToLines(sCleanStats);
 	_tImportState.sActiveLine = "";
+
+	_tImportState.sDescription = ImportUtilityManager.cleanUpText(sDesc);
+	_tImportState.tStatOutput = {};
 
 	local sRootMapping = LibraryData.getRootMapping("npc");
 	_tImportState.node = DB.createChild(sRootMapping);
@@ -535,4 +570,12 @@ end
 function previousImportLine()
 	_tImportState.nLine = _tImportState.nLine - 1;
 	_tImportState.sActiveLine = _tImportState.tLines[_tImportState.nLine];
+end
+
+function addStatOutput(s)
+	table.insert(_tImportState.tStatOutput, s);
+end
+
+function finalizeDescription()
+	DB.setValue(_tImportState.node, "text", "formattedtext", _tImportState.sDescription .. table.concat(_tImportState.tStatOutput));
 end
