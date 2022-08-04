@@ -306,9 +306,11 @@ function importHelperSpeed()
 end
 
 function importHelperAttack()
+	-- Handle primary melee/ranged attacks
 	ImportNPCManager.nextImportLine();
 
 	local sAttacks = _tImportState.sActiveLine:gsub("Melee%s?", "");
+	sAttacks = sAttacks:gsub("Ranged%s?", "");
 	if sAttacks:match(",") then
 		local tAttacks = StringManager.splitByPattern(sAttacks, ",");
 		local sSingleAttack = tAttacks[1];
@@ -320,6 +322,32 @@ function importHelperAttack()
 		DB.setValue(_tImportState.node, "fullatk", "string", sFullAttack);
 	else
 		DB.setValue(_tImportState.node, "atk", "string", sAttacks);
+	end
+
+	-- Check for optional secondary ranged attacks
+	ImportNPCManager.nextImportLine();
+
+	local sRanged = _tImportState.sActiveLine;
+	if sRanged:match("Ranged") then
+		sRanged = sRanged:gsub("Ranged%s?", "");
+		sRanged = sRanged:gsub("%s%+?-?%d+", "%1 ranged");
+		local sExistingSingle = DB.getValue(_tImportState.node, "atk", "");
+		if sRanged:match(",") then
+			local tRanged = StringManager.splitByPattern(sRanged, ",");
+			local sSingleRanged = tRanged[1];
+			sSingleRanged = sSingleRanged:gsub("^%d+%s", "");
+			sSingleRanged = sSingleRanged:gsub("s%s%+", " +");
+			local sFullRanged = sSingleRanged:gsub(",", " and");
+
+			local sExistingFull = DB.getValue(_tImportState.node, "fullatk", "");
+
+			DB.setValue(_tImportState.node, "atk", "string", sExistingSingle .. " or " .. sSingleRanged);
+			DB.setValue(_tImportState.node, "fullatk", "string", sExistingFull .. " or " .. sFullRanged);
+		else
+			DB.setValue(_tImportState.node, "atk", "string", sExistingSingle .. " or " .. sRanged);
+		end
+	else
+		ImportNPCManager.previousImportLine();
 	end
 end
 
