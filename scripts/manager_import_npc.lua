@@ -44,12 +44,14 @@ function import2022(sStats, sDesc)
 	-- Assume aura next (optional)
 	ImportNPCManager.importHelperAura();
 
+	-- DEFENSE
 	-- Assume Defense next
 	ImportNPCManager.importHelperDefense();
 
 	-- Assume Tactics next (optional)
 	ImportNPCManager.importHelperTactics();
 
+	-- OFFENSE
 	-- Assume Speed next
 	ImportNPCManager.importHelperSpeed();
 
@@ -68,6 +70,7 @@ function import2022(sStats, sDesc)
 	-- Assume Spells next (optional)
 	ImportNPCManager.importHelperSpells();
 
+	-- STATISTICS
 	-- Assume Ability Scores next
 	ImportNPCManager.importHelperAbilityScores();
 
@@ -89,7 +92,7 @@ function import2022(sStats, sDesc)
 	-- Assume Gear next (optional)
 	ImportNPCManager.importHelperGear();
 
-	-- Assume special abilities next
+	-- Assume Special Abilities next
 	ImportNPCManager.importHelperSpecialAbilities();
 
 	-- Update Spellclass information
@@ -272,7 +275,28 @@ function importHelperDefStatsOptional(sLines)
 		ImportNPCManager.importHelperSpellClass(nMP);
 	end
 
-	DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
+	-- Optional Fast Healing and Regeneration
+	local sFastHealing = sLines:match("(fast%shealing%s%d+)");
+	local sRegeneration = sLines:match("(regeneration%s%d+)");
+
+	if sFastHealing then
+		DB.setValue(_tImportState.node, "specialqualities", "string", sFastHealing);
+	end
+
+	local sExsitingSQ = DB.getValue(_tImportState.node, "specialqualities", "");
+	if sRegeneration then
+		if sExsitingSQ ~= "" then
+			DB.setValue(_tImportState.node, "specialqualities", "string", sExsitingSQ .. ", " .. sFastHealing);
+		else
+			DB.setValue(_tImportState.node, "specialqualities", "string", sFastHealing);
+		end
+	end
+
+	if sExsitingSQ ~= "" then
+		DB.setValue(_tImportState.node, "specialqualities", "string", sExsitingSQ .. ", " .. sDA);
+	else
+		DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
+	end
 	DB.setValue(_tImportState.node, "absorb", "string", sAbsorb);
 	DB.setValue(_tImportState.node, "dr", "string", sDR);
 	DB.setValue(_tImportState.node, "immune", "string", sImmune);
