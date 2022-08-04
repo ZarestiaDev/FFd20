@@ -672,7 +672,7 @@
 			</label_fieldtop>
 
 			<button_stringcycler name="type">
-				<anchored to="maxlevel" position="righthigh" offset="13" width="44" height="20" />
+				<anchored to="maxlevel" position="righthigh" offset="20" width="44" height="20" />
 				<parameters>
 					<defaultlabelres>spell_label_none</defaultlabelres>
 					<labelsres>spell_label_full|spell_label_semi|spell_label_partial</labelsres>
@@ -683,7 +683,7 @@
 						window.onTypeChanged();
 					end
 				</script>
-				<readonly />
+				<gmeditonly />
 			</button_stringcycler>
 			<label_fieldtop name="type_label">
 				<anchored to="type" />
