@@ -234,6 +234,7 @@ function importHelperDefStatsOptional(sLines)
 	sLines = sLines:gsub(";?%s?defensive%sabilities%s", ";defensive abilities ");
 	sLines = sLines:gsub(";?%s?absorb%s", ";absorb ");
 	sLines = sLines:gsub(";?%s?dr%s", ";dr ");
+	sLines = sLines:gsub(";?%s?hardness%s", ";hardness ");
 	sLines = sLines:gsub(";?%s?immune%s", ";immune ");
 	sLines = sLines:gsub(";?%s?resist%s", ";resist ");
 	sLines = sLines:gsub(";?%s?sr%s", ";sr ");
@@ -251,6 +252,8 @@ function importHelperDefStatsOptional(sLines)
 			sAbsorb = sDefOption:gsub("absorb%s?", "");
 		elseif sDefOption:match("dr") then
 			sDR = sDefOption:gsub("dr%s?", "");
+		elseif sDefOption:match("hardness") then
+			sDR = sDefOption:gsub("hardness%s?", "");
 		elseif sDefOption:match("immune") then
 			sImmune = sDefOption:gsub("immune%s?", "");
 		elseif sDefOption:match("resist") then
