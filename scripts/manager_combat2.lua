@@ -887,7 +887,7 @@ function getCRFromXP(nXP)
 		elseif nXP <= 9830400 then
 			nCR = 30;
 		else
-			nCR = 31;
+			nCR = 35;
 		end
 	end
 	return nCR;
@@ -964,8 +964,10 @@ function getXPFromCR(nCR)
 			nXP = 4915200;
 		elseif nCR <= 29 then
 			nXP = 6553600;
-		else
+		elseif nCR <= 30 then
 			nXP = 9830400;
+		else
+			nXP = 52480000;
 		end
 	end
 	return nXP;
