@@ -62,6 +62,9 @@ function import2022(sStats, sDesc)
 	-- Assume Special Abilities/Special Attack next (optional)
 	ImportNPCManager.importHelperSpecialAbilAtt();
 
+	-- Assume Burst Mode next (optional)
+	ImportNPCManager.importHelperBurstMode();
+
 	-- Assume Spells next (optional)
 	ImportNPCManager.importHelperSpells();
 
@@ -157,7 +160,7 @@ function importHelperDefense()
 
 	local sDiffDefOff;
 	-- Get all data between DEFENSE and OFFENSE
-	sDiffDefOff = ImportNPCManager.importHelperDiff("DEFENSE", "OFFENSE");
+	sDiffDefOff = ImportNPCManager.importHelperDiff("defense", "offense");
 	-- Assume every NPC has AC/HP/Saves and save the data without them in "sDiffDefOff"
 	sDiffDefOff = ImportNPCManager.importHelperDefStats(sDiffDefOff);
 	-- Assume optional values in the order:
@@ -175,12 +178,12 @@ end
 function importHelperDiff(sHeadingStart, sHeadingEnd)
 	local tDefense = {};
 
-	if _tImportState.sActiveLine:match(sHeadingStart) then
-		while not _tImportState.sActiveLine:match(sHeadingEnd) do
+	if _tImportState.sActiveLine:lower():match(sHeadingStart) then
+		while not _tImportState.sActiveLine:lower():match(sHeadingEnd) do
 			ImportNPCManager.nextImportLine();
 
-			local sLine = _tImportState.sActiveLine;
-			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:upper():match("TACTICS") then
+			local sLine = _tImportState.sActiveLine:lower();
+			if not sLine or sLine == "" or sLine:match(sHeadingEnd) or sLine:match("tactics") then
 				ImportNPCManager.previousImportLine();
 				break;
 			end
@@ -195,7 +198,8 @@ end
 function importHelperDefStats(sLines)
 	local sACLine, sHPLine, sSaveLine, sRemainder;
 	-- Extract AC
-	sACLine, sRemainder = StringManager.extractPattern(sLines:lower(), "^ac.-%)");
+	sLines = sLines:lower();
+	sACLine, sRemainder = StringManager.extractPattern(sLines, "^ac.-%)");
 	local sAC = StringManager.trim(sACLine:gsub("ac", "")) or "";
 	-- Extract HP
 	sHPLine, sRemainder = StringManager.extractPattern(sRemainder, "^%s?hp.-%)");
@@ -236,7 +240,7 @@ function importHelperDefStatsOptional(sLines)
 	local tDefOptional = StringManager.splitByPattern(sLines, ";");
 
 	for _,sDefOption in ipairs(tDefOptional) do
-		if sDefOption:match("mp") then
+		if sDefOption:match("mp%s%d+") then
 			nMP = tonumber(sDefOption:match("%d+"));
 		elseif sDefOption:match("defensive abilities") then
 			sDA = sDefOption:gsub("defensive abilities%s?", "");
@@ -259,7 +263,7 @@ function importHelperDefStatsOptional(sLines)
 
 	-- Create Spellclass and save nMP for later here
 	if nMP and nMP > 0 then
-		importHelperSpellClass(nMP);
+		ImportNPCManager.importHelperSpellClass(nMP);
 	end
 
 	DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
@@ -318,6 +322,7 @@ function importHelperSpaceReach()
 
 	local sSpaceReach = "5 ft./5 ft.";
 	local sLine = _tImportState.sActiveLine;
+	sLine = sLine:gsub(",", ";");
 	if sLine:match("Space") and sLine:match(";") then
 		local tSegments = StringManager.splitByPattern(sLine, ";");
 
@@ -353,6 +358,23 @@ function importHelperSpecialAbilAtt()
 		sSpecialAttack = sSpecialAttack:gsub("Special%sAbilities%s", "");
 		sSpecialAttack = sSpecialAttack:gsub("Special%sAttacks%s", "");
 		DB.setValue(_tImportState.node, "specialattacks", "string", sSpecialAttack);
+	else
+		ImportNPCManager.previousImportLine();
+	end
+end
+
+function importHelperBurstMode()
+	ImportNPCManager.nextImportLine();
+
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Burst") then
+		local sBurst = sLine:gsub("Burst%sMode%s", "");
+		local sExistingSQ = DB.getValue(_tImportState.node, "specialqualities", "");
+		if sExistingSQ ~= "" then
+			sBurst = sExistingSQ .. ", " .. sBurst;
+		end
+
+		DB.setValue(_tImportState.node, "specialqualities", "string", sBurst);
 	else
 		ImportNPCManager.previousImportLine();
 	end
@@ -403,10 +425,10 @@ function importHelperSpellcasting()
 	DB.setValue(nodeSpellClass, "type", "string", sType);
 	DB.setValue(nodeSpellClass, "cl", "number", nCL);
 	
-	while not _tImportState.sActiveLine:match("STATISTICS") do
+	while not _tImportState.sActiveLine:lower():match("statistics") do
 		ImportNPCManager.nextImportLine();
-		local sLine = _tImportState.sActiveLine;
-		if not sLine or sLine == "" or sLine:match("STATISTICS") then
+		local sLine = _tImportState.sActiveLine:lower();
+		if not sLine or sLine == "" or sLine:match("statistics") then
 			ImportNPCManager.previousImportLine();
 			break;
 		end
@@ -538,7 +560,7 @@ function importHelperSpecialAbilities()
 			break;
 		end
 
-		if sLine:match("Ex") or sLine:match("Su") then
+		if sLine:match("%(Ex%)") or sLine:match("%(Su%)") or sLine:match("Special%sAbilities") then
 			sLine = sLine:gsub("Copy link to clipboard%s?", "")
 			ImportNPCManager.addStatOutput(string.format("<p><b>%s</b></p>", sLine));
 		else
