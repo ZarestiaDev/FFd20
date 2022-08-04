@@ -910,17 +910,17 @@ function getTagsFromAction(rAction)
 end
 
 function getActionAbilityBonus(nodeAction)
-	if string.find(nodeAction.getNodeName(), "charsheet") then
-		local nodeSpellClass = nodeAction.getChild(".......");
-		local nodeCreature = nodeSpellClass.getChild("...");
-		
-		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
-		
-		local rActor = ActorManager.resolveActor(nodeCreature);
-		return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
-	else
+	-- Check whether spellclass is found
+	local nodeSpellClass = nodeAction.getChild(".......");
+
+	if not nodeSpellClass then
 		return 0;
 	end
+
+	local nodeCreature = nodeSpellClass.getChild("...");		
+	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
+	local rActor = ActorManager.resolveActor(nodeCreature);
+	return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
 end
 
 function getActionCLC(nodeAction)
