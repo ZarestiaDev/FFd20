@@ -135,7 +135,17 @@ function importHelperAlignmentSizeType()
 	-- skip xp line
 	ImportNPCManager.nextImportLine(2);
 
-	DB.setValue(_tImportState.node, "type", "string", _tImportState.sActiveLine);
+	-- Handle optional race/class
+	if _tImportState.sActiveLine:match("%d+") then
+		local sRaceClass = _tImportState.sActiveLine;
+
+		ImportNPCManager.nextImportLine();
+
+		local sAlignmentSizeType = _tImportState.sActiveLine;
+		DB.setValue(_tImportState.node, "type", "string", sAlignmentSizeType .. " [" .. sRaceClass .. "]");
+	else
+		DB.setValue(_tImportState.node, "type", "string", _tImportState.sActiveLine);
+	end
 end
 
 function importHelperInitiativeSenses()
