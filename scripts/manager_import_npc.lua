@@ -86,6 +86,9 @@ function import2022(sStats, sDesc)
 	-- Assume SQ next (optional)
 	ImportNPCManager.importHelperSQ();
 
+	-- Assume Gear next (optional)
+	ImportNPCManager.importHelperGear();
+
 	-- Assume special abilities next
 	ImportNPCManager.importHelperSpecialAbilities();
 
@@ -542,6 +545,19 @@ function importHelperSQ()
 	end
 end
 
+function importHelperGear()
+	ImportNPCManager.nextImportLine();
+
+	local sLine = _tImportState.sActiveLine;
+	if sLine:match("Gear") then
+		local sGear = sLine:gsub("Gear%s", "");
+		ImportNPCManager.addStatOutput("<h>Gear</h>");
+		ImportNPCManager.addStatOutput(string.format("<p>%s</p>", sGear));
+	else
+		ImportNPCManager.previousImportLine();
+	end
+end
+
 function importHelperSpecialAbilities()
 	ImportNPCManager.nextImportLine();
 
@@ -549,7 +565,7 @@ function importHelperSpecialAbilities()
 		return;
 	end
 
-	ImportNPCManager.addStatOutput("<h>Special Abilities</h>")
+	ImportNPCManager.addStatOutput("<h>Special Abilities</h>");
 
 	while _tImportState.sActiveLine:match("%w") do
 		ImportNPCManager.nextImportLine();
