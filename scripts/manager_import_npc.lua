@@ -221,11 +221,14 @@ function importHelperDefStats(sLines)
 	sHPLine, sRemainder = StringManager.extractPattern(sRemainder, "^%s?hp.-%)");
 	local nHP = sHPLine:match("%d+") or 0;
 	local sHD = sHPLine:match("%((.-)%)") or "";
-	-- Extract Fort
-	sSaveLine, sRemainder = StringManager.extractPattern(sRemainder, "fort%s.?%d+,%sref%s.?%d+,%swill%s.?%d+%s?");
-	local nFort = tonumber(sSaveLine:match("fort%s(.?%d+)")) or 0;
-	local nRef = tonumber(sSaveLine:match("ref%s(.?%d+)")) or 0;
-	local nWill = tonumber(sSaveLine:match("will%s(.?%d+)")) or 0;
+	-- Extract Fort | inconsistent formatting on website
+	sRemainder = sRemainder:gsub("fortitude", "fort");
+	sRemainder = sRemainder:gsub("reflex", "ref");
+
+	sSaveLine, sRemainder = StringManager.extractPattern(sRemainder, "fort%s%-?%+?%d+,%sref%s%-?%+?%d+,%swill%s%-?%+?%d+%s?");
+	local nFort = tonumber(sSaveLine:match("fort%s(%-?%+?%d+)")) or 0;
+	local nRef = tonumber(sSaveLine:match("ref%s(%-?%+?%d+)")) or 0;
+	local nWill = tonumber(sSaveLine:match("will%s(%-?%+?%d+)")) or 0;
 	
 	DB.setValue(_tImportState.node, "ac", "string", sAC);
 	DB.setValue(_tImportState.node, "hp", "number", nHP);
@@ -260,23 +263,23 @@ function importHelperDefStatsOptional(sLines)
 		if sDefOption:match("mp%s%d+") then
 			nMP = tonumber(sDefOption:match("%d+"));
 		elseif sDefOption:match("defensive abilities") then
-			sDA = sDefOption:gsub("defensive abilities%s?", "");
+			sDA = StringManager.capitalizeAll(sDefOption:gsub("defensive abilities%s?", ""));
 		elseif sDefOption:match("absorb") then
-			sAbsorb = sDefOption:gsub("absorb%s?", "");
+			sAbsorb = StringManager.capitalizeAll(sDefOption:gsub("absorb%s?", ""));
 		elseif sDefOption:match("dr") then
 			sDR = sDefOption:gsub("dr%s?", "");
 		elseif sDefOption:match("hardness") then
 			sDR = sDefOption:gsub("hardness%s?", "");
 		elseif sDefOption:match("immune") then
-			sImmune = sDefOption:gsub("immune%s?", "");
+			sImmune = StringManager.capitalizeAll(sDefOption:gsub("immune%s?", ""));
 		elseif sDefOption:match("resist") then
-			sResist = sDefOption:gsub("resist%s?", "");
+			sResist = StringManager.capitalizeAll(sDefOption:gsub("resist%s?", ""));
 		elseif sDefOption:match("sr") then
 			nSR = tonumber(sDefOption:match("%d+"));
 		elseif sDefOption:match("strong") then
-			sStrong = sDefOption:gsub("strong%s?", "");
+			sStrong = StringManager.capitalizeAll(sDefOption:gsub("strong%s?", ""));
 		elseif sDefOption:match("weakness") then
-			sWeakness = sDefOption:gsub("weakness%s?", "");
+			sWeakness = StringManager.capitalizeAll(sDefOption:gsub("weakness%s?", ""));
 		end
 	end
 
@@ -290,9 +293,9 @@ function importHelperDefStatsOptional(sLines)
 	local sRegeneration = sLines:match("(regeneration%s%d+)");
 
 	if sFastHealing then
-		DB.setValue(_tImportState.node, "specialqualities", "string", sFastHealing);
+		DB.setValue(_tImportState.node, "specialqualities", "string", StringManager.capitalizeAll(sFastHealing));
 	elseif sRegeneration then
-		DB.setValue(_tImportState.node, "specialqualities", "string", sRegeneration);
+		DB.setValue(_tImportState.node, "specialqualities", "string", StringManager.capitalizeAll(sRegeneration));
 	end
 
 	local sExsitingSQ = DB.getValue(_tImportState.node, "specialqualities", "");
@@ -606,7 +609,7 @@ function importHelperSQ()
 			sSQ = sExistingSQ .. ", " .. sSQ;
 		end
 
-		DB.setValue(_tImportState.node, "specialqualities", "string", sSQ);
+		DB.setValue(_tImportState.node, "specialqualities", "string", StringManager.capitalizeAll(sSQ));
 	else
 		ImportNPCManager.previousImportLine();
 	end
@@ -619,7 +622,7 @@ function importHelperGear()
 	if sLine:match("Gear") then
 		local sGear = sLine:gsub("Gear%s", "");
 		ImportNPCManager.addStatOutput("<h>Gear</h>");
-		ImportNPCManager.addStatOutput(string.format("<p>%s</p>", sGear));
+		ImportNPCManager.addStatOutput(string.format("<p>%s</p>", StringManager.capitalize(sGear)));
 	else
 		ImportNPCManager.previousImportLine();
 	end
