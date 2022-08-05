@@ -291,22 +291,18 @@ function importHelperDefStatsOptional(sLines)
 
 	if sFastHealing then
 		DB.setValue(_tImportState.node, "specialqualities", "string", sFastHealing);
+	elseif sRegeneration then
+		DB.setValue(_tImportState.node, "specialqualities", "string", sRegeneration);
 	end
 
 	local sExsitingSQ = DB.getValue(_tImportState.node, "specialqualities", "");
-	if sRegeneration then
-		if sExsitingSQ ~= "" then
-			DB.setValue(_tImportState.node, "specialqualities", "string", sExsitingSQ .. ", " .. sFastHealing);
-		else
-			DB.setValue(_tImportState.node, "specialqualities", "string", sFastHealing);
-		end
-	end
 
-	if sExsitingSQ ~= "" then
+	if sExsitingSQ ~= "" and sDA then
 		DB.setValue(_tImportState.node, "specialqualities", "string", sExsitingSQ .. ", " .. sDA);
-	else
+	elseif sExsitingSQ == "" then
 		DB.setValue(_tImportState.node, "specialqualities", "string", sDA);
 	end
+
 	DB.setValue(_tImportState.node, "absorb", "string", sAbsorb);
 	DB.setValue(_tImportState.node, "dr", "string", sDR);
 	DB.setValue(_tImportState.node, "immune", "string", sImmune);
