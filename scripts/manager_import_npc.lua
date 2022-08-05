@@ -350,6 +350,12 @@ function importHelperAttack()
 
 		DB.setValue(_tImportState.node, "atk", "string", sSingleAttack);
 		DB.setValue(_tImportState.node, "fullatk", "string", sFullAttack);
+	elseif sAttacks:match("^%d+") and not sAttacks:match(",") then
+		local sSingleAttack = sAttacks:gsub("^%d+%s", "");
+		sSingleAttack = sSingleAttack:gsub("s%s%+", " +");
+
+		DB.setValue(_tImportState.node, "atk", "string", sSingleAttack);
+		DB.setValue(_tImportState.node, "fullatk", "string", sAttacks);
 	else
 		DB.setValue(_tImportState.node, "atk", "string", sAttacks);
 	end
