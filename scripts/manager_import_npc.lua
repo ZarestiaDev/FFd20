@@ -635,7 +635,7 @@ function importHelperSpecialAbilities()
 		return;
 	end
 
-	ImportNPCManager.addStatOutput("<h>Special Abilities</h>")
+	ImportNPCManager.addStatOutput("<h>Special Abilities</h>");
 
 	while _tImportState.sActiveLine:match("%w") do
 		ImportNPCManager.nextImportLine();
@@ -655,9 +655,40 @@ function importHelperSpecialAbilities()
 				ImportNPCManager.addStatOutput(string.format("<p><b>%s</b></p>", sLine));
 			end
 		else
+			ImportNPCManager.checkAddCreatureMagic(sLine);
 			ImportNPCManager.addStatOutput(string.format("<p>%s</p>" ,sLine));
 		end
 	end
+end
+
+function checkAddCreatureMagic(s)
+	if not s:lower():match("blue%smage") then
+		return;
+	end
+
+	local sKnowledge = s:match("%((Knowledge:%s?.*)%)");
+	sKnowledge = sKnowledge:gsub(":", "");
+
+	ImportNPCManager.previousImportLine();
+
+	local sSpellName = _tImportState.sActiveLine:lower():match("(.*)%s%(");
+
+	ImportNPCManager.nextImportLine();
+
+	-- Handle Spell copy
+	local nodeBlueList = _tImportState.node.createChild("blulist");
+	local nodeNewSpell = nodeBlueList.createChild();
+	local tSpells = DB.findNode("spell").getChildren();
+
+	for _,nodeSource in pairs(tSpells) do
+		local sExistingSpellName = DB.getValue(nodeSource, "name", ""):lower();
+		if sSpellName == sExistingSpellName then
+			DB.copyNode(nodeSource, nodeNewSpell)
+			break;
+		end
+	end
+
+	DB.setValue(nodeNewSpell, "knowledge", "string", sKnowledge);
 end
 
 --

@@ -684,8 +684,7 @@
 			</genericcontrol>
 
 			<label name="spell_label">
-				<anchored to="rightanchor" width="140">
-					<top />
+				<anchored to="rightanchor" position="lefthigh" width="140">
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
 				<static textres="npc_label_spell" />
@@ -693,8 +692,7 @@
 			</label>
 
 			<label name="knowledge_label">
-				<anchored to="rightanchor">
-					<top />
+				<anchored to="rightanchor" position="lefthigh">
 					<left parent="header_blu" offset="15" />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
@@ -737,28 +735,24 @@
 				</anchored>
 			</genericcontrol>
 			<button_idelete name="idelete">
-				<anchored to="rightanchor">
-					<top />
+				<anchored to="rightanchor" position="lefthigh">
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
 			</button_idelete>
 			<linkcontrol name="shortcut">
-				<anchored to="rightanchor" width="20" height="20">
-					<top />
+				<anchored to="rightanchor" position="lefthigh" width="20" height="20">
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<class>spelldesc</class>
 				<readonly />
 			</linkcontrol>
 			<string_textlistitem name="name">
-				<anchored to="rightanchor" width="140">
-					<top />
+				<anchored to="rightanchor" position="lefthigh" width="140">
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
 			</string_textlistitem>
 			<string_textlistitem name="knowledge">
-				<anchored to="rightanchor">
-					<top />
+				<anchored to="rightanchor" position="lefthigh">
 					<left parent="" offset="5" />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
