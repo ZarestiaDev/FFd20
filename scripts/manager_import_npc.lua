@@ -262,24 +262,24 @@ function importHelperDefStatsOptional(sLines)
 	for _,sDefOption in ipairs(tDefOptional) do
 		if sDefOption:match("mp%s%d+") then
 			nMP = tonumber(sDefOption:match("%d+"));
-		elseif sDefOption:match("defensive abilities") then
-			sDA = StringManager.capitalizeAll(sDefOption:gsub("defensive abilities%s?", ""));
-		elseif sDefOption:match("absorb") then
-			sAbsorb = StringManager.capitalizeAll(sDefOption:gsub("absorb%s?", ""));
-		elseif sDefOption:match("dr") then
-			sDR = sDefOption:gsub("dr%s?", "");
-		elseif sDefOption:match("hardness") then
-			sDR = sDefOption:gsub("hardness%s?", "");
-		elseif sDefOption:match("immune") then
-			sImmune = StringManager.capitalizeAll(sDefOption:gsub("immune%s?", ""));
-		elseif sDefOption:match("resist") then
-			sResist = StringManager.capitalizeAll(sDefOption:gsub("resist%s?", ""));
-		elseif sDefOption:match("sr") then
+		elseif sDefOption:match("defensive%sabilities%s") then
+			sDA = StringManager.capitalizeAll(sDefOption:gsub("defensive%sabilities%s", ""));
+		elseif sDefOption:match("absorb%s") then
+			sAbsorb = StringManager.capitalizeAll(sDefOption:gsub("absorb%s", ""));
+		elseif sDefOption:match("dr%s") then
+			sDR = sDefOption:gsub("dr%s", "");
+		elseif sDefOption:match("hardness%s") then
+			sDR = sDefOption:gsub("hardness%s", "");
+		elseif sDefOption:match("immune%s") then
+			sImmune = StringManager.capitalizeAll(sDefOption:gsub("immune%s", ""));
+		elseif sDefOption:match("resist%s") then
+			sResist = StringManager.capitalizeAll(sDefOption:gsub("resist%s", ""));
+		elseif sDefOption:match("sr%s") then
 			nSR = tonumber(sDefOption:match("%d+"));
-		elseif sDefOption:match("strong") then
-			sStrong = StringManager.capitalizeAll(sDefOption:gsub("strong%s?", ""));
-		elseif sDefOption:match("weakness") then
-			sWeakness = StringManager.capitalizeAll(sDefOption:gsub("weakness%s?", ""));
+		elseif sDefOption:match("strong%s") then
+			sStrong = StringManager.capitalizeAll(sDefOption:gsub("strong%s", ""));
+		elseif sDefOption:match("weakness%s") then
+			sWeakness = StringManager.capitalizeAll(sDefOption:gsub("weakness%s", ""));
 		end
 	end
 
@@ -635,7 +635,7 @@ function importHelperSpecialAbilities()
 		return;
 	end
 
-	ImportNPCManager.addStatOutput("<h>Special Abilities</h>");
+	ImportNPCManager.addStatOutput("<h>Special Abilities</h>")
 
 	while _tImportState.sActiveLine:match("%w") do
 		ImportNPCManager.nextImportLine();
@@ -646,9 +646,14 @@ function importHelperSpecialAbilities()
 			break;
 		end
 
-		if sLine:match("%(Ex%)") or sLine:match("%(Su%)") or sLine:match("Special%sAbilities") then
+		if sLine:match("%(Ex%)") or sLine:match("%(Su%)") or sLine:lower():match("special%sabilities") then
 			sLine = sLine:gsub("Copy link to clipboard%s?", "")
-			ImportNPCManager.addStatOutput(string.format("<p><b>%s</b></p>", sLine));
+			sLine = StringManager.capitalizeAll(sLine:lower());
+			if sLine:match("Special%ssAbilities") then
+				ImportNPCManager.addStatOutput(string.format("<h>%s</h>" ,sLine));
+			else
+				ImportNPCManager.addStatOutput(string.format("<p><b>%s</b></p>", sLine));
+			end
 		else
 			ImportNPCManager.addStatOutput(string.format("<p>%s</p>" ,sLine));
 		end
