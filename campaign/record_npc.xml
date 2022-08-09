@@ -635,28 +635,6 @@
 
 	<windowclass name="npc_other">
 		<margins control="0,0,0,2" />
-		<sheetdata>
-			<ft_record name="text">
-				<anchored position="over">
-					<bottom offset="-150" />
-				</anchored>
-			</ft_record>
-
-			<subwindow name="blu">
-				<anchored>
-					<top parent="text" anchor="bottom" offset="10" />
-					<left />
-					<right />
-					<bottom />
-				</anchored>
-				<activate />
-				<fastinit />
-				<class>blu_details</class>
-			</subwindow>
-		</sheetdata>
-	</windowclass>
-
-	<windowclass name="blu_details">
 		<script>
 			function onDrop(x, y, draginfo)
 				if draginfo.isType("shortcut") then
@@ -671,7 +649,12 @@
 		<sheetdata>
 			<anchor_column name="columnanchor" />
 
+			<ft_columnh name="text">
+				<anchored bottom="-150" />
+			</ft_columnh>
+
 			<header_column name="header_blu">
+				<anchored to="text" position="below" />
 				<static textres="npc_header_blu" />
 			</header_column>
 
@@ -709,11 +692,6 @@
 				<datasource>.blulist</datasource>
 				<class>blu_spell</class>
 			</list_text>
-
-			<scrollbar>
-				<anchored to="blulist" />
-				<target>blulist</target>
-			</scrollbar>
 
 			<button_iedit name="blulist_iedit">
 				<anchored to="header_blu" position="insidetopright" offset="5,0" />

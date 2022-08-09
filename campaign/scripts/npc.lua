@@ -45,7 +45,6 @@ function StateChanged()
 	end
 	if other.subwindow then
 		other.subwindow.text.setReadOnly(bReadOnly);
-		other.subwindow.blu.subwindow.blulist.setReadOnly(bReadOnly)
 	end
 	
 	npctype.setReadOnly(bReadOnly);
