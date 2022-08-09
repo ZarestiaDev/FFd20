@@ -303,7 +303,7 @@ function onNPCPostAdd(tCustom)
 
 	-- DECODE IMMUNE
 	local sImmune = string.lower(DB.getValue(nodeNPC, "immune", ""));
-	local aImmuneWords = StringManager.parseWords(sImmune);
+	local aImmuneWords = StringManager.splitByPattern(sImmune, ",");
 	local l = 1;
 	while aImmuneWords[l] do
 		if StringManager.isWord(aImmuneWords[l], "magic") then
