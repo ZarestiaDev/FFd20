@@ -86,16 +86,7 @@
 		<margins control="0,0,0,7" />
 		<script>
 			function onInit()
-				update();
-
-				-- DB change check
-				local sSpellcasting = DB.getValue(getDatabaseNode(), "spellcasting", "");
-				if sSpellcasting == "Half" then
-					DB.setValue(getDatabaseNode(), "spellcasting", "string", "Semi");
-				elseif sSpellcasting == "Third" then
-					DB.setValue(getDatabaseNode(), "spellcasting", "string", "Partial");
-				end
-				
+				update();				
 			end
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
