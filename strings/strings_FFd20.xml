@@ -582,6 +582,8 @@
 	
 	<!-- Races -->
 	<string name="race_header_traits">TRAITS</string>
+	<string name="race_header_heritages">HERITAGES</string>
+	<string name="race_header_alternatetraits">ALTERNATE TRAITS</string>
 	
 	<!-- Skills -->
 	<string name="skill_label_ability">Ability</string>
@@ -749,6 +751,8 @@
 	
 	<string name="record_label_classfeature">Class Feature</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
+	<string name="record_label_heritagetrait">Heritage Trait</string>
+	<string name="record_label_alternatetrait">Alternate Trait</string>
 	<string name="record_label_proficiency">Proficiency</string>
 
 	<string name="library_recordtype_label_deity">Deities</string>

@@ -6,7 +6,7 @@
 -->
 
 <root>
-	<windowclass name="referencerace">
+	<windowclass name="referenceheritage">
 		<frame>recordsheet</frame>
 		<placement>
 			<size width="400" height="400" />
@@ -21,7 +21,7 @@
 		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_record_header name="header">
-				<class>ref_race_header</class>
+				<class>ref_heritage_header</class>
 			</sub_record_header>
 
 			<frame_record_content_tabbed name="contentframe" />
@@ -31,7 +31,7 @@
 				<footer>footer_wide</footer>
 			</ft_record>
 			<subwindow_record name="content">
-				<class>ref_race_stats</class>
+				<class>ref_heritage_stats</class>
 			</subwindow_record>
 
 			<scrollbar_record>
@@ -57,12 +57,12 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="ref_race_header">
+	<windowclass name="ref_heritage_header">
 		<margins control="0,0,0,2" />
 		<script file="common/scripts/record_header.lua" />
 		<sheetdata>
 			<link_record_header name="link">
-				<class>referencerace</class>
+				<class>referenceheritage</class>
 			</link_record_header>
 
 			<anchor_record_header_right />
@@ -74,7 +74,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="ref_race_stats">
+	<windowclass name="ref_heritage_stats">
 		<margins control="0,0,0,7" />
 		<script>
 			function onInit()
@@ -82,29 +82,11 @@
 			end
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				heritages.update(bReadOnly);
 				traits.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
 			<anchor_column name="columnanchor" />
-
-			<header_column name="heritages_header">
-				<static textres="race_header_heritages"/>
-				<center />
-			</header_column>
-			<button_iedit name="heritages_iedit">
-				<anchored to="heritages_header" position="righthigh" offset="-20,0" />
-				<target>heritages</target>
-			</button_iedit>
-			<button_iadd name="heritages_iadd">
-				<anchored to="heritages_iedit" position="lefthigh" offset="5,0" />
-				<target>heritages</target>
-			</button_iadd>
-			<list_column name="heritages">
-				<datasource>.heritages</datasource>
-				<class>ref_racial_heritage</class>
-			</list_column>
 			
 			<header_column name="traits_header">
 				<static textres="race_header_traits"/>
@@ -119,62 +101,17 @@
 				<target>traits</target>
 			</button_iadd>
 			<list_column name="traits">
-				<datasource>.racialtraits</datasource>
-				<class>ref_racial_trait</class>
-			</list_column>
-
-			<header_column name="alternatetraits_header">
-				<static textres="race_header_alternatetraits"/>
-				<center />
-			</header_column>
-			<button_iedit name="alternatetraits_iedit">
-				<anchored to="alternatetraits_header" position="righthigh" offset="-20,0" />
-				<target>alternatetraits</target>
-			</button_iedit>
-			<button_iadd name="alternatetraits_iadd">
-				<anchored to="alternatetraits_iedit" position="lefthigh" offset="5,0" />
-				<target>alternatetraits</target>
-			</button_iadd>
-			<list_column name="alternatetraits">
-				<datasource>.alternateracialtraits</datasource>
-				<class>ref_racial_alternatetrait</class>
+				<datasource>.heritagetraits</datasource>
+				<class>ref_heritage_trait</class>
 			</list_column>
 		</sheetdata>
 	</windowclass>
-	<windowclass name="ref_racial_heritage">
+	<windowclass name="ref_heritage_trait">
 		<margins control="0,0,0,2" />
 		<sheetdata>
 			<anchor_listitem_column_right name="rightanchor" />
 			<link_listitem_column name="shortcut">
-				<class>referenceheritage</class>
-			</link_listitem_column>
-			<button_listitem_column_delete name="idelete" />
-
-			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
-			</string_listitem_column_name>
-		</sheetdata>
-	</windowclass>
-	<windowclass name="ref_racial_trait">
-		<margins control="0,0,0,2" />
-		<sheetdata>
-			<anchor_listitem_column_right name="rightanchor" />
-			<link_listitem_column name="shortcut">
-				<class>referenceracialtrait</class>
-			</link_listitem_column>
-			<button_listitem_column_delete name="idelete" />
-
-			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
-			</string_listitem_column_name>
-		</sheetdata>
-	</windowclass>
-	<windowclass name="ref_racial_alternatetrait">
-		<margins control="0,0,0,2" />
-		<sheetdata>
-			<anchor_listitem_column_right name="rightanchor" />
-			<link_listitem_column name="shortcut">
-				<class>referenceracialalternatetrait</class>
+				<class>referenceheritagetrait</class>
 			</link_listitem_column>
 			<button_listitem_column_delete name="idelete" />
 
@@ -184,7 +121,7 @@
 		</sheetdata>
 	</windowclass>
 	
-	<windowclass name="referenceracialtrait">
+	<windowclass name="referenceheritagetrait">
 		<frame>recordsheet</frame>
 		<placement>
 			<size width="350" height="350" />
@@ -197,7 +134,7 @@
 		<script file="common/scripts/record_window.lua" />
 		<sheetdata>
 			<sub_record_header name="header">
-				<class>ref_racialtrait_header</class>
+				<class>ref_heritagetrait_header</class>
 			</sub_record_header>
 
 			<frame_record_content />
@@ -214,12 +151,12 @@
 			<close_recordsheet />
 		</sheetdata>
 	</windowclass>
-	<windowclass name="ref_racialtrait_header">
+	<windowclass name="ref_heritagetrait_header">
 		<margins control="0,0,0,2" />
 		<script file="common/scripts/record_header_simple.lua" />
 		<sheetdata>
 			<link_record_header name="link">
-				<class>referenceracialtrait</class>
+				<class>referenceheritagetrait</class>
 			</link_record_header>
 
 			<anchor_record_header_right />
@@ -230,7 +167,7 @@
 				<empty textres="library_recordtype_empty_racialtrait" />
 			</string_record_name>
 			<label_recordtype name="recordtype_label">
-				<static textres="record_label_racialtrait" />
+				<static textres="record_label_heritagetrait" />
 			</label_recordtype>	
 		</sheetdata>
 	</windowclass>
