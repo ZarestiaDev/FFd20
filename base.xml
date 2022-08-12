@@ -81,7 +81,6 @@
 	<includefile source="campaign/record_feat.xml" />
 	<includefile source="campaign/record_race.xml" />
 	<includefile source="campaign/record_race_heritage.xml" />
-	<includefile source="campaign/record_race_alternate.xml" />
 	<includefile source="campaign/record_skill.xml" />
 
 	<includefile source="campaign/record_trait.xml" />

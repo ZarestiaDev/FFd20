@@ -583,7 +583,7 @@
 	<!-- Races -->
 	<string name="race_header_traits">TRAITS</string>
 	<string name="race_header_heritages">HERITAGES</string>
-	<string name="race_header_alternatetraits">ALTERNATE TRAITS</string>
+	<string name="race_header_alternate">ALTERNATE TRAITS</string>
 	
 	<!-- Skills -->
 	<string name="skill_label_ability">Ability</string>
@@ -744,6 +744,8 @@
 
 	<string name="library_recordtype_empty_classfeature">&#171; New Class Feature &#187;</string>
 	<string name="library_recordtype_empty_racialtrait">&#171; New Racial Trait &#187;</string>
+	<string name="library_recordtype_empty_alternate">&#171; New Alternate Racial Trait &#187;</string>
+	<string name="library_recordtype_empty_heritage">&#171; New Heritage &#187;</string>
 	<string name="library_recordtype_empty_proficiency">&#171; New Proficiency &#187;</string>
 	<string name="library_recordtype_empty_deity">&#171; New Deity &#187;</string>
 	<string name="library_recordtype_empty_trait">&#171; New Trait &#187;</string>
@@ -751,8 +753,8 @@
 	
 	<string name="record_label_classfeature">Class Feature</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
+	<string name="record_label_alternate">Alternate Trait</string>
 	<string name="record_label_heritagetrait">Heritage Trait</string>
-	<string name="record_label_alternatetrait">Alternate Trait</string>
 	<string name="record_label_proficiency">Proficiency</string>
 
 	<string name="library_recordtype_label_deity">Deities</string>

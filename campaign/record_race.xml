@@ -84,6 +84,7 @@
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				heritages.update(bReadOnly);
 				traits.update(bReadOnly);
+				alternate.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
@@ -123,21 +124,21 @@
 				<class>ref_racial_trait</class>
 			</list_column>
 
-			<header_column name="alternatetraits_header">
-				<static textres="race_header_alternatetraits"/>
+			<header_column name="alternate_header">
+				<static textres="race_header_alternate"/>
 				<center />
 			</header_column>
-			<button_iedit name="alternatetraits_iedit">
-				<anchored to="alternatetraits_header" position="righthigh" offset="-20,0" />
-				<target>alternatetraits</target>
+			<button_iedit name="alternate_iedit">
+				<anchored to="alternate_header" position="righthigh" offset="-20,0" />
+				<target>alternate</target>
 			</button_iedit>
-			<button_iadd name="alternatetraits_iadd">
-				<anchored to="alternatetraits_iedit" position="lefthigh" offset="5,0" />
-				<target>alternatetraits</target>
+			<button_iadd name="alternate_iadd">
+				<anchored to="alternate_iedit" position="lefthigh" offset="5,0" />
+				<target>alternate</target>
 			</button_iadd>
-			<list_column name="alternatetraits">
-				<datasource>.alternateracialtraits</datasource>
-				<class>ref_racial_alternatetrait</class>
+			<list_column name="alternate">
+				<datasource>.alternate</datasource>
+				<class>ref_racial_alternate</class>
 			</list_column>
 		</sheetdata>
 	</windowclass>
@@ -151,7 +152,7 @@
 			<button_listitem_column_delete name="idelete" />
 
 			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
+				<empty textres="library_recordtype_empty_heritage" />
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>
@@ -169,17 +170,17 @@
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>
-	<windowclass name="ref_racial_alternatetrait">
+	<windowclass name="ref_racial_alternate">
 		<margins control="0,0,0,2" />
 		<sheetdata>
 			<anchor_listitem_column_right name="rightanchor" />
 			<link_listitem_column name="shortcut">
-				<class>referenceracialalternatetrait</class>
+				<class>referencealternate</class>
 			</link_listitem_column>
 			<button_listitem_column_delete name="idelete" />
 
 			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
+				<empty textres="library_recordtype_empty_alternate" />
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>
@@ -231,6 +232,59 @@
 			</string_record_name>
 			<label_recordtype name="recordtype_label">
 				<static textres="record_label_racialtrait" />
+			</label_recordtype>	
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="referencealternate">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="400" height="400" />
+		</placement>
+		<sharable />
+		<sizelimits>
+			<minimum width="350" height="350" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<sharable />
+		<script file="common/scripts/record_window.lua" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>ref_alternate_header</class>
+			</sub_record_header>
+
+			<frame_record_content />
+			<ft_record name="text">
+				<anchored to="contentframe" position="over" />
+				<footer>footer_wide</footer>
+			</ft_record>
+			<scrollbar>
+				<anchored to="text" />
+				<target>text</target>
+			</scrollbar>
+			
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_alternate_header">
+		<margins control="0,0,0,2" />
+		<script file="common/scripts/record_header.lua" />
+		<sheetdata>
+			<link_record_header name="link">
+				<class>referencealternate</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_alternate" />
+			</string_record_name>
+			<label_recordtype name="recordtype_label">
+				<static textres="record_label_alternate" />
 			</label_recordtype>	
 		</sheetdata>
 	</windowclass>
