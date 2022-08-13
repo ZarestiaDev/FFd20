@@ -256,6 +256,9 @@
 	<string name="char_title_selectabilityincrease">Select Ability Score</string>
 	<string name="char_message_selectabilityincrease">Choose ability from the list below to increase.</string>
 
+	<string name="char_title_selectheritage">Select possible Heritage</string>
+	<string name="char_message_selectheritage">Choose Heritage from the list below.</string>
+
 	<string name="char_title_selectfavoredclass">Select Favored Class</string>
 	<string name="char_message_selectfavoredclass">Choose a favored class from the list below.</string>
 	<string name="char_message_selectfavoredclasses">Choose %d favored classes from the list below.</string>
