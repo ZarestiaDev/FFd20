@@ -81,25 +81,25 @@ function onNPCPostAdd(tCustom)
 	end
 	DB.setValue(tCustom.nodeCT, "ac_flatfooted", "number", tonumber(sFlatFooted) or 10);
 	
-	-- Handle BAB / Grapple / CM Field
-	local sBABGrp = DB.getValue(nodeNPC, "babgrp", "");
-	local aSplitBABGrp = StringManager.split(sBABGrp, "/", true);
+	-- Handle BAB / cmb / CM Field
+	local sBABCMB = DB.getValue(nodeNPC, "babcmb", "");
+	local aSplitBABCMB = StringManager.split(sBABCMB, "/", true);
 	
-	local sMatch = string.match(sBABGrp, "CMB ([+-]%d+)");
+	local sMatch = string.match(sBABCMB, "CMB ([+-]%d+)");
 	if sMatch then
-		DB.setValue(tCustom.nodeCT, "grapple", "number", tonumber(sMatch) or 0);
+		DB.setValue(tCustom.nodeCT, "cmb", "number", tonumber(sMatch) or 0);
 	else
-		if aSplitBABGrp[2] then
-			DB.setValue(tCustom.nodeCT, "grapple", "number", tonumber(aSplitBABGrp[2]) or 0);
+		if aSplitBABCMB[2] then
+			DB.setValue(tCustom.nodeCT, "cmb", "number", tonumber(aSplitBABCMB[2]) or 0);
 		end
 	end
 
-	sMatch = string.match(sBABGrp, "CMD ([+-]?%d+)");
+	sMatch = string.match(sBABCMB, "CMD ([+-]?%d+)");
 	if sMatch then
 		DB.setValue(tCustom.nodeCT, "cmd", "number", tonumber(sMatch) or 0);
 	else
-		if aSplitBABGrp[3] then
-			DB.setValue(tCustom.nodeCT, "cmd", "number", tonumber(aSplitBABGrp[3]) or 0);
+		if aSplitBABCMB[3] then
+			DB.setValue(tCustom.nodeCT, "cmd", "number", tonumber(aSplitBABCMB[3]) or 0);
 		end
 	end
 

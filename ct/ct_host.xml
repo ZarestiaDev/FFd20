@@ -291,25 +291,25 @@
 			</label>
 			<number_ct_init name="init">
 				<anchored to="activeicon" position="righthigh" offset="100,0" />
-				<tabtarget prev="wounds" next="grapple" />
+				<tabtarget prev="wounds" next="cmb" />
 			</number_ct_init>
 			<label name="initlabel">
 				<anchored to="init" position="lefthigh" offset="10,0"/>
 				<static textres="init" />
 			</label>
 
-			<number_ct_grapple name="grapple">
+			<number_ct_cmb name="cmb">
 				<anchored to="init" position="righthigh" offset="50,0" />
-			</number_ct_grapple>
-			<label name="label_grapple">
-				<anchored to="grapple" position="lefthigh" offset="10,0"/>
-				<static textres="grp" />
+			</number_ct_cmb>
+			<label name="label_cmb">
+				<anchored to="cmb" position="lefthigh" offset="10,0"/>
+				<static textres="cmb" />
 			</label>
 
 			<string_ct name="speed">
 				<anchored height="20">
 					<top parent="init" />
-					<left parent="grapple" anchor="right" offset="40" />
+					<left parent="cmb" anchor="right" offset="40" />
 					<right offset="-17" />
 				</anchored>
 			</string_ct>

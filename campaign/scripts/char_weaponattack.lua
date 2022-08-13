@@ -14,7 +14,7 @@ function onSourceUpdate()
 
 	if sAttackStat == "" then
 		if nType == 2 then
-			sAttackStat = DB.getValue(nodeWin, "...attackbonus.grapple.ability", "");
+			sAttackStat = DB.getValue(nodeWin, "...attackbonus.cmb.ability", "");
 		elseif nType == 1 then
 			sAttackStat = DB.getValue(nodeWin, "...attackbonus.ranged.ability", "");
 		else
@@ -33,9 +33,9 @@ function onSourceUpdate()
 	nValue = nValue + DB.getValue(nodeWin, "...abilities." .. sAttackStat .. ".bonus", 0);
 	
 	if nType == 2 then
-		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.grapple.misc", 0);
-		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.grapple.size", 0);
-		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.grapple.temporary", 0);
+		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.cmb.misc", 0);
+		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.cmb.size", 0);
+		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.cmb.temporary", 0);
 	elseif nType == 1 then
 		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.ranged.misc", 0);
 		nValue = nValue + DB.getValue(nodeWin, "...attackbonus.ranged.size", 0);

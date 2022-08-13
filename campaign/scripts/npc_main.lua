@@ -118,7 +118,7 @@ function update()
 	updateControl("spacereach", bReadOnly);
 	updateControl("specialattacks", bReadOnly);
 	
-	updateControl("babgrp", bReadOnly);
+	updateControl("babcmb", bReadOnly);
 	updateControl("feats", bReadOnly);
 	updateControl("skills", bReadOnly);
 	updateControl("languages", bReadOnly);

@@ -13,12 +13,12 @@ function onInit()
 	ActionsManager.registerTargetingHandler("attack", onTargeting);
 
 	ActionsManager.registerModHandler("attack", modAttack);
-	ActionsManager.registerModHandler("grapple", modAttack);
+	ActionsManager.registerModHandler("cmb", modAttack);
 	
 	ActionsManager.registerResultHandler("attack", onAttack);
 	ActionsManager.registerResultHandler("critconfirm", onAttack);
 	ActionsManager.registerResultHandler("misschance", onMissChance);
-	ActionsManager.registerResultHandler("grapple", onGrapple);
+	ActionsManager.registerResultHandler("cmb", onCMB);
 end
 
 function handleApplyAttack(msgOOB)
@@ -105,7 +105,7 @@ end
 function getRoll(rActor, rAction, tag)
 	local rRoll = {};
 	if rAction.cm then
-		rRoll.sType = "grapple";
+		rRoll.sType = "cmb";
 	else
 		rRoll.sType = "attack";
 	end
@@ -153,15 +153,15 @@ function getRoll(rActor, rAction, tag)
 	return rRoll;
 end
 
-function performGrappleRoll(draginfo, rActor, rAction)
-	local rRoll = ActionAttack.getGrappleRoll(rActor, rAction);
+function performCMBRoll(draginfo, rActor, rAction)
+	local rRoll = ActionAttack.getCMBRoll(rActor, rAction);
 	
 	ActionsManager.performAction(draginfo, rActor, rRoll);
 end
 
-function getGrappleRoll(rActor, rAction)
+function getCMBRoll(rActor, rAction)
 	local rRoll = {};
-	rRoll.sType = "grapple";
+	rRoll.sType = "cmb";
 	rRoll.aDice = { "d20" };
 	rRoll.nMod = rAction.modifier or 0;
 	rRoll.sDesc = "[CMB]";
@@ -246,7 +246,7 @@ function modAttack(rSource, rTarget, rRoll)
 			if not sAttackType then
 				sAttackType = "M";
 			end
-		elseif rRoll.sType == "grapple" then
+		elseif rRoll.sType == "cmb" then
 			sAttackType = "M";
 		end
 
@@ -282,7 +282,7 @@ function modAttack(rSource, rTarget, rRoll)
 		if (nEffectCount > 0) then
 			bEffects = true;
 		end
-		if rRoll.sType == "grapple" then
+		if rRoll.sType == "cmb" then
 			local aPFDice, nPFMod, nPFCount = EffectManagerFFd20.getEffectsBonus(rSource, {"CMB"}, false, aAttackFilter, rTarget);
 			if nPFCount > 0 then
 				bEffects = true;
@@ -423,7 +423,7 @@ function onAttack(rSource, rTarget, rRoll)
 	local bAllowCC = OptionsManager.isOption("HRCC", "on") or (not bIsSourcePC and OptionsManager.isOption("HRCC", "npc"));
 	
 	if rRoll.sDesc:match("%[CMB") then
-		rRoll.sType = "grapple";
+		rRoll.sType = "cmb";
 	end
 	
 	rRoll.nTotal = ActionsManager.total(rRoll);
@@ -621,7 +621,7 @@ function onPostAttackResolve(rSource, rTarget, rRoll, rMessage)
 	end
 end
 
-function onGrapple(rSource, rTarget, rRoll)
+function onCMB(rSource, rTarget, rRoll)
 	ActionAttack.onAttack(rSource, rTarget, rRoll);
 end
 
@@ -654,7 +654,7 @@ function applyAttack(rSource, rTarget, bSecret, sAttackType, sDesc, nTotal, sRes
 	local msgShort = {font = "msgfont"};
 	local msgLong = {font = "msgfont"};
 	
-	if sAttackType == "grapple" then
+	if sAttackType == "cmb" then
 		msgShort.text = "Combat Man. ->";
 		msgLong.text = "Combat Man. [" .. nTotal .. "] ->";
 	else

@@ -713,11 +713,11 @@ function getSpellAction(rActor, nodeAction, sSubRoll)
 					rAction.modifier = rAction.modifier + DB.getValue(nodeActor, "attackbonus.ranged.size", 0) + DB.getValue(nodeActor, "attackbonus.ranged.misc", 0);
 				else
 					if rAction.cm then
-						rAction.stat = DB.getValue(nodeActor, "attackbonus.grapple.ability", "");
+						rAction.stat = DB.getValue(nodeActor, "attackbonus.cmb.ability", "");
 						if rAction.stat == "" then
 							rAction.stat = "strength";
 						end
-						rAction.modifier = rAction.modifier + DB.getValue(nodeActor, "attackbonus.grapple.size", 0) + DB.getValue(nodeActor, "attackbonus.grapple.misc", 0);
+						rAction.modifier = rAction.modifier + DB.getValue(nodeActor, "attackbonus.cmb.size", 0) + DB.getValue(nodeActor, "attackbonus.cmb.misc", 0);
 					else
 						rAction.stat = DB.getValue(nodeActor, "attackbonus.melee.ability", "");
 						if rAction.stat == "" then
@@ -1134,7 +1134,7 @@ function getActionAttackText(nodeAction)
 	elseif sAttackType == "rtouch" then
 		sAttack = Interface.getString("power_label_atktypertouch");
 	elseif sAttackType == "cm" then
-		sAttack = Interface.getString("power_label_atktypegrapple");
+		sAttack = Interface.getString("power_label_atktypecmb");
 	end
 	if sAttack ~= "" and nAttackMod ~= 0 then
 		sAttack = sAttack .. " + " .. nAttackMod;

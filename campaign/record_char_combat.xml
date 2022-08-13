@@ -376,12 +376,12 @@
 				<anchored to="meleeattackbonus_label" position="belowleft" offset="0,8" width="80" />
 				<static textres="char_label_combatatkranged" />
 			</label>
-			<number_chargrappletotal name="grappleattackbonus" source="attackbonus.grapple.total">
+			<number_charcmbtotal name="cmbattackbonus" source="attackbonus.cmb.total">
 				<anchored to="rangedattackbonus" position="belowleft" offset="0,8" width="32" height="20" />
-			</number_chargrappletotal>
-			<label name="label_grapple">
+			</number_charcmbtotal>
+			<label name="label_cmb">
 				<anchored to="rangedattackbonus_label" position="belowleft" offset="0,8" width="80" />
-				<static textres="grapple" />
+				<static textres="cmb" />
 			</label>
 			<label_fieldtop name="atktotal_label">
 				<anchored to="meleeattackbonus" />
@@ -426,23 +426,23 @@
 				<anchored to="rangedsize" />
 			</number_charcombatmod>
 
-			<number_charcombatmod_static name="grapplebaseattackbonus" source="attackbonus.base">
+			<number_charcombatmod_static name="cmbbaseattackbonus" source="attackbonus.base">
 				<anchored to="rangedbaseattackbonus" />
 			</number_charcombatmod_static>
-			<cycler_charcombatability name="grapplestat">
-				<anchored to="grapplebaseattackbonus" />
+			<cycler_charcombatability name="cmbstat">
+				<anchored to="cmbbaseattackbonus" />
 				<baseability>strength</baseability>
-				<fieldabilitymod>grapplestatmod</fieldabilitymod>
-				<source><name>attackbonus.grapple.ability</name></source>
+				<fieldabilitymod>cmbstatmod</fieldabilitymod>
+				<source><name>attackbonus.cmb.ability</name></source>
 			</cycler_charcombatability>
-			<number_charcombatabilitymod name="grapplestatmod" source="attackbonus.grapple.abilitymod">
-				<anchored to="grapplebaseattackbonus" offset="48,0" />
+			<number_charcombatabilitymod name="cmbstatmod" source="attackbonus.cmb.abilitymod">
+				<anchored to="cmbbaseattackbonus" offset="48,0" />
 			</number_charcombatabilitymod>
-			<number_charcombatmod name="grapplesize" source="attackbonus.grapple.size">
-				<anchored to="grapplestatmod" />
+			<number_charcombatmod name="cmbsize" source="attackbonus.cmb.size">
+				<anchored to="cmbstatmod" />
 			</number_charcombatmod>
-			<number_charcombatmod name="grapplemisc" source="attackbonus.grapple.misc">
-				<anchored to="grapplesize" />
+			<number_charcombatmod name="cmbmisc" source="attackbonus.cmb.misc">
+				<anchored to="cmbsize" />
 			</number_charcombatmod>
 
 			<label_fieldtop name="atkstatmod_label">

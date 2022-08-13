@@ -67,7 +67,7 @@
 			</script>
 		</number_ct>
 	</template>
-	<template name="number_ct_grapple">
+	<template name="number_ct_cmb">
 		<number_ct>
 			<displaysign />
 			<script>
@@ -75,14 +75,14 @@
 					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
 					local rAction;
 					if ActorManager.isPC(rActor) then
-						rAction = CharManager.getGrappleRollStructures(rActor, "");
+						rAction = CharManager.getCMBRollStructures(rActor, "");
 					else
 						rAction = {};
 						rAction.label = "";
 						rAction.modifier = getValue();
 						rAction.stat = "strength";
 					end
-					ActionAttack.performGrappleRoll(draginfo, rActor, rAction);
+					ActionAttack.performCMBRoll(draginfo, rActor, rAction);
 					return true;
 				end
 				

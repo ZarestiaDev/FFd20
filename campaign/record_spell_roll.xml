@@ -64,7 +64,7 @@
 				</anchored>
 				<parameters>
 					<defaultlabelres>power_label_atktypenone</defaultlabelres>
-					<labelsres>power_label_atktypemelee|power_label_atktyperanged|power_label_atktypemtouch|power_label_atktypertouch|power_label_atktypegrapple</labelsres>
+					<labelsres>power_label_atktypemelee|power_label_atktyperanged|power_label_atktypemtouch|power_label_atktypertouch|power_label_atktypecmb</labelsres>
 					<values>melee|ranged|mtouch|rtouch|cm</values>
 				</parameters>
 			</button_stringcycler>

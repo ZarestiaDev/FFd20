@@ -635,7 +635,7 @@ function getWeaponAttackRollStructures(nodeWeapon, nAttack)
 	if rAttack.stat == "" then
 		if rAttack.range == "M" then
 			if rAttack.cm then
-				rAttack.stat = DB.getValue(nodeChar, "attackbonus.grapple.ability", "");
+				rAttack.stat = DB.getValue(nodeChar, "attackbonus.cmb.ability", "");
 				if rAttack.stat == "" then
 					rAttack.stat = "strength";
 				end
@@ -906,7 +906,7 @@ function getBaseAttackRollStructures(sAttack, nodeChar)
 	return rCreature, rAttack;
 end
 
-function getGrappleRollStructures(rActor, sAttack)
+function getCMBRollStructures(rActor, sAttack)
 	local rAttack = {};
 	rAttack.type = "attack";
 	rAttack.label = sAttack;
@@ -914,8 +914,8 @@ function getGrappleRollStructures(rActor, sAttack)
 	
 	local nodeChar = ActorManager.getCreatureNode(rActor);
 	if nodeChar then
-		rAttack.modifier = DB.getValue(nodeChar, "attackbonus.grapple.total", 0);
-		rAttack.stat = DB.getValue(nodeChar, "attackbonus.grapple.ability", "");
+		rAttack.modifier = DB.getValue(nodeChar, "attackbonus.cmb.total", 0);
+		rAttack.stat = DB.getValue(nodeChar, "attackbonus.cmb.ability", "");
 	end
 	if rAttack.stat == "" then
 		rAttack.stat = "strength";

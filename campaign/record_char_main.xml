@@ -335,12 +335,12 @@
 				<anchored to="rangedmainattackbonus" />
 				<static textres="char_label_ranged" />
 			</label_fieldtop>
-			<number_chargrappletotal name="grappleattackbonus" source="attackbonus.grapple.total">
+			<number_charcmbtotal name="cmbattackbonus" source="attackbonus.cmb.total">
 				<anchored to="rangedmainattackbonus" position="right" offset="23,0" width="36" />
-			</number_chargrappletotal>
-			<label_fieldtop name="label_grapple">
-				<anchored to="grappleattackbonus" />
-				<static textres="grapple" />
+			</number_charcmbtotal>
+			<label_fieldtop name="label_cmb">
+				<anchored to="cmbattackbonus" />
+				<static textres="cmb" />
 			</label_fieldtop>
 			
 			<!-- Armor Class -->

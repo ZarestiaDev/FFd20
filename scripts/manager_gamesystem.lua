@@ -9,7 +9,7 @@ actions = {
 	["table"] = { },
 	["effect"] = { sIcon = "action_effect", sTargeting = "all" },
 	["attack"] = { sIcon = "action_attack", sTargeting = "each", bUseModStack = true },
-	["grapple"] = { sIcon = "action_attack", sTargeting = "each", bUseModStack = true },
+	["cmb"] = { sIcon = "action_attack", sTargeting = "each", bUseModStack = true },
 	["damage"] = { sIcon = "action_damage", sTargeting = "each", bUseModStack = true },
 	["heal"] = { sIcon = "action_heal", sTargeting = "all", bUseModStack = true },
 	["cast"] = { sTargeting = "each" },
@@ -33,7 +33,7 @@ actions = {
 targetactions = {
 	"attack",
 	"critconfirm",
-	"grapple",
+	"cmb",
 	"damage",
 	"spdamage",
 	"heal",

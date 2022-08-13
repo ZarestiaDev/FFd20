@@ -9,14 +9,14 @@ local bab = 0;
 local bab_start = 0;
 local bab_end = 0;
 
-local grp = 0;
-local grp_start = 0;
-local grp_end = 0;
+local cmb = 0;
+local cmb_start = 0;
+local cmb_end = 0;
 
 local hoverbab = nil;
-local hovergrp = nil;
+local hovercmb = nil;
 local clickbab = nil;
-local clickgrp = nil;
+local clickcmb = nil;
 
 local dragging = false;
 
@@ -47,19 +47,19 @@ function parseComponents()
 	end
 	
 	if aSplit[2] and StringManager.isNumberString(aSplit[2]) then
-		grp = tonumber(aSplit[2]) or 0;
-		grp_start = aSplitStats[2].startpos;
-		grp_end = aSplitStats[2].endpos;
+		cmb = tonumber(aSplit[2]) or 0;
+		cmb_start = aSplitStats[2].startpos;
+		cmb_end = aSplitStats[2].endpos;
 	else
-		local sGrp;
-		grp_start, grp_end, sGrp = string.find(sValue, "CMB ([+-]?%d+)");
-		if sGrp then
-			grp = tonumber(sGrp) or 0;
-			grp_end = grp_end + 1;
+		local sCMB;
+		cmb_start, cmb_end, sCMB = string.find(sValue, "CMB ([+-]?%d+)");
+		if sCMB then
+			cmb = tonumber(sCMB) or 0;
+			cmb_end = cmb_end + 1;
 		else
-			grp = 0;
-			grp_start = 0;
-			grp_end = 0;
+			cmb = 0;
+			cmb_start = 0;
+			cmb_end = 0;
 		end
 	end
 end
@@ -72,7 +72,7 @@ function onHover(oncontrol)
 	-- Reset selection when the cursor leaves the control
 	if not oncontrol then
 		hoverbab = nil;
-		hovergrp = nil;
+		hovercmb = nil;
 		
 		setCursorPosition(0);
 	end
@@ -86,7 +86,7 @@ function onHoverUpdate(x, y)
 	end
 
 	hoverbab = nil;
-	hovergrp = nil;
+	hovercmb = nil;
 		
 	if not parsed then
 		parsed = true;
@@ -106,11 +106,11 @@ function onHoverUpdate(x, y)
 		return true;
 	end
 	
-	if (index >= grp_start and index < grp_end) then
-		setCursorPosition(grp_start);
-		setSelectionPosition(grp_end);
+	if (index >= cmb_start and index < cmb_end) then
+		setCursorPosition(cmb_start);
+		setSelectionPosition(cmb_end);
 		
-		hovergrp = true;
+		hovercmb = true;
 		
 		setHoverCursor("hand");
 		return true;
@@ -141,15 +141,15 @@ function actionBAB(draginfo)
 	return true;
 end
 
-function actionGRP(draginfo)
+function actionCMB(draginfo)
 	local rAttack = {};
 	rAttack.label = "";
-	rAttack.modifier = grp;
+	rAttack.modifier = cmb;
 	rAttack.stat = "strength";
 	
 	local rActor = getActor();
 
-	ActionAttack.performGrappleRoll(draginfo, rActor, rAttack);
+	ActionAttack.performCMBRoll(draginfo, rActor, rAttack);
 	return true;
 end
 
@@ -158,8 +158,8 @@ function onDoubleClick(x, y)
 		return actionBAB();
 	end
 	
-	if hovergrp then
-		return actionGRP();
+	if hovercmb then
+		return actionCMB();
 	end
 end
 
@@ -168,12 +168,12 @@ function onDragStart(button, x, y, draginfo)
 		actionBAB(draginfo);
 	end
 
-	if clickgrp then
-		actionGRP(draginfo);
+	if clickcmb then
+		actionCMB(draginfo);
 	end
 
 	clickbab = nil;
-	clickgrp = nil;
+	clickcmb = nil;
 	dragging = true;
 	return true;
 end
@@ -186,7 +186,7 @@ end
 function onClickDown(button, x, y)
 	-- Suppress default processing to support dragging
 	clickbab = hoverbab;
-	clickgrp = hovergrp;
+	clickcmb = hovercmb;
 
 	return true;
 end

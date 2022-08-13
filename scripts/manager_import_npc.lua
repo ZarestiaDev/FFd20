@@ -561,7 +561,7 @@ function importHelperBabCmbCmd()
 	sBabCmbCmd = sBabCmbCmd:gsub("%sCMD%s", "");
 	sBabCmbCmd = sBabCmbCmd:gsub(";", "/");
 
-	DB.setValue(_tImportState.node, "babgrp", "string", sBabCmbCmd);
+	DB.setValue(_tImportState.node, "babcmb", "string", sBabCmbCmd);
 end
 
 function importHelperFeats()

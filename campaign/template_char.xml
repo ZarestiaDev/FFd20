@@ -361,22 +361,22 @@
 			<ability><source>attackbonus.ranged.ability</source><default>dexterity</default></ability>
 		</number_charattacktotal>
 	</template>
-	<template name="number_chargrappletotal">
+	<template name="number_charcmbtotal">
 		<number_chartotalwithability>
 			<rollable />
 			<displaysign />
 			<modifiersize>mini</modifiersize>
-			<description><text>Grapple</text></description>
-			<modifierfield>attackbonus.grapple.temporary</modifierfield>
+			<description><text>CMB</text></description>
+			<modifierfield>attackbonus.cmb.temporary</modifierfield>
 			<source><name>attackbonus.base</name><op>+</op></source>
-			<source><name>attackbonus.grapple.size</name><op>+</op></source>
-			<source><name>attackbonus.grapple.misc</name><op>+</op></source>
-			<ability><source>attackbonus.grapple.ability</source><default>strength</default></ability>
+			<source><name>attackbonus.cmb.size</name><op>+</op></source>
+			<source><name>attackbonus.cmb.misc</name><op>+</op></source>
+			<ability><source>attackbonus.cmb.ability</source><default>strength</default></ability>
 			<script>
 				function action(draginfo)
 					local rActor = ActorManager.resolveActor(window.getDatabaseNode());
-					local rAttack = CharManager.getGrappleRollStructures(rActor, "");
-					ActionAttack.performGrappleRoll(draginfo, rActor, rAttack);
+					local rAttack = CharManager.getCMBRollStructures(rActor, "");
+					ActionAttack.performCMBRoll(draginfo, rActor, rAttack);
 					return true;
 				end
 				
@@ -575,7 +575,7 @@
 							if StringManager.contains(DataCommon.abilities, sAbility) then
 								nodeLocal = nodeCreature.getChild(sAbility);
 							elseif sAbility == "bab" then
-								nodeLocal = nodeCreature.getChild("babgrp");
+								nodeLocal = nodeCreature.getChild("babcmb");
 							elseif sAbility == "level" then
 								nodeLocal = nodeCreature.getChild("hd");
 							end

@@ -239,18 +239,18 @@ function getAbilityScore(rActor, sAbility)
 		elseif sShort == "bab" then
 			nStatScore = 0;
 
-			local sBABGrp = DB.getValue(nodeActor, "babgrp", "");
-			local sBAB = sBABGrp:match("[+-]?%d+");
+			local sBABCMB = DB.getValue(nodeActor, "babcmb", "");
+			local sBAB = sBABCMB:match("[+-]?%d+");
 			if sBAB then
 				nStatScore = tonumber(sBAB) or 0;
 			end
 		elseif sShort == "cmb" then
 			nStatScore = 0;
 
-			local sBABGrp = DB.getValue(nodeActor, "babgrp", "");
-			local sBAB = sBABGrp:match("CMB ([+-]?%d+)");
+			local sBABCMB = DB.getValue(nodeActor, "babcmb", "");
+			local sBAB = sBABCMB:match("CMB ([+-]?%d+)");
 			if not sBAB then
-				sBAB = sBABGrp:match("[+-]?%d+");
+				sBAB = sBABCMB:match("[+-]?%d+");
 			end
 			if sBAB then
 				nStatScore = tonumber(sBAB) or 0;
@@ -480,7 +480,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 	local sDefenseStat = "dexterity";
 	local sDefenseStat2 = "";
 	local sDefenseStat3 = "";
-	if rRoll.sType == "grapple" then
+	if rRoll.sType == "cmb" then
 		sDefenseStat3 = "strength";
 	end
 
@@ -503,7 +503,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 			sDefenseStat = "dexterity";
 		end
 		sDefenseStat2 = DB.getValue(nodeDefender, "ac.sources.ability2", "");
-		if rRoll.sType == "grapple" then
+		if rRoll.sType == "cmb" then
 			sDefenseStat3 = DB.getValue(nodeDefender, "ac.sources.cmdability", "");
 			if sDefenseStat3 == "" then
 				sDefenseStat3 = "strength";
@@ -535,8 +535,8 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 				nTouchMod = nDefense - tonumber(sTouchAC);
 			end
 		else
-			local sBABGrp = DB.getValue(nodeDefender, "babgrp", "");
-			local sMatch = string.match(sBABGrp, "CMD ([+-]?[0-9]+)");
+			local sBABCMB = DB.getValue(nodeDefender, "babcmb", "");
+			local sMatch = string.match(sBABCMB, "CMD ([+-]?[0-9]+)");
 			if sMatch then
 				nDefense = tonumber(sMatch) or 10;
 			else
@@ -661,7 +661,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		if EffectManagerFFd20.hasEffect(rDefender, "Stunned") then
 			nBonusSituational = nBonusSituational - 2;
-			if rRoll.sType == "grapple" then
+			if rRoll.sType == "cmb" then
 				nBonusSituational = nBonusSituational - 4;
 			end
 			bCombatAdvantage = true;
@@ -683,7 +683,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		if bFlatFooted or bCombatAdvantage then
 			table.insert(aIgnoreEffects, "dodge");
 		end
-		if rRoll.sType == "grapple" then
+		if rRoll.sType == "cmb" then
 			table.insert(aIgnoreEffects, "size");
 		end
 		local aACEffects = EffectManagerFFd20.getEffectsBonusByType(rDefender, {"AC"}, true, aAttackFilter, rAttacker);
@@ -711,7 +711,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 				end
 			end
 		end
-		if rRoll.sType == "grapple" then
+		if rRoll.sType == "cmb" then
 			local nPFMod, nPFCount = EffectManagerFFd20.getEffectsBonus(rDefender, {"CMD"}, true, aAttackFilter, rAttacker);
 			if nPFCount > 0 then
 				nBonusAC = nBonusAC + nPFMod;
@@ -763,7 +763,7 @@ function getDefenseValue(rAttacker, rDefender, rRoll)
 		end
 		
 		-- HANDLE NEGATIVE LEVELS
-		if rRoll.sType == "grapple" then
+		if rRoll.sType == "cmb" then
 			local nNegLevelMod, nNegLevelCount = EffectManagerFFd20.getEffectsBonus(rDefender, {"NLVL"}, true);
 			if nNegLevelCount > 0 then
 				nBonusSituational = nBonusSituational - nNegLevelMod;

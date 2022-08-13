@@ -22,5 +22,5 @@ function onInit()
 	initiativestat.onValueChanged();
 	meleestat.onValueChanged();
 	rangedstat.onValueChanged();
-	grapplestat.onValueChanged();
+	cmbstat.onValueChanged();
 end

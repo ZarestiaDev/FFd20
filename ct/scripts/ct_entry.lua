@@ -24,7 +24,7 @@ function onInit()
 	registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 6, 7);
 	
 
-	label_grapple.setValue(Interface.getString("cmb"));
+	label_cmb.setValue(Interface.getString("cmb"));
 end
 
 function updateDisplay()
@@ -186,7 +186,7 @@ function linkPCFields()
 		type.addSource(DB.getPath(nodeChar, "size"), true);
 		type.addSource(DB.getPath(nodeChar, "race"));
 		
-		grapple.setLink(nodeChar.createChild("attackbonus.grapple.total", "number"), true);
+		cmb.setLink(nodeChar.createChild("attackbonus.cmb.total", "number"), true);
 		
 		ac_final.setLink(nodeChar.createChild("ac.totals.general", "number"), true);
 		ac_touch.setLink(nodeChar.createChild("ac.totals.touch", "number"), true);
@@ -240,8 +240,8 @@ function setActiveVisible()
 	immediatelabel.setVisible(v);
 	init.setVisible(v);
 	initlabel.setVisible(v);
-	grapple.setVisible(v);
-	label_grapple.setVisible(v);
+	cmb.setVisible(v);
+	label_cmb.setVisible(v);
 	speed.setVisible(v);
 	speedlabel.setVisible(v);
 	

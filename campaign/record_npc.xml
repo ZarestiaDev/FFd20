@@ -356,11 +356,11 @@
 				<static textres="cha" />
 			</label_fieldtop>
 			
-			<label_column name="babgrp_label">
+			<label_column name="babcmb_label">
 				<static textres="npc_label_babcm" />
 			</label_column>
-			<string_columnh name="babgrp">
-				<script file="campaign/scripts/npc_babgrp.lua" />
+			<string_columnh name="babcmb">
+				<script file="campaign/scripts/npc_babcmb.lua" />
 			</string_columnh>
 			
 			<label_column name="feats_label">

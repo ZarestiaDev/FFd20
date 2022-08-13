@@ -50,8 +50,6 @@
 	<string name="init">Init</string>
 	<string name="initiative">Initiative</string>
 	<string name="bab">BAB</string>
-	<string name="grp">Grp</string>
-	<string name="grapple">CMB</string>
 	<string name="cmb">CMB</string>
 	<string name="cl">CL</string>
 	<string name="casterlevel">Caster Level</string>
@@ -688,7 +686,7 @@
 	<string name="power_label_atktyperanged">Ranged</string>
 	<string name="power_label_atktypemtouch">M Touch</string>
 	<string name="power_label_atktypertouch">R Touch</string>
-	<string name="power_label_atktypegrapple">CMB</string>
+	<string name="power_label_atktypecmb">CMB</string>
 	<string name="power_header_cast_clc">CASTER LEVEL CHECK</string>
 	<string name="power_label_srnotallowed">SR Not Allowed?</string>
 	<string name="power_header_cast_save">SAVE</string>
