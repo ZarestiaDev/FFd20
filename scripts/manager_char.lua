@@ -3,21 +3,15 @@
 -- attribution and copyright information.
 --
 
-RACIAL_TRAIT_ABILITY_D20PFSRD = "^ability score racial traits$";
-RACIAL_TRAIT_ABILITY_SW = "attribute adjustments$";
-RACIAL_TRAIT_LANGUAGES = "^languages$";
-RACIAL_TRAIT_SIZE = "^size$";
-RACIAL_TRAIT_SIZE_MEDIUM = "^medium$";
-RACIAL_TRAIT_SIZE_SMALL = "^small$";
-RACIAL_TRAIT_SPEED_GENERIC = "^speed$";
-RACIAL_TRAIT_SPEED_D20PFSRD = "^base speed$";
-RACIAL_TRAIT_SPEED_SRD_NORMAL = "^normal speed$";
-RACIAL_TRAIT_SPEED_SRD_SLOW = "^slow speed$";
-RACIAL_TRAIT_SLOW_AND_STEADY = "^slow and steady$";
-RACIAL_TRAIT_DARKVISION = "^darkvision$";
-RACIAL_TRAIT_LOWLIGHTVISION = "^low%-?light vision$";
-RACIAL_TRAIT_SUPERIORDARKVISION = "^superior darkvision$";
-RACIAL_TRAIT_WEAPONFAMILIARITY = "^weapon familiarity$";
+RACIAL_TRAIT_ABILITY = "ability score racial traits";
+RACIAL_TRAIT_SIZE = "size";
+RACIAL_TRAIT_SPEED = "base speed";
+RACIAL_TRAIT_LANGUAGES = "languages";
+
+RACIAL_TRAIT_DARKVISION = "darkvision";
+RACIAL_TRAIT_LOWLIGHTVISION = "low%-?light vision";
+RACIAL_TRAIT_SUPERIORDARKVISION = "superior darkvision";
+RACIAL_TRAIT_WEAPONFAMILIARITY = "weapon familiarity";
 
 TRAIT_MULTITALENTED = "multitalented";
 
@@ -1125,49 +1119,31 @@ function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
 	end
 	
 	local sTraitName = DB.getValue(nodeSource, "name", "");
-	local sTraitType = StringManager.strip(sTraitName):gsub(" %(%a%a%)%s*$", ""):lower();
+	local sTraitType = sTraitName:lower();
 	
-	if sTraitType:match(RACIAL_TRAIT_ABILITY_D20PFSRD) or sTraitType:match(RACIAL_TRAIT_ABILITY_SW) then
-		if not handleRacialAbilitiesEmbedded(nodeChar, nodeSource) then
-			return false;
-		end
-		
-	elseif sTraitType:match(RACIAL_TRAIT_LANGUAGES) then
-		return handleRacialLanguages(nodeChar, nodeSource);
+	handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList);
+	if sTraitType:match(RACIAL_TRAIT_ABILITY) then
+		handleRacialAbilitiesEmbedded(nodeChar, nodeSource);
 
-	elseif sTraitType:match(RACIAL_TRAIT_SIZE) or 
-			sTraitType:match(RACIAL_TRAIT_SIZE_MEDIUM) or 
-			sTraitType:match(RACIAL_TRAIT_SIZE_SMALL) then
-		if not handleRacialSize(nodeChar, nodeSource, sTraitType) then
-			return false;
-		end
+	elseif sTraitType:match(RACIAL_TRAIT_LANGUAGES) then
+		handleRacialLanguages(nodeChar, nodeSource);
+
+	elseif sTraitType:match(RACIAL_TRAIT_SIZE) then
+		handleRacialSize(nodeChar, nodeSource);
 	
-	elseif sTraitType:match(RACIAL_TRAIT_SPEED_GENERIC) or 
-			sTraitType:match(RACIAL_TRAIT_SPEED_D20PFSRD) or 
-			sTraitType:match(RACIAL_TRAIT_SPEED_SRD_NORMAL) or 
-			sTraitType:match(RACIAL_TRAIT_SPEED_SRD_SLOW) or 
-			sTraitType:match(RACIAL_TRAIT_SLOW_AND_STEADY) then 
-		if not handleRacialSpeed(nodeChar, nodeSource, sTraitType, nodeTargetList) then
-			return false;
-		end
+	elseif sTraitType:match(RACIAL_TRAIT_SPEED) then
+		handleRacialSpeed(nodeChar, nodeSource);
 	
-	elseif sTraitType:match(RACIAL_TRAIT_DARKVISION) or 
-			sTraitType:match(RACIAL_TRAIT_SUPERIORDARKVISION) then 
+	elseif sTraitType:match(RACIAL_TRAIT_DARKVISION) or sTraitType:match(RACIAL_TRAIT_SUPERIORDARKVISION) then
 		handleRacialVision(nodeChar, nodeSource);
 
 	elseif sTraitType:match(RACIAL_TRAIT_LOWLIGHTVISION) then
 		handleRacialVision(nodeChar, nodeSource, true);
 		
-	elseif sTraitType:match(RACIAL_TRAIT_WEAPONFAMILIARITY) then 
-		if not handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList) then
-			return false;
-		end
+	elseif sTraitType:match(RACIAL_TRAIT_WEAPONFAMILIARITY) then
 		handleProficiencies (nodeChar, nodeSource);
 	else
 		if not checkForRacialAbilityInName(nodeChar, sTraitType) then
-			if not handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList) then
-				return false;
-			end
 			checkForRacialSkillBonus(nodeChar, nodeSource);
 			checkForRacialSaveBonus(nodeChar, nodeSource);
 		end
@@ -1282,23 +1258,12 @@ function handleRacialLanguages(nodeChar, nodeTrait)
 	return true;
 end
 
-function handleRacialSize(nodeChar, nodeTrait, sTraitType)
+function handleRacialSize(nodeChar, nodeTrait)
 	local sSize = "";
-	if sTraitType:match(RACIAL_TRAIT_SIZE) then
-		local sText = DB.getText(nodeTrait, "text"):lower();
-		local aWords = StringManager.parseWords(sText);
-		
-		local i = 1;
-		while aWords[i] do
-			if StringManager.isPhrase(aWords, i, { "are", { "small", "medium" }, "creatures" }) then
-				sSize = aWords[i+1];
-				break;
-			end
-			i = i + 1;
-		end
-	elseif sTraitType:match(RACIAL_TRAIT_SIZE_MEDIUM) then
+	local sText = DB.getText(nodeTrait, "text"):lower();
+	if sText:match("medium") then
 		sSize = "medium";
-	elseif sTraitType:match(RACIAL_TRAIT_SIZE_SMALL) then
+	elseif sText:match("small") then
 		sSize = "small";
 	end
 	
@@ -1306,37 +1271,28 @@ function handleRacialSize(nodeChar, nodeTrait, sTraitType)
 		return false;
 	end
 	
-	local sSkill;
-	sSkill = "Stealth";
+	local sSkill = "Stealth";
 	
-	DB.setValue(nodeChar, "size", "string", StringManager.capitalize(sTraitType));
+	DB.setValue(nodeChar, "size", "string", StringManager.capitalize(sSize));
 	if sSize == "small" then
 		DB.setValue(nodeChar, "ac.sources.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 1);
-		DB.setValue(nodeChar, "attackbonus.grapple.size", "number", -1);
 		addSkillBonus(nodeChar, sSkill, 4);
 	elseif sSize == "medium" then
 		DB.setValue(nodeChar, "ac.sources.size", "number", 0);
 		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 0);
 		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 0);
-		DB.setValue(nodeChar, "attackbonus.grapple.size", "number", 0);
 	end
 	return true;
 end
 
-function handleRacialSpeed(nodeChar, nodeTrait, sTraitType, nodeTargetList)
+function handleRacialSpeed(nodeChar, nodeTrait)
 	local nBaseSpeed = 0;
-	if sTraitType:match(RACIAL_TRAIT_SPEED_SRD_NORMAL) then
-		nBaseSpeed = 30;
-	elseif sTraitType:match(RACIAL_TRAIT_SPEED_SRD_SLOW) or sTraitType:match(RACIAL_TRAIT_SLOW_AND_STEADY) then
-		nBaseSpeed = 20;
-	else
-		local sSpeed = DB.getText(nodeTrait, "text");
-		local sBaseSpeed = sSpeed:match("base speed of (%d+) feet");
-		if sBaseSpeed then
-			nBaseSpeed = tonumber(sBaseSpeed) or 0;
-		end
+	local sSpeed = DB.getText(nodeTrait, "text");
+	local sBaseSpeed = sSpeed:match("base speed of (%d+) feet");
+	if sBaseSpeed then
+		nBaseSpeed = sBaseSpeed;
 	end
 	
 	if nBaseSpeed ~= 0 then
@@ -1344,12 +1300,7 @@ function handleRacialSpeed(nodeChar, nodeTrait, sTraitType, nodeTargetList)
 	else
 		return false;
 	end
-	
-	if sTraitType:match(RACIAL_TRAIT_SLOW_AND_STEADY) then
-		if not handleRacialBasicTrait(nodeChar, nodeTrait, nodeTargetList) then
-			return false;
-		end
-	end
+
 	return true;
 end
 
