@@ -1278,11 +1278,13 @@ function handleRacialSize(nodeChar, nodeTrait)
 		DB.setValue(nodeChar, "ac.sources.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 1);
 		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 1);
+		DB.setValue(nodeChar, "attackbonus.cmb.size", "number", -1);
 		addSkillBonus(nodeChar, sSkill, 4);
 	elseif sSize == "medium" then
 		DB.setValue(nodeChar, "ac.sources.size", "number", 0);
 		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 0);
 		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 0);
+		DB.setValue(nodeChar, "attackbonus.cmb.size", "number", 0);
 	end
 	return true;
 end
