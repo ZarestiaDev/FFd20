@@ -1106,12 +1106,58 @@ function addRace(nodeChar, sClass, sRecord)
 	
 	DB.setValue(nodeChar, "race", "string", sRace);
 	DB.setValue(nodeChar, "racelink", "windowreference", sClass, nodeSource.getPath());
-		
-	for _,v in pairs(DB.getChildren(nodeSource, "racialtraits")) do
-		addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
+	
+	if DB.getChildCount(nodeSource, "heritages") > 0 then
+		handleRacialHeritage(nodeChar, nodeSource);
+	else
+		for _,v in pairs(DB.getChildren(nodeSource, "racialtraits")) do
+			addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
+		end
+	end
+end
+
+function handleRacialHeritage(nodeChar, nodeSource)
+	local aHeritages = { "None" };
+	local tHeritages = DB.getChildren(nodeSource, "heritages");
+
+	for _,v in pairs(tHeritages) do
+		table.insert(aHeritages, DB.getValue(v, "name", ""));
 	end
 
-	handleRacialHeritage(nodeChar, nodeSource);
+	local wSelect = Interface.openWindow("select_dialog", "");
+	local sTitle = Interface.getString("char_title_selectheritage");
+	local sMessage = Interface.getString("char_message_selectheritage");
+	local rHeritageSelect = { nodeChar = nodeChar, tHeritages = tHeritages, nodeSource = nodeSource };
+	wSelect.requestSelection(sTitle, sMessage, aHeritages, CharManager.onRaceHeritageSelect, rHeritageSelect, 1);
+end
+
+function onRaceHeritageSelect(aSelection, rHeritageSelect)
+	local nodeChar = rHeritageSelect.nodeChar;
+	local tHeritageTraits = {};
+
+	local sSelection = aSelection[1];
+	if sSelection ~= "None" then
+		for _,v in pairs(rHeritageSelect.tHeritages) do
+			local sHeritage = DB.getValue(v, "name", "");
+			if sHeritage == sSelection then
+				tHeritageTraits = v.getChild("heritagetraits").getChildren();
+	
+				local sFormat = Interface.getString("char_message_heritageadd");
+				local sMsg = string.format(sFormat, sHeritage, DB.getValue(nodeChar, "name", ""));
+				ChatManager.SystemMessage(sMsg);
+				
+				DB.setValue(nodeChar, "race", "string", DB.getValue(nodeChar, "race", "") .. " (" .. sHeritage .. ")");
+			end
+		end
+	
+		for _,heritageTrait in pairs(tHeritageTraits) do
+			addRacialTrait(nodeChar, "referenceracialtrait", heritageTrait.getPath());
+		end
+	end
+
+	for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
+		addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
+	end
 end
 
 function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
@@ -1122,6 +1168,12 @@ function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
 	
 	local sTraitName = DB.getValue(nodeSource, "name", "");
 	local sTraitType = sTraitName:lower();
+	for _,v in pairs(DB.getChildren(nodeChar, "traitlist")) do
+		local sExistingTrait = DB.getValue(v, "name", ""):lower();
+		if sExistingTrait == sTraitType then
+			return false;
+		end
+	end
 	
 	handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList);
 	if sTraitType:match(RACIAL_TRAIT_ABILITY) then
@@ -1438,58 +1490,6 @@ function addSaveBonus(nodeChar, sSave, sBonusType, nBonus)
 	local sFormat = Interface.getString("char_message_savebonusadd");
 	local sMsg = string.format(sFormat, nBonus, StringManager.capitalize(sSave), DB.getValue(nodeChar, "name", ""));
 	ChatManager.SystemMessage(sMsg);
-end
-
-function handleRacialHeritage(nodeChar, nodeSource)
-	if DB.getChildCount(nodeSource, "heritages") == 0 then
-		return;
-	end
-
-	local aHeritages = { "None" };
-
-	local tHeritages = DB.getChildren(nodeSource, "heritages");
-	for _,v in pairs(tHeritages) do
-		local sName = DB.getValue(v, "name", "");
-		table.insert(aHeritages, sName);
-	end
-
-	local wSelect = Interface.openWindow("select_dialog", "");
-	local sTitle = Interface.getString("char_title_selectheritage");
-	local sMessage = Interface.getString("char_message_selectheritage");
-	local rHeritageSelect = { nodeChar = nodeChar, tHeritages = tHeritages };
-	wSelect.requestSelection(sTitle, sMessage, aHeritages, CharManager.onRaceHeritageSelect, rHeritageSelect, 1);
-end
-
-function onRaceHeritageSelect(aSelection, rHeritageSelect)
-	local nodeChar = rHeritageSelect.nodeChar;
-	local tHeritages = rHeritageSelect.tHeritages;
-	local tHeritageTraits = {};
-	local nodeTraits = nodeChar.getChild("traitlist").getChildren();
-
-	local sSelection = aSelection[1];
-	if sSelection == "None" then
-		return;
-	end
-
-	for _,v in pairs(tHeritages) do
-		local sHeritage = DB.getValue(v, "name", "");
-		if sHeritage == sSelection then
-			tHeritageTraits = v.getChild("heritagetraits").getChildren();
-		end
-	end
-
-	for _,heritageTrait in pairs(tHeritageTraits) do
-		local sHeritageTraitName = DB.getValue(heritageTrait, "name", "");
-		for _,charTrait in pairs(nodeTraits) do
-			local sCharTraitName = DB.getValue(charTrait, "name", "");
-			if sCharTraitName == sHeritageTraitName then
-				-- handle duplicates
-			else
-				-- add racial trait
-			end
-		end
-	end
-
 end
 
 function addClass(nodeChar, sClass, sRecord)

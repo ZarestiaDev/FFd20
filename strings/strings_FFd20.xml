@@ -240,6 +240,7 @@
 	<string name="char_label_skillperception">Percept.</string>
 	
 	<string name="char_message_raceadd">Race '%s' added to '%s'.</string>
+	<string name="char_message_heritageadd">Heritage '%s' added to '%s'.</string>
 	<string name="char_message_racialtraitadd">Trait '%s' added to '%s'.</string>
 	<string name="char_message_classadd">One level of class '%s' added to '%s'.</string>
 	<string name="char_message_classfeatureadd">Feature '%s' added to '%s'.</string>
