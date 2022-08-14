@@ -119,7 +119,6 @@
 	<script name="PartyManager2" file="scripts/manager_ps2.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />
 	<script name="TokenManager2" file="scripts/manager_token2.lua" />
-	<script name="VersionManager2" file="scripts/manager_version2.lua" />
 	
 	<script name="ActionAbility" file="scripts/manager_action_ability.lua" />
 	<script name="ActionAttack" file="scripts/manager_action_attack.lua" />
