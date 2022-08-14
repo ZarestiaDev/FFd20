@@ -50,13 +50,4 @@
 		<bottom rect="68,199,128,12" />
 		<bottomright rect="212,199,12,12" />
 	</framedef>
-
-	<!-- Die Cup (Local mode) -->
-	<framedef name="collector">
-		<bitmap file="graphics/frames/collector.png" />
-		<offset>7,7,3,3</offset>
-	</framedef>
-
-	<!-- Override CoreRPG ruleset graphics -->
-
 </root>
