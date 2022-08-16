@@ -9,11 +9,11 @@
 	<windowclass name="referenceheritage">
 		<frame>recordsheet</frame>
 		<placement>
-			<size width="400" height="400" />
+			<size width="350" height="350" />
 		</placement>
 		<sharable />
 		<sizelimits>
-			<minimum width="350" height="350" />
+			<minimum width="300" height="300" />
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
@@ -56,7 +56,6 @@
 			<close_recordsheet />
 		</sheetdata>
 	</windowclass>
-
 	<windowclass name="ref_heritage_header">
 		<margins control="0,0,0,2" />
 		<script file="common/scripts/record_header.lua" />
@@ -73,7 +72,6 @@
 			<label_recordtype name="recordtype_label" />
 		</sheetdata>
 	</windowclass>
-
 	<windowclass name="ref_heritage_stats">
 		<margins control="0,0,0,7" />
 		<script>
@@ -82,11 +80,17 @@
 			end
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				race.setReadOnly(bReadOnly);
 				traits.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
 			<anchor_column name="columnanchor" />
+
+			<label_column name="race_label">
+				<static textres="race_heritage_label_race" />
+			</label_column>
+			<string_columnh name="race" />
 			
 			<header_column name="traits_header">
 				<static textres="race_header_traits"/>
@@ -101,11 +105,12 @@
 				<target>traits</target>
 			</button_iadd>
 			<list_column name="traits">
-				<datasource>.heritagetraits</datasource>
+				<datasource>.racialtraits</datasource>
 				<class>ref_heritage_trait</class>
 			</list_column>
 		</sheetdata>
 	</windowclass>
+
 	<windowclass name="ref_heritage_trait">
 		<margins control="0,0,0,2" />
 		<sheetdata>
@@ -116,7 +121,7 @@
 			<button_listitem_column_delete name="idelete" />
 
 			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
+				<empty textres="library_recordtype_empty_heritagetrait" />
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>
@@ -164,10 +169,10 @@
 			<button_record_locked />
 
 			<string_record_name name="name">
-				<empty textres="library_recordtype_empty_racialtrait" />
+				<empty textres="library_recordtype_empty_heritagetrait" />
 			</string_record_name>
 			<label_recordtype name="recordtype_label">
-				<static textres="record_label_heritagetrait" />
+				<static textres="ref_type_racialtrait" />
 			</label_recordtype>	
 		</sheetdata>
 	</windowclass>

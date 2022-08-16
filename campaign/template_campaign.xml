@@ -255,6 +255,17 @@
 		</button_masterindex_option_view>
 	</template>
 
+	<template name="button_race_heritage">
+		<button_masterindex_option_view>
+			<state textres="library_recordtype_label_race_heritage" />
+			<script>
+				function onButtonPress()
+					RecordManager.openRecordIndex("race_heritage");
+				end
+			</script>
+		</button_masterindex_option_view>
+	</template>
+
 	<!-- Import templates -->
 	<template name="button_add_spell_import_text">
 		<button_add_record_import_text>
