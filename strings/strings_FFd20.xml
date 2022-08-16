@@ -11,8 +11,6 @@
 	<string name="name">Name</string>
 	<string name="slash">/</string>
 	<string name="type">Type</string>
-	<string name="base">Base</string>
-	<string name="dash">-</string>
 	<string name="str">Str</string>
 	<string name="dex">Dex</string>
 	<string name="con">Con</string>
@@ -26,12 +24,6 @@
 	<string name="wisdom">Wisdom</string>
 	<string name="charisma">Charisma</string>
 	<string name="mod">Mod</string>
-	<string name="lvl">Lvl</string>
-	<string name="level">Level</string>
-	<string name="hp">HP</string>
-	<string name="hitpoints">Hit Points</string>
-	<string name="ac">AC</string>
-	<string name="armorclass">Armor Class</string>
 	<string name="acff">FF</string>
 	<string name="armorclassff">Flat-Footed AC</string>
 	<string name="actouch">Tch</string>
@@ -111,10 +103,6 @@
 	<string name="option_val_fast">Fast</string>
 	
 	<!-- Combat Tracker -->
-	<string name="ct_label_hptemp">Tmp</string>
-	<string name="ct_label_nonlethal">Sbd</string>
-	<string name="ct_label_wounds">Wnd</string>
-	<string name="ct_label_status">Status</string>
 	<string name="ct_label_immediate">Imm?</string>
 	<string name="ct_label_speed">Spd</string>
 	<string name="ct_label_attack">Atk</string>

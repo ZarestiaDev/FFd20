@@ -268,7 +268,7 @@ function awardXP(nXP)
 	local nFinalSplit = math.max((nXP - ((#aParty - 1) * nAverageSplit)), 0);
 	
 	-- Award XP
-	for _,v in ipairs(aParty) do
+	for k,v in ipairs(aParty) do
 		local nAmount;
 		if k == #aParty then
 			nAmount = nFinalSplit;
