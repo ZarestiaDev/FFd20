@@ -131,7 +131,7 @@ function getAbilityEffectsBonus(rActor, sAbility, tags)
 		return 0, 0;
 	end
 	
-	local nEffectMod, nAbilityEffects = EffectManagerFFd20.getEffectsBonus(rActor, sAbilityEffect, true, tags);
+	local nEffectMod, nAbilityEffects = EffectManagerFFd20.getEffectsBonus(rActor, sAbilityEffect, true, nil, nil, false, tags);
 	
 	if sAbility == "dexterity" then
 		if EffectManagerFFd20.hasEffectCondition(rActor, "Entangled", tags) then
