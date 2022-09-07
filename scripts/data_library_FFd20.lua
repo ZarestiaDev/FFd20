@@ -88,27 +88,9 @@ function getNPCSubTypeValue(vNode)
 	return getSubTypeGroup(DB.getValue(vNode, "type", ""));
 end
 
-function getItemRecordDisplayClass(vNode)
-	local sRecordDisplayClass = "item";
-	if vNode then
-		local sBasePath, sSecondPath = UtilityManager.getDataBaseNodePathSplit(vNode);
-		if sBasePath == "reference" then
-			if sSecondPath == "weapon" then
-				sRecordDisplayClass = "referenceweapon";
-			elseif sSecondPath == "armor" then
-				sRecordDisplayClass = "referencearmor";
-			elseif sSecondPath == "equipment" then
-				sRecordDisplayClass = "referenceequipment";
-			else
-				sRecordDisplayClass = "item";
-			end
-		end
-	end
-	return sRecordDisplayClass;
-end
-
 function isItemIdentifiable(vNode)
-	return (getItemRecordDisplayClass(vNode) == "item");
+	local sBasePath = UtilityManager.getDataBaseNodePathSplit(vNode);
+	return (sBasePath ~= "reference");
 end
 
 function getSpellSchoolValue(vNode)
@@ -150,7 +132,6 @@ aRecordOverrides = {
 	["item"] = { 
 		fIsIdentifiable = isItemIdentifiable,
 		aDataMap = { "item", "reference.equipment", "reference.weapon", "reference.armor", "reference.magicitems" }, 
-		fRecordDisplayClass = getItemRecordDisplayClass,
 		aRecordDisplayClasses = { "item", "referencearmor", "referenceweapon", "referenceequipment" },
 		aGMListButtons = { "button_item_armor", "button_item_weapon" },
 		aPlayerListButtons = { "button_item_armor", "button_item_weapon" },

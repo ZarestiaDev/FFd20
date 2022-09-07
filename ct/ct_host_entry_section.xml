@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<!-- Section - Active -->
+	<windowclass name="ct_section_active">
+		<sheetdata>
+			<icon_ct_section name="icon_section">
+				<icon>button_sword_down</icon>
+			</icon_ct_section>
+
+			<anchor_ct_section name="anchor_section" />
+
+			<label name="immediate_label">
+				<anchored to="anchor_section" position="insidetopleft" offset="5,10"/>
+				<static textres="ct_label_immediate" />
+			</label>
+			<buttonfield name="immediate">
+				<anchored to="immediate_label" position="righthigh" offset="5,0" width="12" height="20" />
+				<state icon="button_checkoff" tooltipres="ct_tooltip_immediateoff" />
+				<state icon="button_checkon" tooltipres="ct_tooltip_immediateon" />
+			</buttonfield>
+			<label name="init_label">
+				<anchored to="immediate" position="righthigh" offset="10,0"/>
+				<static textres="init" />
+			</label>
+			<number_ct_init name="init">
+				<anchored to="init_label" position="righthigh" offset="10,0" />
+				<readonly />
+			</number_ct_init>
+			<label name="cmb_label">
+				<anchored to="init" position="righthigh" offset="15,0"/>
+				<static textres="cmb" />
+			</label>
+			<number_ct_cmb name="cmb">
+				<anchored to="cmb_label" position="righthigh" offset="10,0" />
+				<description textres="cmb" />
+				<readonly />
+			</number_ct_cmb>
+			<label name="speedlabel">
+				<anchored to="cmb" position="righthigh" offset="15,0"/>
+				<static textres="ct_label_speed" />
+			</label>
+			<string_ct name="speed">
+				<anchored to="speedlabel" position="righthigh" offset="5,0" height="20">
+					<right parent="anchor_section" offset="-15" />
+				</anchored>
+				<readonly />
+			</string_ct>
+
+			<genericcontrol name="spacer">
+				<anchored to="anchor_section" height="30">
+					<top anchor="bottom" relation="relative" />
+					<left />
+					<right />
+				</anchored>
+				<disabled />
+			</genericcontrol>
+
+			<frame_ct_section name="frame_section">
+				<anchored>
+					<left parent="icon_section" anchor="right" offset="0" />
+					<bottom parent="spacer" offset="10" />
+				</anchored>
+			</frame_ct_section>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ct_section_active_npc">
+		<sheetdata>
+			<icon_ct_section name="icon_section">
+				<icon>button_sword_down</icon>
+			</icon_ct_section>
+
+			<anchor_ct_section name="anchor_section" />
+
+			<label name="immediate_label">
+				<anchored to="anchor_section" position="insidetopleft" offset="5,10"/>
+				<static textres="ct_label_immediate" />
+			</label>
+			<buttonfield name="immediate">
+				<anchored to="immediate_label" position="righthigh" offset="5,0" width="12" height="20" />
+				<state icon="button_checkoff" tooltipres="ct_tooltip_immediateoff" />
+				<state icon="button_checkon" tooltipres="ct_tooltip_immediateon" />
+			</buttonfield>
+			<label name="init_label">
+				<anchored to="immediate" position="righthigh" offset="10,0"/>
+				<static textres="init" />
+			</label>
+			<number_ct_init name="init">
+				<anchored to="init_label" position="righthigh" offset="10,0" />
+				<readonly />
+			</number_ct_init>
+			<label name="cmb_label">
+				<anchored to="init" position="righthigh" offset="15,0"/>
+				<static textres="cmb" />
+			</label>
+			<number_ct_cmb name="cmb">
+				<anchored to="cmb_label" position="righthigh" offset="10,0" />
+				<description textres="cmb" />
+				<readonly />
+			</number_ct_cmb>
+			<label name="speedlabel">
+				<anchored to="cmb" position="righthigh" offset="15,0"/>
+				<static textres="ct_label_speed" />
+			</label>
+			<string_ct name="speed">
+				<anchored to="speedlabel" position="righthigh" offset="5,0" height="20">
+					<right parent="anchor_section" offset="-15" />
+				</anchored>
+				<readonly />
+			</string_ct>
+
+			<genericcontrol name="spacer">
+				<anchored to="anchor_section" height="30">
+					<top anchor="bottom" relation="relative" />
+					<left />
+					<right />
+				</anchored>
+				<disabled />
+			</genericcontrol>
+
+			<list_ct_section_labeled name="attacks">
+				<datasource>.attacks</datasource>
+				<class>ct_attack</class>
+			</list_ct_section_labeled>
+			<label_ct_section name="attacks_label">
+				<anchored to="attacks" />
+				<static textres="ct_label_attack" />
+			</label_ct_section>
+
+			<frame_ct_section name="frame_section">
+				<anchored>
+					<left parent="icon_section" anchor="right" offset="0" />
+					<bottom parent="attacks" offset="10" />
+				</anchored>
+			</frame_ct_section>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ct_attack">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<string_textlistitem name="value">
+				<anchored>
+					<top />
+					<left />
+					<right />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+				<nodeletelast />
+				<nohighlight />
+				<actorpath>....</actorpath>
+				<delaykeyupdate merge="delete" />
+				<script file="common/scripts/string_attackline.lua" />
+			</string_textlistitem>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Section - Defense -->
+	<windowclass name="ct_section_defense">
+		<sheetdata>
+			<icon_ct_section name="icon_section">
+				<icon>button_shield_down</icon>
+			</icon_ct_section>
+
+			<anchor_ct_section name="anchor_section" />
+
+			<label name="ac_final_label">
+				<anchored to="anchor_section" position="insidetopleft" offset="5,10"/>
+				<static textres="ac" />
+			</label>
+			<number_ct name="ac_final">
+				<anchored to="ac_final_label" position="righthigh" offset="10,0" />
+				<description textres="armorclass" />
+			</number_ct>
+			<label name="ac_ff_label">
+				<anchored to="ac_final" position="righthigh" offset="15,0"/>
+				<static textres="acff" />
+			</label>
+			<number_ct name="ac_flatfooted">
+				<anchored to="ac_ff_label" position="righthigh" offset="10,0" />
+				<description textres="armorclassff" />
+			</number_ct>
+			<label name="ac_touch_label">
+				<anchored to="ac_flatfooted" position="righthigh" offset="15,0"/>
+				<static textres="actouch" />
+			</label>
+			<number_ct name="ac_touch">
+				<anchored to="ac_touch_label" position="righthigh" offset="10,0" />
+				<description textres="armorclasstouch" />
+			</number_ct>
+			<label name="cmd_label">
+				<anchored to="ac_touch" position="righthigh" offset="15,0"/>
+				<static textres="cmd" />
+			</label>
+			<number_ct name="cmd">
+				<anchored to="cmd_label" position="righthigh" offset="10,0" />
+				<description textres="cmd" />
+			</number_ct>
+
+			<label name="fortitudelabel">
+				<anchored to="anchor_section" position="insidetopleft" offset="5,40"/>
+				<static textres="fort" />
+			</label>
+			<number_ct_save name="fortitudesave">
+				<anchored to="fortitudelabel" position="righthigh" offset="10,0" />
+				<description textres="fortitude" />
+				<target>fortitude</target>
+			</number_ct_save>
+			<label name="reflexlabel">
+				<anchored to="fortitudesave" position="righthigh" offset="15,0"/>
+				<static textres="ref" />
+			</label>
+			<number_ct_save name="reflexsave">
+				<anchored to="reflexlabel" position="righthigh" offset="10,0" />
+				<description textres="reflex" />
+				<target>reflex</target>
+			</number_ct_save>
+			<label name="willlabel">
+				<anchored to="reflexsave" position="righthigh" offset="15,0"/>
+				<static textres="will" />
+			</label>
+			<number_ct_save name="willsave">
+				<anchored to="willlabel" position="righthigh" offset="10,0" />
+				<description textres="will_long" />
+				<target>will</target>
+			</number_ct_save>
+			<label name="sr_label">
+				<anchored to="willsave" position="righthigh" offset="15,0"/>
+				<static textres="sr" />
+			</label>
+			<number_ct name="sr">
+				<anchored to="sr_label" position="righthigh" offset="10,0" />
+				<description textres="spellresistance" />
+			</number_ct>
+
+			<genericcontrol name="spacer">
+				<anchored to="anchor_section" height="60">
+					<top anchor="bottom" relation="relative" />
+					<left />
+					<right />
+				</anchored>
+				<disabled />
+			</genericcontrol>
+
+			<string_ct_section_labeled name="specialqualities" />
+			<label_ct_section name="specialqualities_label">
+				<anchored to="specialqualities" />
+				<static textres="ct_label_specialqualities" />
+			</label_ct_section>
+
+			<frame_ct_section name="frame_section">
+				<anchored>
+					<left parent="icon_section" anchor="right" offset="0" />
+					<bottom parent="specialqualities" offset="10" />
+				</anchored>
+			</frame_ct_section>
+		</sheetdata>
+	</windowclass>
+
+	<!-- Section - Effects -->
+	<windowclass name="ct_effect" merge="join">
+		<sheetdata>
+			<button_ct_effect_apply name="apply" insertbefore="rightanchor" />
+		</sheetdata>
+	</windowclass>
+</root>

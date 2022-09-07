@@ -325,44 +325,4 @@
 			</script>
 		</number_ps_linked>
 	</template>
-
-	<template name="portrait_base">
-		<genericcontrol>
-			<icon>charlist_base</icon>
-			<script>
-				function onClickDown()
-					if Session.IsHost then
-						return true;
-					end
-				end
-				
-				function onClickRelease()
-					if Session.IsHost then
-						window.link.activate();
-						return true;
-					end
-				end
-			</script>
-		</genericcontrol>
-	</template>
-	<template name="portrait">
-		<genericcontrol>
-			<disabled />
-			<script>
-				function onInit()
-					update();
-				end
-				
-				function update()
-					local _,sCharNode = window.link.getValue();
-					local sCharNodeName = sCharNode:match("%.([%w-]+)$");
-					if sCharNodeName then
-						setIcon("portrait_" .. sCharNodeName .. "_charlist");
-					else
-						setIcon();
-					end
-				end
-			</script>
-		</genericcontrol>
-	</template>
 </root>

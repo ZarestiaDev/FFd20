@@ -13,7 +13,7 @@
 			
 			<label name="namelabel">
 				<anchored to="headeranchor" position="insidetopleft" offset="55,0" width="180" />
-				<static textres="name" />
+				<static textres="ps_label_name" />
 				<center />
 			</label>
 			<label name="classlabel">
@@ -250,12 +250,12 @@
 			<hnx name="wounds" />
 			<hnx name="nonlethal" />
 		
-			<portrait_base>
+			<portrait_ps_base>
 				<bounds>10,10,40,40</bounds>
-			</portrait_base>
-			<portrait name="portrait">
+			</portrait_ps_base>
+			<portrait_ps name="portrait">
 				<bounds>10,10,40,40</bounds>
-			</portrait>
+			</portrait_ps>
 			
 			<string_ps name="name">
 				<anchored position="insidetopleft" offset="55,10" width="180" />
@@ -353,6 +353,7 @@
 					<bottom parent="chacheck" />
 					<right parent="reflex" />
 				</anchored>
+				<tooltip textres="ps_label_dr" />
 			</string_ps>
 			<number_ps_linked name="sr">
 				<anchored height="20">

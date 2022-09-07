@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="ct_entry" merge="join">
+		<script file="ct/scripts/ct_entry.lua" />
+		<sheetdata>
+			<hs name="status" />
+
+			<hsm name="type" />
+			<hsx name="alignment" />
+
+			<hnx name="init" />
+			<hnx name="cmb" />
+
+			<hnx name="ac_final" />
+			<hnx name="ac_flatfooted" />
+			<hnx name="ac_touch" />
+			<hnx name="cmd" />
+			<hnx name="fortitudesave" />
+			<hnx name="reflexsave" />
+			<hnx name="willsave" />
+			<hnx name="sr" />
+
+			<button_ct_section_defense name="button_section_defense" insertbefore="button_section_space" />
+			<button_ct_section_active name="button_section_active" insertbefore="button_section_space" />
+
+			<number_ct_crosslink name="wounds" insertbefore="initresult">
+				<anchored to="rightanchor" width="30" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<hideonvalue value="0" />
+				<tabtarget prev="nonlethal" next="init" />
+				<script>
+					function handleDrop(draginfo)
+						if draginfo.getType() == "number" then
+							local node = window.getDatabaseNode();
+							local rActor = ActorManager.resolveActor(node);
+							ActionDamage.applyDamage(nil, rActor, CombatManager.isCTHidden(node), "number", draginfo.getDescription(), draginfo.getNumberData());
+						end
+					end
+
+					function update()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_ct_crosslink>
+			<number_ct_crosslink name="nonlethal" insertbefore="initresult">
+				<anchored to="rightanchor" width="30" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<hideonvalue value="0" />
+				<tabtarget prev="hptemp" next="wounds" />
+				<script>
+					function handleDrop(draginfo)
+						if draginfo.getType() == "number" then
+							local node = window.getDatabaseNode();
+							local rActor = ActorManager.resolveActor(node);
+							ActionDamage.applyDamage(nil, rActor, CombatManager.isCTHidden(node), "number", draginfo.getDescription() .. " [TYPE: nonlethal]", draginfo.getNumberData());
+						end
+					end
+
+					function update()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_ct_crosslink>
+			<number_ct_crosslink name="hptemp" insertbefore="initresult">
+				<anchored to="rightanchor" width="30" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<color>0000AA</color>
+				<hideonvalue value="0" />
+				<tabtarget prev="hp" next="nonlethal" />
+				<script>
+					function handleDrop(draginfo)
+						if draginfo.getNumberData() &gt; 0 then
+							setValue(draginfo.getNumberData());
+						else
+							setValue(getValue() + draginfo.getNumberData());
+						end
+					end
+
+					function update()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_ct_crosslink>
+			<number_ct_crosslink name="hp" insertbefore="initresult">
+				<anchored to="rightanchor" width="30" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<tabtarget prev="initresult" next="hptemp" />
+				<script>
+					function update()
+						window.onHealthChanged();
+					end
+				</script>
+			</number_ct_crosslink>
+
+			<sub_ct_section name="sub_active" insertbefore="sub_effects" />
+			<sub_ct_section name="sub_defense" insertbefore="sub_effects" />
+		</sheetdata>
+	</windowclass>
+</root>

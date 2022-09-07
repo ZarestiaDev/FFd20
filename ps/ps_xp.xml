@@ -208,12 +208,12 @@
 				</script>
 			</hlink>
 			
-			<portrait_base>
+			<portrait_ps_base>
 				<bounds>10,10,40,40</bounds>
-			</portrait_base>
-			<portrait name="portrait">
+			</portrait_ps_base>
+			<portrait_ps name="portrait">
 				<bounds>10,10,40,40</bounds>
-			</portrait>
+			</portrait_ps>
 
 			<string_ps name="name">
 				<anchored position="insidetopleft" offset="55,10" width="110" height="20" />

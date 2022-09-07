@@ -28,7 +28,6 @@
 
 			<ft_record name="text">
 				<anchored to="contentframe" position="over" />
-				<footer>footer_wide</footer>
 			</ft_record>
 			<subwindow_record name="content">
 				<class>ref_race_stats</class>
@@ -204,7 +203,6 @@
 			<frame_record_content />
 			<ft_record name="text">
 				<anchored to="contentframe" position="over" />
-				<footer>footer_wide</footer>
 			</ft_record>
 			<scrollbar>
 				<anchored to="text" />
@@ -257,7 +255,6 @@
 			<frame_record_content />
 			<ft_record name="text">
 				<anchored to="contentframe" position="over" />
-				<footer>footer_wide</footer>
 			</ft_record>
 			<scrollbar>
 				<anchored to="text" />

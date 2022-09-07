@@ -7,37 +7,7 @@
 
 <root>
 	<windowclass name="combattracker_client" merge="join">
-		<script>
-			function onInit()
-				super.onInit();
-				OptionsManager.registerCallback("SHPC", updateHealthDisplay);
-				OptionsManager.registerCallback("SHNPC", updateHealthDisplay);
-				updateHealthDisplay();
-			end
-			
-			function onClose()
-				super.onClose();
-				OptionsManager.unregisterCallback("SHPC", updateHealthDisplay);
-				OptionsManager.unregisterCallback("SHNPC", updateHealthDisplay);
-			end
-			
-			function updateHealthDisplay()
-				local sOptSHPC = OptionsManager.getOption("SHPC");
-				local sOptSHNPC = OptionsManager.getOption("SHNPC");
-				local bShowDetail = (sOptSHPC == "detailed") or (sOptSHNPC == "detailed");
-				
-				label_hp.setVisible(bShowDetail);
-				label_temp.setVisible(bShowDetail);
-				label_nonlethal.setVisible(bShowDetail);
-				label_wounds.setVisible(bShowDetail);
-
-				label_status.setVisible(not bShowDetail);
-
-				for _,w in pairs(list.getWindows()) do
-					w.updateHealthDisplay();
-				end
-			end
-		</script>
+		<script file="ct/scripts/clientct_window_dnd.lua" />
 		<sheetdata>
 			<label_ct_right name="label_status" insertbefore="label_init">
 				<anchored width="150" />
@@ -59,7 +29,7 @@
 	</windowclass>
 
 	<windowclass name="client_ct_entry" merge="join">
-		<script file="ct/scripts/clientct_entry.lua" />
+		<script file="ct/scripts/clientct_entry_dnd.lua" />
 		<sheetdata>
 			<base_clientct_health name="healthbase" insertbefore="initresult" />
 			<string_clientct_status name="status" insertbefore="initresult" />

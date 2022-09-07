@@ -308,7 +308,6 @@
 			<frame_record_content />
 			<ft_record name="text">
 				<anchored to="contentframe" position="over" />
-				<footer>footer_wide</footer>
 			</ft_record>
 			<scrollbar>
 				<anchored to="text" />

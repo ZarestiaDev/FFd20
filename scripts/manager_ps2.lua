@@ -247,7 +247,7 @@ end
 function awardXP(nXP) 
 	-- Determine members of party
 	local aParty = {};
-	for _,v in pairs(DB.getChildren("partysheet.partyinformation")) do
+	for _,v in pairs(PartyManager.getPartyNodes()) do
 		local sClass, sRecord = DB.getValue(v, "link");
 		if sClass == "charsheet" and sRecord then
 			local nodePC = DB.findNode(sRecord);
