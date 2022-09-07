@@ -3,222 +3,119 @@
 -- attribution and copyright information.
 --
 
-function getRaceHeritageOptions(sRaceName)
-	local tOptions = {};
-	RecordManager.callForEachRecordByStringI("race_heritage", "race", sRaceName, CharRaceManager.helperGetRaceExternalHeritageOption, tOptions);
-	RecordManager.callForEachRecordByStringI("race", "name", sRaceName, CharRaceManager.helperGetRaceEmbeddedHeritageOption, tOptions);
-	table.sort(tOptions, function(a,b) return a.text < b.text; end);
-	return tOptions;
-end
-function helperGetRaceExternalHeritageOption(nodeHeritage, tOptions)
-	local sHeritageName = StringManager.trim(DB.getValue(nodeHeritage, "name", ""));
-	if sHeritageName ~= "" then
-		table.insert(tOptions, { text = sHeritageName, linkclass = "referenceheritage", linkrecord = nodeHeritage.getPath() });
+function addRace(nodeChar, sClass, sRecord)
+	local rAdd = CharManager.helperBuildAddStructure(nodeChar, sClass, sRecord);
+	if not rAdd then
+		return;
 	end
-end
-function helperGetRaceEmbeddedHeritageOption(nodeRace, tOptions)
-	for _,nodeHeritage in pairs(DB.getChildren(nodeRace, "heritages")) do
-		local sHeritageName = StringManager.trim(DB.getValue(nodeHeritage, "name", ""));
-		if sHeritageName ~= "" then
-			table.insert(tOptions, { text = sHeritageName, linkclass = "referenceheritage", linkrecord = nodeHeritage.getPath() });
+	
+	local sRace = DB.getValue(rAdd.nodeSource, "name", "");
+	
+	local sFormat = Interface.getString("char_message_raceadd");
+	local sMsg = string.format(sFormat, sRace, DB.getValue(nodeChar, "name", ""));
+	ChatManager.SystemMessage(sMsg);
+	
+	DB.setValue(nodeChar, "race", "string", sRace);
+	DB.setValue(nodeChar, "racelink", "windowreference", sClass, rAdd.nodeSource.getPath());
+	
+	if DB.getChildCount(rAdd.nodeSource, "heritages") > 0 then
+		handleRacialHeritage(rAdd);
+	else
+		for _,v in pairs(DB.getChildren(rAdd.nodeSource, "racialtraits")) do
+			addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
 		end
 	end
 end
 
-function getRaceFromHeritage(sHeritageName)
-	local nodeExternalHeritage = RecordManager.findRecordByStringI("race_heritage", "name", sHeritageName);
-	if nodeExternalHeritage then
-		local sRaceName = StringManager.trim(DB.getValue(nodeExternalHeritage, "race", ""));
-		local nodeRace = RecordManager.findRecordByStringI("race", "name", sRaceName);
-		return sRaceName, nodeRace;
+function handleRacialHeritage(rAdd)
+	local aHeritages = { "None" };
+	local tHeritages = DB.getChildren(rAdd.nodeSource, "heritages");
+
+	for _,v in pairs(tHeritages) do
+		table.insert(aHeritages, DB.getValue(v, "name", ""));
 	end
 
-	local sHeritageNameLower = StringManager.trim(sHeritageName):lower();
-	local tMappings = LibraryData.getMappings("race");
-	for _,sMapping in ipairs(tMappings) do
-		for _,vRace in pairs(DB.getChildrenGlobal(sMapping)) do
-			for _,vHeritage in pairs(DB.getChildren(vRace, "heritages")) do
-				local sMatch = StringManager.trim(DB.getValue(vHeritage, "name", "")):lower();
-				if sMatch == sHeritageNameLower then
-					local sRaceName = StringManager.trim(DB.getValue(vRace, "name", ""));
-					return sRaceName, vRace;
-				end
+	local wSelect = Interface.openWindow("select_dialog", "");
+	local sTitle = Interface.getString("char_title_selectheritage");
+	local sMessage = Interface.getString("char_message_selectheritage");
+	local rHeritageSelect = { nodeChar = rAdd.nodeChar, tHeritages = tHeritages, nodeSource = rAdd.nodeSource };
+	wSelect.requestSelection(sTitle, sMessage, aHeritages, CharRaceManager.onRaceHeritageSelect, rHeritageSelect, 1);
+end
+
+function onRaceHeritageSelect(aSelection, rHeritageSelect)
+	local tHeritageTraits = {};
+	local sSelection = aSelection[1];
+	if sSelection ~= "None" then
+		for _,v in pairs(rHeritageSelect.tHeritages) do
+			local sHeritage = DB.getValue(v, "name", "");
+			if sHeritage == sSelection then
+				tHeritageTraits = v.getChild("heritagetraits").getChildren();
+	
+				local sFormat = Interface.getString("char_message_heritageadd");
+				local sMsg = string.format(sFormat, sHeritage, DB.getValue(rHeritageSelect.nodeChar, "name", ""));
+				ChatManager.SystemMessage(sMsg);
+				
+				DB.setValue(rHeritageSelect.nodeChar, "race", "string", DB.getValue(rHeritageSelect.nodeChar, "race", "") .. " (" .. sHeritage .. ")");
 			end
 		end
-	end
-
-	return "", nil;
-end
-
-function addRaceDrop(nodeChar, sClass, sRecord)
-	if sClass == "reference_race" then
-		local rAdd = CharManager.helperBuildAddStructure(nodeChar, sClass, sRecord);
-		if not rAdd then
-			return;
-		end
-
-		CharRaceManager.helperAddRaceMain(rAdd);
-		CharRaceManager.helperAddRaceHeritageChoice(rAdd);
-
-	elseif sClass == "reference_heritage" then
-		local nodeSource = DB.findNode(sRecord);
-		if not nodeSource then
-			return;
-		end
-
-		local sHeritageName = StringManager.trim(DB.getValue(nodeSource, "name", ""));
-		local sRaceName, nodeRace = CharRaceManager.getRaceFromHeritage(sHeritageName);
-		if not nodeRace or ((sRaceName or "") == "") then
-			CharManager.outputUserMessage("char_error_missingracefromheritage");
-			return;
-		end
-
-
-		local rAdd = {
-			nodeSource = nodeRace,
-			sSourceClass = "reference_race",
-			sSourceName = sRaceName,
-			nodeChar = nodeChar,
-			sCharName = StringManager.trim(DB.getValue(nodeChar, "name", "")),
-			sHeritageChoice = sHeritageName,
-		};
-		CharRaceManager.helperAddRaceMain(rAdd);
-		CharRaceManager.helperAddRaceHeritage(rAdd);
-	end
-end
-function helperAddRaceMain(rAdd)
-	-- Notification
-	CharManager.outputUserMessage("char_abilities_message_raceadd", rAdd.sSourceName, rAdd.sCharName);
-
-	-- Set name and link
-	DB.setValue(rAdd.nodeChar, "race", "string", rAdd.sSourceName);
-	DB.setValue(rAdd.nodeChar, "racelink", "windowreference", "reference_race", rAdd.nodeSource.getPath());
-	DB.setValue(rAdd.nodeChar, "heritagelink", "windowreference", "", "");
-
-	-- Add racial traits
-	for _,v in pairs(DB.getChildren(rAdd.nodeSource, "traits")) do
-		CharRaceManager.addRaceTrait(rAdd.nodeChar, "reference_racialtrait", v.getPath());
-	end
-end
-
-function helperAddRaceHeritageChoice(rAdd)
-	local tRaceHeritageOptions = CharRaceManager.getRaceHeritageOptions(rAdd.sSourceName);
-	if #tRaceHeritageOptions == 0 then
-		return;
-	end
-
-	if #tRaceHeritageOptions == 1 then
-		-- Automatically select only heritage
-		rAdd.sHeritageChoice = tRaceHeritageOptions[1].text;
-		CharRaceManager.helperAddRaceHeritage(rAdd);
-	else
-		-- Display dialog to choose heritage
-		local wSelect = Interface.openWindow("select_dialog", "");
-		local sTitle = Interface.getString("char_build_title_selectheritage");
-		local sMessage = Interface.getString("char_build_message_selectheritage");
-		wSelect.requestSelection(sTitle, sMessage, tRaceHeritageOptions, CharRaceManager.callbackAddRaceHeritageChoice, rAdd);
-	end
-end
-function callbackAddRaceHeritageChoice(tSelection, rAdd)
-	if not tSelection or (#tSelection ~= 1) then
-		CharManager.outputUserMessage("char_error_addheritage");
-		return;
-	end
-
-	rAdd.sHeritageChoice = tSelection[1];
-	CharRaceManager.helperAddRaceHeritage(rAdd);
-end
-function helperAddRaceHeritage(rAdd)
-	if ((rAdd.sHeritageChoice or "") == "") then
-		return;
-	end
-
-	-- Get heritage data path from name
-	local sHeritagePath = nil;
-	local tRaceHeritageOptions = CharRaceManager.getRaceHeritageOptions(rAdd.sSourceName);
-	for _,v in ipairs(tRaceHeritageOptions) do
-		if v.text == rAdd.sHeritageChoice then
-			sHeritagePath = v.linkrecord;
-			break;
+	
+		for _,heritageTrait in pairs(tHeritageTraits) do
+			addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
 		end
 	end
-	if ((sHeritagePath or "") == "") then
-		CharManager.outputUserMessage("char_error_missingheritage");
-		return;
-	end
-
-	-- Notification
-	CharManager.outputUserMessage("char_abilities_message_heritageadd", rAdd.sHeritageChoice, rAdd.sCharName);
-
-	-- Update race name and heritage link
-	if rAdd.sHeritageChoice:match(rAdd.sSourceName) then
-		DB.setValue(rAdd.nodeChar, "race", "string", rAdd.sHeritageChoice);
-	else
-		DB.setValue(rAdd.nodeChar, "race", "string", string.format("%s (%s)", rAdd.sSourceName, rAdd.sHeritageChoice));
-	end
-	DB.setValue(rAdd.nodeChar, "heritagelink", "windowreference", "reference_heritage", sHeritagePath);
-
-	-- Add racial traits
-	for _,v in pairs(DB.getChildren(DB.getPath(sHeritagePath, "traits"))) do
-		CharRaceManager.addRaceTrait(rAdd.nodeChar, "reference_subracialtrait", v.getPath());
+	
+	for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
+		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", v.getPath());
 	end
 end
 
-function addRaceTrait(nodeChar, sClass, sRecord)
+function addRacialTrait(nodeChar, sClass, sRecord)
 	local rAdd = CharManager.helperBuildAddStructure(nodeChar, sClass, sRecord);
 	if not rAdd then
 		return;
 	end
 
-	CharRaceManager.helperAddRaceTraitMainDrop(rAdd);
+	CharRaceManager.helperAddRaceTraitMain(rAdd);
 end
-function helperAddRaceTraitMainDrop(rAdd)
-	if rAdd.sSourceType == "ability score racial traits" then
-		CharRaceManager.helperAddRaceTraitAbilityIncreaseDrop(rAdd);
-		return;
 
-	elseif rAdd.sSourceType == "size" then
-		CharRaceManager.helperAddRaceTraitSizeDrop(rAdd);
-		return;
-
-	elseif rAdd.sSourceType == "base speed" then
-		CharRaceManager.helperAddRaceTraitSpeedDrop(rAdd);
-		return;
-
-	elseif rAdd.sSourceType == "darkvision" then
-		CharRaceManager.helperAddRaceTraitDarkvisionDrop(rAdd);
-		return;
-		
-	elseif rAdd.sSourceType == "superiordarkvision" then
-		CharRaceManager.helperAddRaceTraitSuperiorDarkvisionDrop(rAdd);
-		return;
-
-	elseif rAdd.sSourceType == "languages" then
-		CharRaceManager.helperAddRaceTraitLanguagesDrop(rAdd);
-		return;
-		
-	else
-		local sText = DB.getText(rAdd.nodeSource, "text", "");
-		CharManager.checkSkillProficiencies(rAdd.nodeChar, sText);
-		
-		-- Create standard trait entry
-		local nodeNewTrait = CharRaceManager.helperAddRaceTraitStandard(rAdd);
-		if not nodeNewTrait then
+function helperAddRaceTraitMain(rAdd)
+	for _,v in pairs(DB.getChildren(rAdd.nodeChar, "traitlist")) do
+		local sExistingTrait = DB.getValue(v, "name", "");
+		if sExistingTrait == rAdd.sSourceName then
 			return;
 		end
-		
-		-- Special handling
-		local sNameLower = rAdd.sSourceName:lower();
-		if sNameLower == CharManager.TRAIT_NATURAL_ARMOR then
-			CharArmorManager.calcItemArmorClass(rAdd.nodeChar);
-		end
-
-		-- Standard action addition handling
-		CharManager.helperCheckActionsAdd(rAdd.nodeChar, rAdd.nodeSource, rAdd.sSourceType, "Race Actions/Effects");
 	end
+	
+	handleRacialBasicTrait(rAdd);
+	if rAdd.sSourceType == "abilityscoreracialtraits" then
+		handleRacialAbilities(rAdd);
+
+	elseif rAdd.sSourceType == "languages" then
+		handleRacialLanguages(rAdd);
+
+	elseif rAdd.sSourceType == "size" then
+		handleRacialSize(rAdd);
+	
+	elseif rAdd.sSourceType == "basespeed" then
+		handleRacialSpeed(rAdd);
+	
+	elseif rAdd.sSourceType == "darkvision" or rAdd.sSourceType == "superiordarkvision" or rAdd.sSourceType == "lowlightvision" then
+		handleRacialVision(rAdd);
+		
+	elseif rAdd.sSourceType == "weaponfamiliarity" then
+		handleProficiencies (rAdd);
+	else
+		if not checkForRacialAbilityInName(rAdd) then
+			checkForRacialSkillBonus(rAdd);
+			checkForRacialSaveBonus(rAdd);
+		end
+	end
+
+	CharManager.outputUserMessage("char_message_racialtraitadd", rAdd.sSourceName, rAdd.sCharName);
+	return true;
 end
 
-function helperAddRaceTraitStandard(rAdd)
+function handleRacialBasicTrait(rAdd)
 	local nodeTraitList = DB.createChild(rAdd.nodeChar, "traitlist");
 	if not nodeTraitList then
 		return nil;
@@ -229,22 +126,21 @@ function helperAddRaceTraitStandard(rAdd)
 		return nil;
 	end
 
-	CharManager.outputUserMessage("char_abilities_message_traitadd", rAdd.sSourceName, rAdd.sCharName);
-
 	DB.copyNode(rAdd.nodeSource, nodeNewTrait);
 	DB.setValue(nodeNewTrait, "locked", "number", 1);
 
-	if rAdd.sSourceClass == "reference_racialtrait" then
+	if rAdd.sSourceClass == "referenceracialtrait" then
 		DB.setValue(nodeNewTrait, "type", "string", "racial");
-	elseif rAdd.sSourceClass == "reference_subracialtrait" then
-		DB.setValue(nodeNewTrait, "type", "string", "subracial");
+	elseif rAdd.sSourceClass == "referenceheritagetrait" then
+		DB.setValue(nodeNewTrait, "type", "string", "heritage");
 	end
 
 	return nodeNewTrait;
 end
-function helperAddRaceTraitAbilityIncreaseDrop(rAdd)
-	local sAdjust = DB.getText(rAdd.nodeSource, "text", ""):lower();
-    local aWords = StringManager.parseWords(sAdjust:lower());
+
+function handleRacialAbilities(rAdd)
+	local sText = DB.getText(rAdd.nodeSource, "text", ""):lower();
+	local aWords = StringManager.parseWords(sText);
 	
 	local aIncreases = {};
 	local bChoice = false;
@@ -294,77 +190,10 @@ function helperAddRaceTraitAbilityIncreaseDrop(rAdd)
 	
 	return bApplied;
 end
-function helperAddRaceTraitSizeDrop(rAdd)
-	local sSize = DB.getText(rAdd.nodeSource, "text", ""):lower();
-	sSize = sSize:match("are (%w+) creatures");
-	if not sSize then
-		sSize = "medium";
-	end
 
-	if sSize == "small" then
-		DB.setValue(rAdd.nodeChar, "ac.sources.size", "number", 1);
-		DB.setValue(rAdd.nodeChar, "attackbonus.melee.size", "number", 1);
-		DB.setValue(rAdd.nodeChar, "attackbonus.ranged.size", "number", 1);
-		DB.setValue(rAdd.nodeChar, "attackbonus.cmb.size", "number", -1);
-		addSkillBonus(rAdd.nodeChar, "Stealth", 4);
-	elseif sSize == "medium" then
-		DB.setValue(rAdd.nodeChar, "ac.sources.size", "number", 0);
-		DB.setValue(rAdd.nodeChar, "attackbonus.melee.size", "number", 0);
-		DB.setValue(rAdd.nodeChar, "attackbonus.ranged.size", "number", 0);
-		DB.setValue(rAdd.nodeChar, "attackbonus.cmb.size", "number", 0);
-	end
-	DB.setValue(rAdd.nodeChar, "size", "string", StringManager.capitalize(sSize));
-end
-function helperAddRaceTraitSpeedDrop(rAdd)
-	local s = DB.getText(rAdd.nodeSource, "text", "");
-
-	local nSpeed, tSpecial = CharRaceManager.parseRaceSpeed(s);
-	
-	DB.setValue(rAdd.nodeChar, "speed.base", "number", nSpeed);
-	CharManager.outputUserMessage("char_abilities_message_basespeedset", nSpeed, DB.getValue(rAdd.nodeChar, "name", ""));
-
-	local sExistingSpecial = StringManager.trim(DB.getValue(rAdd.nodeChar, "speed.special", ""));
-	local tExistingSpecial = StringManager.split(sExistingSpecial, ",", true);
-
-	local tFinalSpecial = {};
-	local tMatchCheck = {};
-	for _,sSpecial in ipairs(tSpecial) do
-		if not tMatchCheck[sSpecial] then
-			table.insert(tFinalSpecial, sSpecial);
-		end
-	end
-	for _,sSpecial in ipairs(tExistingSpecial) do
-		if not tMatchCheck[sSpecial] then
-			table.insert(tFinalSpecial, sSpecial);
-		end
-	end
-	DB.setValue(rAdd.nodeChar, "speed.special", "string", table.concat(tFinalSpecial, ", "));
-end
-function helperAddRaceTraitDarkvisionDrop(rAdd)
-	local tSenses = {};
-	local sSenses = DB.getValue(rAdd.nodeChar, "senses", "");
-	if sSenses ~= "" then
-		table.insert(tSenses, sSenses);
-	end
-	
-	local sNewSense;
-	local sText = DB.getText(rAdd.nodeSource, "text", "");
-	if sText then
-		local sDist = sText:match("%d+");
-		if sDist then
-			sNewSense = string.format("%s %s", rAdd.sSourceName, sDist);
-		end
-	end
-	if not sNewSense then
-		sNewSense = rAdd.sSourceName;
-	end
-	table.insert(tSenses, sNewSense);
-	
-	DB.setValue(rAdd.nodeChar, "senses", "string", table.concat(tSenses, ", "));
-end
-function helperAddRaceTraitLanguagesDrop(rAdd)
-	local sText = DB.getText(rAdd.nodeSource, "text", "");
-    local aWords = StringManager.parseWords(sText);
+function handleRacialLanguages(rAdd)
+	local sText = DB.getText(rAdd.nodeSource, "text");
+	local aWords = StringManager.parseWords(sText);
 	
 	local aLanguages = {};
 	local i = 1;
@@ -388,44 +217,140 @@ function helperAddRaceTraitLanguagesDrop(rAdd)
 		return false;
 	end
 	
-	for s in ipairs(aLanguages) do
-		CharManager.addLanguage(rAdd.nodeChar, s);
+	for _,v in ipairs(aLanguages) do
+		CharManager.addLanguage(rAdd.nodeChar, v);
+	end
+	return true;
+end
+
+function handleRacialSize(rAdd)
+	local sSize = "";
+	local sText = DB.getText(rAdd.nodeSource, "text"):lower();
+	if sText:match("medium") then
+		sSize = "medium";
+	elseif sText:match("small") then
+		sSize = "small";
+	end
+	
+	if sSize == "" then
+		return false;
+	end
+	
+	DB.setValue(rAdd.nodeChar, "size", "string", StringManager.capitalize(sSize));
+	if sSize == "small" then
+		DB.setValue(rAdd.nodeChar, "ac.sources.size", "number", 1);
+		DB.setValue(rAdd.nodeChar, "attackbonus.melee.size", "number", 1);
+		DB.setValue(rAdd.nodeChar, "attackbonus.ranged.size", "number", 1);
+		DB.setValue(rAdd.nodeChar, "attackbonus.cmb.size", "number", -1);
+		CharManager.addSkillBonus(rAdd.nodeChar, "Stealth", 4);
+	elseif sSize == "medium" then
+		DB.setValue(rAdd.nodeChar, "ac.sources.size", "number", 0);
+		DB.setValue(rAdd.nodeChar, "attackbonus.melee.size", "number", 0);
+		DB.setValue(rAdd.nodeChar, "attackbonus.ranged.size", "number", 0);
+		DB.setValue(rAdd.nodeChar, "attackbonus.cmb.size", "number", 0);
+	end
+	return true;
+end
+
+function handleRacialSpeed(rAdd)
+	local nBaseSpeed = 0;
+	local sSpeed = DB.getText(rAdd.nodeSource, "text");
+	local sBaseSpeed = sSpeed:match("base speed of (%d+) feet");
+	if sBaseSpeed then
+		nBaseSpeed = sBaseSpeed;
+	end
+	
+	if nBaseSpeed ~= 0 then
+		DB.setValue(rAdd.nodeChar, "speed.base", "number", nBaseSpeed);
+	else
+		return false;
+	end
+
+	return true;
+end
+
+function handleRacialVision(rAdd)
+	local tSenses = {};
+	local sSenses = DB.getValue(rAdd.nodeChar, "senses", "");
+	if sSenses ~= "" then
+		table.insert(tSenses, sSenses);
+	end
+	
+	local sNewSense;
+	local sText = DB.getText(rAdd.nodeSource, "text", "");
+	if sText then
+		local sDist = sText:match("%d+");
+		if sDist then
+			sNewSense = string.format("%s %s", rAdd.sSourceName, sDist);
+		end
+	end
+	if not sNewSense then
+		sNewSense = rAdd.sSourceName;
+	end
+	table.insert(tSenses, sNewSense);
+	
+	DB.setValue(rAdd.nodeChar, "senses", "string", table.concat(tSenses, ", "));
+end
+
+function onRaceAbilitySelect(aSelection, nodeChar)
+	for _,sAbility in ipairs(aSelection) do
+		local k = sAbility:lower();
+		if StringManager.contains(DataCommon.abilities, k) then
+			local sPath = "abilities." .. k .. ".score";
+			DB.setValue(nodeChar, sPath, "number", DB.getValue(nodeChar, sPath, 10) + 2);
+		end
 	end
 end
 
-function parseRaceSpeed(s)
-	if (s or "") == "" then
-		return 30, {};
+function checkForRacialAbilityInName(rAdd)
+	local bHandled = false;
+	local aWords = StringManager.parseWords(rAdd.sSourceType);
+	if #aWords > 0 then
+		local bRaceAttInName = true;
+		local i = 1;
+		while aWords[i] do
+			if not StringManager.isNumberString(aWords[i]) and not StringManager.contains(DataCommon.abilities, aWords[i]) then
+				bRaceAttInName = false;
+				break;
+			end
+			i = i + 1;
+		end
+		if bRaceAttInName then
+			bHandled = handleRacialAbilities(rAdd);
+		end
 	end
+	return bHandled;
+end
 
-	local sSpeed = s:lower();
-	local nSpeed = 30;
-	local tSpecial = {};
+function checkForRacialSkillBonus(rAdd)
+	local sText = DB.getText(rAdd.nodeSource, "text", "");
+	sText = sText:gsub(" due to their fearsome nature%.", "."); -- Half-orc Intimidating
+	for sMod, sSkills in sText:gmatch("%+(%d) racial bonus on ([^.]+) checks[.;,]") do
+		local nMod = tonumber(sMod) or 0;
+		if sSkills and nMod ~= 0 then
+			local aSkills = {};
+			sSkills = sSkills:gsub(",? and ", ",");
+			aSkills = StringManager.split(sSkills, ",", true);
+			for _,vSkill in ipairs(aSkills) do
+				vSkill = vSkill:gsub(" checks$", "");
+				vSkill = vSkill:gsub(" skill$", "");
+				local sSpecialty = vSkill:match("%(%w+%)");
+				if sSpecialty then
+					vSkill = StringManager.trim(vSkill:match("[^(]*"));
+				end
+				CharManager.addSkillBonus(rAdd.nodeChar, vSkill, nMod, sSpecialty);
+			end
+		end
+	end
+end
 
-	local sBaseSpeed = sSpeed:match("base speed of (%d+) feet");
-	if sBaseSpeed then
-		nSpeed = tonumber(sBaseSpeed) or 30;
+function checkForRacialSaveBonus(rAdd)
+	local sText = DB.getText(rAdd.nodeSource, "text", "");
+	local sMod = sText:match("%+(%d) racial bonus on all saving throws%.");
+	local nMod = tonumber(sMod) or 0;
+	if nMod ~= 0 then
+		CharManager.addSaveBonus(rAdd.nodeChar, "fortitude", "misc", nMod);
+		CharManager.addSaveBonus(rAdd.nodeChar, "reflex", "misc", nMod);
+		CharManager.addSaveBonus(rAdd.nodeChar, "will", "misc", nMod);
 	end
-	
-	local sSwimSpeed = sSpeed:match("swim speed of (%d+) feet");
-	if sSwimSpeed then
-		table.insert(tSpecial, "Swim " .. sSwimSpeed .. " ft.");
-	end
-
-	local sFlySpeed = sSpeed:match("fly speed of (%d+) feet");
-	if sFlySpeed then
-		table.insert(tSpecial, "Fly " .. sFlySpeed .. " ft.");
-	end
-
-	local sClimbSpeed = sSpeed:match("climb speed of (%d+) feet");
-	if sClimbSpeed then
-		table.insert(tSpecial, "Climb " .. sClimbSpeed .. " ft.");
-	end
-	
-	local sBurrowSpeed = sSpeed:match("burrow speed of (%d+) feet");
-	if sBurrowSpeed then
-		table.insert(tSpecial, "Burrow " .. sBurrowSpeed .. " ft.");
-	end
-
-	return nSpeed, tSpecial;
 end

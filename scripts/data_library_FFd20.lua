@@ -183,17 +183,6 @@ aRecordOverrides = {
 		bExport = true,
 		aDataMap = { "race", "reference.races" },
 		sRecordDisplayClass = "referencerace",
-		aGMListButtons = { "button_race_heritage" },
-		aPlayerListButtons = { "button_race_heritage" },
-	},
-	["race_heritage"] = {
-		bExport = true,
-		bHidden = true,
-		aDataMap = { "race_heritage", "reference.races_heritages" },
-		sRecordDisplayClass = "referenceheritage",
-		aCustomFilters = {
-			["Race"] = { sField = "race" },
-		},
 	},
 	["skill"] = {
 		bExport = true,

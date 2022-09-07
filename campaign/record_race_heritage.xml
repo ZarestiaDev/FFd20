@@ -80,17 +80,11 @@
 			end
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				race.setReadOnly(bReadOnly);
 				traits.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
 			<anchor_column name="columnanchor" />
-
-			<label_column name="race_label">
-				<static textres="race_heritage_label_race" />
-			</label_column>
-			<string_columnh name="race" />
 			
 			<header_column name="traits_header">
 				<static textres="race_header_traits"/>
@@ -105,7 +99,7 @@
 				<target>traits</target>
 			</button_iadd>
 			<list_column name="traits">
-				<datasource>.racialtraits</datasource>
+				<datasource>.heritagetraits</datasource>
 				<class>ref_heritage_trait</class>
 			</list_column>
 		</sheetdata>

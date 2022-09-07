@@ -3,16 +3,6 @@
 -- attribution and copyright information.
 --
 
-RACIAL_TRAIT_ABILITY = "ability score racial traits";
-RACIAL_TRAIT_SIZE = "size";
-RACIAL_TRAIT_SPEED = "base speed";
-RACIAL_TRAIT_LANGUAGES = "languages";
-
-RACIAL_TRAIT_DARKVISION = "darkvision";
-RACIAL_TRAIT_LOWLIGHTVISION = "low%-?light vision";
-RACIAL_TRAIT_SUPERIORDARKVISION = "superior darkvision";
-RACIAL_TRAIT_WEAPONFAMILIARITY = "weapon familiarity";
-
 TRAIT_MULTITALENTED = "multitalented";
 
 CLASS_BAB_FAST = "fast";
@@ -31,6 +21,12 @@ function onInit()
 	ItemManager.setCustomCharAdd(onCharItemAdd);
 	ItemManager.setCustomCharRemove(onCharItemDelete);
 	initWeaponIDTracking();
+end
+
+function outputUserMessage(sResource, ...)
+	local sFormat = Interface.getString(sResource);
+	local sMsg = string.format(sFormat, ...);
+	ChatManager.SystemMessage(sMsg);
 end
 
 --
@@ -980,10 +976,10 @@ function addInfoDB(nodeChar, sClass, sRecord, nodeTargetList)
 		return false;
 	end
 	
-	if sClass == "referencerace" then
-		addRace(nodeChar, sClass, sRecord);
-	elseif sClass == "referenceracialtrait" then
-		addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList);
+	if sClass == "referencerace" or sClass == "referenceheritage" then
+		CharRaceManager.addRace(nodeChar, sClass, sRecord);
+	elseif sClass == "referenceracialtrait" or sClass == "referenceheritagetrait" then
+		CharRaceManager.addRacialTrait(nodeChar, sClass, sRecord);
 	elseif sClass == "referenceclass" then
 		addClass(nodeChar, sClass, sRecord);
 	elseif sClass == "referenceclassability" then
@@ -1092,355 +1088,28 @@ function addDeity(nodeChar, sClass, sRecord)
 	DB.setValue(nodeChar, "deitylink", "windowreference", sClass, nodeSource.getPath());
 end
 
-function addRace(nodeChar, sClass, sRecord)
-	local nodeSource = resolveRefNode(sRecord);
-	if not nodeSource then
-		return;
-	end
-	
-	local sRace = DB.getValue(nodeSource, "name", "");
-	
-	local sFormat = Interface.getString("char_message_raceadd");
-	local sMsg = string.format(sFormat, sRace, DB.getValue(nodeChar, "name", ""));
-	ChatManager.SystemMessage(sMsg);
-	
-	DB.setValue(nodeChar, "race", "string", sRace);
-	DB.setValue(nodeChar, "racelink", "windowreference", sClass, nodeSource.getPath());
-	
-	if DB.getChildCount(nodeSource, "heritages") > 0 then
-		handleRacialHeritage(nodeChar, nodeSource);
-	else
-		for _,v in pairs(DB.getChildren(nodeSource, "racialtraits")) do
-			addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
-		end
-	end
-end
-
-function handleRacialHeritage(nodeChar, nodeSource)
-	local aHeritages = { "None" };
-	local tHeritages = DB.getChildren(nodeSource, "heritages");
-
-	for _,v in pairs(tHeritages) do
-		table.insert(aHeritages, DB.getValue(v, "name", ""));
+function helperBuildAddStructure(nodeChar, sClass, sRecord)
+	if not nodeChar or ((sClass or "") == "") or ((sRecord or "") == "") then
+		return nil;
 	end
 
-	local wSelect = Interface.openWindow("select_dialog", "");
-	local sTitle = Interface.getString("char_title_selectheritage");
-	local sMessage = Interface.getString("char_message_selectheritage");
-	local rHeritageSelect = { nodeChar = nodeChar, tHeritages = tHeritages, nodeSource = nodeSource };
-	wSelect.requestSelection(sTitle, sMessage, aHeritages, CharManager.onRaceHeritageSelect, rHeritageSelect, 1);
-end
-
-function onRaceHeritageSelect(aSelection, rHeritageSelect)
-	local nodeChar = rHeritageSelect.nodeChar;
-	local tHeritageTraits = {};
-
-	local sSelection = aSelection[1];
-	if sSelection ~= "None" then
-		for _,v in pairs(rHeritageSelect.tHeritages) do
-			local sHeritage = DB.getValue(v, "name", "");
-			if sHeritage == sSelection then
-				tHeritageTraits = v.getChild("heritagetraits").getChildren();
-	
-				local sFormat = Interface.getString("char_message_heritageadd");
-				local sMsg = string.format(sFormat, sHeritage, DB.getValue(nodeChar, "name", ""));
-				ChatManager.SystemMessage(sMsg);
-				
-				DB.setValue(nodeChar, "race", "string", DB.getValue(nodeChar, "race", "") .. " (" .. sHeritage .. ")");
-			end
-		end
-	
-		for _,heritageTrait in pairs(tHeritageTraits) do
-			addRacialTrait(nodeChar, "referenceracialtrait", heritageTrait.getPath());
-		end
+	local rAdd = { };
+	rAdd.nodeSource = DB.findNode(sRecord);
+	if not rAdd.nodeSource then
+		return nil;
 	end
 
-	for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
-		addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
-	end
-end
+	rAdd.sSourceClass = sClass;
+	rAdd.sSourceName = StringManager.trim(DB.getValue(rAdd.nodeSource, "name", ""));
+	rAdd.nodeChar = nodeChar;
+	rAdd.sCharName = StringManager.trim(DB.getValue(nodeChar, "name", ""));
 
-function addRacialTrait(nodeChar, sClass, sRecord, nodeTargetList)
-	local nodeSource = resolveRefNode(sRecord);
-	if not nodeSource then
-		return false;
-	end
-	
-	local sTraitName = DB.getValue(nodeSource, "name", "");
-	local sTraitType = sTraitName:lower();
-	for _,v in pairs(DB.getChildren(nodeChar, "traitlist")) do
-		local sExistingTrait = DB.getValue(v, "name", ""):lower();
-		if sExistingTrait == sTraitType then
-			return false;
-		end
-	end
-	
-	handleRacialBasicTrait(nodeChar, nodeSource, nodeTargetList);
-	if sTraitType:match(RACIAL_TRAIT_ABILITY) then
-		handleRacialAbilitiesEmbedded(nodeChar, nodeSource);
-
-	elseif sTraitType:match(RACIAL_TRAIT_LANGUAGES) then
-		handleRacialLanguages(nodeChar, nodeSource);
-
-	elseif sTraitType:match(RACIAL_TRAIT_SIZE) then
-		handleRacialSize(nodeChar, nodeSource);
-	
-	elseif sTraitType:match(RACIAL_TRAIT_SPEED) then
-		handleRacialSpeed(nodeChar, nodeSource);
-	
-	elseif sTraitType:match(RACIAL_TRAIT_DARKVISION) or sTraitType:match(RACIAL_TRAIT_SUPERIORDARKVISION) then
-		handleRacialVision(nodeChar, nodeSource);
-
-	elseif sTraitType:match(RACIAL_TRAIT_LOWLIGHTVISION) then
-		handleRacialVision(nodeChar, nodeSource, true);
-		
-	elseif sTraitType:match(RACIAL_TRAIT_WEAPONFAMILIARITY) then
-		handleProficiencies (nodeChar, nodeSource);
-	else
-		if not checkForRacialAbilityInName(nodeChar, sTraitType) then
-			checkForRacialSkillBonus(nodeChar, nodeSource);
-			checkForRacialSaveBonus(nodeChar, nodeSource);
-		end
+	rAdd.sSourceType = StringManager.simplify(rAdd.sSourceName);
+	if rAdd.sSourceType == "" then
+		rAdd.sSourceType = rAdd.nodeSource.getName();
 	end
 
-	local sFormat = Interface.getString("char_message_racialtraitadd");
-	local sMsg = string.format(sFormat, DB.getValue(nodeSource, "name", ""), DB.getValue(nodeChar, "name", ""));
-	ChatManager.SystemMessage(sMsg);
-	return true;
-end
-
-function handleRacialBasicTrait(nodeChar, nodeTrait, nodeTargetList)
-	if not nodeTargetList then
-		nodeTargetList = nodeChar.createChild("traitlist");
-		if not nodeTargetList then
-			return false;
-		end
-	end
-	local nodeEntry = nodeTargetList.createChild();
-	DB.copyNode(nodeTrait, nodeEntry);
-	DB.setValue(nodeEntry, "source", "string", DB.getValue(nodeTrait, "...name", ""));
-	DB.setValue(nodeEntry, "locked", "number", 1);
-	return true;
-end
-
-function handleRacialAbilitiesEmbedded(nodeChar, nodeTrait)
-	local sText = DB.getText(nodeTrait, "text");
-	return handleRacialAbilities(nodeChar, sText);
-end
-
-function handleRacialAbilities(nodeChar, sText)
-	local aWords = StringManager.parseWords(sText:lower());
-	
-	local aIncreases = {};
-	local bChoice = false;
-	local i = 1;
-	while aWords[i] do
-		if StringManager.isNumberString(aWords[i]) then
-			local nMod = tonumber(aWords[i]) or 0;
-			if nMod ~= 0 then
-				if StringManager.contains(DataCommon.abilities, aWords[i+1]) then
-					aIncreases[aWords[i+1]] = nMod;
-				elseif StringManager.contains(DataCommon.abilities, aWords[i-1]) then
-					aIncreases[aWords[i-1]] = nMod;
-				else
-					local j = i + 1;
-					if StringManager.isWord(aWords[j], "bonus") then
-						j = j + 1;
-					end
-					if StringManager.isPhrase(aWords, j, { "to", "one", "ability", "score" }) then
-						bChoice = true;
-					end
-				end
-			end
-		end
-		i = i + 1;
-	end
-	
-	local bApplied = false;
-	for k,v in pairs(aIncreases) do
-		if StringManager.contains(DataCommon.abilities, k) then
-			local sPath = "abilities." .. k .. ".score";
-			DB.setValue(nodeChar, sPath, "number", DB.getValue(nodeChar, sPath, 10) + v);
-			bApplied = true;
-		end
-	end
-	
-	if bChoice then
-		local aAbilities = {};
-		for _,v in ipairs(DataCommon.abilities) do
-			table.insert(aAbilities, StringManager.capitalize(v));
-		end
-		local wSelect = Interface.openWindow("select_dialog", "");
-		local sTitle = Interface.getString("char_title_selectabilityincrease");
-		local sMessage = Interface.getString("char_message_selectabilityincrease");
-		wSelect.requestSelection(sTitle, sMessage, aAbilities, CharManager.onRaceAbilitySelect, nodeChar, 1);
-		bApplied = true;
-	end
-	
-	return bApplied;
-end
-
-function handleRacialLanguages(nodeChar, nodeTrait)
-	local sText = DB.getText(nodeTrait, "text");
-	local aWords = StringManager.parseWords(sText);
-	
-	local aLanguages = {};
-	local i = 1;
-	while aWords[i] do
-		if StringManager.isPhrase(aWords, i, { "begin", "play", "speaking" }) then
-			local j = i + 3;
-			while aWords[j] do
-				if GameSystem.languages[aWords[j]] then
-					table.insert(aLanguages, aWords[j]);
-				elseif not StringManager.isWord(aWords[j], "and") then
-					break;
-				end
-				j = j + 1;
-			end
-			break;
-		end
-		i = i + 1;
-	end
-
-	if #aLanguages == 0 then
-		return false;
-	end
-	
-	for _,v in ipairs(aLanguages) do
-		addLanguage(nodeChar, v);
-	end
-	return true;
-end
-
-function handleRacialSize(nodeChar, nodeTrait)
-	local sSize = "";
-	local sText = DB.getText(nodeTrait, "text"):lower();
-	if sText:match("medium") then
-		sSize = "medium";
-	elseif sText:match("small") then
-		sSize = "small";
-	end
-	
-	if sSize == "" then
-		return false;
-	end
-	
-	local sSkill = "Stealth";
-	
-	DB.setValue(nodeChar, "size", "string", StringManager.capitalize(sSize));
-	if sSize == "small" then
-		DB.setValue(nodeChar, "ac.sources.size", "number", 1);
-		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 1);
-		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 1);
-		DB.setValue(nodeChar, "attackbonus.cmb.size", "number", -1);
-		addSkillBonus(nodeChar, sSkill, 4);
-	elseif sSize == "medium" then
-		DB.setValue(nodeChar, "ac.sources.size", "number", 0);
-		DB.setValue(nodeChar, "attackbonus.melee.size", "number", 0);
-		DB.setValue(nodeChar, "attackbonus.ranged.size", "number", 0);
-		DB.setValue(nodeChar, "attackbonus.cmb.size", "number", 0);
-	end
-	return true;
-end
-
-function handleRacialSpeed(nodeChar, nodeTrait)
-	local nBaseSpeed = 0;
-	local sSpeed = DB.getText(nodeTrait, "text");
-	local sBaseSpeed = sSpeed:match("base speed of (%d+) feet");
-	if sBaseSpeed then
-		nBaseSpeed = sBaseSpeed;
-	end
-	
-	if nBaseSpeed ~= 0 then
-		DB.setValue(nodeChar, "speed.base", "number", nBaseSpeed);
-	else
-		return false;
-	end
-
-	return true;
-end
-
-function handleRacialVision(nodeChar, nodeTrait, bIgnoreText)
-	local sSenses = DB.getValue(nodeChar, "senses", "");
-	if sSenses ~= "" then
-		sSenses = sSenses .. ", ";
-	end
-	sSenses = sSenses .. DB.getValue(nodeTrait, "name", "");
-	
-	if not bIgnoreText then
-		local sText = DB.getText(nodeTrait, "text");
-		if sText then
-			local sDist = sText:match("%d+");
-			if sDist then
-				sSenses = sSenses .. " " .. sDist;
-			end
-		end
-	end
-	
-	DB.setValue(nodeChar, "senses", "string", sSenses);
-end
-
-function onRaceAbilitySelect(aSelection, nodeChar)
-	for _,sAbility in ipairs(aSelection) do
-		local k = sAbility:lower();
-		if StringManager.contains(DataCommon.abilities, k) then
-			local sPath = "abilities." .. k .. ".score";
-			DB.setValue(nodeChar, sPath, "number", DB.getValue(nodeChar, sPath, 10) + 2);
-		end
-	end
-end
-
-function checkForRacialAbilityInName(nodeChar, sTraitType)
-	local bHandled = false;
-	local aWords = StringManager.parseWords(sTraitType);
-	if #aWords > 0 then
-		local bRaceAttInName = true;
-		local i = 1;
-		while aWords[i] do
-			if not StringManager.isNumberString(aWords[i]) and not StringManager.contains(DataCommon.abilities, aWords[i]) then
-				bRaceAttInName = false;
-				break;
-			end
-			i = i + 1;
-		end
-		if bRaceAttInName then
-			bHandled = handleRacialAbilities(nodeChar, sTraitType);
-		end
-	end
-	return bHandled;
-end
-
-function checkForRacialSkillBonus(nodeChar, nodeTrait)
-	local sText = DB.getText(nodeTrait, "text", "");
-	sText = sText:gsub(" due to their fearsome nature%.", "."); -- Half-orc Intimidating
-	for sMod, sSkills in sText:gmatch("%+(%d) racial bonus on ([^.]+) checks[.;,]") do
-		local nMod = tonumber(sMod) or 0;
-		if sSkills and nMod ~= 0 then
-			local aSkills = {};
-			sSkills = sSkills:gsub(",? and ", ",");
-			aSkills = StringManager.split(sSkills, ",", true);
-			for _,vSkill in ipairs(aSkills) do
-				vSkill = vSkill:gsub(" checks$", "");
-				vSkill = vSkill:gsub(" skill$", "");
-				local sSpecialty = vSkill:match("%(%w+%)");
-				if sSpecialty then
-					vSkill = StringManager.trim(vSkill:match("[^(]*"));
-				end
-				addSkillBonus(nodeChar, vSkill, nMod, sSpecialty);
-			end
-		end
-	end
-end
-
-function checkForRacialSaveBonus(nodeChar, nodeTrait)
-	local sText = DB.getText(nodeTrait, "text", "");
-	local sMod = sText:match("%+(%d) racial bonus on all saving throws%.");
-	local nMod = tonumber(sMod) or 0;
-	if nMod ~= 0 then
-		addSaveBonus(nodeChar, "fortitude", "misc", nMod);
-		addSaveBonus(nodeChar, "reflex", "misc", nMod);
-		addSaveBonus(nodeChar, "will", "misc", nMod);
-	end
+	return rAdd;
 end
 
 function addLanguage(nodeChar, sLanguage)
