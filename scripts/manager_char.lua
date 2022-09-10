@@ -978,7 +978,7 @@ function addInfoDB(nodeChar, sClass, sRecord, nodeTargetList)
 	
 	if sClass == "referencerace" or sClass == "referenceheritage" then
 		CharRaceManager.addRace(nodeChar, sClass, sRecord);
-	elseif sClass == "referenceracialtrait" or sClass == "referenceheritagetrait" then
+	elseif sClass == "referenceracialtrait" or sClass == "referenceheritagetrait" or sClass == "referencealternate" then
 		CharRaceManager.addRacialTrait(nodeChar, sClass, sRecord);
 	elseif sClass == "referenceclass" then
 		addClass(nodeChar, sClass, sRecord);
