@@ -9,8 +9,8 @@
 	- Many thanks to Kelrugem for letting me adapt parts of his extended automation extension
 -->
 
-<root version="3.0" release="0.76">
-	<announcement text="FFd20 ruleset v0.76 (2022-September-07) for Fantasy Grounds, development by Zarestia" font="emotefont" />
+<root version="3.0" release="0.77">
+	<announcement text="FFd20 ruleset v0.77 (2022-September-10) for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
 	<description>
