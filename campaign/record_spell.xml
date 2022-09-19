@@ -9,9 +9,10 @@
 	<windowclass name="spelldesc">
 		<frame>recordsheet</frame>
 		<placement>
-			<size width="350" height="450" />
+			<size width="550" height="450" />
 		</placement>
 		<sizelimits>
+			<minimum width="550" height="450" />
 			<dynamic />
 		</sizelimits>
 		<minimize>minimized_reference</minimize>
