@@ -774,4 +774,7 @@
 	<string name="ft_empty_import_description_npc">Paste the NPC description text here.
 
 		Formatting is NOT preserved.</string>
+
+	<!-- LB -->
+	<string name="char_label_limit_break">Limit Break</string>
 </root>
