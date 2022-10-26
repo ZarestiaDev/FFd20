@@ -774,4 +774,13 @@
 	<string name="ft_empty_import_description_npc">Paste the NPC description text here.
 
 		Formatting is NOT preserved.</string>
+	
+	<!-- Custom Dice Types -->
+	<string name="drc_label_damage-type-earth">Damage: Earth</string>
+	<string name="drc_label_damage-type-holy">Damage: Holy</string>
+	<string name="drc_label_damage-type-ice">Damage: Ice</string>
+	<string name="drc_label_damage-type-non-elemental">Damage: Non-Elemental</string>
+	<string name="drc_label_damage-type-shadow">Damage: Shadow</string>
+	<string name="drc_label_damage-type-water">Damage: Water</string>
+	<string name="drc_label_damage-type-wind">Damage: Wind</string>
 </root>
