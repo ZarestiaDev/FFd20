@@ -226,18 +226,6 @@
 			<button_charclasslevel name="button_classlevel">
 				<anchored to="classframe" position="insidetopright" offset="30,18" />
 			</button_charclasslevel>
-
-			<label name="limitbreak_label">
-				<anchored position="insidebottomleft" offset="10,10" />
-				<static textres="char_label_limit_break" />
-			</label>
-			<progressbar name="limitbreak">
-				<anchored position="insidebottomleft" offset="100,10" height="20">
-					<right offset="-5" />
-				</anchored>
-				<fillcolor>D500F9</fillcolor>
-				<source><max>hp.limitbreak</max><current>hp.wounds</current></source>
-			</progressbar>
 		</sheetdata>
 	</windowclass>
 </root>

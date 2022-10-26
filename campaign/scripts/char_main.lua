@@ -27,7 +27,6 @@ function onHealthChanged()
 	local nHPWounds = DB.getValue(nodeChar, "hp.wounds", 0);
 	local nHPCurrent = nHPMax - nHPWounds;
 	DB.setValue(nodeChar, "hp.current", "number", nHPCurrent);
-	DB.setValue(nodeChar, "hp.limitbreak", "number", math.ceil(nHPMax/2));
 
 	wounds.setColor(sColor);
 	nonlethal.setColor(sColor);
