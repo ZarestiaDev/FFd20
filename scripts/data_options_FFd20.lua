@@ -5,6 +5,21 @@
 
 function onInit()
 	registerOptions();
+	registerDiceRolls();
+end
+
+function registerDiceRolls()
+	DiceRollManager.registerDamageTypeKey("earth", "earth");
+	DiceRollManager.registerDamageTypeKey("fire", "fire");
+	DiceRollManager.registerDamageTypeKey("holy", "light");
+	DiceRollManager.registerDamageTypeKey("ice", "frost");
+	DiceRollManager.registerDamageTypeKey("lightning", "lightning");
+	DiceRollManager.registerDamageTypeKey("shadow", "shadow");
+	DiceRollManager.registerDamageTypeKey("water", "water");
+	DiceRollManager.registerDamageTypeKey("wind", "storm");
+	DiceRollManager.registerDamageTypeKey("non-elemental", "arcane");
+
+	DiceRollManager.registerHealKey("life");
 end
 
 function registerOptions()

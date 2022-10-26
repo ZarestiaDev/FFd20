@@ -6,7 +6,7 @@
 function onInit()
 	local sNode = getDatabaseNode().getPath();
 	DB.addHandler(sNode, "onChildUpdate", onDataChanged);
-	onDataChanged();
+	self.onDataChanged();
 end
 
 function onClose()
@@ -15,8 +15,8 @@ function onClose()
 end
 
 function onDataChanged()
-	updateDisplay();
-	updateViews();
+	self.updateDisplay();
+	self.updateViews();
 end
 
 function updateDisplay()
@@ -37,13 +37,13 @@ function updateViews()
 	local sType = DB.getValue(getDatabaseNode(), "type", "");
 	
 	if sType == "cast" then
-		onCastChanged();
+		self.onCastChanged();
 	elseif sType == "damage" then
-		onDamageChanged();
+		self.onDamageChanged();
 	elseif sType == "heal" then
-		onHealChanged();
+		self.onHealChanged();
 	elseif sType == "effect" then
-		onEffectChanged();
+		self.onEffectChanged();
 	end
 end
 
