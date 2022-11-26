@@ -48,16 +48,14 @@ function createWidgets(name)
 	portraitwidget.setSize(72,72);
 	-- OVERWRITE END
 	
-	namewidget = addTextWidget("mini_name", "- Unnamed -");
-	namewidget.setPosition("center", 0, 36);
-	namewidget.setFrame("mini_name", 5, 2, 5, 2);
-	namewidget.setMaxWidth(65);
-	
-	statewidget = addBitmapWidget();
-	statewidget.setPosition("center", -23, -23);
-	
-	colorwidget = addBitmapWidget("charlist_pointer");
-	colorwidget.setPosition("center", 35, 16);
+	namewidget = addTextWidget({
+		font = "mini_name", text = "- Unnamed -", x = 0, y = 36, 
+		frame = "mini_name", frameoffset="5,2,5,2", w = 65 
+	});
+
+	statewidget = addBitmapWidget({ x = -23, y = -23 });
+
+	colorwidget = addBitmapWidget({ icon = "charlist_pointer", x = 35, y = 16 });
 	colorwidget.setVisible(false);
 end
 

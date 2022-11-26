@@ -23,10 +23,17 @@ function getRoll(rActor, rAction, tag)
 
 	-- Save the heal clauses in the roll structure
 	rRoll.clauses = rAction.clauses;
+
+	-- Add heal type to roll data
+	if rAction.subtype == "temp" then
+		rRoll.healtype = "temp";
+	else
+		rRoll.healtype = "health";
+	end
 	
 	-- Add the dice and modifiers
 	for _,vClause in pairs(rRoll.clauses) do
-		DiceRollManager.addHealDice(rRoll.aDice, vClause.dice);
+		DiceRollManager.addHealDice(rRoll.aDice, vClause.dice, { healtype = rRoll.healtype });
 		rRoll.nMod = rRoll.nMod + vClause.modifier;
 	end
 
@@ -106,7 +113,7 @@ function modHeal(rSource, rTarget, rRoll)
 		if (nEffectCount > 0) then
 			bEffects = true;
 			
-			DiceRollManager.addHealDice(rRoll.aDice, aAddDice, { iconcolor = "FF00FF" });
+			DiceRollManager.addHealDice(rRoll.aDice, aAddDice, { iconcolor = "FF00FF", healtype = rRoll.healtype });
 			nEffectMod = nEffectMod + nAddMod;
 			rRoll.nMod = rRoll.nMod + nAddMod;
 		end

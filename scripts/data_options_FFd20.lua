@@ -9,6 +9,7 @@ function onInit()
 end
 
 function registerDiceRolls()
+	DiceRollManager.registerDamageKey();
 	DiceRollManager.registerDamageTypeKey("earth", "earth");
 	DiceRollManager.registerDamageTypeKey("fire", "fire");
 	DiceRollManager.registerDamageTypeKey("holy", "light");
@@ -19,7 +20,13 @@ function registerDiceRolls()
 	DiceRollManager.registerDamageTypeKey("wind", "storm");
 	DiceRollManager.registerDamageTypeKey("non-elemental", "arcane");
 
-	DiceRollManager.registerHealKey("life");
+	DiceRollManager.registerDamageTypeKey("bludgeoning");
+	DiceRollManager.registerDamageTypeKey("piercing");
+	DiceRollManager.registerDamageTypeKey("slashing");
+
+	DiceRollManager.registerHealKey();
+	DiceRollManager.registerHealTypeKey("health", "light");
+	DiceRollManager.registerHealTypeKey("temp", "water");
 end
 
 function registerOptions()
