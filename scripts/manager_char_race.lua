@@ -103,7 +103,7 @@ function helperAddRaceTraitMain(rAdd)
 		handleRacialVision(rAdd);
 		
 	elseif rAdd.sSourceType == "weaponfamiliarity" then
-		handleProficiencies(rAdd);
+		CharManager.handleProficiencies(rAdd.nodeChar, rAdd.nodeSource);
 	else
 		if not checkForRacialAbilityInName(rAdd) then
 			checkForRacialSkillBonus(rAdd);
