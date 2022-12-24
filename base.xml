@@ -116,6 +116,7 @@
 	<script name="ActorManagerFFd20" file="scripts/manager_actor_FFd20.lua" />
 	<script name="CharManager" file="scripts/manager_char.lua" />
 	<script name="CharRaceManager" file="scripts/manager_char_race.lua" />
+	<script name="CharClassManager" file="scripts/manager_char_class.lua" />
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
 	<script name="EffectManagerFFd20" file="scripts/manager_effect_FFd20.lua" />
 	<script name="ItemManager2" file="scripts/manager_item2.lua" />

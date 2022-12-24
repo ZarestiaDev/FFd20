@@ -16,5 +16,5 @@ function onInit()
 end
 
 function updateValue()
-	setValue(CharManager.getClassLevelSummary(window.getDatabaseNode()));
+	setValue(CharClassManager.getClassLevelSummary(window.getDatabaseNode()));
 end

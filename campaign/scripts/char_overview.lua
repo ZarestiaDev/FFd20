@@ -14,7 +14,7 @@ function onClose()
 end
 
 function onLevelChanged()
-	CharManager.calcLevel(getDatabaseNode());
+	CharClassManager.calcLevel(getDatabaseNode());
 end
 
 function onDrop(x, y, draginfo)

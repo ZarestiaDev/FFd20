@@ -89,7 +89,7 @@
 				end
 				
 				function update()
-					setValue(CharManager.getClassLevelSummary(window.getDatabaseNode(), true));
+					setValue(ChaClassManager.getClassLevelSummary(window.getDatabaseNode(), true));
 				end
 			</script>
 		</stringc_labeled>

@@ -22,7 +22,7 @@ function linkPCClasses(nodeClass)
 		return;
 	end
 
-	DB.setValue(nodePS, "class", "string", CharManager.getClassLevelSummary(nodeClass.getParent()));
+	DB.setValue(nodePS, "class", "string", CharClassManager.getClassLevelSummary(nodeClass.getParent()));
 end
 
 function linkPCLanguages(nodeLanguages)
