@@ -91,6 +91,7 @@
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				features.update(bReadOnly);
+				archetypes.update(bReadOnly);
 			end
 		</script>
 		<sheetdata>
@@ -184,6 +185,23 @@
 				<anchored to="skillranks" position="righthigh" offset="10,0" />
 				<static textres="class_label_skillrankssuffix" />
 			</label>
+
+			<header_column name="archetypes_header">
+				<static textres="class_header_archetypes" />
+				<center />
+			</header_column>
+			<button_iedit name="archetypes_iedit">
+				<anchored to="archetypes_header" position="righthigh" offset="-20,0" />
+				<target>archetypes</target>
+			</button_iedit>
+			<button_iadd name="archetypes_iadd">
+				<anchored to="archetypes_iedit" position="lefthigh" offset="5,0" />
+				<target>archetypes</target>
+			</button_iadd>
+			<list_column name="archetypes">
+				<datasource>.classarchetypes</datasource>
+				<class>ref_class_archetype</class>
+			</list_column>
 			
 			<header_column name="classskills_header">
 				<static textres="class_header_classskills"/>
@@ -231,6 +249,25 @@
 			<string_listitem_column_name name="name">
 				<anchored offset="35,2" />
 				<empty textres="library_recordtype_empty_classfeature" />
+			</string_listitem_column_name>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_class_archetype">
+		<margins control="0,0,0,2" />
+		<script>
+			function update(bReadOnly)
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_column_right name="rightanchor" />
+			<link_listitem_column name="shortcut">
+				<class>referenceclassability</class>
+			</link_listitem_column>
+			<button_listitem_column_delete name="idelete" />
+
+			<string_listitem_column_name name="name">
+				<empty textres="library_recordtype_empty_classarchetype" />
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>

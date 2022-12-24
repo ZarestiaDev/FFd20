@@ -378,6 +378,7 @@
 	<string name="class_label_skillranks">Skill Ranks</string>
 	<string name="class_label_skillrankssuffix">+ Int Modifier (per level)</string>
 	<string name="class_header_classskills">CLASS SKILLS</string>
+	<string name="class_header_archetypes">ARCHETYPES</string>
 	<string name="class_header_features">FEATURES</string>
 
 	<!-- Encounters -->
@@ -736,6 +737,7 @@
 	<string name="power_label_effect_durunit">Units</string>
 
 	<string name="library_recordtype_empty_classfeature">&#171; New Class Feature &#187;</string>
+	<string name="library_recordtype_empty_classarchetype">&#171; New Class Archetype &#187;</string>
 	<string name="library_recordtype_empty_racialtrait">&#171; New Racial Trait &#187;</string>
 	<string name="library_recordtype_empty_alternate">&#171; New Alternate Racial Trait &#187;</string>
 	<string name="library_recordtype_empty_heritagetrait">&#171; New Heritage Trait &#187;</string>
