@@ -934,12 +934,6 @@ function updateSkillPoints(nodeChar)
 	DB.setValue(nodeChar, "skillpoints.spent", "number", nSpentTotal);
 end
 
-function updateEncumbrance(nodeChar)
-	Debug.console("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01 - Use CharEncumbranceManager.updateEncumbrance");
-	ChatManager.SystemMessage("CharManager.updateEncumbrance - DEPRECATED - 2022-02-01 - Contact forge/extension author");
-	CharEncumbranceManager.updateEncumbrance(nodeChar);
-end
-
 function hasFeat(nodeChar, sFeat)
 	if not sFeat then
 		return false;
