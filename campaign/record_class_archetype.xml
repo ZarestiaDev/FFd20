@@ -61,6 +61,8 @@
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				prerequisite.update(bReadOnly);
+				skill_replace.update(bReadOnly);
+				skill_with.update(bReadOnly);
 				text.update(bReadOnly);
 				archetypefeatures.update(bReadOnly);
 			end
@@ -72,6 +74,16 @@
 				<static textres="archetpye_label_prerequisites" />
 			</label_column>
 			<string_columnh name="prerequisite" />
+
+			<label_column name="skill_replace_label">
+				<static textres="archetype_label_replaceskills" />
+			</label_column>
+			<string_columnh name="skill_replace" />
+
+			<label_column name="skill_with_label">
+				<static textres="archetype_label_withskills" />
+			</label_column>
+			<string_columnh name="skill_with" />
 			
 			<ft_columnh name="text" />
 
@@ -89,6 +101,7 @@
 			</button_iadd>
 			<list_column name="archetypefeatures">
 				<datasource>.archetypefeatures</datasource>
+				<sortby><control>level</control><control>name</control></sortby>
 				<class>ref_class_archetypefeatures</class>
 			</list_column>
 		</sheetdata>

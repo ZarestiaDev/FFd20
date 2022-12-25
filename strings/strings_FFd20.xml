@@ -753,6 +753,8 @@
 	<string name="record_label_classfeature">Class Feature</string>
 	<string name="record_label_archetype">Class Archetype</string>
 	<string name="archetpye_label_prerequisites">Prerequisites</string>
+	<string name="archetype_label_replaceskills">Replace Skills</string>
+	<string name="archetype_label_withskills">with</string>
 	<string name="archetpye_label_replace">Replaces</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
 	<string name="record_label_alternate">Alternate Trait</string>
