@@ -199,7 +199,7 @@
 				<target>archetypes</target>
 			</button_iadd>
 			<list_column name="archetypes">
-				<datasource>.classarchetypes</datasource>
+				<datasource>.archetypes</datasource>
 				<class>ref_class_archetype</class>
 			</list_column>
 			
@@ -249,25 +249,6 @@
 			<string_listitem_column_name name="name">
 				<anchored offset="35,2" />
 				<empty textres="library_recordtype_empty_classfeature" />
-			</string_listitem_column_name>
-		</sheetdata>
-	</windowclass>
-	<windowclass name="ref_class_archetype">
-		<margins control="0,0,0,2" />
-		<script>
-			function update(bReadOnly)
-				name.setReadOnly(bReadOnly);
-			end
-		</script>
-		<sheetdata>
-			<anchor_listitem_column_right name="rightanchor" />
-			<link_listitem_column name="shortcut">
-				<class>referenceclassability</class>
-			</link_listitem_column>
-			<button_listitem_column_delete name="idelete" />
-
-			<string_listitem_column_name name="name">
-				<empty textres="library_recordtype_empty_classarchetype" />
 			</string_listitem_column_name>
 		</sheetdata>
 	</windowclass>

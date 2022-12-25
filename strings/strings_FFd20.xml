@@ -379,6 +379,7 @@
 	<string name="class_label_skillrankssuffix">+ Int Modifier (per level)</string>
 	<string name="class_header_classskills">CLASS SKILLS</string>
 	<string name="class_header_archetypes">ARCHETYPES</string>
+	<string name="class_header_archetypefeatures">ARCHETYPE FEATURES</string>
 	<string name="class_header_features">FEATURES</string>
 
 	<!-- Encounters -->
@@ -597,6 +598,7 @@
 
 	<!-- Special Abilities -->
 	<string name="specialability_empty_type">Class Feature</string>
+	<string name="archetypeability_empty_type">Archetype Feature</string>
 	
 	<!-- Deities -->
 	<string name="deity_label_titles">Titles</string>
@@ -737,7 +739,8 @@
 	<string name="power_label_effect_durunit">Units</string>
 
 	<string name="library_recordtype_empty_classfeature">&#171; New Class Feature &#187;</string>
-	<string name="library_recordtype_empty_classarchetype">&#171; New Class Archetype &#187;</string>
+	<string name="library_recordtype_empty_archetype">&#171; New Class Archetype &#187;</string>
+	<string name="library_recordtype_empty_archetypefeature">&#171; New Archetype Feature &#187;</string>
 	<string name="library_recordtype_empty_racialtrait">&#171; New Racial Trait &#187;</string>
 	<string name="library_recordtype_empty_alternate">&#171; New Alternate Racial Trait &#187;</string>
 	<string name="library_recordtype_empty_heritagetrait">&#171; New Heritage Trait &#187;</string>
@@ -748,6 +751,9 @@
 	<string name="library_recordtype_empty_talent">&#171; New Talent &#187;</string>
 	
 	<string name="record_label_classfeature">Class Feature</string>
+	<string name="record_label_archetype">Class Archetype</string>
+	<string name="archetpye_label_prerequisites">Prerequisites</string>
+	<string name="archetpye_label_replace">Replaces</string>
 	<string name="record_label_racialtrait">Racial Trait</string>
 	<string name="record_label_alternate">Alternate Trait</string>
 	<string name="record_label_heritagetrait">Heritage Trait</string>

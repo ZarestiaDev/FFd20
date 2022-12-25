@@ -78,6 +78,7 @@
 	<includefile source="campaign/record_spell.xml" />
 	
 	<includefile source="campaign/record_class.xml" />
+	<includefile source="campaign/record_class_archetype.xml" />
 	<includefile source="campaign/record_feat.xml" />
 	<includefile source="campaign/record_race.xml" />
 	<includefile source="campaign/record_race_heritage.xml" />

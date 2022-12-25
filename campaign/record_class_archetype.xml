@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <windowclass name="referencearchetype">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<sharable />
+		<script file="common/scripts/record_window.lua" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_archetype_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_archetype_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="ref_archetype_header">
+		<margins control="0,0,0,2" />
+		<script file="common/scripts/record_header_simple.lua" />
+		<sheetdata>
+			<link_record_header name="link">
+				<class>referencearchetype</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_archetype" />
+			</string_record_name>
+			<label_recordtype name="recordtype_label">
+				<static textres="record_label_archetype" />
+			</label_recordtype>	
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_archetype_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				prerequisite.update(bReadOnly);
+				text.update(bReadOnly);
+				archetypefeatures.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="prerequisite_label">
+				<static textres="archetpye_label_prerequisites" />
+			</label_column>
+			<string_columnh name="prerequisite" />
+			
+			<ft_columnh name="text" />
+
+			<header_column name="archetypefeatures_header">
+				<static textres="class_header_archetypefeatures" />
+				<center />
+			</header_column>
+			<button_iedit name="archetypefeatures_iedit">
+				<anchored to="archetypefeatures_header" position="righthigh" offset="-20,0" />
+				<target>archetypefeatures</target>
+			</button_iedit>
+			<button_iadd name="archetypefeatures_iadd">
+				<anchored to="archetypefeatures_iedit" position="lefthigh" offset="5,0" />
+				<target>archetypefeatures</target>
+			</button_iadd>
+			<list_column name="archetypefeatures">
+				<datasource>.archetypefeatures</datasource>
+				<class>ref_class_archetypefeatures</class>
+			</list_column>
+		</sheetdata>
+	</windowclass>
+
+    <windowclass name="ref_class_archetype">
+		<margins control="0,0,0,2" />
+		<script>
+			function update(bReadOnly)
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_column_right name="rightanchor" />
+			<link_listitem_column name="shortcut">
+				<class>referencearchetype</class>
+			</link_listitem_column>
+			<button_listitem_column_delete name="idelete" />
+
+			<string_listitem_column_name name="name">
+				<empty textres="library_recordtype_empty_archetype" />
+			</string_listitem_column_name>
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_class_archetypefeatures">
+		<margins control="0,0,0,2" />
+		<script>
+			function update(bReadOnly)
+				level.setReadOnly(bReadOnly);
+				name.setReadOnly(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_listitem_column_right name="rightanchor" />
+			<link_listitem_column name="shortcut">
+				<class>referencearchetpyeability</class>
+			</link_listitem_column>
+			<button_listitem_column_delete name="idelete" />
+
+			<basicnumber name="level">
+				<anchored position="insidetopleft" offset="5,2" height="20" width="20" />
+			</basicnumber>
+			<string_listitem_column_name name="name">
+				<anchored offset="35,2" />
+				<empty textres="library_recordtype_empty_archetypefeature" />
+			</string_listitem_column_name>
+		</sheetdata>
+	</windowclass>
+
+    <windowclass name="referencearchetpyeability">
+		<frame>referencepage</frame>
+		<placement>
+			<size width="400" height="350" />
+		</placement>
+		<sizelimits>
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_reference</minimize>
+		<sharable />
+		<script file="common/scripts/record_window.lua" />
+		<sheetdata>
+			<sub_ref_header name="header">
+				<class>ref_archetypeability_header</class>
+			</sub_ref_header>
+
+			<frame_ref_content />
+			<sub_ref_content name="content">
+				<class>ref_archetypeability_stats</class>
+			</sub_ref_content>
+			<scrollbar_ref_content />
+			
+			<resize_referencepage />
+			<close_referencepage />
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_archetypeability_header">
+		<margins control="0,0,0,2" />
+		<script file="common/scripts/record_header_simple.lua" />
+		<sheetdata>
+			<link_record_header name="link">
+				<class>referencearchetypeability</class>
+			</link_record_header>
+
+			<anchor_record_header_right />
+			<icon_record_locked />
+			<button_record_locked />
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_archetypefeature" />
+			</string_record_name>
+			<label_recordtype name="recordtype_label">
+				<static textres="record_label_archetypefeature" />
+			</label_recordtype>	
+		</sheetdata>
+	</windowclass>
+	<windowclass name="ref_archetypeability_stats">
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				type.update(bReadOnly);
+                replace.update(bReadOnly);
+				text.update(bReadOnly);
+			end
+		</script>
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			
+			<label_column name="type_label">
+				<static textres="type" />
+			</label_column>
+			<string_columnh name="type">
+				<empty textres="archetypeability_empty_type" />
+				<nohide />
+				<delaykeyupdate />
+			</string_columnh>
+
+            <label_column name="replace_label">
+                <static textres="archetpye_label_replace" />
+            </label_column>
+            <string_columnh name="replace" />
+			
+			<ft_columnh name="text" />
+		</sheetdata>
+	</windowclass>
+</root>
