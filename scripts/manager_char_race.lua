@@ -45,23 +45,26 @@ end
 function onRaceHeritageSelect(aSelection, rHeritageSelect)
 	local tHeritageTraits = {};
 	local sSelection = aSelection[1];
-	if sSelection ~= "None" then
-		for _,v in pairs(rHeritageSelect.tHeritages) do
-			local sHeritage = DB.getValue(v, "name", "");
-			if sHeritage == sSelection then
-				tHeritageTraits = v.getChild("heritagetraits").getChildren();
 	
-				local sFormat = Interface.getString("char_message_heritageadd");
-				local sMsg = string.format(sFormat, sHeritage, DB.getValue(rHeritageSelect.nodeChar, "name", ""));
-				ChatManager.SystemMessage(sMsg);
-				
-				DB.setValue(rHeritageSelect.nodeChar, "race", "string", DB.getValue(rHeritageSelect.nodeChar, "race", "") .. " (" .. sHeritage .. ")");
-			end
-		end
+	if sSelection == "None" then
+		return;
+	end
 	
-		for _,heritageTrait in pairs(tHeritageTraits) do
-			addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
+	for _,vHeritage in pairs(rHeritageSelect.tHeritages) do
+		local sHeritage = DB.getValue(vHeritage, "name", "");
+		if sHeritage == sSelection then
+			tHeritageTraits = vHeritage.getChild("heritagetraits").getChildren();
+			
+			local sFormat = Interface.getString("char_message_heritageadd");
+			local sMsg = string.format(sFormat, sHeritage, DB.getValue(rHeritageSelect.nodeChar, "name", ""));
+			ChatManager.SystemMessage(sMsg);
+			
+			DB.setValue(rHeritageSelect.nodeChar, "race", "string", DB.getValue(rHeritageSelect.nodeChar, "race", "") .. " (" .. sHeritage .. ")");
 		end
+	end
+	
+	for _,heritageTrait in pairs(tHeritageTraits) do
+		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
 	end
 	
 	for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
