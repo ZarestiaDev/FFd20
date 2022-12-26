@@ -231,6 +231,7 @@
 	<string name="char_message_heritageadd">Heritage '%s' added to '%s'.</string>
 	<string name="char_message_racialtraitadd">Trait '%s' added to '%s'.</string>
 	<string name="char_message_classadd">One level of class '%s' added to '%s'.</string>
+	<string name="char_message_archetypeadd">Archetype '%s' added to '%s'.</string>
 	<string name="char_message_classfeatureadd">Feature '%s' added to '%s'.</string>
 	<string name="char_message_classhpaddmax">Maximum hit points for first %s level added to '%s'.</string>
 	<string name="char_message_classhpaddavg">Average hit points for additional %s level added to '%s'.</string>
@@ -247,6 +248,8 @@
 
 	<string name="char_title_selectheritage">Select possible Heritage</string>
 	<string name="char_message_selectheritage">Choose Heritage from the list below.</string>
+	<string name="char_title_selectarchetype">Select possible Archetype</string>
+	<string name="char_message_selectarchetype">Choose Archetype from the list below.</string>
 
 	<string name="char_title_selectfavoredclass">Select Favored Class</string>
 	<string name="char_message_selectfavoredclass">Choose a favored class from the list below.</string>

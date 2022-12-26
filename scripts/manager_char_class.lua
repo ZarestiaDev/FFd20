@@ -84,16 +84,56 @@ function getCharClassRecord(nodeChar, sClassName)
 	return nil;
 end
 
+function helperAddClassArchetypeChoice(rAdd)
+	local aArchetypes = { "None" };
+	local tArchetypes = DB.getChildren(rAdd.nodeSource, "archetypes");
+
+	for _,vArchetype in pairs(tArchetypes) do
+		table.insert(aArchetypes, DB.getValue(vArchetype, "name", ""));
+	end
+
+	local wSelect = Interface.openWindow("select_dialog", "");
+	local sTitle = Interface.getString("char_title_selectarchetype");
+	local sMessage = Interface.getString("char_message_selectarchetype");
+	local rArchetypeSelect = { nodeChar = rAdd.nodeChar, tArchetypes = tArchetypes, nodeSource = rAdd.nodeSource, nodeCharClass = rAdd.nodeCharClass };
+	wSelect.requestSelection(sTitle, sMessage, aArchetypes, CharClassManager.onClassArchetypeSelect, rArchetypeSelect, 1);
+end
+function onClassArchetypeSelect(aSelection, rArchetypeSelect)
+	local tArchetypeFeatures = {};
+	local sSelection = aSelection[1];
+	
+	if sSelection == "None" then
+		return;
+	end
+	
+	for _,vArchetype in pairs(rArchetypeSelect.tArchetypes) do
+		local sArchetype = DB.getValue(vArchetype, "name", "");
+		if sArchetype == sSelection then
+			--tHeritageTraits = vArchetype.getChild("heritagetraits").getChildren();
+			
+			local sFormat = Interface.getString("char_message_archetypeadd");
+			local sMsg = string.format(sFormat, sArchetype, DB.getValue(rArchetypeSelect.nodeChar, "name", ""));
+			ChatManager.SystemMessage(sMsg);
+			
+			DB.setValue(rArchetypeSelect.nodeCharClass, "archetype", "string", sArchetype);
+		end
+	end
+	
+	-- for _,heritageTrait in pairs(tHeritageTraits) do
+	-- 	addRacialTrait(rArchetypeSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
+	-- end
+	
+	-- for _,v in pairs(DB.getChildren(rArchetypeSelect.nodeSource, "racialtraits")) do
+	-- 	addRacialTrait(rArchetypeSelect.nodeChar, "referenceracialtrait", v.getPath());
+	-- end
+end
+
 --
 
 function addClass(nodeChar, sClass, sRecord)
 	local rAdd = CharManager.helperBuildAddStructure(nodeChar, sClass, sRecord);
 	if not rAdd then
 		return;
-	end
-
-	if DB.getChildCount(rAdd.nodeSource, "archetypes") > 0 then
-		--CharClassManager.helperAddClassArchetypeChoice(rAdd);
 	end
 
 	CharClassManager.helperAddClassMain(rAdd);
@@ -104,6 +144,12 @@ function helperAddClassMain(rAdd)
 	CharManager.outputUserMessage("char_abilities_message_classadd", rAdd.sSourceName, rAdd.sCharName);
 
 	CharClassManager.helperAddClassLevel(rAdd);
+
+	-- Have to do that here
+	if DB.getChildCount(rAdd.nodeSource, "archetypes") > 0 and rAdd.nCharClassLevel == 1 then
+		CharClassManager.helperAddClassArchetypeChoice(rAdd);
+	end
+
 	CharClassManager.helperAddClassHP(rAdd);
 	CharClassManager.helperAddClassBAB(rAdd);
 	CharClassManager.helperAddClassSaves(rAdd);
