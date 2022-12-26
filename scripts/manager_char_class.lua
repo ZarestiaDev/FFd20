@@ -59,297 +59,267 @@ function getClassLevelSummary(nodeChar, bLong)
 	return sSummary;
 end
 
+function getCharLevel(nodeChar)
+	local nTotal = 0;
+	for _,v in pairs(DB.getChildren(nodeChar, "classes")) do
+		local nClassLevel = DB.getValue(v, "level", 0);
+		if nClassLevel > 0 then
+			nTotal = nTotal + nClassLevel;
+		end
+	end
+	return nTotal;
+end
+function getCharClassRecord(nodeChar, sClassName)
+	if (sClassName or "") == "" then
+		return nil;
+	end
+	local sClassNameLower = StringManager.trim(sClassName):lower();
+
+	for _,v in pairs(DB.getChildren(nodeChar, "classes")) do
+		local sMatch = StringManager.trim(DB.getValue(v, "name", "")):lower();
+		if sMatch == sClassNameLower then
+			return v;
+		end
+	end
+	return nil;
+end
+
 --
 
 function addClass(nodeChar, sClass, sRecord)
-	local nodeSource = CharManager.resolveRefNode(sRecord);
-	if not nodeSource then
+	local rAdd = CharManager.helperBuildAddStructure(nodeChar, sClass, sRecord);
+	if not rAdd then
 		return;
 	end
-	
-	local nodeList = nodeChar.createChild("classes");
-	if not nodeList then
-		return;
-	end
-	
-	local sClassName = DB.getValue(nodeSource, "name", "");
-	local sClassNameLower = StringManager.trim(sClassName):lower();
-	
-	local sFormat = Interface.getString("char_message_classadd");
-	local sMsg = string.format(sFormat, sClassName, DB.getValue(nodeChar, "name", ""));
-	ChatManager.SystemMessage(sMsg);
-	
-	-- Try and match an existing class entry, or create a new one
-	local nodeClass = nil;
-	for _,v in pairs(nodeList.getChildren()) do
-		local sExistingClassName = StringManager.trim(DB.getValue(v, "name", "")):lower();
-		if (sExistingClassName == sClassNameLower) and (sExistingClassName ~= "") then
-			nodeClass = v;
-			break;
-		end
-	end
-	local nLevel = 1;
-	local bExistingClass = false;
-	if nodeClass then
-		bExistingClass = true;
-		nLevel = DB.getValue(nodeClass, "level", 1) + 1;
-	else
-		nodeClass = nodeList.createChild();
+
+	if DB.getChildCount(rAdd.nodeSource, "archetypes") > 0 then
+		--CharClassManager.helperAddClassArchetypeChoice(rAdd);
 	end
 
-	if not bExistingClass then
-		DB.setValue(nodeClass, "name", "string", sClassName);
-	end
-	DB.setValue(nodeClass, "level", "number", nLevel);
-	DB.setValue(nodeClass, "shortcut", "windowreference", sClass, sRecord);
-
-	local nTotalLevel = 0;
-	for _,vClass in pairs(DB.getChildren(nodeChar, "classes")) do
-		nTotalLevel = nTotalLevel + DB.getValue(vClass, "level", 0);
-	end
-
-	applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel);
-	
-	for _,v in pairs(DB.getChildren(nodeSource, "classfeatures")) do
-		if DB.getValue(v, "level", 0) == nLevel then
-			addClassFeature(nodeChar, "referenceclassability", v.getPath());
-		end
-	end
-
-	addClassSpellLevel(nodeChar, sClassName);
-
-	if nTotalLevel == 1 then
-		local aClasses = {};
-			
-		local sRootMapping = LibraryData.getRootMapping("class");
-		local wIndex, bWasIndexOpen = RecordManager.openRecordIndex(sRootMapping);
-			
-		if wIndex then
-			local aMappings = LibraryData.getMappings("class");
-			for _,vMapping in ipairs(aMappings) do
-				for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
-					local sClassType = DB.getValue(vClass, "classtype");
-					if (sClassType or "") ~= "prestige" then
-						table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
-					end
-				end
-			end
-
-			if not bWasIndexOpen then
-				wIndex.close();
-			end
-		end
-			
-		table.sort(aClasses, function(a,b) return a.text < b.text end);
-			
-		local nFavoredClass = 1;
-		if CharManager.hasTrait(nodeChar, TRAIT_MULTITALENTED) then
-			nFavoredClass = nFavoredClass + 1;
-		end
-			
-		local wSelect = Interface.openWindow("select_dialog", "");
-		local sTitle = Interface.getString("char_title_selectfavoredclass");
-		local sMessage;
-		if nFavoredClass > 1 then
-			sMessage = string.format(Interface.getString("char_message_selectfavoredclasses"), nFavoredClass);
-		else
-			sMessage = Interface.getString("char_message_selectfavoredclass");
-		end
-		local rFavoredClassSelect = { nodeChar = nodeChar, sCurrentClass = sClassName, aClassesOffered = aClasses };
-		wSelect.requestSelection(sTitle, sMessage, aClasses, CharManager.onFavoredClassSelect, rFavoredClassSelect, nFavoredClass);
-	else
-		checkFavoredClassBonus(nodeChar, sClassName);
-	end
+	CharClassManager.helperAddClassMain(rAdd);
 end
 
-function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
-	local sClassType = DB.getValue(nodeSource, "classtype");
-	local sHD = StringManager.trim(DB.getValue(nodeSource, "hitdie", ""));
-	local sSpellcastingType = DB.getValue(nodeSource, "spellcasting", "");
-	local sSpellcastingStat = DB.getValue(nodeSource, "stat", "");
-	local sBAB = StringManager.trim(DB.getValue(nodeSource, "bab", "")):lower();
-	local sFort = StringManager.trim(DB.getValue(nodeSource, "fort", "")):lower();
-	local sRef = StringManager.trim(DB.getValue(nodeSource, "ref", "")):lower();
-	local sWill = StringManager.trim(DB.getValue(nodeSource, "will", "")):lower();
-	local nSkillPoints = DB.getValue(nodeSource, "skillranks", 0);
-	local sClassSkills = DB.getValue(nodeSource, "classskills", "");
-	local bPrestige = (sClassType == "prestige");
+function helperAddClassMain(rAdd)
+	-- Notification
+	CharManager.outputUserMessage("char_abilities_message_classadd", rAdd.sSourceName, rAdd.sCharName);
 
-	-- Spellcasting
-	if sSpellcastingType ~= "" and sSpellcastingStat ~= "" then
-		handleClassFeatureSpells(nodeChar, nodeClass, sSpellcastingStat, sSpellcastingType);
-	end
-
-	-- Hit points
-	local sHDMult, sHDSides = sHD:match("^(%d?)d(%d+)");
-	if sHDSides then
-		local nHDMult = tonumber(sHDMult) or 1;
-		local nHDSides = tonumber(sHDSides) or 8;
-
-		local nHP = DB.getValue(nodeChar, "hp.total", 0);
-		local nCHP = DB.getValue(nodeChar, "hp.class", 0);
-		local nAHP = DB.getValue(nodeChar, "hp.ability", 0);
-		local nConBonus = DB.getValue(nodeChar, "abilities.constitution.bonus", 0);
-		if nTotalLevel == 1 then
-			local nAddHP = (nHDMult * nHDSides);
-			nCHP = nCHP + nAddHP;
-			nAHP = nAHP + nConBonus;
-			nHP = nCHP + nAHP;
-
-			local sFormat = Interface.getString("char_message_classhpaddmax");
-			local sMsg = string.format(sFormat, DB.getValue(nodeClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. nAddHP .. "+" .. nConBonus .. ")";
-			ChatManager.SystemMessage(sMsg);
-		else
-			local nAddHP = math.floor(((nHDMult * (nHDSides + 1)) / 2) + 0.5);
-			nCHP = nCHP + nAddHP;
-			nAHP = nAHP + nConBonus;
-			nHP = nCHP + nAHP;
-
-			local sFormat = Interface.getString("char_message_classhpaddavg");
-			local sMsg = string.format(sFormat, DB.getValue(nodeClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. nAddHP .. "+" .. nConBonus .. ")";
-			ChatManager.SystemMessage(sMsg);
-		end
-		DB.setValue(nodeChar, "hp.class", "number", nCHP);
-		DB.setValue(nodeChar, "hp.ability", "number", nAHP);
-		DB.setValue(nodeChar, "hp.total", "number", nHP);
-	end
+	CharClassManager.helperAddClassLevel(rAdd);
+	CharClassManager.helperAddClassHP(rAdd);
+	CharClassManager.helperAddClassBAB(rAdd);
+	CharClassManager.helperAddClassSaves(rAdd);
+	CharClassManager.helperAddClassSkills(rAdd);
+	CharClassManager.helperAddClassFeatures(rAdd);
+end
 	
-	-- BAB
+function helperAddClassLevel(rAdd)
+	-- Check to see if the character already has this class; or create a new class entry
+	rAdd.nodeCharClass = CharClassManager.getCharClassRecord(rAdd.nodeChar, rAdd.sSourceName);
+	if not rAdd.nodeCharClass then
+		local nodeClassList = DB.createChild(rAdd.nodeChar, "classes");
+		if not nodeClassList then
+			return;
+		end
+		rAdd.nodeCharClass = DB.createChild(nodeClassList);
+		rAdd.bNewCharClass = true;
+	end
+
+	-- Add basic class information
+	if rAdd.bNewCharClass then
+		DB.setValue(rAdd.nodeCharClass, "name", "string", rAdd.sSourceName);
+		rAdd.nCharClassLevel = 1;
+	else
+		rAdd.nCharClassLevel = DB.getValue(rAdd.nodeCharClass, "level", 0) + 1;
+	end
+	DB.setValue(rAdd.nodeCharClass, "level", "number", rAdd.nCharClassLevel);
+	DB.setValue(rAdd.nodeCharClass, "shortcut", "windowreference", "referenceclass", DB.getPath(rAdd.nodeSource));
+	
+	-- Calculate total level
+	rAdd.nCharLevel = CharClassManager.getCharLevel(rAdd.nodeChar);
+end
+
+function helperAddClassHP(rAdd)
+	-- Translate Hit Die
+	local bHDFound = false;
+	local nHDMult, nHDSides;
+	local sHD = DB.getText(rAdd.nodeSource, "hitdie");
+	if sHD then
+		local sMult, sSides = sHD:match("(%d?)d(%d+)");
+		nHDMult = tonumber(sMult) or 1;
+		nHDSides = tonumber(sSides) or 8;
+		bHDFound = true;
+	end
+	if not bHDFound then
+		CharManager.outputUserMessage("char_error_addclasshd");
+	end
+
+	-- Add hit points based on level added
+	local nHP = DB.getValue(rAdd.nodeChar, "hp.total", 0);
+	local nCHP = DB.getValue(rAdd.nodeChar, "hp.class", 0);
+	local nAHP = DB.getValue(rAdd.nodeChar, "hp.ability", 0);
+	local nConBonus = DB.getValue(rAdd.nodeChar, "abilities.constitution.bonus", 0);
+	local nAddHP;
+
+	if rAdd.nCharLevel == 1 then
+		nAddHP = (nHDMult * nHDSides);
+		CharManager.outputUserMessage("char_abilities_message_hpaddmax", rAdd.sSourceName, rAdd.sCharName, nAddHP);
+	else
+		nAddHP = math.floor(((nHDMult * (nHDSides + 1)) / 2) + 0.5);
+		CharManager.outputUserMessage("char_abilities_message_hpaddavg", rAdd.sSourceName, rAdd.sCharName, nAddHP);
+	end
+
+	nCHP = nCHP + nAddHP;
+	nAHP = nAHP + nConBonus;
+	nHP = nCHP + nAHP;
+
+	DB.setValue(rAdd.nodeChar, "hp.class", "number", nCHP);
+	DB.setValue(rAdd.nodeChar, "hp.ability", "number", nAHP);
+	DB.setValue(rAdd.nodeChar, "hp.total", "number", nHP);
+end
+
+function helperAddClassBAB(rAdd)
+	local sBAB = StringManager.trim(DB.getValue(rAdd.nodeSource, "bab", "")):lower();
 	if StringManager.contains({ CLASS_BAB_FAST, CLASS_BAB_MEDIUM, CLASS_BAB_SLOW }, sBAB) then
 		local nAddBAB = 0;
 		if sBAB == CLASS_BAB_FAST then
 			nAddBAB = 1;
 		elseif sBAB == CLASS_BAB_MEDIUM then
-			if nLevel % 4 ~= 1 then
+			if rAdd.nCharClassLevel % 4 ~= 1 then
 				nAddBAB = 1;
 			end
 		elseif sBAB == CLASS_BAB_SLOW then
-			if nLevel % 2 == 0 then
+			if rAdd.nCharClassLevel % 2 == 0 then
 				nAddBAB = 1;
 			end
 		end
 		
 		if nAddBAB > 0 then
-			DB.setValue(nodeChar, "attackbonus.base", "number", DB.getValue(nodeChar, "attackbonus.base", 0) + nAddBAB);
-			local sFormat = Interface.getString("char_message_classbabadd");
-			local sMsg = string.format(sFormat, DB.getValue(nodeChar, "name", "")) .. " (+" .. nAddBAB .. ")";
+			DB.setValue(rAdd.nodeChar, "attackbonus.base", "number", DB.getValue(rAdd.nodeChar, "attackbonus.base", 0) + nAddBAB);
 		end
 	end
-	
-	-- Saves
+end
+
+function helperAddClassSaves(rAdd)
+	local sClassType = DB.getValue(rAdd.nodeSource, "classtype");
+	local sFort = StringManager.trim(DB.getValue(rAdd.nodeSource, "fort", "")):lower();
+	local sRef = StringManager.trim(DB.getValue(rAdd.nodeSource, "ref", "")):lower();
+	local sWill = StringManager.trim(DB.getValue(rAdd.nodeSource, "will", "")):lower();
+	local bPrestige = (sClassType == "prestige");
+
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sFort) then
 		local nAddSave = 0;
 		if sFort == CLASS_SAVE_GOOD then
 			if bPrestige then
-				if nLevel % 2 == 1 then
+				if rAdd.nCharClassLevel % 2 == 1 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel == 1 then
+				if rAdd.nCharClassLevel == 1 then
 					nAddSave = 2;
-				elseif nLevel % 2 == 0 then
+				elseif rAdd.nCharClassLevel % 2 == 0 then
 					nAddSave = 1;
 				end
 			end
 		elseif sFort == CLASS_SAVE_BAD then
 			if bPrestige then
-				if nLevel % 3 == 2 then
+				if rAdd.nCharClassLevel % 3 == 2 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel % 3 == 0 then
+				if rAdd.nCharClassLevel % 3 == 0 then
 					nAddSave = 1;
 				end
 			end
 		end
 		
 		if nAddSave > 0 then
-			CharManager.addSaveBonus(nodeChar, "fortitude", "base", nAddSave);
+			CharManager.addSaveBonus(rAdd.nodeChar, "fortitude", "base", nAddSave);
 		end
 	end
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sRef) then
 		local nAddSave = 0;
 		if sRef == CLASS_SAVE_GOOD then
 			if bPrestige then
-				if nLevel % 2 == 1 then
+				if rAdd.nCharClassLevel % 2 == 1 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel == 1 then
+				if rAdd.nCharClassLevel == 1 then
 					nAddSave = 2;
-				elseif nLevel % 2 == 0 then
+				elseif rAdd.nCharClassLevel % 2 == 0 then
 					nAddSave = 1;
 				end
 			end
 		elseif sRef == CLASS_SAVE_BAD then
 			if bPrestige then
-				if nLevel % 3 == 2 then
+				if rAdd.nCharClassLevel % 3 == 2 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel % 3 == 0 then
+				if rAdd.nCharClassLevel % 3 == 0 then
 					nAddSave = 1;
 				end
 			end
 		end
 		
 		if nAddSave > 0 then
-			CharManager.addSaveBonus(nodeChar, "reflex", "base", nAddSave);
+			CharManager.addSaveBonus(rAdd.nodeChar, "reflex", "base", nAddSave);
 		end
 	end
 	if StringManager.contains({ CLASS_SAVE_GOOD, CLASS_SAVE_BAD }, sWill) then
 		local nAddSave = 0;
 		if sWill == CLASS_SAVE_GOOD then
 			if bPrestige then
-				if nLevel % 2 == 1 then
+				if rAdd.nCharClassLevel % 2 == 1 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel == 1 then
+				if rAdd.nCharClassLevel == 1 then
 					nAddSave = 2;
-				elseif nLevel % 2 == 0 then
+				elseif rAdd.nCharClassLevel % 2 == 0 then
 					nAddSave = 1;
 				end
 			end
 		elseif sWill == CLASS_SAVE_BAD then
 			if bPrestige then
-				if nLevel % 3 == 2 then
+				if rAdd.nCharClassLevel % 3 == 2 then
 					nAddSave = 1;
 				end
 			else
-				if nLevel % 3 == 0 then
+				if rAdd.nCharClassLevel % 3 == 0 then
 					nAddSave = 1;
 				end
 			end
 		end
 		
 		if nAddSave > 0 then
-			CharManager.addSaveBonus(nodeChar, "will", "base", nAddSave);
+			CharManager.addSaveBonus(rAdd.nodeChar, "will", "base", nAddSave);
 		end
 	end
+end
+
+function helperAddClassSkills(rAdd)
+	local nSkillPoints = DB.getValue(rAdd.nodeSource, "skillranks", 0);
+	local sClassSkills = DB.getValue(rAdd.nodeSource, "classskills", "");
 	
 	-- Skill Points
 	if nSkillPoints > 0 then
-		local nSkillAbilityScore = DB.getValue(nodeChar, "abilities.intelligence.score", 10);
+		local nSkillAbilityScore = DB.getValue(rAdd.nodeChar, "abilities.intelligence.score", 10);
 		local nAbilitySkillPoints = math.floor((nSkillAbilityScore - 10) / 2);
 		local nBonusSkillPoints = 0;
-		if CharManager.hasTrait(nodeChar, "Skilled") then
+		if CharManager.hasTrait(rAdd.nodeChar, "Skilled") then
 			nBonusSkillPoints = nBonusSkillPoints + 1;
 		end
 		
-		DB.setValue(nodeClass, "skillranks", "number", DB.getValue(nodeClass, "skillranks", 0) + nSkillPoints + nAbilitySkillPoints + nBonusSkillPoints);
+		DB.setValue(rAdd.nodeCharClass, "skillranks", "number", DB.getValue(rAdd.nodeCharClass, "skillranks", 0) + nSkillPoints + nAbilitySkillPoints + nBonusSkillPoints);
 		
 		local sPoints = tostring(nSkillPoints) .. "+" .. tostring(nAbilitySkillPoints);
 		if nBonusSkillPoints > 0 then
 			sPoints = sPoints .. "+" .. nBonusSkillPoints;
 		end
-		local sFormat = Interface.getString("char_message_classskillranksadd");
-		local sMsg = string.format(sFormat, DB.getValue(nodeClass, "name", ""), DB.getValue(nodeChar, "name", "")) .. " (" .. sPoints .. ")";
-		ChatManager.SystemMessage(sMsg);
 	end
 	
 	-- Class Skills
-	if nLevel == 1 and sClassSkills ~= "" then
+	if rAdd.nCharClassLevel == 1 and sClassSkills ~= "" then
 		local aClassSkillsAdded = {};
 		
 		sClassSkills = sClassSkills:gsub(" and ", "");
@@ -362,20 +332,30 @@ function applyClassStats(nodeChar, nodeClass, nodeSource, nLevel, nTotalLevel)
 			end
 			local sSkill = vSkill:match("[^(]+%w");
 			if sSkill then
-				if addClassSkill(nodeChar, sSkill, vSkill:match("%(([^)]+)%)")) then
+				if CharClassManager.addClassSkill(rAdd.nodeChar, sSkill, vSkill:match("%(([^)]+)%)")) then
 					table.insert(aClassSkillsAdded, vSkill);
 				end
 			end
 		end
-		
-		if #aClassSkillsAdded > 0 then
-			local sFormat = Interface.getString("char_message_classskillsadd");
-			local sMsg = string.format(sFormat, DB.getValue(nodeChar, "name", "")) .. " (" .. table.concat(aClassSkillsAdded, ", ") .. ")";
-			ChatManager.SystemMessage(sMsg);
+	end
+end
+
+function helperAddClassSpellcasting(rAdd)
+	rAdd.sSpellcastingType = DB.getValue(rAdd.nodeSource, "spellcasting", "");
+	rAdd.sSpellcastingStat = DB.getValue(rAdd.nodeSource, "stat", "");
+
+	-- Spellcasting
+	if rAdd.sSpellcastingType ~= "" and rAdd.sSpellcastingStat ~= "" then
+		handleClassFeatureSpells(rAdd);
+	end
+end
+
+function helperAddClassFeatures(rAdd)
+	for _,vFeature in pairs(DB.getChildren(rAdd.nodeSource, "classfeatures")) do
+		if DB.getValue(vFeature, "level", 0) == rAdd.nCharClassLevel then
+			CharClassManager.addClassFeature(rAdd.nodeChar, "referenceclassability", vFeature.getPath());
 		end
 	end
-	
-	return aClassStats;
 end
 
 function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
@@ -469,24 +449,24 @@ function handleClassFeatureDomains(nodeChar, nodeFeature)
 	return true;
 end
 
-function handleClassFeatureSpells(nodeChar, nodeClass, sAbility, sType)
-	local sClassName = DB.getValue(nodeClass, "name", "");
-	local nodeSpellClassList = nodeChar.createChild("spellset");
+function handleClassFeatureSpells(rAdd)
+	local sClassName = DB.getValue(rAdd.nodeCharClass, "name", "");
+	local nodeSpellClassList = rAdd.nodeChar.createChild("spellset");
 	local nCount = nodeSpellClassList.getChildCount();
 
 	if nCount == 0 then
 		local nodeNewSpellClass = nodeSpellClassList.createChild();
 		DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
-		DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
-		DB.setValue(nodeNewSpellClass, "type", "string", sType);
+		DB.setValue(nodeNewSpellClass, "dc.ability", "string", rAdd.sSpellcastingStat);
+		DB.setValue(nodeNewSpellClass, "type", "string", rAdd.sSpellcastingType);
 	else
 		for _,v in pairs(nodeSpellClassList.getChildren()) do
 			local sExistingClassName = DB.getValue(v, "label", "");
 			if sClassName ~= sExistingClassName then
 				local nodeNewSpellClass = nodeSpellClassList.createChild();
 				DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
-				DB.setValue(nodeNewSpellClass, "dc.ability", "string", sAbility);
-				DB.setValue(nodeNewSpellClass, "type", "string", sType);
+				DB.setValue(nodeNewSpellClass, "dc.ability", "string", rAdd.sSpellcastingStat);
+				DB.setValue(nodeNewSpellClass, "type", "string", rAdd.sSpellcastingType);
 			end
 		end
 	end
