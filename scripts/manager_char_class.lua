@@ -100,6 +100,7 @@ end
 function onClassArchetypeSelect(aSelection, rAdd)
 	local sSelection = aSelection[1];
 	if sSelection == "None" then
+		CharClassManager.helperAddClassMain(rAdd);
 		return;
 	end
 	
@@ -113,37 +114,15 @@ function onClassArchetypeSelect(aSelection, rAdd)
 			DB.setValue(rAdd.nodeCharClass, "archetype", "string", sArchetype);
 		end
 	end
-	
-	local sArchetype = DB.getValue(rAdd.nodeCharClass, "archetype", "");
-	if sArchetype == "" then
-		return;
-	end
 
 	for _,vNodeArchetype in pairs(DB.getChildren(DB.getChild(rAdd.nodeSource, "archetypes"))) do
-		if sArchetype == DB.getValue(vNodeArchetype, "name") then
+		if DB.getValue(rAdd.nodeCharClass, "archetype", "") == DB.getValue(vNodeArchetype, "name", "") then
 			rAdd.nodeArchetype = vNodeArchetype;
 			break;
 		end
 	end
 
-	CharClassManager.archetypeReplaceSkills(rAdd);
-		-- Replacing features at levels (immer, wenn levelup und passendes level)
-end
-
-function archetypeReplaceSkills(rAdd)
-	local sReplace = DB.getValue(rAdd.nodeArchetype, "skill_replace", "");
-	if sReplace == "" then
-		return;
-	end
-
-	local sWith = DB.getValue(rAdd.nodeArchetype, "skill_with", "");
-	local splitReplace = StringManager.split(sReplace, ",", true);
-	local splitWith = StringManager.split(sReplace, ",", true);
-
-	-- for _,vskill in ipairs(split) do
-	-- 		removeSkill(vSkill)
-	-- end
-	-- SAME but addSkill(vSKill)
+	CharClassManager.helperAddClassMain(rAdd);
 end
 
 --
@@ -154,20 +133,20 @@ function addClass(nodeChar, sClass, sRecord)
 		return;
 	end
 
-	CharClassManager.helperAddClassMain(rAdd);
-end
-
-function helperAddClassMain(rAdd)
 	-- Notification
 	CharManager.outputUserMessage("char_abilities_message_classadd", rAdd.sSourceName, rAdd.sCharName);
 
 	CharClassManager.helperAddClassLevel(rAdd);
 
-	-- Have to do that here
+	-- We have to intercept because we might want to change skills and features based on archetype
 	if DB.getChildCount(rAdd.nodeSource, "archetypes") > 0 and rAdd.nCharClassLevel == 1 then
 		CharClassManager.helperAddClassArchetypeChoice(rAdd);
+	else
+		CharClassManager.helperAddClassMain(rAdd);
 	end
+end
 
+function helperAddClassMain(rAdd)
 	CharClassManager.helperAddClassHP(rAdd);
 	CharClassManager.helperAddClassBAB(rAdd);
 	CharClassManager.helperAddClassSaves(rAdd);
@@ -362,8 +341,32 @@ function helperAddClassSaves(rAdd)
 end
 
 function helperAddClassSkills(rAdd)
+	-- Potential Archetype skills
+	local sArchetypeSkillReplace = "";
+	local sArchetypeSkillWith = "";
+
+	if rAdd.nodeArchetype then
+		sArchetypeSkillReplace = DB.getValue(rAdd.nodeArchetype, "skill.replace", "");
+		sArchetypeSkillWith = DB.getValue(rAdd.nodeArchetype, "skill.with", "");
+	end
+
 	local nSkillPoints = DB.getValue(rAdd.nodeSource, "skillranks", 0);
 	local sClassSkills = DB.getValue(rAdd.nodeSource, "classskills", "");
+
+	if sArchetypeSkillReplace ~= "" then
+		sArchetypeSkillReplace = sArchetypeSkillReplace:gsub("%s?and", ",");
+	end
+	if sArchetypeSkillReplace:match(",") then
+		for _,vSkillReplace in ipairs(StringManager.split(sArchetypeSkillReplace, ",", true)) do
+			vSkillReplace = vSkillReplace:gsub("%(", "%%(");
+			vSkillReplace = vSkillReplace:gsub("%)", "%%)");
+			sClassSkills = sClassSkills:gsub(vSkillReplace, "");
+		end
+	end
+	if sArchetypeSkillWith ~= "" then
+		sArchetypeSkillWith = sArchetypeSkillWith:gsub("%s?and", ",");
+		sClassSkills = sClassSkills .. ", " .. sArchetypeSkillWith;
+	end
 	
 	-- Skill Points
 	if nSkillPoints > 0 then

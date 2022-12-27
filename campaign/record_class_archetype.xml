@@ -78,12 +78,12 @@
 			<label_column name="skill_replace_label">
 				<static textres="archetype_label_replaceskills" />
 			</label_column>
-			<string_columnh name="skill_replace" />
+			<string_columnh name="skill_replace" source="skill.replace" />
 
 			<label_column name="skill_with_label">
 				<static textres="archetype_label_withskills" />
 			</label_column>
-			<string_columnh name="skill_with" />
+			<string_columnh name="skill_with" source="skill.with" />
 			
 			<ft_columnh name="text" />
 
