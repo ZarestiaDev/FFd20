@@ -86,46 +86,64 @@ end
 
 function helperAddClassArchetypeChoice(rAdd)
 	local aArchetypes = { "None" };
-	local tArchetypes = DB.getChildren(rAdd.nodeSource, "archetypes");
+	rAdd.tArchetypes = DB.getChildren(rAdd.nodeSource, "archetypes");
 
-	for _,vArchetype in pairs(tArchetypes) do
+	for _,vArchetype in pairs(rAdd.tArchetypes) do
 		table.insert(aArchetypes, DB.getValue(vArchetype, "name", ""));
 	end
 
 	local wSelect = Interface.openWindow("select_dialog", "");
 	local sTitle = Interface.getString("char_title_selectarchetype");
 	local sMessage = Interface.getString("char_message_selectarchetype");
-	local rArchetypeSelect = { nodeChar = rAdd.nodeChar, tArchetypes = tArchetypes, nodeSource = rAdd.nodeSource, nodeCharClass = rAdd.nodeCharClass };
-	wSelect.requestSelection(sTitle, sMessage, aArchetypes, CharClassManager.onClassArchetypeSelect, rArchetypeSelect, 1);
+	wSelect.requestSelection(sTitle, sMessage, aArchetypes, CharClassManager.onClassArchetypeSelect, rAdd, 1);
 end
-function onClassArchetypeSelect(aSelection, rArchetypeSelect)
-	local tArchetypeFeatures = {};
+function onClassArchetypeSelect(aSelection, rAdd)
 	local sSelection = aSelection[1];
-	
 	if sSelection == "None" then
 		return;
 	end
 	
-	for _,vArchetype in pairs(rArchetypeSelect.tArchetypes) do
+	for _,vArchetype in pairs(rAdd.tArchetypes) do
 		local sArchetype = DB.getValue(vArchetype, "name", "");
 		if sArchetype == sSelection then
-			--tHeritageTraits = vArchetype.getChild("heritagetraits").getChildren();
-			
 			local sFormat = Interface.getString("char_message_archetypeadd");
-			local sMsg = string.format(sFormat, sArchetype, DB.getValue(rArchetypeSelect.nodeChar, "name", ""));
+			local sMsg = string.format(sFormat, sArchetype, DB.getValue(rAdd.nodeChar, "name", ""));
 			ChatManager.SystemMessage(sMsg);
 			
-			DB.setValue(rArchetypeSelect.nodeCharClass, "archetype", "string", sArchetype);
+			DB.setValue(rAdd.nodeCharClass, "archetype", "string", sArchetype);
 		end
 	end
 	
-	-- for _,heritageTrait in pairs(tHeritageTraits) do
-	-- 	addRacialTrait(rArchetypeSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
+	local sArchetype = DB.getValue(rAdd.nodeCharClass, "archetype", "");
+	if sArchetype == "" then
+		return;
+	end
+
+	for _,vNodeArchetype in pairs(DB.getChildren(DB.getChild(rAdd.nodeSource, "archetypes"))) do
+		if sArchetype == DB.getValue(vNodeArchetype, "name") then
+			rAdd.nodeArchetype = vNodeArchetype;
+			break;
+		end
+	end
+
+	CharClassManager.archetypeReplaceSkills(rAdd);
+		-- Replacing features at levels (immer, wenn levelup und passendes level)
+end
+
+function archetypeReplaceSkills(rAdd)
+	local sReplace = DB.getValue(rAdd.nodeArchetype, "skill_replace", "");
+	if sReplace == "" then
+		return;
+	end
+
+	local sWith = DB.getValue(rAdd.nodeArchetype, "skill_with", "");
+	local splitReplace = StringManager.split(sReplace, ",", true);
+	local splitWith = StringManager.split(sReplace, ",", true);
+
+	-- for _,vskill in ipairs(split) do
+	-- 		removeSkill(vSkill)
 	-- end
-	
-	-- for _,v in pairs(DB.getChildren(rArchetypeSelect.nodeSource, "racialtraits")) do
-	-- 	addRacialTrait(rArchetypeSelect.nodeChar, "referenceracialtrait", v.getPath());
-	-- end
+	-- SAME but addSkill(vSKill)
 end
 
 --
