@@ -557,6 +557,14 @@
 				<center />
 				<static textres="char_label_classlevel" />
 			</label>
+			<label name="archetype_label">
+				<anchored to="labelanchor" width="100">
+					<top />
+					<right anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<center />
+				<static textres="char_label_archetype" />
+			</label>
 			<label name="class_label">
 				<anchored to="labelanchor">
 					<top />
@@ -699,6 +707,13 @@
 					<right anchor="left" relation="relative" offset="-10" />
 				</anchored>
 			</basicnumber>
+			<string_textlistitem name="archetype">
+				<anchored width="100">
+					<top parent="rightanchor" offset="0" />
+					<right parent="level" anchor="left" relation="relative" offset="-10" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</string_textlistitem>
 			<string_textlistitem name="name">
 				<anchored>
 					<top parent="rightanchor" offset="0" />

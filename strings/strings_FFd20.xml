@@ -268,6 +268,7 @@
 	<string name="char_classes_title">Class &amp; Level</string>
 	<string name="char_label_totallevel">Total Level</string>
 	<string name="char_label_class">Class</string>
+	<string name="char_label_archetype">Archetype</string>
 	<string name="char_label_classlevel">Level</string>
 	<string name="char_label_classskillranks">Skill Ranks</string>
 	<string name="char_label_classskillrankstotal">Total</string>
