@@ -460,10 +460,10 @@
 	<windowclass name="charsheet_classes">
 		<frame>charsheethelper</frame>
 		<placement>
-			<size width="400" height="350" />
+			<size width="450" height="350" />
 		</placement>
 		<sizelimits>
-			<minimum width="400" height="350" />
+			<minimum width="450" height="350" />
 			<dynamic />
 		</sizelimits>
 		<script file="campaign/scripts/char_classes.lua" />
@@ -662,21 +662,6 @@
 				</anchored>
 				<disabled />
 			</genericcontrol>
-			<linkfield name="shortcut">
-				<anchored to="rightanchor" width="20" height="20">
-					<top />
-					<right anchor="left" />
-				</anchored>
-				<script>
-					function onInit()
-						onValueChanged();
-					end
-					
-					function onValueChanged()
-						setVisible(not isEmpty());
-					end
-				</script>
-			</linkfield>
 			<button_idelete name="idelete">
 				<anchored to="rightanchor">
 					<top />
@@ -714,6 +699,21 @@
 				</anchored>
 				<multilinespacing>20</multilinespacing>
 			</string_textlistitem>
+			<linkfield name="shortcutarchetype">
+				<anchored to="archetype" width="20" height="20">
+					<top />
+					<right anchor="right" />
+				</anchored>
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					
+					function onValueChanged()
+						setVisible(not isEmpty());
+					end
+				</script>
+			</linkfield>
 			<string_textlistitem name="name">
 				<anchored>
 					<top parent="rightanchor" offset="0" />
@@ -722,6 +722,21 @@
 				</anchored>
 				<multilinespacing>20</multilinespacing>
 			</string_textlistitem>
+			<linkfield name="shortcut">
+				<anchored to="name" width="20" height="20">
+					<top />
+					<right anchor="right" />
+				</anchored>
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					
+					function onValueChanged()
+						setVisible(not isEmpty());
+					end
+				</script>
+			</linkfield>
 		</sheetdata>
 	</windowclass>
 	

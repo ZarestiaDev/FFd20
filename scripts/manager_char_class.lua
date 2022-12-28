@@ -118,6 +118,7 @@ function onClassArchetypeSelect(aSelection, rAdd)
 	for _,vNodeArchetype in pairs(DB.getChildren(DB.getChild(rAdd.nodeSource, "archetypes"))) do
 		if DB.getValue(rAdd.nodeCharClass, "archetype", "") == DB.getValue(vNodeArchetype, "name", "") then
 			rAdd.nodeArchetype = vNodeArchetype;
+			DB.setValue(rAdd.nodeCharClass, "shortcutarchetype", "windowreference", "referencearchetype", DB.getPath(rAdd.nodeArchetype));
 			break;
 		end
 	end
