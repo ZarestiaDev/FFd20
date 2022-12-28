@@ -209,10 +209,21 @@
 				<description field="name" />
 				<readonly />
 			</linkcontrol>
+			<label name="source">
+				<anchored width="80">
+					<top offset="2" />
+					<left offset="5" />
+				</anchored>
+				<script>
+					function onFirstLayout()
+						setValue(DB.getValue(window.getDatabaseNode(), "source", ""));
+					end
+				</script>
+			</label>
 			<string_textlistitem name="name">
 				<anchored>
 					<top offset="2" />
-					<left offset="5" />
+					<left parent="source" anchor="right" offset="10" />
 					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 				<multilinespacing>20</multilinespacing>
