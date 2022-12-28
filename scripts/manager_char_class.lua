@@ -436,7 +436,7 @@ function helperAddClassFeatures(rAdd)
 					local sClassFeatureName = DB.getValue(vFeature, "name", "");
 					local sArchetypeFeatureReplace = DB.getValue(vArchetypeFeature, "replace", "");
 					if sArchetypeFeatureReplace == sClassFeatureName then
-						CharClassManager.addClassFeature(rAdd.nodeChar, "referencearchetypeability", vArchetypeFeature.getPath());
+						CharClassManager.addClassFeature(rAdd.nodeChar, "referenceclassability", vArchetypeFeature.getPath());
 						bReplaced = true;
 						break;
 					end

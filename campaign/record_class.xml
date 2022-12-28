@@ -307,6 +307,7 @@
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				type.update(bReadOnly);
+				replace.update(bReadOnly);
 				text.update(bReadOnly);
 			end
 		</script>
@@ -321,6 +322,11 @@
 				<nohide />
 				<delaykeyupdate />
 			</string_columnh>
+
+			<label_column name="replace_label">
+                <static textres="archetpye_label_replace" />
+            </label_column>
+            <string_columnh name="replace" />
 			
 			<ft_columnh name="text" />
 		</sheetdata>
