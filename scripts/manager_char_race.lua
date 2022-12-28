@@ -28,7 +28,7 @@ function addRace(nodeChar, sClass, sRecord)
 end
 
 function handleRacialHeritage(rAdd)
-	local aHeritages = { "None" };
+	local aHeritages = { "Base Race" };
 	local tHeritages = DB.getChildren(rAdd.nodeSource, "heritages");
 
 	for _,v in pairs(tHeritages) do
@@ -46,7 +46,10 @@ function onRaceHeritageSelect(aSelection, rHeritageSelect)
 	local tHeritageTraits = {};
 	local sSelection = aSelection[1];
 	
-	if sSelection == "None" then
+	if sSelection == "Base Race" then
+		for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
+			addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", v.getPath());
+		end
 		return;
 	end
 	

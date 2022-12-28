@@ -85,7 +85,7 @@ function getCharClassRecord(nodeChar, sClassName)
 end
 
 function helperAddClassArchetypeChoice(rAdd)
-	local aArchetypes = { "None" };
+	local aArchetypes = { "Base Class" };
 	rAdd.tArchetypes = DB.getChildren(rAdd.nodeSource, "archetypes");
 
 	for _,vArchetype in pairs(rAdd.tArchetypes) do
@@ -99,7 +99,7 @@ function helperAddClassArchetypeChoice(rAdd)
 end
 function onClassArchetypeSelect(aSelection, rAdd)
 	local sSelection = aSelection[1];
-	if sSelection == "None" then
+	if sSelection == "Base Class" then
 		CharClassManager.helperAddClassMain(rAdd);
 		return;
 	end
