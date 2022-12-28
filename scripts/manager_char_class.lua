@@ -178,6 +178,17 @@ function helperAddClassLevel(rAdd)
 	
 	-- Calculate total level
 	rAdd.nCharLevel = CharClassManager.getCharLevel(rAdd.nodeChar);
+
+	-- Get existing archetype on level-up
+	if DB.getValue(rAdd.nodeCharClass, "archetype", "") == "" then
+		return;
+	end
+	for _,vNodeArchetype in pairs(DB.getChildren(DB.getChild(rAdd.nodeSource, "archetypes"))) do
+		if DB.getValue(rAdd.nodeCharClass, "archetype", "") == DB.getValue(vNodeArchetype, "name", "") then
+			rAdd.nodeArchetype = vNodeArchetype;
+			break;
+		end
+	end
 end
 
 function helperAddClassHP(rAdd)
@@ -342,8 +353,7 @@ end
 
 function helperAddClassSkills(rAdd)
 	-- Potential Archetype skills
-	local sArchetypeSkillReplace = "";
-	local sArchetypeSkillWith = "";
+	local sArchetypeSkillReplace, sArchetypeSkillWith = "", "";
 
 	if rAdd.nodeArchetype then
 		sArchetypeSkillReplace = DB.getValue(rAdd.nodeArchetype, "skill.replace", "");
@@ -420,7 +430,21 @@ end
 function helperAddClassFeatures(rAdd)
 	for _,vFeature in pairs(DB.getChildren(rAdd.nodeSource, "classfeatures")) do
 		if DB.getValue(vFeature, "level", 0) == rAdd.nCharClassLevel then
-			CharClassManager.addClassFeature(rAdd.nodeChar, "referenceclassability", vFeature.getPath());
+			local bReplaced = false;
+			for _,vArchetypeFeature in pairs(DB.getChildren(rAdd.nodeArchetype, "archetypefeatures")) do
+				if DB.getValue(vArchetypeFeature, "level", 0) == rAdd.nCharClassLevel then
+					local sClassFeatureName = DB.getValue(vFeature, "name", "");
+					local sArchetypeFeatureReplace = DB.getValue(vArchetypeFeature, "replace", "");
+					if sArchetypeFeatureReplace == sClassFeatureName then
+						CharClassManager.addClassFeature(rAdd.nodeChar, "referencearchetypeability", vArchetypeFeature.getPath());
+						bReplaced = true;
+						break;
+					end
+				end
+			end
+			if not bReplaced then
+				CharClassManager.addClassFeature(rAdd.nodeChar, "referenceclassability", vFeature.getPath());
+			end
 		end
 	end
 end
