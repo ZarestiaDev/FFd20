@@ -180,7 +180,7 @@ function addClass(nodeChar, sClass, sRecord)
 	end
 
 	-- Notification
-	CharManager.outputUserMessage("char_abilities_message_classadd", rAdd.sSourceName, rAdd.sCharName);
+	CharManager.outputUserMessage("char_message_classadd", rAdd.sSourceName, rAdd.sCharName);
 
 	CharClassManager.helperAddClassLevel(rAdd);
 	CharClassManager.helperAddClassFavoredChoice(rAdd);
@@ -263,10 +263,10 @@ function helperAddClassHP(rAdd)
 
 	if rAdd.nCharLevel == 1 then
 		nAddHP = (nHDMult * nHDSides);
-		CharManager.outputUserMessage("char_abilities_message_hpaddmax", rAdd.sSourceName, rAdd.sCharName, nAddHP);
+		CharManager.outputUserMessage("char_message_classhpaddmax", rAdd.sSourceName, rAdd.sCharName, nAddHP);
 	else
 		nAddHP = math.floor(((nHDMult * (nHDSides + 1)) / 2) + 0.5);
-		CharManager.outputUserMessage("char_abilities_message_hpaddavg", rAdd.sSourceName, rAdd.sCharName, nAddHP);
+		CharManager.outputUserMessage("char_message_classhpaddavg", rAdd.sSourceName, rAdd.sCharName, nAddHP);
 	end
 
 	nCHP = nCHP + nAddHP;

@@ -242,6 +242,7 @@
 	<string name="char_message_savebonusadd">%+d bonus added to '%s' saving throw for '%s'.</string>
 	<string name="char_message_languageadd">Language '%s' added to '%s'.</string>
 	<string name="char_error_missingrecord">Unable to find record to match link dropped. Check to make sure the correct modules are open.</string>
+	<string name="char_error_addclasshd">Unable to find class hit die type (assuming d8).</string>
 
 	<string name="char_title_selectabilityincrease">Select Ability Score</string>
 	<string name="char_message_selectabilityincrease">Choose ability from the list below to increase.</string>
