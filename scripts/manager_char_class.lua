@@ -126,6 +126,51 @@ function onClassArchetypeSelect(aSelection, rAdd)
 	CharClassManager.helperAddClassMain(rAdd);
 end
 
+function helperAddClassFavoredChoice(rAdd)
+	if rAdd.nCharLevel ~= 1 then
+		CharClassManager.checkFavoredClassBonus(rAdd.nodeChar, rAdd.sSourceName);
+		return;
+	end
+	local aClasses = {};
+	
+	local sRootMapping = LibraryData.getRootMapping("class");
+	local wIndex, bWasIndexOpen = RecordManager.openRecordIndex(sRootMapping);
+	
+	if wIndex then
+		local aMappings = LibraryData.getMappings("class");
+		for _,vMapping in ipairs(aMappings) do
+			for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
+				local sClassType = DB.getValue(vClass, "classtype");
+				if (sClassType or "") ~= "prestige" then
+					table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
+				end
+			end
+		end
+		
+		if not bWasIndexOpen then
+			wIndex.close();
+		end
+	end
+	
+	table.sort(aClasses, function(a,b) return a.text < b.text end);
+	
+	local nFavoredClass = 1;
+	if CharManager.hasTrait(rAdd.nodeChar, TRAIT_MULTITALENTED) then
+		nFavoredClass = nFavoredClass + 1;
+	end
+	
+	local wSelect = Interface.openWindow("select_dialog", "");
+	local sTitle = Interface.getString("char_title_selectfavoredclass");
+	local sMessage;
+	if nFavoredClass > 1 then
+		sMessage = string.format(Interface.getString("char_message_selectfavoredclasses"), nFavoredClass);
+	else
+		sMessage = Interface.getString("char_message_selectfavoredclass");
+	end
+	local rFavoredClassSelect = { nodeChar = rAdd.nodeChar, sCurrentClass = rAdd.sSourceName, aClassesOffered = aClasses };
+	wSelect.requestSelection(sTitle, sMessage, aClasses, CharClassManager.onFavoredClassSelect, rFavoredClassSelect, nFavoredClass);
+end
+
 --
 
 function addClass(nodeChar, sClass, sRecord)
@@ -138,6 +183,7 @@ function addClass(nodeChar, sClass, sRecord)
 	CharManager.outputUserMessage("char_abilities_message_classadd", rAdd.sSourceName, rAdd.sCharName);
 
 	CharClassManager.helperAddClassLevel(rAdd);
+	CharClassManager.helperAddClassFavoredChoice(rAdd);
 
 	-- We have to intercept because we might want to change skills and features based on archetype
 	if DB.getChildCount(rAdd.nodeSource, "archetypes") > 0 and rAdd.nCharClassLevel == 1 then
@@ -606,7 +652,7 @@ function onFavoredClassSelect(aSelection, rFavoredClassSelect)
 			table.insert(aClassToAdd, vClassSelect);
 		end
 	end
-	checkFavoredClassBonus(rFavoredClassSelect.nodeChar, rFavoredClassSelect.sCurrentClass);
+	CharClassManager.checkFavoredClassBonus(rFavoredClassSelect.nodeChar, rFavoredClassSelect.sCurrentClass);
 	for _,vClassToAdd in ipairs(aClassToAdd) do
 		local nodeList = rFavoredClassSelect.nodeChar.createChild("classes");
 		if nodeList then
@@ -639,7 +685,7 @@ function checkFavoredClassBonus(nodeChar, sClassName)
 		local sTitle = Interface.getString("char_title_selectfavoredclassbonus");
 		local sMessage = Interface.getString("char_message_selectfavoredclassbonus");
 		local rFavoredClassBonusSelect = { nodeChar = nodeChar, sCurrentClass = sClassName };
-		wSelect.requestSelection(sTitle, sMessage, aOptions, CharManager.onFavoredClassBonusSelect, rFavoredClassBonusSelect, 1);
+		wSelect.requestSelection(sTitle, sMessage, aOptions, CharClassManager.onFavoredClassBonusSelect, rFavoredClassBonusSelect, 1);
 		bApplied = true;
 	end
 end
@@ -654,7 +700,7 @@ function onFavoredClassBonusSelect(aSelection, rFavoredClassBonusSelect)
 		local sMsg = string.format(Interface.getString("char_message_favoredclasshpadd"), DB.getValue(rFavoredClassBonusSelect.nodeChar, "name", ""));
 		ChatManager.SystemMessage(sMsg);
 	elseif aSelection[1] == Interface.getString("char_value_favoredclassskillbonus") then
-		local nodeClass = getClassNode(rFavoredClassBonusSelect.nodeChar, rFavoredClassBonusSelect.sCurrentClass);
+		local nodeClass = CharManager.getClassNode(rFavoredClassBonusSelect.nodeChar, rFavoredClassBonusSelect.sCurrentClass);
 		if nodeClass then
 			DB.setValue(nodeClass, "skillranks", "number", DB.getValue(nodeClass, "skillranks", 0) + 1);
 		end
