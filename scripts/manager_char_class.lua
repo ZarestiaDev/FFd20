@@ -153,6 +153,7 @@ function helperAddClassMain(rAdd)
 	CharClassManager.helperAddClassSaves(rAdd);
 	CharClassManager.helperAddClassSkills(rAdd);
 	CharClassManager.helperAddClassFeatures(rAdd);
+	CharClassManager.helperAddClassSpellcasting(rAdd);
 end
 	
 function helperAddClassLevel(rAdd)
@@ -424,7 +425,8 @@ function helperAddClassSpellcasting(rAdd)
 
 	-- Spellcasting
 	if rAdd.sSpellcastingType ~= "" and rAdd.sSpellcastingStat ~= "" then
-		handleClassFeatureSpells(rAdd);
+		CharClassManager.handleClassFeatureSpells(rAdd);
+		CharClassManager.addClassSpellLevel(rAdd);
 	end
 end
 
@@ -467,7 +469,7 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 		if not CharManager.handleDuplicateFeatures(nodeChar, nodeSource, sFeatureType, nodeTargetList) then
 			bCreateFeatureEntry = true;
 			if sFeatureType:match(CLASS_FEATURE_DOMAINS) then
-				handleClassFeatureDomains(nodeChar, nodeSource);
+				CharClassManager.handleClassFeatureDomains(nodeChar);
 			end
 		end
 	end
@@ -533,7 +535,7 @@ function addClassSkill(nodeChar, sSkill, sParens)
 	end
 end
 
-function handleClassFeatureDomains(nodeChar, nodeFeature)
+function handleClassFeatureDomains(nodeChar)
 	local nodeSpellClassList = nodeChar.createChild("spellset");
 	local nodeNewSpellClass = nodeSpellClassList.createChild();
 	DB.setValue(nodeNewSpellClass, "label", "string", CLASS_FEATURE_DOMAIN_SPELLS);
@@ -562,19 +564,17 @@ function handleClassFeatureSpells(rAdd)
 			end
 		end
 	end
-	return true;
 end
 
-function addClassSpellLevel(nodeChar, sClassName)
-	for _,v in pairs(DB.getChildren(nodeChar, "spellset")) do
-		if DB.getValue(v, "label", "") == sClassName then
-			addClassSpellLevelHelper(v);
+function addClassSpellLevel(rAdd)
+	for _,v in pairs(DB.getChildren(rAdd.nodeChar, "spellset")) do
+		if DB.getValue(v, "label", "") == rAdd.sSourceName then
+			CharClassManager.addClassSpellLevelHelper(v);
 		end
 	end
 end
 
 function addClassSpellLevelHelper(nodeSpellClass)
-	local nCL = DB.getValue(nodeSpellClass, "cl", 0) + 1;
 	local nClassLevel = DB.getValue(nodeSpellClass, "classlevel", 0) + 1;
 	local sType = DB.getValue(nodeSpellClass, "type", "");
 	local tClassSpellLvl = {
@@ -583,12 +583,11 @@ function addClassSpellLevelHelper(nodeSpellClass)
 		["Full"] = {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,9,9}
 	}
 	-- Increment caster level
-	DB.setValue(nodeSpellClass, "cl", "number", nCL);
+	DB.setValue(nodeSpellClass, "cl", "number", DB.getValue(nodeSpellClass, "cl", 0) + 1);
 	DB.setValue(nodeSpellClass, "classlevel", "number", nClassLevel);
 
 	-- Set available spell level
 	local nSpellLevel = tClassSpellLvl[sType][nClassLevel];
-
 	DB.setValue(nodeSpellClass, "availablelevel", "number", nSpellLevel);
 end
 
