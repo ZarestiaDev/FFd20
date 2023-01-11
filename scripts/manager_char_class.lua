@@ -191,6 +191,14 @@ function addClass(nodeChar, sClass, sRecord)
 	else
 		CharClassManager.helperAddClassMain(rAdd);
 	end
+
+	-- Add 1 Hero Point if levelup above char level 1
+	if rAdd.nCharLevel > 1 then
+		local nCur = DB.getValue(rAdd.nodeChar, "heropoint", 1);
+		if nCur < 3 then
+			DB.setValue(rAdd.nodeChar, "heropoint", "number", nCur + 1);
+		end
+	end
 end
 
 function helperAddClassMain(rAdd)

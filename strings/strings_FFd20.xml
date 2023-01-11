@@ -275,6 +275,11 @@
 	<string name="char_label_exp">XP</string>
 	<string name="char_label_expneeded">XP Needed</string>
 
+	<string name="char_label_heropoint">HP</string>
+	<string name="char_label_heropoint_tooltip">Hero Points</string>
+	<string name="char_label_useheropoint_tooltip">Use Hero Point</string>
+	<string name="char_message_usedheropoint">Use 1 Hero Point.</string>
+
 	<!-- Character - Combat -->
 	<string name="char_label_combatbase">Base</string>
 	<string name="char_label_combatability">Stat</string>
