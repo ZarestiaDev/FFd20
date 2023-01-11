@@ -62,11 +62,7 @@ function registerOptions()
 	OptionsManager.registerOption2("HRXP", false, "option_header_houserule", "option_label_HRXP", "option_entry_cycler", 
 			{ labels = "option_val_slow|option_val_medium|option_val_fast", values = "slow|medium|fast", baselabel = "option_val_off", baseval = "off", default = "off" });
 
-	OptionsManager.registerOption2("GFP", false, "option_header_optional", "option_label_GFP", "option_entry_cycler",
-			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 	OptionsManager.registerOption2("HP", false, "option_header_optional", "option_label_HP", "option_entry_cycler",
-			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
-	OptionsManager.registerOption2("MITR", false, "option_header_optional", "option_label_MITR", "option_entry_cycler",
 			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 	OptionsManager.registerOption2("RL", false, "option_header_optional", "option_label_RL", "option_entry_cycler",
 			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
@@ -75,7 +71,5 @@ function registerOptions()
 	OptionsManager.registerOption2("SHP", false, "option_header_optional", "option_label_SHP", "option_entry_cycler",
 			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 	OptionsManager.registerOption2("VMP", false, "option_header_optional", "option_label_VMP", "option_entry_cycler",
-			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
-	OptionsManager.registerOption2("VM", false, "option_header_optional", "option_label_VM", "option_entry_cycler",
 			{ labels = "option_val_on", values = "on", baselabel = "option_val_off", baseval = "off", default = "off" });
 end
