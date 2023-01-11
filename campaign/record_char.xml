@@ -206,7 +206,7 @@
 				<anchored height="57">
 					<top parent="overviewframe" anchor="bottom" />
 					<left parent="raceframe" anchor="right" />
-					<right offset="-50" />
+					<right />
 				</anchored>
 			</frame_char>
 			<stringc_charclasslevel name="classlevel">
@@ -234,6 +234,7 @@
 					<left parent="classframe" anchor="right" />
 					<right />
 				</anchored>
+				<invisible />
 			</frame_char>
 			<basicnumber name="heropoint">
 				<anchored to="heropointframe" position="insidetopleft" offset="14,22" width="22" height="20" />
@@ -243,6 +244,7 @@
 				<nodrag />
 				<nodrop />
 				<tooltip><textres>char_label_useheropoint_tooltip</textres></tooltip>
+				<cursor hover="hand" />
 				<script>
 					function onDoubleClick(x, y)
 						local nodeChar = window.getDatabaseNode();
@@ -251,16 +253,18 @@
 						if nCur == 0 then
 							return;
 						end
-						
+
 						DB.setValue(nodeChar, "heropoint", "number", nCur - 1);
 						ChatManager.Message(Interface.getString("char_message_usedheropoint"), true, ActorManager.resolveActor(nodeChar));
 					end
 				</script>
+				<invisible />
 			</basicnumber>
 			<label_fieldtop name="heropoint_label">
 				<anchored to="heropoint" />
 				<static textres="char_label_heropoint" />
 				<tooltip><textres>char_label_heropoint_tooltip</textres></tooltip>
+				<invisible />
 			</label_fieldtop>
 		</sheetdata>
 	</windowclass>

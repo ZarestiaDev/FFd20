@@ -193,7 +193,7 @@ function addClass(nodeChar, sClass, sRecord)
 	end
 
 	-- Add 1 Hero Point if levelup above char level 1
-	if rAdd.nCharLevel > 1 then
+	if rAdd.nCharLevel > 1 and OptionsManager.getOption("HP") == "on" then
 		local nCur = DB.getValue(rAdd.nodeChar, "heropoint", 1);
 		if nCur < 3 then
 			DB.setValue(rAdd.nodeChar, "heropoint", "number", nCur + 1);

@@ -6,10 +6,13 @@
 function onInit()
 	updateAdd();
 	onLevelChanged();
+	OptionsManager.registerCallback("HP", onHeroPoints);
+	onHeroPoints();
 	DB.addHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
 end
 
 function onClose()
+	OptionsManager.unregisterCallback("HP", onHeroPoints);
 	DB.removeHandler(DB.getPath(getDatabaseNode(), "classes"), "onChildUpdate", onLevelChanged);
 end
 
@@ -36,4 +39,22 @@ function updateAdd()
 	if DB.getValue(nodeChar, "deitylink", "") == "referencedeity" then
 		deity_add.setVisible(false);
 	end
+end
+
+function onHeroPoints()
+	local bVisible = false;
+	local nOffset = 0;
+
+	if OptionsManager.getOption("HP") == "on" then
+		bVisible = true;
+		nOffset = -50;
+	else
+		bVisible = false;
+		nOffset = 0;
+	end
+
+	heropointframe.setVisible(bVisible);
+	heropoint.setVisible(bVisible);
+	heropoint_label.setVisible(bVisible);
+	classframe.setAnchor("right", "", "right", "", nOffset);
 end
