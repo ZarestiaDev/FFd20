@@ -134,21 +134,6 @@
 		</button_stringcycler>
 	</template>
 
-	<template name="button_toggledetail">
-		<buttoncontrol>
-			<anchored width="20" height="20" />
-			<state icon="button_details" />
-			<state icon="button_details_down" />
-			<script>
-				function onValueChanged()
-					if window.toggleDetail then
-						window.toggleDetail();
-					end
-				end
-			</script>
-		</buttoncontrol>
-	</template>
-
 	<template name="button_enc_refreshcr">
 		<buttoncontrol>
 			<anchored width="23" height="23">

@@ -11,7 +11,7 @@ function getSkillDescNode()
 	
 	local aMappings = LibraryData.getMappings("skill");
 	for _,vMapping in ipairs(aMappings) do
-		for _,vNode in pairs(DB.getChildrenGlobal(vMapping)) do
+		for _,vNode in ipairs(DB.getChildrenGlobal(vMapping)) do
 			if StringManager.strip(DB.getValue(vNode, "name", "")) == sStripName then
 				return vNode;
 			end

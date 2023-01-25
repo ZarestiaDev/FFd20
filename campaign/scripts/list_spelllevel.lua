@@ -6,16 +6,16 @@
 function onInit()
 	local node = getDatabaseNode();
 	if node then
-		node.createChild("level0");
-		node.createChild("level1");
-		node.createChild("level2");
-		node.createChild("level3");
-		node.createChild("level4");
-		node.createChild("level5");
-		node.createChild("level6");
-		node.createChild("level7");
-		node.createChild("level8");
-		node.createChild("level9");
+		DB.createChild(node, "level0");
+		DB.createChild(node, "level1");
+		DB.createChild(node, "level2");
+		DB.createChild(node, "level3");
+		DB.createChild(node, "level4");
+		DB.createChild(node, "level5");
+		DB.createChild(node, "level6");
+		DB.createChild(node, "level7");
+		DB.createChild(node, "level8");
+		DB.createChild(node, "level9");
 	end
 end
 
@@ -42,9 +42,9 @@ function onDrop(x, y, draginfo)
 		local node = winLevel.getDatabaseNode();
 		if node then
 			local nodeSource = draginfo.getDatabaseNode();
-			local nodeNew = SpellManager.addSpell(nodeSource, node.getChild("..."), DB.getValue(node, "level"));
+			local nodeNew = SpellManager.addSpell(nodeSource, DB.getChild(node, "..."), DB.getValue(node, "level"));
 			if nodeNew then
-				nodeSource.delete();
+				DB.deleteNode(nodeSource);
 				winLevel.spells.setVisible(true);
 			end
 		end
@@ -56,7 +56,7 @@ function onDrop(x, y, draginfo)
 		local node = winLevel.getDatabaseNode();
 		if node then
 			local nodeSource = draginfo.getDatabaseNode();
-			local nodeNew = SpellManager.addSpell(nodeSource, node.getChild("..."), DB.getValue(node, "level"));
+			local nodeNew = SpellManager.addSpell(nodeSource, DB.getChild(node, "..."), DB.getValue(node, "level"));
 			if nodeNew then
 				winLevel.spells.setVisible(true);
 			end
@@ -72,7 +72,7 @@ function onDrop(x, y, draginfo)
 			local node = winLevel.getDatabaseNode();
 			if node then
 				local nodeSource = DB.findNode(sSource);
-				local nodeNew = SpellManager.addSpell(nodeSource, node.getChild("..."), DB.getValue(node, "level"));
+				local nodeNew = SpellManager.addSpell(nodeSource, DB.getChild(node, "..."), DB.getValue(node, "level"));
 				if nodeNew then
 					winLevel.spells.setVisible(true);
 				end

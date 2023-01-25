@@ -136,9 +136,9 @@
 				<script>
 					function onSourceUpdate()
 						local nMaxMod = -1;
-						local bMaxActive = sources["encumbrance.armormaxstatbonusactive"].getValue();
+						local bMaxActive = DB.getValue(sources["encumbrance.armormaxstatbonusactive"]);
 						if bMaxActive &gt; 0 then
-							nMaxMod = sources["encumbrance.armormaxstatbonus"].getValue();
+							nMaxMod = DB.getValue(sources["encumbrance.armormaxstatbonus"]);
 						end
 
 						local nAbility = getAbilityBonus(nMaxMod);

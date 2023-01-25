@@ -4,15 +4,13 @@
 --
 
 function onInit()
-	local nodeChar = window.getDatabaseNode();
-	if nodeChar then
-		local nodeClass = nodeChar.createChild("classes");
-		if nodeClass then
-			nodeClass.onChildUpdate = updateValue;
-		end
-	end
+	DB.addHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", updateValue);
 
 	updateValue();
+end
+
+function onClose()
+	DB.removeHandler(DB.getPath(window.getDatabaseNode(), "classes"), "onChildUpdate", updateValue);
 end
 
 function updateValue()

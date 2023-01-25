@@ -191,7 +191,7 @@
 				<bounds>22,8,12,12</bounds>
 				<script>
 					function onValueChanged()
-						CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
+					CharManager.updateSkillPoints(DB.getChild(window.getDatabaseNode(), "..."));
 					end
 				</script>
 			</button_checkbox>

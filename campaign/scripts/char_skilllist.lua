@@ -9,7 +9,7 @@ function onInit()
 	constructDefaultSkills();
 	CharManager.updateSkillPoints(window.getDatabaseNode());
 
-	local nodeChar = getDatabaseNode().getParent();
+	local nodeChar = DB.getParent(getDatabaseNode());
 	DB.addHandler(DB.getPath(nodeChar, "abilities"), "onChildUpdate", onStatUpdate);
 	
 	DB.addHandler(DB.getPath(nodeChar, "skilllist"), "onChildAdded", onSkillDataUpdate);
@@ -17,7 +17,7 @@ function onInit()
 end
 
 function onClose()
-	local nodeChar = getDatabaseNode().getParent();
+	local nodeChar = DB.getParent(getDatabaseNode());
 	DB.removeHandler(DB.getPath(nodeChar, "abilities"), "onChildUpdate", onStatUpdate);
 	
 	DB.removeHandler(DB.getPath(nodeChar, "skilllist"), "onChildAdded", onSkillDataUpdate);

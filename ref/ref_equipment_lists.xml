@@ -11,7 +11,7 @@
 		<placement><size width="200" height="200" /></placement>
 		<script>
 			function onInit()
-				local sModule = DB.getModule(getDatabaseNode());
+				local sModule = UtilityManager.getNodeModule(getDatabaseNode());
 				ListManager.toggleRecordView("item", "weapon", "reference.weapon@" .. sModule);
 				close();
 			end
@@ -24,7 +24,7 @@
 		<placement><size width="200" height="200" /></placement>
 		<script>
 			function onInit()
-				local sModule = DB.getModule(getDatabaseNode());
+				local sModule = UtilityManager.getNodeModule(getDatabaseNode());
 				ListManager.toggleRecordView("item", "armor", "reference.armor@" .. sModule);
 				close();
 			end
@@ -37,7 +37,7 @@
 		<placement><size width="200" height="200" /></placement>
 		<script>
 			function onInit()
-				local sModule = DB.getModule(getDatabaseNode());
+				local sModule = UtilityManager.getNodeModule(getDatabaseNode());
 				local sPath = "reference.equipment@" .. sModule;
 				local w = Interface.findWindow("reference_list", sPath);
 				if not w then

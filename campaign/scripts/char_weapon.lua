@@ -7,25 +7,17 @@ function onInit()
 	registerMenuItem(Interface.getString("menu_deleteweapon"), "delete", 4);
 	registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 4, 3);
 	
-	local sNode = getDatabaseNode().getPath();
-	DB.addHandler(sNode, "onChildUpdate", onDataChanged);
-	onDataChanged();
+	self.onDataChanged();
+	DB.addHandler(getDatabaseNode(), "onChildUpdate", onDataChanged);
+end
+function onClose()
+	DB.removeHandler(getDatabaseNode(), "onChildUpdate", onDataChanged);
 end
 
 function onMenuSelection(selection, subselection)
 	if selection == 4 and subselection == 3 then
-		local node = getDatabaseNode();
-		if node then
-			node.delete();
-		else
-			close();
-		end
+		UtilityManager.safeDeleteWindow(self);
 	end
-end
-
-function onClose()
-	local sNode = getDatabaseNode().getPath();
-	DB.removeHandler(sNode, "onChildUpdate", onDataChanged);
 end
 
 local m_sClass = "";
@@ -69,11 +61,11 @@ end
 
 function onDamageChanged()
 	local nodeWeapon = getDatabaseNode();
-	local nodeChar = nodeWeapon.getChild("...")
+	local nodeChar = DB.getChild(nodeWeapon, "...")
 	local rActor = ActorManager.resolveActor(nodeChar);
 	
 	local aDamage = {};
-	local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeWeapon, "damagelist"));
+	local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeWeapon, "damagelist");
 	for _,v in ipairs(aDamageNodes) do
 		local aDice = DB.getValue(v, "dice", {});
 		local nMod = DB.getValue(v, "bonus", 0);

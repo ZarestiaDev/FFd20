@@ -1466,7 +1466,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags
 				local aActualDamageTypes = StringManager.split(table.concat(aTempDamageTypes, ","), ",", true);
 					
 				-- Check target's effects for regeneration effects that match
-				for _,v in pairs(DB.getChildren(nodeTargetCT, "effects")) do
+				for _,v in ipairs(DB.getChildList(nodeTargetCT, "effects")) do
 					local nActive = DB.getValue(v, "isactive", 0);
 					if (nActive == 1) then
 						local bMatch = false;

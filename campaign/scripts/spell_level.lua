@@ -11,7 +11,7 @@ function onInit()
 		return;
 	end
 	
-	local nLevel = tonumber(string.sub(node.getName(), 6)) or 0;
+	local nLevel = tonumber(string.sub(DB.getName(node), 6)) or 0;
 	DB.setValue(node, "level", "number", nLevel);
 
 	updateLabel();

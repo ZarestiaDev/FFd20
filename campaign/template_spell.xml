@@ -6,12 +6,10 @@
 -->
 
 <root>
-	<template name="list_spellitem">
+	<template name="list_spellclass">
 		<windowlist>
-			<noscroll />
-			<datasource>.spells</datasource>
-			<sortby><field>name</field></sortby>
-			<script file="campaign/scripts/list_spell.lua" />
+			<datasource>.spellset</datasource>
+			<script file="campaign/scripts/list_spellclass.lua" />
 		</windowlist>
 	</template>
 	<template name="list_spelllevel">
@@ -21,31 +19,13 @@
 			<script file="campaign/scripts/list_spelllevel.lua" />
 		</windowlist>
 	</template>
-	<template name="list_spellclass">
+	<template name="list_spellitem">
 		<windowlist>
-			<datasource>.spellset</datasource>
-			<script file="campaign/scripts/list_spellclass.lua" />
+			<noscroll />
+			<datasource>.spells</datasource>
+			<sortby><field>name</field></sortby>
+			<script file="campaign/scripts/list_spell.lua" />
 		</windowlist>
-	</template>
-
-	<template name="button_spellactionheader_mini">
-		<button_roll>
-			<bounds>1,1,20,20</bounds>
-			<script>
-				function action(draginfo)
-					SpellManager.onSpellAction(draginfo, window.getDatabaseNode());
-				end
-				
-				function onButtonPress()
-					action();
-				end
-				
-				function onDragStart(button, x, y, draginfo)
-					action(draginfo);
-					return true;
-				end
-			</script>
-		</button_roll>
 	</template>
 
 	<template name="button_cc">
@@ -53,7 +33,7 @@
 			<script>
 				function action(draginfo)
 					local nodeSpellClass = window.getDatabaseNode();
-					local rActor = ActorManager.resolveActor(nodeSpellClass.getChild("..."));
+					local rActor = ActorManager.resolveActor(DB.getChild(nodeSpellClass, "..."));
 					GameSystem.performConcentrationCheck(draginfo, rActor, nodeSpellClass);
 				end
 				
@@ -67,75 +47,6 @@
 				end
 			</script>
 		</button_roll>
-	</template>
-	
-	<template name="button_spellaction">
-		<button_roll>
-			<script>
-				function action(draginfo)
-					local sSubRoll = nil;
-					if subroll then
-						sSubRoll = subroll[1];
-					end
-					
-					SpellManager.onSpellAction(draginfo, window.getDatabaseNode(), sSubRoll);
-				end
-
-				function onButtonPress()
-					action();
-				end
-				
-				function onDragStart(button, x, y, draginfo)
-					action(draginfo);
-					return true;
-				end
-			</script>
-		</button_roll>
-	</template>
-	<template name="string_spellactionview">
-		<simplestringc>
-			<anchored height="20" />
-			<frame name="fieldlight" offset="7,5,7,5" />
-			<center />
-			<nodrag />
-			<readonly />
-			<cursor hover="hand" />
-			<script>
-				function action(draginfo)
-					local sSubRoll = nil;
-					if subroll then
-						sSubRoll = subroll[1];
-					end
-					
-					SpellManager.onSpellAction(draginfo, window.getDatabaseNode(), sSubRoll);
-				end
-
-				function onDoubleClick(x, y)
-					action();
-					return true;
-				end
-				
-				function onDragStart(button, x, y, draginfo)
-					action(draginfo);
-					return true;
-				end
-			</script>
-		</simplestringc>
-	</template>
-	<template name="button_poweractioneditor">
-		<buttoncontrol>
-			<anchored width="20" height="20">
-				<top />
-				<right parent="" offset="-20" />
-			</anchored>
-			<state icon="button_details" pressed="button_details_down" />
-			<script>
-				function onButtonPress()
-					local w = Interface.openWindow(editor[1], window.getDatabaseNode());
-					w.main.subwindow.name.setValue(DB.getValue(window.getDatabaseNode(), "...name", ""));
-				end
-			</script>
-		</buttoncontrol>
 	</template>
 
 	<template name="number_spelldc">
@@ -163,47 +74,6 @@
 		<basicnumber>
 			<anchored width="26" height="20" />
 		</basicnumber>
-	</template>
-	
-	<template name="string_spell">
-		<basicstring>
-			<script>
-				function onEnter()
-					if window.windowlist and window.windowlist.onEnter then
-						return window.windowlist.onEnter();
-					end
-				end
-			</script>
-		</basicstring>
-	</template>
-	
-	<template name="icon_usepower">
-		<buttoncontrol>
-			<anchored width="10" height="10" />
-			<icon normal="spell_cast" />
-			<script>
-				function onButtonPress()
-					window.usePower();
-				end
-			</script>
-		</buttoncontrol>
-	</template>
-	
-	<template name="dice_spell_action">
-		<basicdice>
-			<script>
-				function onInit()
-					super.onInit();
-					registerMenuItem(Interface.getString("menu_dieclear"), "erase", 4);
-				end
-				
-				function onMenuSelection(selection)
-					if selection == 4 then
-						reset();
-					end
-				end
-			</script>
-		</basicdice>
 	</template>
 
 	<template name="string_weaponactionview">

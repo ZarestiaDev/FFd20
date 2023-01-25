@@ -159,18 +159,17 @@
 					<right anchor="left" offset="-5" />
 				</anchored>
 			</button_idelete>
-			<buttoncontrol name="activatedetail">
+			<button_details name="activatedetail">
 				<anchored to="rightanchor" width="20" height="20">
 					<top />
 					<right anchor="left" relation="relative" offset="-3" />
 				</anchored>
-				<state icon="button_details" pressed="button_details_down" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("char_weapon_editor", window.getDatabaseNode());
 					end
 				</script>
-			</buttoncontrol>
+			</button_details>
 
 			<simplestringc name="damageview">
 				<anchored to="rightanchor" width="100">

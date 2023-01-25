@@ -17,7 +17,7 @@ CLASS_FEATURE_DOMAIN_SPELLS = "Domain Spells";
 function calcLevel(nodeChar)
 	local nLevel = 0;
 	
-	for _,nodeChild in pairs(DB.getChildren(nodeChar, "classes")) do
+	for _,nodeChild in ipairs(DB.getChildList(nodeChar, "classes")) do
 		nLevel = nLevel + DB.getValue(nodeChild, "level", 0);
 	end
 	
@@ -25,7 +25,7 @@ function calcLevel(nodeChar)
 end
 
 function sortClasses(a,b)
-	return a.getName() < b.getName();
+	return DB.getName(a) < DB.getName(b);
 end
 
 function getClassLevelSummary(nodeChar, bLong)
@@ -36,7 +36,7 @@ function getClassLevelSummary(nodeChar, bLong)
 	local aClasses = {};
 
 	local aSorted = {};
-	for _,nodeChild in pairs(DB.getChildren(nodeChar, "classes")) do
+	for _,nodeChild in ipairs(DB.getChildList(nodeChar, "classes")) do
 		table.insert(aSorted, nodeChild);
 	end
 	table.sort(aSorted, sortClasses);
@@ -139,10 +139,10 @@ function helperAddClassFavoredChoice(rAdd)
 	if wIndex then
 		local aMappings = LibraryData.getMappings("class");
 		for _,vMapping in ipairs(aMappings) do
-			for _,vClass in pairs(DB.getChildrenGlobal(vMapping)) do
+			for _,vClass in ipairs(DB.getChildrenGlobal(vMapping)) do
 				local sClassType = DB.getValue(vClass, "classtype");
 				if (sClassType or "") ~= "prestige" then
-					table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = vClass.getPath() });
+					table.insert(aClasses, { text = DB.getValue(vClass, "name", ""), linkclass = "referenceclass", linkrecord = DB.getPath(vClass) });
 				end
 			end
 		end
@@ -529,12 +529,12 @@ function addClassFeature(nodeChar, sClass, sRecord, nodeTargetList)
 	end
 	if bCreateFeatureEntry then
 		if not nodeTargetList then
-			nodeTargetList = nodeChar.createChild("specialabilitylist");
+			nodeTargetList = DB.createChild(nodeChar, "specialabilitylist");
 			if not nodeTargetList then
 				return false;
 			end
 		end
-		local vNew = nodeTargetList.createChild();
+		local vNew = DB.createChild(nodeTargetList);
 		DB.copyNode(nodeSource, vNew);
 		DB.setValue(vNew, "name", "string", sFeatureName);
 		DB.setValue(vNew, "source", "string", sClassName);
@@ -590,8 +590,8 @@ function addClassSkill(nodeChar, sSkill, sParens)
 end
 
 function handleClassFeatureDomains(nodeChar)
-	local nodeSpellClassList = nodeChar.createChild("spellset");
-	local nodeNewSpellClass = nodeSpellClassList.createChild();
+	local nodeSpellClassList = DB.createChild(nodeChar, "spellset");
+	local nodeNewSpellClass = DB.createChild(nodeSpellClassList);
 	DB.setValue(nodeNewSpellClass, "label", "string", CLASS_FEATURE_DOMAIN_SPELLS);
 	DB.setValue(nodeNewSpellClass, "dc.ability", "string", "wisdom");
 	return true;
@@ -599,11 +599,11 @@ end
 
 function handleClassFeatureSpells(rAdd)
 	local sClassName = DB.getValue(rAdd.nodeCharClass, "name", "");
-	local nodeSpellClassList = rAdd.nodeChar.createChild("spellset");
+	local nodeSpellClassList = DB.createChild(rAdd.nodeChar, "spellset");
 	local nCount = nodeSpellClassList.getChildCount();
 
 	if nCount == 0 then
-		local nodeNewSpellClass = nodeSpellClassList.createChild();
+		local nodeNewSpellClass = DB.createChild(nodeSpellClassList);
 		DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
 		DB.setValue(nodeNewSpellClass, "dc.ability", "string", rAdd.sSpellcastingStat);
 		DB.setValue(nodeNewSpellClass, "type", "string", rAdd.sSpellcastingType);
@@ -611,7 +611,7 @@ function handleClassFeatureSpells(rAdd)
 		for _,v in pairs(nodeSpellClassList.getChildren()) do
 			local sExistingClassName = DB.getValue(v, "label", "");
 			if sClassName ~= sExistingClassName then
-				local nodeNewSpellClass = nodeSpellClassList.createChild();
+				local nodeNewSpellClass = DB.createChild(nodeSpellClassList);
 				DB.setValue(nodeNewSpellClass, "label", "string", sClassName, "");
 				DB.setValue(nodeNewSpellClass, "dc.ability", "string", rAdd.sSpellcastingStat);
 				DB.setValue(nodeNewSpellClass, "type", "string", rAdd.sSpellcastingType);
@@ -621,7 +621,7 @@ function handleClassFeatureSpells(rAdd)
 end
 
 function addClassSpellLevel(rAdd)
-	for _,v in pairs(DB.getChildren(rAdd.nodeChar, "spellset")) do
+	for _,v in ipairs(DB.getChildList(rAdd.nodeChar, "spellset")) do
 		if DB.getValue(v, "label", "") == rAdd.sSourceName then
 			CharClassManager.addClassSpellLevelHelper(v);
 		end
@@ -649,7 +649,7 @@ function onFavoredClassSelect(aSelection, rFavoredClassSelect)
 	local aClassToAdd = {};
 	for _,vClassSelect in ipairs(aSelection) do
 		local bHandled = false;
-		for _,vClass in pairs(DB.getChildren(rFavoredClassSelect.nodeChar, "classes")) do
+		for _,vClass in ipairs(DB.getChildList(rFavoredClassSelect.nodeChar, "classes")) do
 			if DB.getValue(vClass, "name", "") == vClassSelect then
 				DB.setValue(vClass, "favored", "number", 1);
 				bHandled = true;
@@ -662,9 +662,9 @@ function onFavoredClassSelect(aSelection, rFavoredClassSelect)
 	end
 	CharClassManager.checkFavoredClassBonus(rFavoredClassSelect.nodeChar, rFavoredClassSelect.sCurrentClass);
 	for _,vClassToAdd in ipairs(aClassToAdd) do
-		local nodeList = rFavoredClassSelect.nodeChar.createChild("classes");
+		local nodeList = DB.createChild(rFavoredClassSelect.nodeChar, "classes");
 		if nodeList then
-			local nodeClass = nodeList.createChild();
+			local nodeClass = DB.createChild(nodeList);
 			DB.setValue(nodeClass, "name", "string", vClassToAdd);
 			DB.setValue(nodeClass, "favored", "number", 1);
 			for _,vClassOffered in ipairs(rFavoredClassSelect.aClassesOffered) do
@@ -679,7 +679,7 @@ end
 
 function checkFavoredClassBonus(nodeChar, sClassName)
 	local bApply = false;
-	for _,vClass in pairs(DB.getChildren(nodeChar, "classes")) do
+	for _,vClass in ipairs(DB.getChildList(nodeChar, "classes")) do
 		if DB.getValue(vClass, "name", "") == sClassName and DB.getValue(vClass, "favored", 0) == 1 then
 			bApply = true;
 			break;

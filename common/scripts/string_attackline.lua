@@ -102,7 +102,7 @@ function getActor()
 	local nodeActor = nil;
 	local node = getDatabaseNode();
 	if node then
-		nodeActor = node.getChild(actorpath[1]);
+		nodeActor = DB.getChild(node, actorpath[1]);
 	end
 	
 	return ActorManager.resolveActor(nodeActor);

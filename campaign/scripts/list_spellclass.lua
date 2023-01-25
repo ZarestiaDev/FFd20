@@ -40,13 +40,13 @@ function onDrop(x, y, draginfo)
 
 				local nSourceLevel = nil;
 				if nodeSource then
-					nSourceLevel = nodeSource.getChild("...level");
+					nSourceLevel = DB.getChild(nodeSource, "...level");
 				end
 
 				if nSourceLevel and nSourceLevel ~= nTargetLevel then
 					local nodeNew = SpellManager.addSpell(nodeSource, nodeWin, nTargetLevel);
 					if nodeNew then
-						nodeSource.delete();
+						DB.deleteNode(nodeSource);
 						winClass.showSpellsForLevel(nTargetLevel);
 					end
 				end

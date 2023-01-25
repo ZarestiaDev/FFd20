@@ -110,6 +110,7 @@ tokenLightDefaults = {
 
 function onInit()
 	VisionManager.addLightDefaults(tokenLightDefaults);
+	ImageDeathMarkerManager.registerStandardDeathMarkersDnD();
 
 	-- Call for new Currency & Encumbrance
 	CharEncumbranceManager.addStandardCalc();

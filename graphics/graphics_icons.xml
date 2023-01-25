@@ -7,12 +7,8 @@
 
 <root>
 	<!-- Common -->
-	<icon name="question" file="graphics/icons/question.png" />
-	<icon name="star" file="graphics/icons/star.png" />
 	<icon name="expand" file="graphics/icons/expand.png" />
 	<icon name="expand_down" file="graphics/icons/expand_down.png" />
-	<icon name="actions" file="graphics/icons/actions.png" />
-	<icon name="actions_down" file="graphics/icons/actions_down.png" />
 	
 	<icon name="button_star" file="graphics/buttons/button_star.png" />
 	<icon name="button_star_down" file="graphics/buttons/button_star_down.png" />
@@ -25,14 +21,6 @@
 	<icon name="button_skillpr" file="graphics/buttons/button_skillpr.png" />
 	<icon name="button_skillpr_down" file="graphics/buttons/button_skillpr_down.png" />
 
-	<!-- Rolls -->
-	<icon name="roll_attack" file="graphics/icons/roll_attack.png" />
-	<icon name="roll_attack_miss" file="graphics/icons/roll_attack_miss.png" />
-	<icon name="roll_attack_hit" file="graphics/icons/roll_attack_hit.png" />
-	<icon name="roll_attack_crit" file="graphics/icons/roll_attack_crit.png" />
-	<icon name="roll_damage" file="graphics/icons/roll_damage.png" />
-	<icon name="roll_heal" file="graphics/icons/roll_heal.png" />
-
 	<!-- Encounters -->
 	<icon name="button_enc_refreshcr" file="graphics/buttons/button_ctnextround.png" />
 	<icon name="button_enc_refreshcr_down" file="graphics/buttons/button_ctnextround_down.png" />
@@ -41,11 +29,7 @@
 	
 	<!-- Spells -->
 	<icon name="caster_spontaneous" file="graphics/icons/caster_spontaneous.png" />
-	<icon name="spell_cast" file="graphics/icons/spell_cast.png" />
 	<icon name="spell_cast_fail" file="graphics/icons/spell_cast_fail.png" />
-	<icon name="spell_damage" file="graphics/icons/spell_damage.png" />
-	<icon name="spell_heal" file="graphics/icons/spell_heal.png" />
-	<icon name="spell_effect" file="graphics/icons/spell_effect.png" />
 
 	<!-- Character Sheet -->
 	<icon name="char_weapon" file="graphics/icons/char_weapon.png" />
@@ -53,5 +37,4 @@
 	<icon name="char_weapon_ranged" file="graphics/icons/char_weapon_ranged.png" />
 	<icon name="char_weapon_cm" file="graphics/icons/char_weapon_cm.png" />
 	<icon name="char_armorcheck" file="graphics/icons/char_armorcheck.png" />
-	<icon name="char_coin" file="graphics/icons/char_coin.png" />
 </root>

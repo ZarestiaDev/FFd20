@@ -7,11 +7,6 @@
 
 <root>
 	<!-- Character sheet -->
-	<framedef name="charsheethelper">
-		<bitmap file="graphics/frames/charsheet.png" />
-		<offset>25,40,25,25</offset>
-		<insideoffset>0,0,7,7</insideoffset>
-	</framedef>
 	<framedef name="acicon">
 		<bitmap file="graphics/frames/acicon.png" />
 		<topleft rect="0,0,40,44" />

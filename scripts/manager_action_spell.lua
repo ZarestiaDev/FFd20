@@ -67,11 +67,11 @@ function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss, t
 	if nodeTarget and (sTargetNodeType == "pc") then
 		if Session.IsHost then
 			local sOwner = DB.getOwner(nodeTarget);
-			if sOwner ~= "" then
+			if (sOwner or "") ~= "" then
 				for _,vUser in ipairs(User.getActiveUsers()) do
 					if vUser == sOwner then
 						for _,vIdentity in ipairs(User.getActiveIdentities(vUser)) do
-							if nodeTarget.getName() == vIdentity then
+							if DB.getName(nodeTarget) == vIdentity then
 								Comm.deliverOOBMessage(msgOOB, sOwner);
 								return;
 							end
@@ -270,7 +270,7 @@ end
 function onSpellCast(rSource, rTarget, rRoll)
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 	rMessage.dice = nil;
-	rMessage.icon = "spell_cast";
+	rMessage.icon = "power_use";
 
 	if rTarget then
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
@@ -302,7 +302,7 @@ function onSpellFailure(rSource, rTarget, rRoll)
 		rMessage.icon = "spell_cast_fail";
 	else
 		rMessage.text = rMessage.text .. " [SUCCESS]";
-		rMessage.icon = "spell_cast";
+		rMessage.icon = "power_use";
 	end
 
 	Comm.deliverChatMessage(rMessage);

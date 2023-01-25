@@ -15,7 +15,5 @@ function update()
 end
 
 function deleteAll()
-	for k, v in pairs(getWindows()) do
-		v.getDatabaseNode().delete();
-	end
+	DB.deleteChildren(getDatabaseNode());
 end

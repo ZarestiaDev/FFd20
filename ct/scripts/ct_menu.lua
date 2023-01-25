@@ -67,24 +67,9 @@ function onMenuSelection(selection, subselection, subsubselection)
 		end
 		if selection == 3 then
 			if subselection == 1 then
-				clearNPCs();
+				CombatManager.deleteNonFaction("friend");
 			elseif subselection == 3 then
-				clearNPCs(true);
-			end
-		end
-	end
-end
-
-function clearNPCs(bDeleteOnlyFoe)
-	for _, vChild in pairs(window.list.getWindows()) do
-		local sFaction = vChild.friendfoe.getStringValue();
-		if bDeleteOnlyFoe then
-			if sFaction == "foe" then
-				vChild.delete();
-			end
-		else
-			if sFaction ~= "friend" then
-				vChild.delete();
+				CombatManager.deleteFaction("foe");
 			end
 		end
 	end

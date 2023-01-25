@@ -72,7 +72,7 @@ function onStatUpdate()
 
 	if dcstatmod then
 		local nodeSpellClass = getDatabaseNode();
-		local nodeCreature = nodeSpellClass.getChild("...");
+		local nodeCreature = DB.getChild(nodeSpellClass, "...");
 
 		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
@@ -84,12 +84,16 @@ function onStatUpdate()
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
-		for _,vSpell in pairs(vLevel.spells.getWindows()) do
-			for _,vAction in pairs(vSpell.actions.getWindows()) do
-				vAction.updateViews();
+		for _,v in pairs(vLevel.spells.getWindows()) do
+			if v.header.subwindow and v.header.subwindow.actionsmini then
+				for _,v2 in pairs(v.header.subwindow.actionsmini.getWindows()) do
+					v2.onDataChanged();
+				end
 			end
-			for _,vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
-				vAction.updateViews();
+			if v.actions then
+				for _,v2 in pairs(v.actions.getWindows()) do
+					v2.onDataChanged();
+				end
 			end
 		end
 	end
@@ -146,7 +150,7 @@ end
 
 function onTypeChanged()
 	local nodeSpellClass = getDatabaseNode();
-	local nodeCreature = nodeSpellClass.getChild("...");
+	local nodeCreature = DB.getChild(nodeSpellClass, "...");
 
 	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
@@ -166,12 +170,7 @@ end
 
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
-		local node = getDatabaseNode();
-		if node then
-			node.delete();
-		else
-			close();
-		end
+		UtilityManager.safeDeleteWindow(self);
 	end
 end
 

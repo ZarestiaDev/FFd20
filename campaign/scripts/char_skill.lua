@@ -41,12 +41,7 @@ end
 
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
-		local node = getDatabaseNode();
-		if node then
-			node.delete();
-		else
-			close();
-		end
+		UtilityManager.safeDeleteWindow(self);
 	end
 end
 

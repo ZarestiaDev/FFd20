@@ -23,7 +23,5 @@ function addEntry(bFocus)
 end
 
 function deleteAll()
-	for _,v in pairs(getWindows()) do
-		v.getDatabaseNode().delete();
-	end
+	DB.deleteChildren(getDatabaseNode());
 end

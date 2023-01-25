@@ -16,13 +16,13 @@ function addRace(nodeChar, sClass, sRecord)
 	ChatManager.SystemMessage(sMsg);
 	
 	DB.setValue(nodeChar, "race", "string", sRace);
-	DB.setValue(nodeChar, "racelink", "windowreference", sClass, rAdd.nodeSource.getPath());
+	DB.setValue(nodeChar, "racelink", "windowreference", sClass, DB.getPath(rAdd.nodeSource));
 	
 	if DB.getChildCount(rAdd.nodeSource, "heritages") > 0 then
 		handleRacialHeritage(rAdd);
 	else
-		for _,v in pairs(DB.getChildren(rAdd.nodeSource, "racialtraits")) do
-			addRacialTrait(nodeChar, "referenceracialtrait", v.getPath());
+		for _,v in ipairs(DB.getChildList(rAdd.nodeSource, "racialtraits")) do
+			addRacialTrait(nodeChar, "referenceracialtrait", DB.getPath(v));
 		end
 	end
 end
@@ -47,8 +47,8 @@ function onRaceHeritageSelect(aSelection, rHeritageSelect)
 	local sSelection = aSelection[1];
 	
 	if sSelection == "Base Race" then
-		for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
-			addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", v.getPath());
+		for _,v in ipairs(DB.getChildList(rHeritageSelect.nodeSource, "racialtraits")) do
+			addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", DB.getPath(v));
 		end
 		return;
 	end
@@ -67,11 +67,11 @@ function onRaceHeritageSelect(aSelection, rHeritageSelect)
 	end
 	
 	for _,heritageTrait in pairs(tHeritageTraits) do
-		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", heritageTrait.getPath());
+		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", DB.getPath(heritageTrait));
 	end
 	
 	for _,v in pairs(DB.getChildren(rHeritageSelect.nodeSource, "racialtraits")) do
-		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", v.getPath());
+		addRacialTrait(rHeritageSelect.nodeChar, "referenceracialtrait", DB.getPath(v));
 	end
 end
 

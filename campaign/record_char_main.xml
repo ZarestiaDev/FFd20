@@ -468,9 +468,9 @@
 		</sizelimits>
 		<script file="campaign/scripts/char_classes.lua" />
 		<sheetdata>
-			<windowtitlebar_char name="title">
+			<windowtitlebar_charsheethelper name="title">
 				<prefix>char_classes_title</prefix>
-			</windowtitlebar_char>
+			</windowtitlebar_charsheethelper>
 			<anchor_title_charsheethelper name="contentanchor" />
 			
 			<frame_char name="levelframe">
@@ -634,7 +634,7 @@
 		</sizelimits>
 		<script>
 			function action(draginfo)
-				local nodeChar = getDatabaseNode().getChild("...")
+			local nodeChar = DB.getChild(getDatabaseNode(), "...");
 				local rActor = ActorManager.resolveActor(nodeChar);
 				
 				ActionRecovery.performRoll(draginfo, rActor, getDatabaseNode());
@@ -751,9 +751,9 @@
 			<dynamic />
 		</sizelimits>
 		<sheetdata>
-			<windowtitlebar_char name="title">
+			<windowtitlebar_charsheethelper name="title">
 				<prefix>hitpoints</prefix>
-			</windowtitlebar_char>
+			</windowtitlebar_charsheethelper>
 			<anchor_title_charsheethelper name="contentanchor" />
 			
 			<frame_char name="hpdetailframe">
