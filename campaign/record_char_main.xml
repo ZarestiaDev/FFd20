@@ -744,10 +744,10 @@
 		<script file="campaign/scripts/char_main.lua" />
 		<frame>charsheethelper</frame>
 		<placement>
-			<size width="380" height="130" />
+			<size width="400" height="130" />
 		</placement>
 		<sizelimits>
-			<minimum width="380" height="130" />
+			<minimum width="400" height="130" />
 			<dynamic />
 		</sizelimits>
 		<sheetdata>
