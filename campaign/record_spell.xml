@@ -71,32 +71,18 @@
 				save.update(bReadOnly);
 				sr.update(bReadOnly);
 				description.update(bReadOnly);
+				
+				action_label_add.setVisible(not bReadOnly);
+				action_label_add_cast.setVisible(not bReadOnly);
+				action_label_add_damage.setVisible(not bReadOnly);
+				action_label_add_heal.setVisible(not bReadOnly);
+				action_label_add_effect.setVisible(not bReadOnly);
+				action_label_clear.setVisible(not bReadOnly);
+				action_label_parse.setVisible(not bReadOnly);
+				actions_iedit.setVisible(not bReadOnly);
 
 				if bReadOnly then
-					actionlist_iedit.setValue(0);
-				end
-				
-				actionlist_add.setVisible(not bReadOnly);
-				actionlist_add_cast.setVisible(not bReadOnly);
-				actionlist_add_damage.setVisible(not bReadOnly);
-				actionlist_add_heal.setVisible(not bReadOnly);
-				actionlist_add_effect.setVisible(not bReadOnly);
-				actionlist_clear.setVisible(not bReadOnly);
-				actionlist_parse.setVisible(not bReadOnly);
-				actionlist_iedit.setVisible(not bReadOnly);
-				actionlist.update();
-			end
-
-			function createAction(sType)
-				local nodeSpell = getDatabaseNode();
-				if nodeSpell then
-					local nodeActions = nodeSpell.createChild("actions");
-					if nodeActions then
-						local nodeAction = nodeActions.createChild();
-						if nodeAction then
-							DB.setValue(nodeAction, "type", "string", sType);
-						end
-					end
+					actions_iedit.setValue(0);
 				end
 			end
 
@@ -163,66 +149,66 @@
 
 			<ft_columnh name="description" />
 
-			<label_column name="actionlist_add">
+			<label_column name="action_label_add">
 				<anchored>
 					<top offset="8" />
 				</anchored>
 				<static textres="actionlist_add" />
 			</label_column>
 			
-			<button_text name="actionlist_add_cast">
+			<button_text name="action_label_add_cast">
 				<anchored to="description" width="65" height="16">
 					<top anchor="bottom" offset="10" />
-					<left parent="actionlist_add" anchor="right" offset="10" />
+					<left parent="action_label_add" anchor="right" offset="10" />
 				</anchored>
 				<state textres="actionlist_add_cast" />
 					<script>
 						function onButtonPress()
-							window.createAction("cast");
+							PowerManagerCore.createPowerAction(window, "cast");
 						end
 					</script>
 			</button_text>
 			
-			<button_text name="actionlist_add_damage">
+			<button_text name="action_label_add_damage">
 				<anchored to="description" width="60" height="16">
 					<top anchor="bottom" offset="10" />
-					<left parent="actionlist_add_cast" anchor="right" offset="15" />
+					<left parent="action_label_add_cast" anchor="right" offset="15" />
 				</anchored>
 				<state textres="actionlist_add_damage" />
 					<script>
 						function onButtonPress()
-							window.createAction("damage");
+							PowerManagerCore.createPowerAction(window, "damage");
 						end
 					</script>
 			</button_text>
 			
-			<button_text name="actionlist_add_heal">
+			<button_text name="action_label_add_heal">
 				<anchored to="description" width="60" height="16">
 					<top anchor="bottom" offset="10" />
-					<left parent="actionlist_add_damage" anchor="right" offset="15" />
+					<left parent="action_label_add_damage" anchor="right" offset="15" />
 				</anchored>
 				<state textres="actionlist_add_heal" />
 					<script>
 						function onButtonPress()
-							window.createAction("heal");
+							PowerManagerCore.createPowerAction(window, "heal");
 						end
 					</script>
 			</button_text>
 			
-			<button_text name="actionlist_add_effect">
+			<button_text name="action_label_add_effect">
 				<anchored to="description" width="60" height="16">
 					<top anchor="bottom" offset="10" />
-					<left parent="actionlist_add_heal" anchor="right" offset="15" />
+					<left parent="action_label_add_heal" anchor="right" offset="15" />
 				</anchored>
 				<state textres="actionlist_add_effect" />
 					<script>
 						function onButtonPress()
-							window.createAction("effect");
+							PowerManagerCore.createPowerAction(window, "effect");
 						end
 					</script>
 			</button_text>
 			
-			<button_text name="actionlist_clear">
+			<button_text name="action_label_clear">
 				<anchored to="description" width="60" height="16">
 					<top anchor="bottom" offset="10" />
 					<right />
@@ -230,18 +216,18 @@
 				<state textres="actionlist_clear" />
 					<script>
 						function onButtonPress()
-							local nodeActions = window.getDatabaseNode().createChild("actions");
-							for k, v in pairs(nodeActions.getChildren()) do
-								v.delete();
+							local nodeActions = DB.createChild(window.getDatabaseNode(), "actions");
+							for _,vAction in ipairs(DB.getChildList(nodeActions)) do
+								vAction.delete();
 							end
 						end
 					</script>
 			</button_text>
 			
-			<button_text name="actionlist_parse">
+			<button_text name="action_label_parse">
 				<anchored to="description" width="60" height="16">
 					<top anchor="bottom" offset="10" />
-					<right parent="actionlist_clear" anchor="left" offset="-15" />
+					<right parent="action_label_clear" anchor="left" offset="-15" />
 				</anchored>
 				<state textres="actionlist_parse" />
 					<script>
@@ -253,27 +239,24 @@
 		
 			<header_column name="actionseffects_label">
 				<anchored>
-					<top parent="actionlist_add_cast" />
+					<top parent="action_label_add_cast" />
 				</anchored>
-				<static textres="actionlist_actions_effects"/>
+				<static textres="action_label_actions_effects"/>
 				<center />
 			</header_column>
-			
-			<button_iedit name="actionlist_iedit">
+
+			<button_iedit name="actions_iedit">
 				<anchored to="actionseffects_label" position="righthigh" offset="-13,0" />
-				<target>actionlist</target>
+				<edittarget>actions</edittarget>
 			</button_iedit>
 			
-			<list_text name="actionlist">
+			<list_poweraction name="actions">
 				<anchored>
 					<top parent="actionseffects_label" anchor="bottom" relation="relative" offset="5" />
 					<left />
 					<right />
-				</anchored>	
-				<noscroll />
-				<datasource>.actions</datasource>
-				<class>spell_action</class>
-			</list_text>
+				</anchored>
+			</list_poweraction>
 		</sheetdata>
 	</windowclass>
 </root>
