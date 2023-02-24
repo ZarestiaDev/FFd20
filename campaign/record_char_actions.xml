@@ -39,11 +39,6 @@
 			
 			<button_iedit name="actions_iedit">
 				<anchored to="actionframe" position="insidebottomright" offset="15,15" />
-				<script>
-					function onValueChanged()					
-						window.actions.subwindow.update();
-					end
-				</script>
 			</button_iedit>
 			<buttoncontrol name="spellclass_iadd">
 				<anchored to="actions_iedit" position="lefthigh" offset="5,0" width="20" height="20" />
@@ -158,19 +153,19 @@
 					<top />
 					<right anchor="left" offset="-5" />
 				</anchored>
+				<editmode>actions_iedit</editmode>
 			</button_idelete>
-			<buttoncontrol name="activatedetail">
+			<button_details name="activatedetail">
 				<anchored to="rightanchor" width="20" height="20">
 					<top />
 					<right anchor="left" relation="relative" offset="-3" />
 				</anchored>
-				<state icon="button_details" pressed="button_details_down" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("char_weapon_editor", window.getDatabaseNode());
 					end
 				</script>
-			</buttoncontrol>
+			</button_details>
 
 			<simplestringc name="damageview">
 				<anchored to="rightanchor" width="100">
@@ -459,7 +454,7 @@
 			</header_column>
 			<button_iedit name="list_iedit">
 				<anchored to="header_damage" position="insidetopright" offset="-5,0" />
-				<target>list</target>
+				<edittarget>list</edittarget>
 			</button_iedit>
 			<button_iadd name="list_iadd">
 				<anchored to="list_iedit" position="lefthigh" offset="5,0" />
@@ -526,6 +521,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
+				<editmode>list_iedit</editmode>
 			</button_idelete>
 
 			<basicdice name="dice">

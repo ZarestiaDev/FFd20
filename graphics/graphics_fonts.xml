@@ -6,16 +6,6 @@
 -->
 
 <root>
-	<font name="subwindowtitle">
-		<ttf file="graphics/fonts/AlegreyaSansSC-Bold.ttf" name="Alegreya Sans SC" size="20" />
-		<color value="#000000" />
-		<shadow offset="1,1" color="#808080" />
-	</font>
-	<font name="reference-subtitle">
-		<ttf file="graphics/fonts/Noto_Sans/NotoSans-Bold.ttf" name="Noto Sans Bold" size="16" />
-		<color value="000000" />
-	</font>
-
 	<!-- Languages -->
 	<font name="Dwarven">
 		<ttf file="graphics/fonts/Dwarven.ttf" name="D&amp;D Dwarvish Bold" size="20" />

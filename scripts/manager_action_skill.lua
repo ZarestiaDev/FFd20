@@ -247,14 +247,8 @@ function modSkill(rSource, rTarget, rRoll)
 			end
 			rRoll.nMod = rRoll.nMod + nAddMod;
 
-			local sEffects = "";
 			local sMod = StringManager.convertDiceToString(aAddDice, nAddMod, true);
-			if sMod ~= "" then
-				sEffects = "[" .. Interface.getString("effects_tag") .. " " .. sMod .. "]";
-			else
-				sEffects = "[" .. Interface.getString("effects_tag") .. "]";
-			end
-			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
+			rRoll.sDesc = string.format("%s %s", rRoll.sDesc, EffectManager.buildEffectOutput(sMod));
 		end
 		ActionAdvantage.encodeAdvantage(rRoll, bADV, bDIS);
 	end

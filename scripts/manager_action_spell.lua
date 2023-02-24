@@ -67,11 +67,11 @@ function notifyApplySave(rSource, rTarget, bSecret, sDesc, nDC, bRemoveOnMiss, t
 	if nodeTarget and (sTargetNodeType == "pc") then
 		if Session.IsHost then
 			local sOwner = DB.getOwner(nodeTarget);
-			if sOwner ~= "" then
+			if (sOwner or "") ~= "" then
 				for _,vUser in ipairs(User.getActiveUsers()) do
 					if vUser == sOwner then
 						for _,vIdentity in ipairs(User.getActiveIdentities(vUser)) do
-							if nodeTarget.getName() == vIdentity then
+							if DB.getName(nodeTarget) == vIdentity then
 								Comm.deliverOOBMessage(msgOOB, sOwner);
 								return;
 							end
@@ -198,8 +198,7 @@ function modCastSave(rSource, rTarget, rRoll)
 		if sActionStat then
 			local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat, rRoll.tags);
 			if nBonusEffects > 0 then
-				local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
-				rRoll.sDesc = rRoll.sDesc .. " " .. string.format(sFormat, nBonusStat);
+				rRoll.sDesc = string.format("%s %s", rRoll.sDesc, EffectManager.buildEffectOutput(nBonusStat));
 				rRoll.nMod = rRoll.nMod + nBonusStat;
 			end
 		end
@@ -226,13 +225,8 @@ function modCLC(rSource, rTarget, rRoll)
 		end
 
 		if bEffects then
-			local sEffects = "[" .. Interface.getString("effects_tag");
 			local sMod = StringManager.convertDiceToString(aAddDice, nAddMod, true);
-			if sMod ~= "" then
-				sEffects = sEffects .. " " .. sMod;
-			end
-			sEffects = sEffects .. "]";
-			rRoll.sDesc = rRoll.sDesc .. " " .. sEffects;
+			rRoll.sDesc = string.format("%s %s", rRoll.sDesc, EffectManager.buildEffectOutput(sMod));
 			for _,vDie in ipairs(aAddDice) do
 				if vDie:sub(1,1) == "-" then
 					table.insert(rRoll.aDice, "-p" .. vDie:sub(3));
@@ -255,14 +249,8 @@ function modConcentration(rSource, rTarget, rRoll)
 
 		local nBonusStat, nBonusEffects = ActorManagerFFd20.getAbilityEffectsBonus(rSource, sActionStat);
 		if nBonusEffects > 0 then
+			rRoll.sDesc = string.format("%s %s", rRoll.sDesc, EffectManager.buildEffectOutput(nBonusStat));
 			rRoll.nMod = rRoll.nMod + nBonusStat;
-
-			if nBonusStat ~= 0 then
-				local sFormat = "%s [" .. Interface.getString("effects_tag") .. " %+d]";
-				rRoll.sDesc = string.format(sFormat, rRoll.sDesc, nBonusStat);
-			else
-				rRoll.sDesc = rRoll.sDesc .. " [" .. Interface.getString("effects_tag") .. "]";
-			end
 		end
 	end
 end
@@ -270,7 +258,7 @@ end
 function onSpellCast(rSource, rTarget, rRoll)
 	local rMessage = ActionsManager.createActionMessage(rSource, rRoll);
 	rMessage.dice = nil;
-	rMessage.icon = "spell_cast";
+	rMessage.icon = "power_use";
 
 	if rTarget then
 		rMessage.text = rMessage.text .. " [at " .. ActorManager.getDisplayName(rTarget) .. "]";
@@ -302,7 +290,7 @@ function onSpellFailure(rSource, rTarget, rRoll)
 		rMessage.icon = "spell_cast_fail";
 	else
 		rMessage.text = rMessage.text .. " [SUCCESS]";
-		rMessage.icon = "spell_cast";
+		rMessage.icon = "power_use";
 	end
 
 	Comm.deliverChatMessage(rMessage);

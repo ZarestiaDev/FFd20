@@ -3,21 +3,41 @@
 -- attribution and copyright information.
 --
 
-iscustom = true;
-sets = {};
-
 function onInit()
-	updateMenu();
-	
-	onCheckPenaltyChange();
-	onStatUpdate();
+	self.updateMenu();
+
+	self.onCheckPenaltyChange();
+	self.onStatUpdate();
+
+	self.onEditModeChanged();
+end
+
+function onEditModeChanged()
+	local bEditMode = WindowManager.getEditMode(windowlist, "skills_iedit");
+
+	local bAllowDelete = self.isCustom();
+	if not bAllowDelete then
+		local sLabel = label.getValue();
+		local rSkill = DataCommon.skilldata[sLabel];
+		if rSkill and rSkill.sublabeling then
+			bAllowDelete = true;
+		end
+	end
+
+	if bAllowDelete then
+		idelete_spacer.setVisible(false);
+		idelete.setVisibility(bEditMode);
+	else
+		idelete_spacer.setVisible(bEditMode);
+		idelete.setVisibility(false);
+	end
 end
 
 function updateWindow()
 	local sLabel = label.getValue();
 	local t = DataCommon.skilldata[sLabel];
 	if t then
-		setCustom(false);
+		self.setCustom(false);
 		
 		if t.sublabeling then
 			sublabel.setVisible(true);
@@ -35,18 +55,13 @@ function updateWindow()
 			trainedonly.setVisible(false);
 		end
 	else
-		setCustom(true);
+		self.setCustom(true);
 	end
 end
 
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
-		local node = getDatabaseNode();
-		if node then
-			node.delete();
-		else
-			close();
-		end
+		UtilityManager.safeDeleteWindow(self);
 	end
 end
 
@@ -64,10 +79,11 @@ end
 
 -- This function is called to set the entry to non-custom or custom.
 -- Custom entries have configurable stats and editable labels.
+local _bCustom = true;
 function setCustom(state)
-	iscustom = state;
+	_bCustom = state;
 	
-	if iscustom then
+	if _bCustom then
 		label.setEnabled(true);
 		label.setLine(true);
 	else
@@ -75,17 +91,17 @@ function setCustom(state)
 		label.setLine(false);
 	end
 	
-	updateMenu();
+	self.updateMenu();
 end
 
 function isCustom()
-	return iscustom;
+	return _bCustom;
 end
 
 function updateMenu()
 	resetMenuItems();
 	
-	if iscustom then
+	if self.isCustom() then
 		registerMenuItem(Interface.getString("list_menu_deleteitem"), "delete", 6);
 		registerMenuItem(Interface.getString("list_menu_deleteconfirm"), "delete", 6, 7);
 	else

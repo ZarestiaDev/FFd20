@@ -4,7 +4,7 @@
 --
 
 function resetMP(nodeCaster)
-	for _,nodeSpellClass in pairs(DB.getChildren(nodeCaster, "spellset")) do
+	for _,nodeSpellClass in ipairs(DB.getChildList(nodeCaster, "spellset")) do
 		local nCL = DB.getValue(nodeSpellClass, "cl", 0);
 		local nStat = DB.getValue(nodeSpellClass, "dc.abilitymod", 0);
 		local nMPCurrent = DB.getValue(nodeSpellClass, "mp.current", 0);
@@ -15,18 +15,18 @@ function resetMP(nodeCaster)
 end
 
 function convertSpellDescToFormattedText(nodeSpell)
-	local nodeDesc = nodeSpell.getChild("description");
+	local nodeDesc = DB.getChild(nodeSpell, "description");
 	if nodeDesc then
-		local sDescType = nodeDesc.getType();
+		local sDescType = DB.getType(nodeDesc);
 		if sDescType == "string" then
-			local sValue = "<p>" .. nodeDesc.getValue() .. "</p>";
+			local sValue = "<p>" .. DB.getValue(nodeDesc) .. "</p>";
 			sValue = sValue:gsub("\r", "</p><p>");
 			
-			local nodeLinkedSpells = nodeSpell.getChild("linkedspells");
+			local nodeLinkedSpells = DB.getChild(nodeSpell, "linkedspells");
 			if nodeLinkedSpells then
-				if nodeLinkedSpells.getChildCount() > 0 then
+				if DB.getChildCount(nodeLinkedSpells) > 0 then
 					sValue = sValue .. "<linklist>";
-					for _,v in pairs(nodeLinkedSpells.getChildren()) do
+					for _,v in ipairs(DB.getChildList(nodeLinkedSpells)) do
 						local sLinkName = DB.getValue(v, "linkedname", "");
 						local sLinkClass, sLinkRecord = DB.getValue(v, "link", "", "");
 						sValue = sValue .. "<link class=\"" .. sLinkClass .. "\" recordname=\"" .. sLinkRecord .. "\">" .. sLinkName .. "</link>";
@@ -35,23 +35,23 @@ function convertSpellDescToFormattedText(nodeSpell)
 				end
 			end
 			
-			nodeDesc.delete();
+			DB.deleteNode(nodeDesc);
 			DB.setValue(nodeSpell, "description", "formattedtext", sValue);
 		end
 	end
 end
 
 function convertSpellDescToString(nodeSpell)
-	local nodeDesc = nodeSpell.getChild("description");
+	local nodeDesc = DB.getChild(nodeSpell, "description");
 	if nodeDesc then
-		local sDescType = nodeDesc.getType();
+		local sDescType = DB.getType(nodeDesc);
 		if sDescType == "formattedtext" then
-			local sDesc = nodeDesc.getText();
-			local sValue = nodeDesc.getValue();
+			local sDesc = DB.getText(nodeDesc);
+			local sValue = DB.getValue(nodeDesc);
 			
 			DB.setValue(nodeSpell, "descparse", "string", sDesc);
 			
-			local nodeLinkedSpells = nodeSpell.createChild("linkedspells");
+			local nodeLinkedSpells = DB.createChild(nodeSpell, "linkedspells");
 			if nodeLinkedSpells then
 				local nIndex = 1;
 				local nLinkStartB, nLinkStartE, sClass, sRecord = string.find(sValue, "<link class=\"([^\"]*)\" recordname=\"([^\"]*)\">", nIndex);
@@ -61,7 +61,7 @@ function convertSpellDescToString(nodeSpell)
 					if nLinkEndB then
 						local sText = string.sub(sValue, nLinkStartE + 1, nLinkEndB - 1);
 						
-						local nodeLink = nodeLinkedSpells.createChild();
+						local nodeLink = DB.createChild(nodeLinkedSpells);
 						if nodeLink then
 							DB.setValue(nodeLink, "link", "windowreference", sClass, sRecord);
 							DB.setValue(nodeLink, "linkedname", "string", sText);
@@ -85,11 +85,11 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	end
 	
 	-- Create the new spell entry
-	local nodeTargetLevelSpells = nodeSpellClass.getChild("levels.level" .. nLevel .. ".spells");
+	local nodeTargetLevelSpells = DB.getChild(nodeSpellClass, "levels.level" .. nLevel .. ".spells");
 	if not nodeTargetLevelSpells then
 		return nil;
 	end
-	local nodeNewSpell = nodeTargetLevelSpells.createChild();
+	local nodeNewSpell = DB.createChild(nodeTargetLevelSpells);
 	if not nodeNewSpell then
 		return nil;
 	end
@@ -97,10 +97,11 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 	-- Copy the spell details over
 	DB.copyNode(nodeSource, nodeNewSpell);
 	
-	local nodeParent = nodeTargetLevelSpells.getParent();
+	local nodeParent = DB.getParent(nodeTargetLevelSpells);
 	if nodeParent then
 		-- If spell level not visible, then make it so.
-		local sAvailablePath = "....available" .. nodeParent.getName();
+		local sParentName = DB.getName(nodeParent);
+		local sAvailablePath = "....available" .. sParentName;
 		local nAvailable = DB.getValue(nodeTargetLevelSpells, sAvailablePath, 1);
 		if nAvailable <= 0 then
 			DB.setValue(nodeTargetLevelSpells, sAvailablePath, "number", 1);
@@ -118,11 +119,11 @@ function addSpell(nodeSource, nodeSpellClass, nLevel)
 end
 
 function addSpellCastAction(nodeSpell)
-	local nodeActions = nodeSpell.createChild("actions");
+	local nodeActions = DB.createChild(nodeSpell, "actions");
 	if not nodeActions then
 		return nil;
 	end
-	local nodeAction = nodeActions.createChild();
+	local nodeAction = DB.createChild(nodeActions);
 	if not nodeAction then
 		return nil;
 	end
@@ -202,11 +203,8 @@ end
 
 function parseSpell(nodeSpell)
 	-- Clean out old actions
-	local nodeActions = nodeSpell.createChild("actions");
-	local nodeAction = nodeActions.getChildren();
-	for _, v in pairs(nodeAction) do
-		v.delete();
-	end
+	local nodeActions = DB.createChild(nodeSpell, "actions");
+	DB.deleteChildren(nodeActions);
 	
 	-- Always create a cast action
 	addSpellCastAction(nodeSpell);
@@ -391,7 +389,7 @@ function parseSpell(nodeSpell)
 	end
 	for i = 1, #aHeals do
 		local rRoll = aHeals[i];
-		local nodeAction = nodeActions.createChild();
+		local nodeAction = DB.createChild(nodeActions);
 		
 		DB.setValue(nodeAction, "type", "string", "heal");
 		
@@ -554,7 +552,7 @@ function parseSpell(nodeSpell)
 				return nil;
 			end
 			
-			local nodeAction = nodeActions.createChild();
+			local nodeAction = DB.createChild(nodeActions);
 			if not nodeAction then
 				return nil;
 			end
@@ -638,7 +636,7 @@ function getSpellActionOutputOrder(nodeAction)
 	if not nodeAction then
 		return 1;
 	end
-	local nodeActionList = nodeAction.getParent();
+	local nodeActionList = DB.getParent(nodeAction);
 	if not nodeActionList then
 		return 1;
 	end
@@ -649,7 +647,7 @@ function getSpellActionOutputOrder(nodeAction)
 	
 	-- Iterate through list node
 	local nOutputOrder = 1;
-	for k, v in pairs(nodeActionList.getChildren()) do
+	for _, v in ipairs(DB.getChildList(nodeActionList)) do
 		if DB.getValue(v, "type", "") == sType then
 			if DB.getValue(v, "order", 0) < nOrder then
 				nOutputOrder = nOutputOrder + 1;
@@ -802,7 +800,7 @@ function onSpellAction(draginfo, nodeAction, sSubRoll)
 	if not nodeAction then
 		return;
 	end
-	local rActor = ActorManager.resolveActor(nodeAction.getChild("........."));
+	local rActor = ActorManager.resolveActor(DB.getChild(nodeAction, "........."));
 	if not rActor then
 		return;
 	end
@@ -911,13 +909,13 @@ end
 
 function getActionAbilityBonus(nodeAction)
 	-- Check whether spellclass is found
-	local nodeSpellClass = nodeAction.getChild(".......");
+	local nodeSpellClass = DB.getChild(nodeAction, ".......");
 
 	if not nodeSpellClass then
 		return 0;
 	end
 
-	local nodeCreature = nodeSpellClass.getChild("...");		
+	local nodeCreature = DB.getChild(nodeSpellClass, "...");
 	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 	local rActor = ActorManager.resolveActor(nodeCreature);
 	return ActorManagerFFd20.getAbilityBonus(rActor, sAbility);
@@ -984,7 +982,7 @@ function getActionDamage(rActor, nodeAction)
 	end
 	
 	local clauses = {};
-	local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeAction, "damagelist"));
+	local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeAction, "damagelist");
 	for _,v in ipairs(aDamageNodes) do
 		local aDmgDice = DB.getValue(v, "dice", {});
 		if #aDmgDice > 0 then
@@ -1036,7 +1034,7 @@ function getActionHeal(rActor, nodeAction)
 	end
 	
 	local clauses = {};
-	local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeAction, "heallist"));
+	local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeAction, "heallist");
 	for _,v in ipairs(aDamageNodes) do
 		local aDice = DB.getValue(v, "dice", {});
 		if #aDice > 0 then
@@ -1120,6 +1118,14 @@ end
 -- DISPLAY FUNCTIONS
 --
 
+function getActionCLText(nodeAction)
+	local nCL = SpellManager.getActionCLC(nodeAction);
+	if (nCL or 0) == 0 then
+		return "";
+	end
+	return tostring(nCL) or "";
+end
+
 function getActionAttackText(nodeAction)
 	local sAttack = "";
 	
@@ -1168,7 +1174,7 @@ function getActionSaveText(nodeAction)
 end
 
 function getActionDamageText(nodeAction)
-	local nodeActor = nodeAction.getChild(".........")
+	local nodeActor = DB.getChild(nodeAction, ".........");
 	local rActor = ActorManager.resolveActor(nodeActor);
 	
 	local clauses = SpellManager.getActionDamage(rActor, nodeAction);
@@ -1198,7 +1204,7 @@ function getActionDamageText(nodeAction)
 end
 
 function getActionHealText(nodeAction)
-	local nodeActor = nodeAction.getChild(".........")
+	local nodeActor = DB.getChild(nodeAction, ".........");
 	local rActor = ActorManager.resolveActor(nodeActor);
 	
 	local clauses = SpellManager.getActionHeal(rActor, nodeAction);
@@ -1227,28 +1233,33 @@ function getActionHealText(nodeAction)
 	return sHeal;
 end
 
-function getActionEffectDurationText(nodeAction)
-	local nodeActor = nodeAction.getChild(".........")
+function getActionEffectDurationText(node)
+	local nodeActor = DB.getChild(node, ".........");
 	local rActor = ActorManager.resolveActor(nodeActor);
 	
-	local aDice, nMod = getActionEffectDuration(rActor, nodeAction);
+	local aDice, nMod = getActionEffectDuration(rActor, node);
 	
+	local tOutput = {};
 	local sDuration = StringManager.convertDiceToString(aDice, nMod);
 	
-	local sUnits = DB.getValue(nodeAction, "durunit", "");
 	if sDuration ~= "" then
-		if sUnits == "minute" then
-			sDuration = sDuration .. " min";
-		elseif sUnits == "hour" then
-			sDuration = sDuration .. " hr";
-		elseif sUnits == "day" then
-			sDuration = sDuration .. " dy";
-		else
-			sDuration = sDuration .. " rd";
+		table.insert(tOutput, sDuration);
+
+		local sUnits = DB.getValue(node, "durunit", "");
+		if sDuration ~= "" then
+			if sUnits == "minute" then
+				table.insert(tOutput, "min");
+			elseif sUnits == "hour" then
+				table.insert(tOutput, "hr");
+			elseif sUnits == "day" then
+				table.insert(tOutput, "dy");
+			else
+				table.insert(tOutput, "rd");
+			end
 		end
 	end
 	
-	return sDuration;
+	return table.concat(tOutput, " ");
 end
 
 function onExplosiveSpellAction(draginfo, nodeAction, sSubRoll)

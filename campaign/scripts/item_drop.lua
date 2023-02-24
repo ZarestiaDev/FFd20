@@ -89,9 +89,9 @@ function onDrop(x, y, draginfo)
 			DB.setValue(nodeTarget, "prerequisites", "string", DB.getValue(nodeSource, "prerequisites", ""));
 			
 			if nodeSource and nodeTarget then
-				local nodeSourceDesc = nodeSource.getChild("description");
+				local nodeSourceDesc = DB.getChild(nodeSource, "description");
 				if nodeSourceDesc then
-					local nodeTargetDesc = nodeTarget.createChild("description", "formattedtext");
+					local nodeTargetDesc = DB.createChild(nodeTarget, "description", "formattedtext");
 					if nodeTargetDesc then
 						DB.copyNode(nodeSourceDesc, nodeTargetDesc);
 					end

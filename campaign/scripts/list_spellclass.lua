@@ -3,24 +3,6 @@
 -- attribution and copyright information.
 --
 
-local bInit = false;
-function onInit()
-	bInit = true;
-end
-
-function onListChanged()
-	update();
-end
-
-function update()
-	if bInit then
-		local bEditMode = window.getEditMode();
-		for _,w in ipairs(getWindows()) do
-			w.update(bEditMode);
-		end
-	end
-end
-
 function onFilter(w)
 	return w.getFilter();
 end
@@ -40,13 +22,13 @@ function onDrop(x, y, draginfo)
 
 				local nSourceLevel = nil;
 				if nodeSource then
-					nSourceLevel = nodeSource.getChild("...level");
+					nSourceLevel = DB.getChild(nodeSource, "...level");
 				end
 
 				if nSourceLevel and nSourceLevel ~= nTargetLevel then
 					local nodeNew = SpellManager.addSpell(nodeSource, nodeWin, nTargetLevel);
 					if nodeNew then
-						nodeSource.delete();
+						DB.deleteNode(nodeSource);
 						winClass.showSpellsForLevel(nTargetLevel);
 					end
 				end

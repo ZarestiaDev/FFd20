@@ -35,23 +35,26 @@ local tAbilityBonusMP = {
 	[16] = {4,12,24,40,55,73,94,118,136},
 	[17] = {5,13,25,41,61,79,100,124,151}
 }
-
-local bInitialized = false;
-local bShow = true;
 	
 function onInit()
-	bInitialized = true;
-	
-	registerMenuItems();
-	toggleDetail();
-	onClassLevelChanged();
+	self.setInitialized();
+
+	self.toggleDetail();
 end
 
-function update(bEditMode)
-	idelete.setVisibility(bEditMode);
-	for _,w in ipairs(levels.getWindows()) do
-		w.update(bEditMode);
-	end
+local _bShow = true;
+function setFilter(bValue)
+	_bShow = bValue;
+end
+function getFilter()
+	return _bShow;
+end
+local _bInitialized = false;
+function isInitialized()
+	return _bInitialized;
+end
+function setInitialized()
+	_bInitialized = true;
 end
 
 function registerMenuItems()
@@ -72,7 +75,7 @@ function onStatUpdate()
 
 	if dcstatmod then
 		local nodeSpellClass = getDatabaseNode();
-		local nodeCreature = nodeSpellClass.getChild("...");
+		local nodeCreature = DB.getChild(nodeSpellClass, "...");
 
 		local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
@@ -84,12 +87,16 @@ function onStatUpdate()
 	end
 	
 	for _,vLevel in pairs(levels.getWindows()) do
-		for _,vSpell in pairs(vLevel.spells.getWindows()) do
-			for _,vAction in pairs(vSpell.actions.getWindows()) do
-				vAction.updateViews();
+		for _,v in pairs(vLevel.spells.getWindows()) do
+			if v.header.subwindow and v.header.subwindow.actionsmini then
+				for _,v2 in pairs(v.header.subwindow.actionsmini.getWindows()) do
+					v2.onDataChanged();
+				end
 			end
-			for _,vAction in pairs(vSpell.header.subwindow.actionsmini.getWindows()) do
-				vAction.updateViews();
+			if v.actions then
+				for _,v2 in pairs(v.actions.getWindows()) do
+					v2.onDataChanged();
+				end
 			end
 		end
 	end
@@ -146,7 +153,7 @@ end
 
 function onTypeChanged()
 	local nodeSpellClass = getDatabaseNode();
-	local nodeCreature = nodeSpellClass.getChild("...");
+	local nodeCreature = DB.getChild(nodeSpellClass, "...");
 
 	local sAbility = DB.getValue(nodeSpellClass, "dc.ability", "");
 
@@ -166,26 +173,7 @@ end
 
 function onMenuSelection(selection, subselection)
 	if selection == 6 and subselection == 7 then
-		local node = getDatabaseNode();
-		if node then
-			node.delete();
-		else
-			close();
-		end
-	end
-end
-
-function updateControl(sControl, bShow)
-	local bLocalShow = bShow;
-	
-	if self[sControl] then
-		self[sControl].setVisible(bLocalShow);
-	else
-		bLocalShow = false;
-	end
-
-	if self[sControl .. "_label"] then
-		self[sControl .. "_label"].setVisible(bLocalShow);
+		UtilityManager.safeDeleteWindow(self);
 	end
 end
 
@@ -194,43 +182,31 @@ function toggleDetail()
 	
 	frame_stat.setVisible(status);
 	ability_label.setVisible(status);
-	updateControl("dcstat", status);
+	WindowManager.setControlVisibleWithLabel(self, "dcstat", status);
 	
 	frame_dc.setVisible(status);
 	dc_label.setVisible(status);
-	updateControl("dcstatmod", status);
-	updateControl("dcmisc", status);
-	updateControl("dctotal", status);
+	WindowManager.setControlVisibleWithLabel(self, "dcstatmod", status);
+	WindowManager.setControlVisibleWithLabel(self, "dcmisc", status);
+	WindowManager.setControlVisibleWithLabel(self, "dctotal", status);
 	
 	frame_sp.setVisible(status);
 	spmain_label.setVisible(status);
-	updateControl("sp", status);
+	WindowManager.setControlVisibleWithLabel(self, "sp", status);
 	
 	frame_cc.setVisible(status);
 	label_cc.setVisible(status);
-	updateControl("ccmisc", status);
+	WindowManager.setControlVisibleWithLabel(self, "ccmisc", status);
 
 	frame_mp.setVisible(status);
 	label_classlevel.setVisible(status);
 	label_mpclass.setVisible(status);
-	updateControl("mpbonus", status);
-	updateControl("mpclass", status);
-	updateControl("classlevel", status);
-	updateControl("maxlevel", status);
-	updateControl("mpmisc", status);
-	updateControl("type", status);
-end
-
-function setFilter(bFilter)
-	bShow = bFilter;
-end
-
-function getFilter()
-	return bShow;
-end
-
-function isInitialized()
-	return bInitialized;
+	WindowManager.setControlVisibleWithLabel(self, "mpbonus", status);
+	WindowManager.setControlVisibleWithLabel(self, "mpclass", status);
+	WindowManager.setControlVisibleWithLabel(self, "classlevel", status);
+	WindowManager.setControlVisibleWithLabel(self, "maxlevel", status);
+	WindowManager.setControlVisibleWithLabel(self, "mpmisc", status);
+	WindowManager.setControlVisibleWithLabel(self, "type", status);
 end
 
 function updateSpellView()

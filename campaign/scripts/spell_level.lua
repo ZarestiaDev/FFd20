@@ -3,36 +3,28 @@
 -- attribution and copyright information.
 --
 
-local bShow = true;
-
 function onInit()
 	local node = getDatabaseNode();
 	if not node then
 		return;
 	end
 	
-	local nLevel = tonumber(string.sub(node.getName(), 6)) or 0;
+	local nLevel = tonumber(string.sub(DB.getName(node), 6)) or 0;
 	DB.setValue(node, "level", "number", nLevel);
 
-	updateLabel();
+	self.updateLabel();
 	
 	if not windowlist.isReadOnly() then
 		registerMenuItem(Interface.getString("menu_addspell"), "insert", 5);
 	end
 end
 
-function update(bEditMode)
-	for _,w in ipairs(spells.getWindows()) do
-		w.update(bEditMode);
-	end
-end
-
-function setFilter(bFilter)
-	bShow = bFilter;
-end
-
+local _bShow = true;
 function getFilter()
-	return bShow;
+	return _bShow;
+end
+function setFilter(bValue)
+	_bShow = bValue;
 end
 
 function updateLabel()

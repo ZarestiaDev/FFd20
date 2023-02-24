@@ -97,7 +97,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
-				<target>encounters</target>
+				<edittarget>encounters</edittarget>
 			</button_iedit>
 			<filter name="encfilter">
 				<anchored to="encounters" position="belowleft" offset="25,15" height="20">
@@ -178,7 +178,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
-				<target>quests</target>
+				<edittarget>quests</edittarget>
 			</button_iedit>
 			<button_iadd name="quests_iadd">
 				<anchored to="rightanchor_questfilter">
@@ -281,6 +281,7 @@
 					<right anchor="left" offset="-5" />
 				</anchored>
 				<tabtarget prev="xpawarded" />
+				<editmode>enc_iedit</editmode>
 			</button_idelete>
 			<button_checkbox name="xpawarded">
 				<anchored width="20" height="20">
@@ -344,6 +345,7 @@
 					<right anchor="left" offset="-5" />
 				</anchored>
 				<tabtarget prev="xpawarded" />
+				<editmode>quests_iedit</editmode>
 			</button_idelete>
 			<button_checkbox name="xpawarded">
 				<anchored width="20" height="20">

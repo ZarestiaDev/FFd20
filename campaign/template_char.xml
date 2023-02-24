@@ -28,51 +28,6 @@
 		</buttoncontrol>
 	</template>
 
-	<template name="windowtitlebar_char">
-		<windowtitlebar>
-			<bounds merge="replace">0,10,-1,40</bounds>
-			<field>name</field>
-			<font>subwindowtitle</font>
-			<script>
-				function setValue(sTitle)
-					if widgetTitle then
-						if prefix then
-							sTitle = Interface.getString(prefix[1]) .. " - " .. sTitle;
-						end
-						widgetTitle.setText(sTitle);
-						updatePosition();
-					end
-				end
-			</script>
-		</windowtitlebar>
-	</template>
-	<template name="anchor_title_charsheethelper">
-		<genericcontrol>
-			<anchored height="0">
-				<top parent="title" anchor="bottom" offset="0" />
-				<left parent="" anchor="left" offset="15" />
-				<right parent="" anchor="right" offset="-15" />
-			</anchored>
-			<disabled />
-		</genericcontrol>
-	</template>
-	<template name="close_charsheethelper">
-		<close>
-			<anchored>
-				<top offset="0" />
-				<right offset="-8" />
-			</anchored>
-		</close>
-	</template>
-	<template name="resize_charsheethelper">
-		<resize>
-			<anchored>
-				<right offset="-10" />
-				<bottom offset="-10" />
-			</anchored>
-		</resize>
-	</template>
-
 	<template name="stringc_charclasslevel">
 		<stringc_labeled>
 			<anchored height="20" />
@@ -410,9 +365,9 @@
 			<script>
 				function onSourceUpdate()
 					local nMaxMod = -1;
-					local bMaxActive = sources["encumbrance.armormaxstatbonusactive"].getValue();
+					local bMaxActive = DB.getValue(sources["encumbrance.armormaxstatbonusactive"]);
 					if bMaxActive &gt; 0 then
-						nMaxMod = sources["encumbrance.armormaxstatbonus"].getValue();
+						nMaxMod = DB.getValue(sources["encumbrance.armormaxstatbonus"]);
 					end
 
 					local nAbility = getAbilityBonus(nMaxMod);
@@ -461,9 +416,9 @@
 			<script>
 				function onSourceUpdate()
 					local nMaxMod = -1;
-					local bMaxActive = sources["encumbrance.armormaxstatbonusactive"].getValue();
+					local bMaxActive = DB.getValue(sources["encumbrance.armormaxstatbonusactive"]);
 					if bMaxActive &gt; 0 then
-						nMaxMod = sources["encumbrance.armormaxstatbonus"].getValue();
+						nMaxMod = DB.getValue(sources["encumbrance.armormaxstatbonus"]);
 					end
 
 					local nAbility = getAbilityBonus(nMaxMod);
@@ -544,61 +499,75 @@
 			<displaysign />
 			<disabled />
 			<script>
-				local sLocalAbility = "";
-				local nodeLocal = nil;
-				local nodeCreature = nil;
+				local _sAbility = "";
+				local _nodeCreature = nil;
+				local _nodeAbility = nil;
 				
+				function onClose()
+					if _nodeAbility then
+						DB.removeHandler(_nodeAbility, "onUpdate", updateValue);
+					end
+				end
+
+				function setAbilityNodes(nodeCreature, sAbility, nodeAbility)
+					if _nodeAbility then
+						_sAbility = "";
+						_nodeCreature = nil;
+						DB.removeHandler(_nodeAbility, "onUpdate", updateValue);
+					end
+					_nodeAbility = node;
+					if _nodeAbility then
+						_sAbility = sAbility;
+						_nodeCreature = nodeCreature;
+						DB.addHandler(_nodeAbility, "onUpdate", updateValue);
+					end
+				end
+
 				function updateAbility(sCharRelative, sAbility)
-					if sLocalAbility == sAbility then
+					if _sAbility == sAbility then
 						return;
 					end
-					if nodeLocal then
-						nodeLocal.onUpdate = function () end;
-						nodeLocal = nil;
-						nodeCreature = nil;
-					end
 					
+					local nodeCreature = nil;
+					local nodeAbility = nil;
 					if sAbility ~= "" then
 						local nodeSpellClass = window.getDatabaseNode();
-						nodeCreature = nodeSpellClass.getChild(sCharRelative);
-						local nodeParent = nodeCreature.getParent();
-						
-						if ActorManager.isPC(nodeCreature) then
-							if StringManager.contains(DataCommon.abilities, sAbility) then
-								nodeLocal = nodeCreature.getChild("abilities." .. sAbility .. ".bonus");
-							elseif sAbility == "bab" then
-								nodeLocal = nodeCreature.getChild("attackbonus.base");
-							elseif sAbility == "level" then
-								nodeLocal = nodeCreature.getChild("level");
+						nodeCreature = DB.getChild(nodeSpellClass, sCharRelative);
+
+						if nodeCreature then
+							if ActorManager.isPC(nodeCreature) then
+								if StringManager.contains(DataCommon.abilities, sAbility) then
+									nodeAbility = DB.getChild(nodeCreature, "abilities." .. sAbility .. ".bonus");
+								elseif sAbility == "bab" then
+									nodeAbility = DB.getChild(nodeCreature, "attackbonus.base");
+								elseif sAbility == "level" then
+									nodeAbility = DB.getChild(nodeCreature, "level");
+								end
+							else
+								if StringManager.contains(DataCommon.abilities, sAbility) then
+									nodeAbility = DB.getChild(nodeCreature, sAbility);
+								elseif sAbility == "bab" then
+									nodeAbility = DB.getChild(nodeCreature, "babgrp");
+								elseif sAbility == "level" then
+									nodeAbility = DB.getChild(nodeCreature, "hd");
+								end
 							end
-						else
-							if StringManager.contains(DataCommon.abilities, sAbility) then
-								nodeLocal = nodeCreature.getChild(sAbility);
-							elseif sAbility == "bab" then
-								nodeLocal = nodeCreature.getChild("babcmb");
-							elseif sAbility == "level" then
-								nodeLocal = nodeCreature.getChild("hd");
-							end
-						end
-						
-						if nodeLocal then
-							nodeLocal.onUpdate = updateValue;
-							sLocalAbility = sAbility;
 						end
 					end
+					setAbilityNodes(nodeCreature, sAbility, nodeAbility)
 
 					updateValue();
 				end
 				
 				function updateValue()
-					if nodeLocal then
-						local nodeParent = nodeCreature.getParent();
+					if _nodeAbility then
+						local nodeParent = DB.getParent(nodeCreature);
 						
-						if nodeParent.getName() == "charsheet" then
-							setValue(nodeLocal.getValue());
-						elseif nodeParent.getName() == "npc" then
+						if DB.getName(nodeParent) == "charsheet" then
+							setValue(DB.getValue(_nodeAbility));
+						elseif DB.getName(nodeParent) == "npc" then
 							local rActor = ActorManager.resolveActor(nodeCreature);
-							local nValue = ActorManagerFFd20.getAbilityBonus(rActor, sLocalAbility);
+							local nValue = ActorManager35E.getAbilityBonus(rActor, _sAbility);
 							setValue(nValue);
 						end
 					else
@@ -747,7 +716,7 @@
 				end
 
 				function onValueChanged()
-					CharManager.updateSkillPoints(window.getDatabaseNode().getChild("..."));
+					CharManager.updateSkillPoints(DB.getChild(window.getDatabaseNode(), "..."));
 				end
 			</script>
 		</basicnumber>
@@ -785,9 +754,9 @@
 					if sourcename == "ranks" then
 						return math.floor(source.getValue());
 					elseif sourcename == "...encumbrance.armorcheckpenalty" then
-						local bMaxActive = sources["...encumbrance.armormaxstatbonusactive"].getValue();
+						local bMaxActive = DB.getValue(sources["...encumbrance.armormaxstatbonusactive"]);
 						if bMaxActive &gt; 0 then
-							return math.min(DB.getValue(window.getDatabaseNode(), "armorcheckmultiplier", 0) * source.getValue(), 0);
+							return math.min(DB.getValue(window.getDatabaseNode(), "armorcheckmultiplier", 0) * DB.getValue(source), 0);
 						end
 						return 0;
 					elseif sourcename == "state" then
@@ -807,7 +776,7 @@
 				function action(draginfo)
 					local nodeWin = window.getDatabaseNode();
 					if nodeWin then
-						local rActor = ActorManager.resolveActor(nodeWin.getChild("..."));
+						local rActor = ActorManager.resolveActor(DB.getChild(nodeWin, "..."));
 						ActionSkill.performPCRoll(draginfo, rActor, nodeWin);
 					end
 					return true;
@@ -840,17 +809,6 @@
 				end
 			</script>
 		</list_text>
-	</template>
-
-	<template name="list_charinv">
-		<windowlist>
-			<child></child>
-			<child><backcolor>1A40301E</backcolor></child>
-			<datasource>.inventorylist</datasource>
-			<class>char_invitem</class>
-			<allowdelete />
-			<script file="campaign/scripts/char_invlist.lua" />
-		</windowlist>
 	</template>
 
 	<template name="list_charweapon">

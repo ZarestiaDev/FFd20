@@ -88,6 +88,8 @@
 	<includefile source="campaign/record_deity.xml" />
 	<includefile source="campaign/record_talent.xml" />
 
+	<includefile source="campaign/record_power_item.xml" />
+
 	<!-- Combat tracker -->
 	<includefile source="ct/template_ct.xml" />
 	<includefile source="ct/ct_host.xml" />
@@ -120,6 +122,7 @@
 	<script name="CharClassManager" file="scripts/manager_char_class.lua" />
 	<script name="CombatManager2" file="scripts/manager_combat2.lua" />
 	<script name="EffectManagerFFd20" file="scripts/manager_effect_FFd20.lua" />
+	<script name="PowerManagerFFd20" file="scripts/manager_power_FFd20.lua" />
 	<script name="ItemManager2" file="scripts/manager_item2.lua" />
 	<script name="PartyManager2" file="scripts/manager_ps2.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />
@@ -133,7 +136,6 @@
 	<script name="ActionSkill" file="scripts/manager_action_skill.lua" />
 	<script name="ActionSave" file="scripts/manager_action_save.lua" />
 	<script name="ActionSpell" file="scripts/manager_action_spell.lua" />
-
 	<script name="ActionAdvantage" file="scripts/manager_action_advantage.lua" />
 
 	<!-- Import -->

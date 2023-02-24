@@ -56,7 +56,6 @@
 	<string name="misc">Misc</string>
 	<string name="off">Off</string>
 	
-	<string name="menu_dieclear">Clear Dice</string>
 	<string name="menu_rest">Rest</string>
 	<string name="menu_restshort">Short Rest</string>
 	<string name="menu_restovernight">Overnight Rest</string>
@@ -70,16 +69,8 @@
 	<string name="menu_addspellclass">Add Spell Class</string>
 	<string name="menu_deletespellclass">Delete Spell Class</string>
 	<string name="menu_addspell">Add Spell</string>
-	<string name="menu_deletespell">Delete Spell</string>
 	<string name="menu_addweapon">Add Weapon</string>
 	<string name="menu_deleteweapon">Delete Weapon</string>
-	<string name="menu_addspellaction">Add Spell Action</string>
-	<string name="menu_addspellcast">Add Cast</string>
-	<string name="menu_addspelldamage">Add Damage</string>
-	<string name="menu_addspellheal">Add Heal</string>
-	<string name="menu_addspelleffect">Add Effect</string>
-	<string name="menu_reparsespell">Reparse spell actions</string>
-	<string name="menu_deletespellaction">Delete Spell Action</string>
 	<string name="message_rollbab">Base Attack</string>
 	
 	<!-- Options -->
@@ -550,11 +541,6 @@
 	<string name="spell_label_partial">Partial</string>
 	<string name="spell_label_type">Caster</string>
 	
-	<string name="spell_label_cast">Cast</string>
-	<string name="spell_label_atk">Atk</string>
-	<string name="spell_label_dmg">Dmg</string>
-	<string name="spell_label_heal">Heal</string>
-
 	<string name="spell_text_components">V, S</string>
 
 	<string name="spell_error_dropclassmissing">Unable to determine class for moved spell, please drop within a class.</string>
@@ -670,9 +656,6 @@
 	<string name="weapon_label_dmgbonus">Bonus</string>
 	<string name="weapon_label_dmgcritmult">Crit</string>
 
-	<string name="power_label_targeting">Targeting</string>
-	<string name="power_label_targetnormal">Targets</string>
-	<string name="power_label_targetself">Self</string>
 	<string name="power_label_metamagic">Metamagic</string>
 	<string name="power_label_metamagicempower">Empower</string>
 	<string name="power_label_metamagicmaximize">Maximize</string>
@@ -712,17 +695,13 @@
 	<string name="power_label_extraordinary">Extraordinary</string>
 	<string name="power_header_tags">TAGS</string>
 	
-	<string name="power_title_damage">Spell/Ability Damage</string>
 	<string name="power_label_spelldmg">Spell Dmg?</string>
-	<string name="power_header_damage">DAMAGE</string>
 	<string name="power_label_dmg_dice">Dice</string>
 	<string name="power_label_dmg_dicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_dmg_stat">Mult x Stat (Max)</string>
 	<string name="power_label_dmg_bonus">Bonus</string>
 	<string name="power_label_stat">Stat</string>
 
-	<string name="power_title_heal">Spell/Ability Heal</string>
-	<string name="power_header_heal">HEAL</string>
 	<string name="power_label_healtypenormal">HP</string>
 	<string name="power_label_healtypetemp">TEMP</string>
 	<string name="power_label_heal_dice">Dice</string>
@@ -730,15 +709,6 @@
 	<string name="power_label_heal_stat">Mult x Stat (Max)</string>
 	<string name="power_label_heal_bonus">Bonus</string>
 
-	<string name="power_title_effect">Spell/Ability Effect</string>
-	<string name="power_header_effect">DESCRIPTION / CONDITIONS / MODIFIERS</string>
-	<string name="power_header_effect_duration">DURATION</string>
-	<string name="power_header_effect_other">TARGETING / EXPENDITURE</string>
-	<string name="power_label_effect_apply">Expend?</string>
-	<string name="power_label_effect_applyall">Never</string>
-	<string name="power_label_effect_applyaction">On next action</string>
-	<string name="power_label_effect_applyroll">On next roll</string>
-	<string name="power_label_effect_applysingle">Once per modifier</string>
 	<string name="power_label_effect_durdice">Dice</string>
 	<string name="power_label_effect_durdicemult">Dice Multiplier (Max)</string>
 	<string name="power_label_effect_durstat">Mult x Stat (Max)</string>

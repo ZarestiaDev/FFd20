@@ -125,18 +125,17 @@
 				<anchored to="encumbrancepushordrag" />
 				<static textres="char_label_invencdrag" />
 			</label_fieldtop>
-			<buttoncontrol name="button_encumbrance">
-				<anchored to="encumbrancepushordrag" width="20" height="20">
+			<button_details name="button_encumbrance">
+				<anchored to="encumbrancepushordrag">
 					<bottom anchor="top" />
 					<left anchor="right" />
 				</anchored>
-				<state icon="button_details" pressed="button_details_down" />
 				<script>
 					function onButtonPress()
 						Interface.openWindow("charsheet_encumbrance", window.getDatabaseNode());
 					end
 				</script>
-			</buttoncontrol>
+			</button_details>
 		</sheetdata>
 	</windowclass>
 
@@ -150,9 +149,9 @@
 			<dynamic />
 		</sizelimits>
 		<sheetdata>
-			<windowtitlebar_char name="title">
+			<windowtitlebar_charsheethelper name="title">
 				<prefix>char_encumbrance_title</prefix>
-			</windowtitlebar_char>
+			</windowtitlebar_charsheethelper>
 			<anchor_title_charsheethelper name="contentanchor" />
 
 			<frame_char name="encadjframe">

@@ -6,7 +6,36 @@
 function onInit()
 	ItemManager.setCustomCharAdd(onCharItemAdd);
 	ItemManager.setCustomCharRemove(onCharItemDelete);
+
 	initWeaponIDTracking();
+
+	if Session.IsHost then
+		CharInventoryManager.enableInventoryUpdates();
+		CharInventoryManager.enableSimpleLocationHandling();
+
+		CharInventoryManager.registerFieldUpdateCallback("carried", CharManager.onCharInventoryArmorCalc);
+
+		CharInventoryManager.registerFieldUpdateCallback("isidentified", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("bonus", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("ac", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("maxstatbonus", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("checkpenalty", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("spellfailure", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("speed20", CharManager.onCharInventoryArmorCalcIfCarried);
+		CharInventoryManager.registerFieldUpdateCallback("speed30", CharManager.onCharInventoryArmorCalcIfCarried);
+	end
+end
+
+function onCharInventoryArmorCalcIfCarried(nodeItem, sField)
+	if DB.getValue(nodeItem, "carried", 0) == 2 then
+		CharManager.onCharInventoryArmorCalc(nodeItem, sField);
+	end
+end
+function onCharInventoryArmorCalc(nodeItem, sField)
+	if ItemManager.isArmor(nodeItem) then
+		local nodeChar = DB.getChild(nodeItem, "...");
+		CharManager.calcItemArmorClass(nodeChar);
+	end
 end
 
 function outputUserMessage(sResource, ...)
@@ -57,11 +86,11 @@ function addToArmorDB(nodeItem)
 	-- Determine whether to auto-equip armor
 	local bArmorAllowed = true;
 	local bShieldAllowed = true;
-	local nodeChar = nodeItem.getChild("...");
+	local nodeChar = DB.getChild(nodeItem, "...");
 	if (bArmorAllowed and not bIsShield) or (bShieldAllowed and bIsShield) then
 		local bArmorEquipped = false;
 		local bShieldEquipped = false;
-		for _,v in pairs(DB.getChildren(nodeItem, "..")) do
+		for _,v in ipairs(DB.getChildList(nodeItem, "..")) do
 			if DB.getValue(v, "carried", 0) == 2 then
 				if ItemManager.isArmor(v) then
 					if ItemManager.isShield(v) then
@@ -89,7 +118,7 @@ function calcItemArmorClass(nodeChar)
 	local nMainSpeed30 = 0;
 	local nMainSpeed20 = 0;
 
-	for _,vNode in pairs(DB.getChildren(nodeChar, "inventorylist")) do
+	for _,vNode in ipairs(DB.getChildList(nodeChar, "inventorylist")) do
 		if DB.getValue(vNode, "carried", 0) == 2 then
 			if ItemManager.isArmor(vNode) then
 				local bID = LibraryData.getIDState("item", vNode, true);
@@ -194,13 +223,13 @@ function removeFromWeaponDB(nodeItem)
 	end
 	
 	-- Check to see if any of the weapon nodes linked to this item node should be deleted
-	local sItemNode = nodeItem.getPath();
-	local sItemNode2 = "....inventorylist." .. nodeItem.getName();
+	local sItemNode = DB.getPath(nodeItem);
+	local sItemNode2 = "....inventorylist." .. DB.getName(nodeItem);
 	local bFound = false;
-	for _,v in pairs(DB.getChildren(nodeItem, "...weaponlist")) do
+	for _,v in ipairs(DB.getChildList(nodeItem, "...weaponlist")) do
 		local sClass, sRecord = DB.getValue(v, "shortcut", "", "");
 		if sRecord == sItemNode or sRecord == sItemNode2 then
-			v.delete();
+			DB.deleteNode(v);
 			bFound = true;
 		end
 	end
@@ -215,8 +244,8 @@ function addToWeaponDB(nodeItem)
 	end
 	
 	-- Get the weapon list we are going to add to
-	local nodeChar = nodeItem.getChild("...");
-	local nodeWeapons = nodeChar.createChild("weaponlist");
+	local nodeChar = DB.getChild(nodeItem, "...");
+	local nodeWeapons = DB.createChild(nodeChar, "weaponlist");
 	if not nodeWeapons then
 		return nil;
 	end
@@ -354,10 +383,10 @@ function addToWeaponDB(nodeItem)
 	end
 
 	for _,v in pairs(aWeaponNumber) do
-		local nodeWeapon = nodeWeapons.createChild();
+		local nodeWeapon = DB.createChild(nodeWeapons);
 		if nodeWeapon then
 			DB.setValue(nodeWeapon, "isidentified", "number", nItemID);
-			DB.setValue(nodeWeapon, "shortcut", "windowreference", "item", "....inventorylist." .. nodeItem.getName());
+			DB.setValue(nodeWeapon, "shortcut", "windowreference", "item", "....inventorylist." .. DB.getName(nodeItem));
 
 			if bMelee then
 				DB.setValue(nodeWeapon, "type", "number", 0);
@@ -468,11 +497,11 @@ function initWeaponIDTracking()
 end
 
 function onItemIDChanged(nodeItemID)
-	local nodeItem = nodeItemID.getChild("..");
-	local nodeChar = nodeItemID.getChild("....");
-	
-	local sPath = nodeItem.getPath();
-	for _,vWeapon in pairs(DB.getChildren(nodeChar, "weaponlist")) do
+	local nodeItem = DB.getChild(nodeItemID, "..");
+	local nodeChar = DB.getChild(nodeItemID, "....");
+
+	local sPath = DB.getPath(nodeItem);
+	for _,vWeapon in ipairs(DB.getChildList(nodeChar, "weaponlist")) do
 		local _,sRecord = DB.getValue(vWeapon, "shortcut", "", "");
 		if sRecord == sPath then
 			checkWeaponIDChange(vWeapon);
@@ -524,13 +553,13 @@ function checkWeaponIDChange(nodeWeapon)
 	local nBonus = 0;
 	if bItemID then
 		DB.setValue(nodeWeapon, "bonus", "number", DB.getValue(nodeWeapon, "bonus", 0) + DB.getValue(nodeItem, "bonus", 0));
-		local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeWeapon, "damagelist"));
+		local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeWeapon, "damagelist");
 		if #aDamageNodes > 0 then
 			DB.setValue(aDamageNodes[1], "bonus", "number", DB.getValue(aDamageNodes[1], "bonus", 0) + DB.getValue(nodeItem, "bonus", 0));
 		end
 	else
 		DB.setValue(nodeWeapon, "bonus", "number", DB.getValue(nodeWeapon, "bonus", 0) - DB.getValue(nodeItem, "bonus", 0));
-		local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeWeapon, "damagelist"));
+		local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeWeapon, "damagelist");
 		if #aDamageNodes > 0 then
 			DB.setValue(aDamageNodes[1], "bonus", "number", DB.getValue(aDamageNodes[1], "bonus", 0) - DB.getValue(nodeItem, "bonus", 0));
 		end
@@ -548,7 +577,7 @@ function getWeaponAttackRollStructures(nodeWeapon, nAttack)
 		return;
 	end
 	
-	local nodeChar = nodeWeapon.getChild("...");
+	local nodeChar = DB.getChild(nodeWeapon, "...");
 	local rActor = ActorManager.resolveActor(nodeChar);
 
 	local rAttack = {};
@@ -595,7 +624,7 @@ function getWeaponAttackRollStructures(nodeWeapon, nAttack)
 end
 
 function getWeaponDamageRollStructures(nodeWeapon)
-	local nodeChar = nodeWeapon.getChild("...");
+	local nodeChar = DB.getChild(nodeWeapon, "...");
 	local rActor = ActorManager.resolveActor(nodeChar);
 
 	local bRanged = (DB.getValue(nodeWeapon, "type", 0) == 1);
@@ -610,7 +639,7 @@ function getWeaponDamageRollStructures(nodeWeapon)
 	end
 	
 	rDamage.clauses = {};
-	local aDamageNodes = UtilityManager.getSortedTable(DB.getChildren(nodeWeapon, "damagelist"));
+	local aDamageNodes = UtilityManager.getNodeSortedChildren(nodeWeapon, "damagelist");
 	for _,v in ipairs(aDamageNodes) do
 		local sDmgType = DB.getValue(v, "type", "");
 		local aDmgDice = DB.getValue(v, "dice", {});
@@ -734,7 +763,7 @@ function getSkillValue(rActor, sSkill, sSubSkill)
 		end
 		
 		local nodeSkill = nil;
-		for _,vNode in pairs(DB.getChildren(nodeChar, "skilllist")) do
+		for _,vNode in ipairs(DB.getChildList(nodeChar, "skilllist")) do
 			local sNameLower = DB.getValue(vNode, "label", ""):lower();
 
 			-- Capture exact matches
@@ -861,7 +890,7 @@ function updateSkillPoints(nodeChar)
 	local nSpentTotal = 0;
 	
 	local nSpent;
-	for _,vNode in pairs(DB.getChildren(nodeChar, "skilllist")) do
+	for _,vNode in ipairs(DB.getChildList(nodeChar, "skilllist")) do
 		nSpent = DB.getValue(vNode, "ranks", 0);
 		if nSpent > 0 then			
 			nSpentTotal = nSpentTotal + nSpent;
@@ -876,7 +905,7 @@ function hasFeat(nodeChar, sFeat)
 		return false;
 	end
 	local sLowerFeat = StringManager.trim(sFeat:lower());
-	for _,vNode in pairs(DB.getChildren(nodeChar, "fttlist")) do
+	for _,vNode in ipairs(DB.getChildList(nodeChar, "fttlist")) do
 		if StringManager.trim(DB.getValue(vNode, "name", ""):lower()) == sLowerFeat then
 			return true;
 		end
@@ -890,7 +919,7 @@ function hasTrait(nodeChar, sTrait)
 	end
 	local sLowerTrait = StringManager.trim(string.lower(sTrait));
 	
-	for _,vNode in pairs(DB.getChildren(nodeChar, "traitlist")) do
+	for _,vNode in ipairs(DB.getChildList(nodeChar, "traitlist")) do
 		if StringManager.trim(DB.getValue(vNode, "name", ""):lower()) == sLowerTrait then
 			return true;
 		end
@@ -946,7 +975,7 @@ function getSkillNode(nodeChar, sSkill, sSpecialty)
 	end
 
 	local nodeSkill = nil;
-	for _,vSkill in pairs(DB.getChildren(nodeChar, "skilllist")) do
+	for _,vSkill in ipairs(DB.getChildList(nodeChar, "skilllist")) do
 		if DB.getValue(vSkill, "label", "") == sSkill then
 			if sSpecialty then
 				if DB.getValue(vSkill, "sublabel", "") == sSpecialty then
@@ -980,7 +1009,7 @@ function getClassNode(nodeChar, sClassName)
 	end
 
 	local nodeClass = nil;
-	for _,vClass in pairs(DB.getChildren(nodeChar, "classes")) do
+	for _,vClass in ipairs(DB.getChildList(nodeChar, "classes")) do
 		if DB.getValue(vClass, "name", "") == sClassName then
 			return vClass;
 		end
@@ -1000,7 +1029,7 @@ function addSpell(nodeChar, sClass, sRecord, nodeTargetList)
 			return false;
 		end
 	end
-	local nodeEntry = nodeTargetList.createChild();
+	local nodeEntry = DB.createChild(nodeTargetList);
 	DB.copyNode(nodeSource, nodeEntry);
 	DB.setValue(nodeEntry, "source", "string", DB.getValue(nodeSource, "...name", ""));
 	DB.setValue(nodeEntry, "locked", "number", 1);
@@ -1044,20 +1073,20 @@ function helperBuildAddStructure(nodeChar, sClass, sRecord)
 end
 
 function addLanguage(nodeChar, sLanguage)
-	local nodeList = nodeChar.createChild("languagelist");
+	local nodeList = DB.createChild(nodeChar, "languagelist");
 	if not nodeList then
 		return false;
 	end
 	
 	if sLanguage ~= "Choice" then
-		for _,v in pairs(nodeList.getChildren()) do
+		for _,v in ipairs(DB.getChildList(nodeList)) do
 			if DB.getValue(v, "name", "") == sLanguage then
 				return false;
 			end
 		end
 	end
 
-	local vNew = nodeList.createChild();
+	local vNew = DB.createChild(nodeList);
 	DB.setValue(vNew, "name", "string", sLanguage);
 
 	local sFormat = Interface.getString("char_message_languageadd");
@@ -1139,13 +1168,13 @@ function handleDuplicateFeatures(nodeChar, nodeFeature, sFeatureType, nodeTarget
 	end
 
 	if not nodeTargetList then
-		nodeTargetList = nodeChar.createChild("specialabilitylist");
+		nodeTargetList = DB.createChild(nodeChar, "specialabilitylist");
 		if not nodeTargetList then
 			return false;
 		end
 	end
 	
-	for _,v in pairs(nodeTargetList.getChildren()) do
+	for _,v in ipairs(DB.getChildList(nodeTargetList)) do
 		local sStrip = StringManager.strip(DB.getValue(v, "name", ""));
 		local sLower, nMult, sSuffix = parseFeatureName(sStrip);
 		
@@ -1283,13 +1312,13 @@ function handleProficiencies(nodeChar, nodeFeature)
 		end
 	end
 	
-	local nodeProfList = nodeChar.createChild("proficiencylist");
+	local nodeProfList = DB.createChild(nodeChar, "proficiencylist");
 	if #aWeapons > 0 then
-		local nodeWeaponProf = nodeProfList.createChild();
+		local nodeWeaponProf = DB.createChild(nodeProfList);
 		DB.setValue(nodeWeaponProf, "name", "string", "Weapon: " .. table.concat(aWeapons, ", "));
 	end
 	if #aArmor > 0 then
-		local nodeWeaponProf = nodeProfList.createChild();
+		local nodeWeaponProf = DB.createChild(nodeProfList);
 		DB.setValue(nodeWeaponProf, "name", "string", "Armor: " .. table.concat(aArmor, ", "));
 	end
 	
@@ -1306,7 +1335,7 @@ function addFeat(nodeChar, sRecord, nodeTargetList)
 	end
 	
 	if not nodeTargetList then
-		nodeTargetList = nodeChar.createChild("fttlist");
+		nodeTargetList = DB.createChild(nodeChar, "fttlist");
 		if not nodeTargetList then
 			return;
 		end
@@ -1321,7 +1350,7 @@ function addFeat(nodeChar, sRecord, nodeTargetList)
 		sRecordType = "talent";
 	end
 	
-	local nodeEntry = nodeTargetList.createChild();
+	local nodeEntry = DB.createChild(nodeTargetList);
 	DB.setValue(nodeEntry, "recordtype", "string", sRecordType)
 	DB.copyNode(nodeSource, nodeEntry);
 	DB.setValue(nodeEntry, "locked", "number", 1);

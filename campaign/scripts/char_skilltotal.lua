@@ -14,8 +14,8 @@ function calculateSkills()
 	local nodeChar = getDatabaseNode();
 	local nTotalSkillRanks = 0;
 	
-	for _,vClass in pairs(DB.getChildren(nodeChar.getChild("classes"))) do
-		local nSkillRanks = DB.getValue(vClass, "skillranks", 0);
+	for _,nodeClass in pairs(DB.getChildList(DB.getChild(nodeChar, "classes"))) do
+		local nSkillRanks = DB.getValue(nodeClass, "skillranks", 0);
 		nTotalSkillRanks = nTotalSkillRanks + nSkillRanks;
 	end
 	

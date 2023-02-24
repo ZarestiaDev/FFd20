@@ -3,27 +3,6 @@
 -- attribution and copyright information.
 --
 
-function onInit()
-	DB.addHandler(DB.getPath(getDatabaseNode()), "onChildAdded", onChildAdded);
-end
-
-function onListChanged()
-	DB.removeHandler(DB.getPath(getDatabaseNode()), "onChildAdded", onChildAdded);
-
-	update();
-end
-
-function onChildAdded()
-	update();
-end
-
-function update()
-	local bEditMode = window.getEditMode();
-	for _,w in pairs(getWindows()) do
-		w.idelete.setVisibility(bEditMode);
-	end
-end
-
 function addEntry(bFocus)
 	local w = createWindow();
 	if bFocus and w then
@@ -37,9 +16,7 @@ function onDrop(x, y, draginfo)
 end
 
 function onFilter(w)
-	if (w.carried.getValue() < 2) then
-		return false;
-	end
+	local bEquipped = (w.carried.getValue() >= 2);
 	
-	return true;
+	return (bEquipped or (DB.getValue(window.getDatabaseNode(), "spellmode", "") ~= "combat"));
 end

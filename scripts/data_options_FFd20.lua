@@ -9,6 +9,9 @@ function onInit()
 end
 
 function registerDiceRolls()
+	DiceRollManager.registerDamageTypeMode("critical");
+	DiceRollManager.registerDamageTypeMode("precision");
+
 	DiceRollManager.registerDamageKey();
 	DiceRollManager.registerDamageTypeKey("earth", "earth");
 	DiceRollManager.registerDamageTypeKey("fire", "fire");

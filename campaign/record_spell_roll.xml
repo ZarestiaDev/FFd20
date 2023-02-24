@@ -6,37 +6,7 @@
 -->
 
 <root>
-	<windowclass name="power_cast_editor">
-		<frame>recordsheet</frame>
-		<placement>
-			<size width="400" height="350" />
-		</placement>
-		<sizelimits>
-			<minimum width="400" height="350" />
-			<dynamic />
-		</sizelimits>
-		<sheetdata>
-			<windowtitlebar name="title">
-				<resource>power_title_cast</resource>
-			</windowtitlebar>
-			
-			<frame_record_editor name="contentframe" />
-
-			<subwindow_record name="main">
-				<class>power_cast_editor_main</class>
-				<activate />
-				<fastinit />
-			</subwindow_record>
-
-			<scrollbar_record>
-				<target>main</target>
-			</scrollbar_record>
-
-			<resize_recordsheet />
-			<close_recordsheet />
-		</sheetdata>
-	</windowclass>
-	<windowclass name="power_cast_editor_main">
+	<windowclass name="power_action_editor_cast">
 		<sheetdata>
 			<anchor_column name="columnanchor" />
 			
@@ -177,37 +147,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="power_damage_editor">
-		<frame>recordsheet</frame>
-		<placement>
-			<size width="560" height="350" />
-		</placement>
-		<sizelimits>
-			<minimum width="560" height="350" />
-			<dynamic />
-		</sizelimits>
-		<sheetdata>
-			<windowtitlebar name="title">
-				<resource>power_title_damage</resource>
-			</windowtitlebar>
-			
-			<frame_record_editor name="contentframe" />
-
-			<subwindow_record name="main">
-				<class>power_damage_editor_main</class>
-				<activate />
-				<fastinit />
-			</subwindow_record>
-
-			<scrollbar_record>
-				<target>main</target>
-			</scrollbar_record>
-
-			<resize_recordsheet />
-			<close_recordsheet />
-		</sheetdata>
-	</windowclass>
-	<windowclass name="power_damage_editor_main">
+	<windowclass name="power_action_editor_damage">
 		<script>
 			function onDrop(x, y, draginfo)
 				local sDragType = draginfo.getType();
@@ -293,7 +233,7 @@
 			</header_column>
 			<button_iedit name="list_iedit">
 				<anchored to="header_damage" position="insidetopright" offset="-5,0" />
-				<target>list</target>
+				<edittarget>list</edittarget>
 			</button_iedit>
 			<button_iadd name="list_iadd">
 				<anchored to="list_iedit" position="lefthigh" offset="5,0" />
@@ -302,7 +242,7 @@
 
 			<list_editor name="list">
 				<datasource>.damagelist</datasource>
-				<class>power_damage_entry</class>
+				<class>power_action_editor_damage_entry</class>
 			</list_editor>
 			
 			<label_fieldtop name="label_dmg_dice">
@@ -327,7 +267,7 @@
 			</label_fieldtop>
 		</sheetdata>
 	</windowclass>
-	<windowclass name="power_damage_entry">
+	<windowclass name="power_action_editor_damage_entry">
 		<margins control="0,0,0,5" />
 		<sheetdata>
 			<genericcontrol name="rightanchor">
@@ -342,6 +282,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
+				<editmode>list_iedit</editmode>
 			</button_idelete>
 
 			<basicdice name="dice">
@@ -442,37 +383,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="power_heal_editor">
-		<frame>recordsheet</frame>
-		<placement>
-			<size width="560" height="350" />
-		</placement>
-		<sizelimits>
-			<minimum width="560" height="350" />
-			<dynamic />
-		</sizelimits>
-		<sheetdata>
-			<windowtitlebar name="title">
-				<resource>power_title_heal</resource>
-			</windowtitlebar>
-			
-			<frame_record_editor name="contentframe" />
-
-			<subwindow_record name="main">
-				<class>power_heal_editor_main</class>
-				<activate />
-				<fastinit />
-			</subwindow_record>
-
-			<scrollbar_record>
-				<target>main</target>
-			</scrollbar_record>
-
-			<resize_recordsheet />
-			<close_recordsheet />
-		</sheetdata>
-	</windowclass>
-	<windowclass name="power_heal_editor_main">
+	<windowclass name="power_action_editor_heal">
 		<script>
 			function onDrop(x, y, draginfo)
 				local sDragType = draginfo.getType();
@@ -509,7 +420,7 @@
 			<label_column name="label_heal_targeting">
 				<static textres="power_label_targeting" />
 			</label_column>
-			<button_stringcycler name="targeting">
+			<button_stringcycler name="healtargeting">
 				<anchored width="60">
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
 					<left offset="97" />
@@ -557,7 +468,7 @@
 			</header_column>
 			<button_iedit name="list_iedit">
 				<anchored to="header_heal" position="insidetopright" offset="-5,0" />
-				<target>list</target>
+				<edittarget>list</edittarget>
 			</button_iedit>
 			<button_iadd name="list_iadd">
 				<anchored to="list_iedit" position="lefthigh" offset="5,0" />
@@ -566,7 +477,7 @@
 
 			<list_editor name="list">
 				<datasource>.heallist</datasource>
-				<class>power_heal_entry</class>
+				<class>power_action_editor_heal_entry</class>
 			</list_editor>
 			
 			<label_fieldtop name="label_heal_dice">
@@ -591,7 +502,7 @@
 			</label_fieldtop>
 		</sheetdata>
 	</windowclass>
-	<windowclass name="power_heal_entry">
+	<windowclass name="power_action_editor_heal_entry">
 		<margins control="0,0,0,5" />
 		<sheetdata>
 			<genericcontrol name="rightanchor">
@@ -606,6 +517,7 @@
 					<top />
 					<right anchor="left" relation="relative" offset="-5" />
 				</anchored>
+				<editmode>list_iedit</editmode>
 			</button_idelete>
 
 			<basicdice name="dice">
@@ -695,37 +607,7 @@
 		</sheetdata>
 	</windowclass>
 
-	<windowclass name="power_effect_editor">
-		<frame>recordsheet</frame>
-		<placement>
-			<size width="470" height="370" />
-		</placement>
-		<sizelimits>
-			<minimum width="470" height="370" />
-			<dynamic />
-		</sizelimits>
-		<sheetdata>
-			<windowtitlebar name="title">
-				<resource>power_title_effect</resource>
-			</windowtitlebar>
-			
-			<frame_record_editor name="contentframe" />
-
-			<subwindow_record name="main">
-				<class>power_effect_editor_main</class>
-				<activate />
-				<fastinit />
-			</subwindow_record>
-
-			<scrollbar_record>
-				<target>main</target>
-			</scrollbar_record>
-
-			<resize_recordsheet />
-			<close_recordsheet />
-		</sheetdata>
-	</windowclass>
-	<windowclass name="power_effect_editor_main">
+	<windowclass name="power_action_editor_effect">
 		<sheetdata>
 			<anchor_column name="columnanchor" />
 			

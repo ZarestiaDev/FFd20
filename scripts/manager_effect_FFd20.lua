@@ -55,10 +55,10 @@ function onEffectTextEncode(rEffect)
 		end
 	end
 	if rEffect.sTargeting and rEffect.sTargeting ~= "" then
-		table.insert(aMessage, "[" .. rEffect.sTargeting:upper() .. "]");
+		table.insert(aMessage, string.format("[%s]", rEffect.sTargeting:upper()));
 	end
 	if rEffect.sApply and rEffect.sApply ~= "" then
-		table.insert(aMessage, "[" .. rEffect.sApply:upper() .. "]");
+		table.insert(aMessage, string.format("[%s]", rEffect.sApply:upper()));
 	end
 	
 	return table.concat(aMessage, " ");
@@ -419,7 +419,7 @@ function getEffectsByType(rActor, sEffectType, aFilter, rFilterActor, bTargetedO
 	local bTargetSupport = StringManager.isWord(sEffectType, DataCommon.targetableeffectcomps);
 	
 	-- Iterate through effects
-	for _,v in pairs(DB.getChildren(ActorManager.getCTNode(rActor), "effects")) do
+	for _,v in ipairs(DB.getChildList(ActorManager.getCTNode(rActor), "effects")) do
 		-- Check active
 		local nActive = DB.getValue(v, "isactive", 0);
 		if (nActive ~= 0) then
@@ -783,7 +783,7 @@ function hasEffect(rActor, sEffect, rTarget, bTargetedOnly, bIgnoreEffectTargets
 	
 	-- Iterate through each effect
 	local aMatch = {};
-	for _,v in pairs(DB.getChildren(ActorManager.getCTNode(rActor), "effects")) do
+	for _,v in ipairs(DB.getChildList(ActorManager.getCTNode(rActor), "effects")) do
 		local nActive = DB.getValue(v, "isactive", 0);
 		if nActive ~= 0 then
 			-- Parse each effect label
@@ -893,7 +893,7 @@ function checkConditional(rActor, nodeEffect, aConditions, rTarget, aIgnore, rEf
 	if not aIgnore then
 		aIgnore = {};
 	end
-	table.insert(aIgnore, nodeEffect.getPath());
+	table.insert(aIgnore, DB.getPath(nodeEffect));
 	
 	for _,v in ipairs(aConditions) do
 		local sLower = v:lower();
@@ -964,9 +964,9 @@ function checkConditionalHelper(rActor, sEffect, rTarget, aIgnore, rEffectSpell)
 		return false;
 	end
 	
-	for _,v in pairs(DB.getChildren(ActorManager.getCTNode(rActor), "effects")) do
+	for _,v in ipairs(DB.getChildList(ActorManager.getCTNode(rActor), "effects")) do
 		local nActive = DB.getValue(v, "isactive", 0);
-		if nActive ~= 0 and not StringManager.contains(aIgnore, v.getPath()) then
+		if nActive ~= 0 and not StringManager.contains(aIgnore, DB.getPath(v)) then
 			-- Parse each effect label
 			local sLabel = DB.getValue(v, "label", "");
 			local aEffectComps = EffectManager.parseEffect(sLabel);

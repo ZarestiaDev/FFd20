@@ -4,8 +4,8 @@
 --
 
 function onInit()
-	update();
-	updateAbility();
+	self.update();
+	self.updateAbility();
 
 	local node = getDatabaseNode();
 	for _,v in pairs(DataCommon.abilities) do
@@ -14,6 +14,13 @@ function onInit()
 
 	local node = getDatabaseNode();
 	DB.addHandler(DB.getPath(node, "spellset"), "onChildUpdate", updateAbility);
+end
+
+function onEditModeChanged()
+	local bEditMode = WindowManager.getEditMode(self, "actions_iedit");
+
+	label_mode.setVisible(not bEditMode);
+	spellmode.setVisible(not bEditMode);
 end
 
 function onClose()
@@ -29,9 +36,9 @@ end
 function update()
 	local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 	
-	spellclasslist_iedit.setValue(0);
-	spellclasslist_iedit.setVisible(not bReadOnly);
-	spellclasslist_iadd.setVisible(not bReadOnly);
+	actions_iedit.setValue(0);
+	actions_iedit.setVisible(not bReadOnly);
+	spellclass_iadd.setVisible(not bReadOnly);
 end
 
 function updateAbility()
@@ -63,8 +70,4 @@ function onSpellDrop(x, y, draginfo)
 			return true;
 		end
 	end
-end
-
-function getEditMode()
-	return (spellclasslist_iedit.getValue() == 1);
 end

@@ -7,8 +7,7 @@ function onInit()
 	registerMenuItem(Interface.getString("menu_addweapon"), "insert", 3);
 	registerMenuItem(Interface.getString("menu_addspellclass"), "insert", 5);
 	
-	updateAbility();
-	update();
+	self.updateAbility();
 
 	local node = getDatabaseNode();
 	DB.addHandler(DB.getPath(node, "abilities"), "onChildUpdate", updateAbility);
@@ -25,9 +24,9 @@ end
 
 function onMenuSelection(selection)
 	if selection == 3 then
-		addWeapon();
+		self.addWeapon();
 	elseif selection == 5 then
-		addSpellClass();
+		self.addSpellClass();
 	end
 end
 
@@ -59,13 +58,4 @@ function updateAbility()
 		v.onStatUpdate();
 	end
 	bUpdateLock = false;
-end
-
-function update()
-	weaponlist.update();
-	spellclasslist.update();
-end
-
-function getEditMode()
-	return (parentcontrol.window.actions_iedit.getValue() == 1);
 end

@@ -56,7 +56,7 @@
 			function update()
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
 				if bReadOnly then
-					type_biglabel.setValue("[" .. type.getValue() .. "]");
+					type_biglabel.setValue(string.format("[%s]", type.getValue()));
 					type_biglabel.setVisible(true);
 					
 					type.update(bReadOnly, true);
