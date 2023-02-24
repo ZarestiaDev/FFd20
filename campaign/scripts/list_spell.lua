@@ -11,7 +11,7 @@ end
 
 function onMenuSelection(selection)
 	if selection == 6 then
-		addEntry(true);
+		self.addEntry(true);
 	end
 end
 
@@ -32,7 +32,7 @@ end
 
 function onEnter()
 	if Input.isShiftPressed() then
-		addEntry(true);
+		self.addEntry(true);
 		return true;
 	end
 	

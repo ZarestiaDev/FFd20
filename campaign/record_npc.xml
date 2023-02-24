@@ -592,7 +592,7 @@
 				<target>spellclasslist,levels,spells</target>
 				<togglelevel>2</togglelevel>
 			</button_collapse>
-			<buttoncontrol name="spellclasslist_iadd">
+			<buttoncontrol name="spellclass_iadd">
 				<anchored position="insidetopright" offset="35,2" width="20" height="20" />
 				<icon normal="button_star" pressed="button_star_down" />
 				<invisible />
@@ -602,15 +602,10 @@
 					end
 				</script>
 			</buttoncontrol>
-			<button_iedit name="spellclasslist_iedit">
+			<button_iedit name="actions_iedit">
 				<anchored position="insidetopright" offset="5,2" width="20" height="20" />
 				<target>spellclasslist</target>
 				<invisible />
-				<script>
-					function onValueChanged()
-						window.spellclasslist.update();
-					end
-				</script>
 			</button_iedit>
 
 			<list_spellclass name="spellclasslist">
@@ -619,8 +614,9 @@
 				<npc />
 				<script>
 					function onInit()
-						super.onInit();
-						registerMenuItem(Interface.getString("menu_addspellclass"), "insert", 5);
+						if super and super.onInit then
+							super.onInit();
+						end
 					end
 					
 					function onMenuSelection(selection)

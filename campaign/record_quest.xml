@@ -6,27 +6,22 @@
 -->
 
 <root>
-	<windowclass name="quest_stats">
+	<windowclass name="quest_stats" merge="join">
 		<script>
-			function onInit()
-				update();
-			end
 			function update()
+				super.update();
+
 				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
-				
 				type.setReadOnly(bReadOnly);
 				level.setReadOnly(bReadOnly);
 				xp.setReadOnly(bReadOnly);
-				description.setReadOnly(bReadOnly);
 			end
 		</script>
 		<sheetdata>
-			<anchor_column name="columnanchor" />
-			
-			<label_column name="type_label">
+			<label_column name="type_label" insertbefore="description">
 				<static textres="type" />
 			</label_column>
-			<button_stringcycler name="type">
+			<button_stringcycler name="type" insertbefore="description">
 				<anchored width="50">
 					<left offset="97" />
 					<top parent="columnanchor" anchor="bottom" relation="relative" offset="7" />
@@ -39,19 +34,17 @@
 				</parameters>		
 			</button_stringcycler>
 
-			<label_column name="level_label">
+			<label_column name="level_label" insertbefore="description">
 				<static textres="level" />
 			</label_column>
-			<number_column name="level" />
+			<number_column name="level" insertbefore="description" />
 
-			<label_column name="xp_label">
+			<label_column name="xp_label" insertbefore="description">
 				<static textres="quest_label_xp" />
 			</label_column>
-			<number_column name="xp">
+			<number_column name="xp" insertbefore="description">
 				<anchored width="65" />
 			</number_column>
-			
-			<ft_columnh name="description" />
 		</sheetdata>
 	</windowclass>
 </root>

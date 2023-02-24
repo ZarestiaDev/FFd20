@@ -3,24 +3,6 @@
 -- attribution and copyright information.
 --
 
-local bInit = false;
-function onInit()
-	bInit = true;
-end
-
-function onListChanged()
-	update();
-end
-
-function update()
-	if bInit then
-		local bEditMode = window.getEditMode();
-		for _,w in ipairs(getWindows()) do
-			w.update(bEditMode);
-		end
-	end
-end
-
 function onFilter(w)
 	return w.getFilter();
 end

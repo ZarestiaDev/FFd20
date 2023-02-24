@@ -7,14 +7,6 @@ function onInit()
 	update();
 end
 
-function updateControl(sControl, bReadOnly, bForceHide)
-	if not self[sControl] then
-		return false;
-	end
-
-	return self[sControl].update(bReadOnly, bForceHide);
-end
-
 function insertTables(aTypeSubtype, nodeRecord)
 	for category,value in pairs(aTypeSubtype) do
 		local sExistingValue = DB.getValue(nodeRecord, category, "");
@@ -89,58 +81,58 @@ function update()
 
 	local bSection1 = false;
 	if Session.IsHost then
-		if updateControl("nonid_name", bReadOnly) then bSection1 = true; end;
+		if WindowManager.callSafeControlUpdate(self, "nonid_name", bReadOnly) then bSection1 = true; end;
 	else
-		updateControl("nonid_name", bReadOnly, true);
+		WindowManager.callSafeControlUpdate(self, "nonid_name", bReadOnly, true);
 	end
 	divider.setVisible(bSection1);
 
-	updateControl("type", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "type", bReadOnly);
 
-	updateControl("alignment", bReadOnly, true);
-	updateControl("senses", bReadOnly);
-	updateControl("aura", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "alignment", bReadOnly, true);
+	WindowManager.callSafeControlUpdate(self, "senses", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "aura", bReadOnly);
 	
-	updateControl("ac", bReadOnly);
-	updateControl("hd", bReadOnly);
-	updateControl("absorb", bReadOnly);
-	updateControl("dr", bReadOnly);
-	updateControl("immune", bReadOnly);
-	updateControl("resistance", bReadOnly);
-	updateControl("weakness", bReadOnly);
-	updateControl("strong", bReadOnly);
-	updateControl("sr", bReadOnly);
-	updateControl("specialqualities", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "ac", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "hd", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "absorb", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "dr", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "immune", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "resistance", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "weakness", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "strong", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "sr", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "specialqualities", bReadOnly);
 	
-	updateControl("speed", bReadOnly);
-	updateControl("atk", bReadOnly);
-	updateControl("fullatk", bReadOnly);
-	updateControl("spacereach", bReadOnly);
-	updateControl("specialattacks", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "speed", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "atk", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "fullatk", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "spacereach", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "specialattacks", bReadOnly);
 	
-	updateControl("babcmb", bReadOnly);
-	updateControl("feats", bReadOnly);
-	updateControl("skills", bReadOnly);
-	updateControl("languages", bReadOnly);
-	updateControl("advancement", bReadOnly);
-	updateControl("leveladjustment", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "babcmb", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "feats", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "skills", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "languages", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "advancement", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "leveladjustment", bReadOnly);
 
-	updateControl("environment", bReadOnly);
-	updateControl("organization", bReadOnly);
-	updateControl("treasure", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "environment", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "organization", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "treasure", bReadOnly);
 	
 	-- Trap
-	updateControl("trigger", bReadOnly);
-	updateControl("reset", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "trigger", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "reset", bReadOnly);
 
 	-- Vehicle
-	updateControl("size", bReadOnly);
-	updateControl("cost", bReadOnly);
-	updateControl("fuel", bReadOnly);
-	updateControl("vac", bReadOnly);
-	updateControl("cmd", bReadOnly);
-	updateControl("cover", bReadOnly);
-	updateControl("hardness", bReadOnly);
-	updateControl("modifiers", bReadOnly);
-	updateControl("passengers", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "size", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "cost", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "fuel", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "vac", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "cmd", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "cover", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "hardness", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "modifiers", bReadOnly);
+	WindowManager.callSafeControlUpdate(self, "passengers", bReadOnly);
 end

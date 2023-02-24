@@ -6,7 +6,7 @@
 function onInit()
 	registerMenuItem(Interface.getString("list_menu_createitem"), "insert", 5);
 	
-	constructDefaultSkills();
+	self.constructDefaultSkills();
 	CharManager.updateSkillPoints(window.getDatabaseNode());
 
 	local nodeChar = DB.getParent(getDatabaseNode());
@@ -26,33 +26,6 @@ end
 
 function onSkillDataUpdate()
 	CharManager.updateSkillPoints(window.getDatabaseNode());
-end
-
-function onListChanged()
-	update();
-end
-
-function update()
-	local bEditMode = (window.skills_iedit.getValue() == 1);
-	window.idelete_header.setVisible(bEditMode);
-	for _,w in ipairs(getWindows()) do
-		local bAllowDelete = w.isCustom();
-		if not bAllowDelete then
-			local sLabel = w.label.getValue();
-			local rSkill = DataCommon.skilldata[sLabel];
-			if rSkill and rSkill.sublabeling then
-				bAllowDelete = true;
-			end
-		end
-		
-		if bAllowDelete then
-			w.idelete_spacer.setVisible(false);
-			w.idelete.setVisibility(bEditMode);
-		else
-			w.idelete_spacer.setVisible(bEditMode);
-			w.idelete.setVisibility(false);
-		end
-	end
 end
 
 function onStatUpdate()
@@ -129,6 +102,5 @@ function addNewInstance(sLabel)
 		w.statname.setStringValue(rSkill.stat);
 		w.updateWindow();
 		w.sublabel.setFocus();
-		onListChanged();
 	end
 end

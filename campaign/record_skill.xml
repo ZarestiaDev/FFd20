@@ -66,7 +66,7 @@
 					if armorcheckpenalty.getValue() ~= 0 then
 						table.insert(aLabel, "Armor check penalty");
 					end
-					type_label.setValue("[" .. table.concat(aLabel, "; ") .. "]");
+					type_label.setValue(string.format("[%s]", table.concat(aLabel, "; ")));
 					type_label.setVisible(true);
 					
 					ability.update(bReadOnly, true);

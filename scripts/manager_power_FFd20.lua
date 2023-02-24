@@ -31,24 +31,20 @@ function usePower(node)
 		return;
 	end
 
-	if DB.getValue(nodeSpellClass, "castertype", "") ~= "points" then
-		PowerManagerCore.performDefaultPowerUse(node);
-		return;
-	end
+	PowerManagerCore.performDefaultPowerUse(node);
 
 	local nodeChar = PowerManagerFFd20.getPowerActor(node);
 	local rActor = ActorManager.resolveActor(nodeChar);
 
-	local nPP = DB.getValue(nodeSpellClass, "points", 0);
-	local nPPUsed = DB.getValue(nodeSpellClass, "pointsused", 0);
-	local nCost = DB.getValue(node, "cost", 0);
+	local nMPCurrent = DB.getValue(nodeSpellClass, "mp.current", 0);
+	local nCost = DB.getValue(node, "...level", 0);
 	
 	local sMessage;
-	if (nPP - nPPUsed) < nCost then
-		sMessage = string.format("%s\r[%d PP] [INSUFFICIENT PP AVAILABLE]", PowerManagerCore.getPowerName(node), nCost);
+	if nCost > nMPCurrent then
+		sMessage = string.format("%s\r[%d MP] [NOT ENOUGH MP AVAILABLE]", PowerManagerCore.getPowerName(node), nCost);
 	else
-		DB.setValue(nodeSpellClass, "pointsused", "number", nPPUsed + nCost);
-		sMessage = string.format("%s\r[%d PP]", PowerManagerCore.getPowerOutput(node), nCost);
+		DB.setValue(nodeSpellClass, "mp.current", "number", nMPCurrent - nCost);
+		sMessage = string.format("%s\r[%d MP]", PowerManagerCore.getPowerOutput(node), nCost);
 	end
 
 	ChatManager.Message(sMessage, ActorManager.isPC(rActor), rActor);
