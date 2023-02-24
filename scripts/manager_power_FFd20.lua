@@ -5,19 +5,19 @@
 
 function onInit()
 	local tPowerHandlers = {
-		fnGetActorNode = PowerManager35E.getPowerActorNode,
-		fnUsePower = PowerManager35E.usePower,
-		fnParse = PowerManager35E.parsePower,
-		fnUpdateDisplay = PowerManager35E.updatePowerDisplay,
+		fnGetActorNode = PowerManagerFFd20.getPowerActorNode,
+		fnUsePower = PowerManagerFFd20.usePower,
+		fnParse = PowerManagerFFd20.parsePower,
+		fnUpdateDisplay = PowerManagerFFd20.updatePowerDisplay,
 	};
 	PowerManagerCore.registerPowerHandlers(tPowerHandlers);
 
 	PowerActionManagerCore.registerActionTypes({ "cast", "damage", "heal", "effect" });
 	local tPowerActionHandlers = {
-		fnGetButtonIcons = PowerManager35E.getActionButtonIcons,
-		fnGetText = PowerManager35E.getActionText,
-		fnGetTooltip = PowerManager35E.getActionTooltip,
-		fnPerform = PowerManager35E.performAction,
+		fnGetButtonIcons = PowerManagerFFd20.getActionButtonIcons,
+		fnGetText = PowerManagerFFd20.getActionText,
+		fnGetTooltip = PowerManagerFFd20.getActionTooltip,
+		fnPerform = PowerManagerFFd20.performAction,
 	};
 	PowerActionManagerCore.registerActionHandlers(tPowerActionHandlers);
 end
@@ -36,7 +36,7 @@ function usePower(node)
 		return;
 	end
 
-	local nodeChar = PowerManager35E.getPowerActor(node);
+	local nodeChar = PowerManagerFFd20.getPowerActor(node);
 	local rActor = ActorManager.resolveActor(nodeChar);
 
 	local nPP = DB.getValue(nodeSpellClass, "points", 0);

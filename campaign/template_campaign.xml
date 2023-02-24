@@ -185,17 +185,6 @@
 					end
 				end
 				
-				function onListChanged()
-					update();
-				end
-
-				function update()
-					local bEditMode = (window.list_iedit.getValue() == 1);
-					for _,w in pairs(getWindows()) do
-						w.idelete.setVisibility(bEditMode);
-					end
-				end
-				
 				function addEntry(bFocus)
 					return createWindow();
 				end

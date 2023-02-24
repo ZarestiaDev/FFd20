@@ -115,8 +115,8 @@
 				<gmvisibleonly />
 			</button_iedit>
 			
-			<list_psmain />
-			<scrollbar_list />
+			<list_psmain name="list" />
+			<scrollbar_list name="scrollbar_list" />
 
 			<anchor_partysheet_main_footer />
 			

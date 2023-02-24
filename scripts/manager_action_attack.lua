@@ -380,14 +380,8 @@ function modAttack(rSource, rTarget, rRoll)
 
 		-- If effects, then add them
 		if bEffects then
-			local sEffects = "";
 			local sMod = StringManager.convertDiceToString(aAddDice, nAddMod, true);
-			if sMod ~= "" then
-				sEffects = "[" .. Interface.getString("effects_tag") .. " " .. sMod .. "]";
-			else
-				sEffects = "[" .. Interface.getString("effects_tag") .. "]";
-			end
-			table.insert(aAddDesc, sEffects);
+			table.insert(aAddDesc, EffectManager.buildEffectOutput(sMod));
 		end
 	end
 	
@@ -442,13 +436,11 @@ function onAttack(rSource, rTarget, rRoll)
 		rRoll.nDefenseVal, rRoll.nAtkEffectsBonus, rRoll.nDefEffectsBonus, rRoll.nMissChance = ActorManagerFFd20.getDefenseValue(rSource, rTarget, rRoll);
 		if rRoll.nAtkEffectsBonus ~= 0 then
 			rRoll.nTotal = rRoll.nTotal + rRoll.nAtkEffectsBonus;
-			local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
-			table.insert(rRoll.aMessages, string.format(sFormat, rRoll.nAtkEffectsBonus));
+			table.insert(rRoll.aMessages, EffectManager.buildEffectOutput(rRoll.nAtkEffectsBonus));
 		end
 		if rRoll.nDefEffectsBonus ~= 0 then
 			rRoll.nDefenseVal = rRoll.nDefenseVal + rRoll.nDefEffectsBonus;
-			local sFormat = "[" .. Interface.getString("effects_def_tag") .. " %+d]";
-			table.insert(rRoll.aMessages, string.format(sFormat, rRoll.nDefEffectsBonus));
+			table.insert(rRoll.aMessages, string.format("[%s %+d]", Interface.getString("effects_def_tag"), rRoll.nDefEffectsBonus));
 		end
 	end
 
@@ -575,8 +567,7 @@ function onAttackResolve(rSource, rTarget, rRoll, rMessage)
 			end
 
 			if (rRoll.nAtkEffectsBonus or 0) ~= 0 then
-				local sFormat = "[" .. Interface.getString("effects_tag") .. " %+d]";
-				rCritConfirmRoll.sDesc = rCritConfirmRoll.sDesc .. " " .. string.format(sFormat, rRoll.nAtkEffectsBonus);
+				rCritConfirmRoll.sDesc = string.format("%s %s", rCritConfirmRoll.sDesc, EffectManager.buildEffectOutput(rRoll.nAtkEffectsBonus));
 			end
 			
 			ActionsManager.roll(rSource, { rTarget }, rCritConfirmRoll, true);

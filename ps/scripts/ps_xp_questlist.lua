@@ -3,17 +3,6 @@
 -- attribution and copyright information.
 --
 
-function onListChanged()
-	update();
-end
-
-function update()
-	local bEditMode = (window.quests_iedit.getValue() == 1);
-	for _,w in ipairs(getWindows()) do
-		w.idelete.setVisibility(bEditMode);
-	end
-end
-
 function addEntry(bFocus)
 	local w = createWindow();
 	if w and bFocus then

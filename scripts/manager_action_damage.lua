@@ -487,14 +487,8 @@ end
 
 function applyEffectModNotificationToModRoll(rRoll)
 	if rRoll.bEffects then
-		local sEffects;
 		local sMod = StringManager.convertDiceToString(rRoll.tEffectDice, rRoll.nEffectMod, true);
-		if sMod ~= "" then
-			sEffects = "[" .. Interface.getString("effects_tag") .. " " .. sMod .. "]";
-		else
-			sEffects = "[" .. Interface.getString("effects_tag") .. "]";
-		end
-		table.insert(rRoll.tNotifications, sEffects);
+		table.insert(rRoll.tNotifications, EffectManager.buildEffectOutput(sMod));
 	end
 end
 
@@ -527,8 +521,7 @@ function applyDmgTypeEffectsToModRoll(rRoll, rSource, rTarget)
 			end
 		end
 
-		local sNotification = "[" .. Interface.getString("effects_tag") .. " " .. table.concat(tAddDmgTypes, ",") .. "]";
-		table.insert(rRoll.tNotifications, sNotification);
+		table.insert(rRoll.tNotifications, EffectManager.buildEffectOutput(table.concat(tAddDmgTypes, ",")));
 	end
 end
 
@@ -593,13 +586,7 @@ function applyTargetedDmgEffectsToDamageOutput(rDamageOutput, rSource, rTarget)
 	if nDamageEffectCount > 0 then
 		rDamageOutput.nVal = rDamageOutput.nVal + nDamageEffectTotal;
 
-		local sNotification;
-		if nDamageEffectTotal ~= 0 then
-			sNotification = string.format("[" .. Interface.getString("effects_tag") .. " %+d]", nDamageEffectTotal);
-		else
-			sNotification = "[" .. Interface.getString("effects_tag") .. "]";
-		end
-		table.insert(rDamageOutput.tNotifications, sNotification);
+		table.insert(rDamageOutput.tNotifications, EffectManager.buildEffectOutput(nDamageEffectTotal));
 	end
 end
 
@@ -635,8 +622,7 @@ function applyTargetedDmgTypeEffectsToDamageOutput(rDamageOutput, rSource, rTarg
 		end
 		rDamageOutput.aDamageTypes = tNewDmgTypes;
 
-		local sNotification = "[" .. Interface.getString("effects_tag") .. " " .. table.concat(tAddDmgTypes, ",") .. "]";
-		table.insert(rDamageOutput.tNotifications, sNotification);
+		table.insert(rDamageOutput.tNotifications, EffectManager.buildEffectOutput(table.concat(tAddDmgTypes, ",")));
 	end
 end
 
@@ -1537,7 +1523,7 @@ function applyDamage(rSource, rTarget, bSecret, sRollType, sDamage, nTotal, tags
 	end
 	if bShowStatus then
 		if sOriginalStatus ~= sNewStatus then
-			table.insert(rDamageOutput.tNotifications, "[" .. Interface.getString("combat_tag_status") .. ": " .. sNewStatus .. "]");
+			table.insert(rDamageOutput.tNotifications, string.format("[%s: %s]", Interface.getString("combat_tag_status"), sNewStatus));
 		end
 	end
 	
