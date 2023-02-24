@@ -15,10 +15,6 @@ function onMenuSelection(selection)
 	end
 end
 
-function onListChanged()
-	window.windowlist.window.windowlist.update();
-end
-
 function addEntry(bFocus)
 	local w = createWindow();
 	

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the LICENSE.md file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <windowclass name="power_item_header">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<anchor_poweritem_header_left name="leftanchor" />
+			<genericcontrol name="usespacer">
+				<anchored to="leftanchor" width="10" height="20">
+					<top />
+					<left anchor="right" relation="relative" />
+				</anchored>
+			</genericcontrol>
+			<icon_usepower name="usepower">
+				<anchored to="leftanchor">
+					<top />
+					<left anchor="right" relation="relative" />
+				</anchored>
+			</icon_usepower>
+
+			<string_poweritem_header_name name="name">
+				<empty textres="library_recordtype_empty_spell" />
+				<script>
+					function onDragStart(button, x, y, draginfo)
+						local node = window.getDatabaseNode();
+						if not node then
+							return false;
+						end
+						
+						local nLevel = 0;
+						local nodeSpellLevel = DB.getChild(node, "...");
+						if nodeSpellLevel then
+							nLevel = tonumber(string.sub(DB.getName(nodeSpellLevel), 6)) or 0;
+						end
+						
+						draginfo.setType("spellmove");
+						draginfo.setStringData(getValue());
+						draginfo.setNumberData(nLevel);
+						draginfo.setDatabaseNode(node);
+						
+						return true;
+					end
+				</script>
+			</string_poweritem_header_name>
+
+			<anchor_poweritem_header_right name="rightanchor" />
+			<list_poweraction_mini name="actionsmini" />
+		</sheetdata>
+	</windowclass>
+</root>

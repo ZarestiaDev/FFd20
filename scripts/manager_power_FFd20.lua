@@ -12,14 +12,17 @@ function onInit()
 	};
 	PowerManagerCore.registerPowerHandlers(tPowerHandlers);
 
-	PowerActionManagerCore.registerActionTypes({ "cast", "damage", "heal", "effect" });
 	local tPowerActionHandlers = {
 		fnGetButtonIcons = PowerManagerFFd20.getActionButtonIcons,
 		fnGetText = PowerManagerFFd20.getActionText,
 		fnGetTooltip = PowerManagerFFd20.getActionTooltip,
 		fnPerform = PowerManagerFFd20.performAction,
 	};
-	PowerActionManagerCore.registerActionHandlers(tPowerActionHandlers);
+	PowerActionManagerCore.registerActionType("", tPowerActionHandlers);
+	PowerActionManagerCore.registerActionType("cast", {});
+	PowerActionManagerCore.registerActionType("damage", {});
+	PowerActionManagerCore.registerActionType("heal", {});
+	PowerActionManagerCore.registerActionType("effect", {});
 end
 
 function getPowerActorNode(node)
@@ -31,9 +34,7 @@ function usePower(node)
 		return;
 	end
 
-	PowerManagerCore.performDefaultPowerUse(node);
-
-	local nodeChar = PowerManagerFFd20.getPowerActor(node);
+	local nodeChar = PowerManagerFFd20.getPowerActorNode(node);
 	local rActor = ActorManager.resolveActor(nodeChar);
 
 	local nMPCurrent = DB.getValue(nodeSpellClass, "mp.current", 0);
@@ -45,6 +46,7 @@ function usePower(node)
 	else
 		DB.setValue(nodeSpellClass, "mp.current", "number", nMPCurrent - nCost);
 		sMessage = string.format("%s\r[%d MP]", PowerManagerCore.getPowerOutput(node), nCost);
+		PowerManagerCore.performDefaultPowerUse(node);
 	end
 
 	ChatManager.Message(sMessage, ActorManager.isPC(rActor), rActor);
@@ -56,63 +58,48 @@ function updatePowerDisplay(w)
 	if not w.header or not w.header.subwindow then
 		return;
 	end
-	if not w.header.subwindow.shortdescription or not w.header.subwindow.actionsmini then
+	if not w.header.subwindow.actionsmini then
 		return;
 	end
 
-	local nodeActor = PowerManagerCore.getPowerActorNode(w.getDatabaseNode());
-	if ActorManager.isPC(nodeActor) then
-		sDisplayMode = DB.getValue(nodeActor, "spelldisplaymode", "");
-	else
-		sDisplayMode = "action";
-	end
-
-	if sDisplayMode == "action" then
-		w.header.subwindow.shortdescription.setVisible(false);
-		w.header.subwindow.actionsmini.setVisible(true);
-	else
-		w.header.subwindow.shortdescription.setVisible(true);
-		w.header.subwindow.actionsmini.setVisible(false);
-	end
+	w.header.subwindow.actionsmini.setVisible(true);
 end
 
 function getActionButtonIcons(node, tData)
-	local sType = DB.getValue(node, "type", "");
-	if sType == "cast" then
-		if tData and tData.sSubRoll == "atk" then
+	if tData.sType == "cast" then
+		if tData.sSubRoll == "atk" then
 			return "button_action_attack", "button_action_attack_down";
-		elseif tData and tData.sSubRoll == "clc" then
+		elseif tData.sSubRoll == "clc" then
 			return "button_roll", "button_roll_down";
-		elseif tData and tData.sSubRoll == "save" then
+		elseif tData.sSubRoll == "save" then
 			return "button_roll", "button_roll_down";
 		end
 		return "button_roll", "button_roll_down";
-	elseif sType == "damage" then
+	elseif tData.sType == "damage" then
 		return "button_action_damage", "button_action_damage_down";
-	elseif sType == "heal" then
+	elseif tData.sType == "heal" then
 		return "button_action_heal", "button_action_heal_down";
-	elseif sType == "effect" then
+	elseif tData.sType == "effect" then
 		return "button_action_effect", "button_action_effect_down";
 	end
 	return "", "";
 end
 function getActionText(node, tData)
-	local sType = DB.getValue(node, "type", "");
-	if sType == "cast" then
-		if tData and tData.sSubRoll == "atk" then
+	if tData.sType == "cast" then
+		if tData.sSubRoll == "atk" then
 			return SpellManager.getActionAttackText(node);
-		elseif tData and tData.sSubRoll == "clc" then
+		elseif tData.sSubRoll == "clc" then
 			return SpellManager.getActionCLText(node);
-		elseif tData and tData.sSubRoll == "save" then
+		elseif tData.sSubRoll == "save" then
 			return SpellManager.getActionSaveText(node);
 		end
 		return "";
-	elseif sType == "damage" then
+	elseif tData.sType == "damage" then
 		return SpellManager.getActionDamageText(node);
-	elseif sType == "heal" then
+	elseif tData.sType == "heal" then
 		return SpellManager.getActionHealText(node);
-	elseif sType == "effect" then
-		if tData and tData.sSubRoll == "duration" then
+	elseif tData.sType == "effect" then
+		if tData.sSubRoll == "duration" then
 			return SpellManager.getActionEffectDurationText(node);
 		else
 			return PowerActionManagerCore.getActionEffectText(node, tData);
@@ -121,13 +108,12 @@ function getActionText(node, tData)
 	return "";
 end
 function getActionTooltip(node, tData)
-	local sType = DB.getValue(node, "type", "");
-	if sType == "cast" then
-		if tData and tData.sSubRoll == "atk" then
+	if tData.sType == "cast" then
+		if tData.sSubRoll == "atk" then
 			return string.format("%s: %s", Interface.getString("power_tooltip_attack"), PowerActionManagerCore.getActionText(node, tData));
-		elseif tData and tData.sSubRoll == "clc" then
+		elseif tData.sSubRoll == "clc" then
 			return string.format("%s: %s", Interface.getString("power_tooltip_cl"), PowerActionManagerCore.getActionText(node, tData));
-		elseif tData and tData.sSubRoll == "save" then
+		elseif tData.sSubRoll == "save" then
 			return string.format("%s: %s", Interface.getString("power_tooltip_save"), PowerActionManagerCore.getActionText(node, tData));
 		end
 		local tTooltip = {};
@@ -145,22 +131,15 @@ function getActionTooltip(node, tData)
 			table.insert(tTooltip, string.format("%s: %s", Interface.getString("power_tooltip_save"), sSave));
 		end
 		return table.concat(tTooltip, "\r");
-	elseif sType == "damage" then
+	elseif tData.sType == "damage" then
 		return string.format("%s: %s", Interface.getString("power_tooltip_damage"), PowerActionManagerCore.getActionText(node, tData));
-	elseif sType == "heal" then
+	elseif tData.sType == "heal" then
 		return string.format("%s: %s", Interface.getString("power_tooltip_heal"), PowerActionManagerCore.getActionText(node, tData));
-	elseif sType == "effect" then
+	elseif tData.sType == "effect" then
 		return PowerActionManagerCore.getActionEffectTooltip(node, tData);
 	end
 	return "";
 end
-function performAction(draginfo, node, tData)
-	local sType = DB.getValue(node, "type", "");
-	if sType ~= "" then
-		local sSubRoll;
-		if tData and tData.sSubRoll then
-			sSubRoll = tData.sSubRoll;
-		end
-		SpellManager.onSpellAction(draginfo, node, sSubRoll);
-	end
+function performAction(node, tData)
+	SpellManager.onSpellAction(tData.draginfo, node, tData and tData.sSubRoll);
 end

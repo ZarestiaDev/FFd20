@@ -39,9 +39,7 @@ local tAbilityBonusMP = {
 function onInit()
 	self.setInitialized();
 
-	self.onCasterTypeChanged();
 	self.toggleDetail();
-	self.onDisplayChanged();
 end
 
 local _bShow = true;
