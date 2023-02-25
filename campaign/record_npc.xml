@@ -19,7 +19,6 @@
 		<gmexport>npc</gmexport>
 		<script file="campaign/scripts/npc.lua" />
 		<sheetdata>
-			
 			<sub_record_header name="header">
 				<class>npc_header</class>
 			</sub_record_header>
