@@ -40,6 +40,7 @@ function onInit()
 	self.setInitialized();
 
 	self.toggleDetail();
+	onClassLevelChanged();
 end
 
 local _bShow = true;

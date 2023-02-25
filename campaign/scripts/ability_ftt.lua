@@ -7,18 +7,6 @@ function onInit()
 	update();
 end
 
-function updateControl(sControl, bReadOnly, bShow)
-	if not self[sControl] then
-		return false;
-	end
-	
-	if not bShow then
-		return self[sControl].update(bReadOnly, true);
-	end
-	
-	return self[sControl].update(bReadOnly);
-end
-
 function update()
 	local nodeRecord = getDatabaseNode();
 	local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
@@ -30,7 +18,7 @@ function update()
 	
 	if bFeat or bTrait then
 		if bReadOnly then
-			type_biglabel.setValue("[" .. type.getValue() .. "]");
+			type_biglabel.setValue(string.format("[%s]", type.getValue()));
 			type_biglabel.setVisible(true);
 			class_biglabel.setVisible(false);
 			class.update(bReadOnly);
@@ -42,7 +30,7 @@ function update()
 		end
 	elseif bTalent then
 		if bReadOnly then
-			class_biglabel.setValue("[" .. class.getValue() .. "]");
+			class_biglabel.setValue(string.format("[%s]", class.getValue()));
 			class_biglabel.setVisible(true);
 			type_biglabel.setVisible(false);
 			type.update(bReadOnly);
@@ -54,11 +42,11 @@ function update()
 		end
 	end
 	
-	updateControl("advance", bReadOnly, bTalent);
-	updateControl("flavor", bReadOnly, bFeat or bTrait);
-	updateControl("prerequisites", bReadOnly, bFeat or bTrait or bTalent);
-	updateControl("summary", bReadOnly, bFeat);
-	updateControl("benefit", bReadOnly, bFeat or bTrait or bTalent);
-	updateControl("normal", bReadOnly, bFeat);
-	updateControl("special", bReadOnly, bFeat);
+	WindowManager.callSafeControlUpdate(self, "advance", bReadOnly, not bTalent);
+	WindowManager.callSafeControlUpdate(self, "flavor", bReadOnly, not (bFeat or bTrait));
+	WindowManager.callSafeControlUpdate(self, "prerequisites", bReadOnly, not (bFeat or bTrait or bTalent));
+	WindowManager.callSafeControlUpdate(self, "summary", bReadOnly, not bFeat);
+	WindowManager.callSafeControlUpdate(self, "benefit", bReadOnly, not (bFeat or bTrait or bTalent));
+	WindowManager.callSafeControlUpdate(self, "normal", bReadOnly, not bFeat);
+	WindowManager.callSafeControlUpdate(self, "special", bReadOnly, not bFeat);
 end

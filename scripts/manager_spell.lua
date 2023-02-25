@@ -1266,7 +1266,7 @@ function onExplosiveSpellAction(draginfo, nodeAction, sSubRoll)
 	if not nodeAction then
 		return;
 	end
-	local rActor = ActorManager.resolveActor(nodeAction.getChild("..."));
+	local rActor = ActorManager.resolveActor(DB.getChild(nodeAction, "..."));
 	if not rActor then
 		return;
 	end

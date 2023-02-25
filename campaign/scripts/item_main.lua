@@ -183,86 +183,86 @@ function update()
 
 	local bSection2 = false;
 	if Session.IsHost then
-		if WindowManager.callSafeControlUpdate(self,"cost", bReadOnly, not bID and not bMateria) then bSection2 = true; end
+		if WindowManager.callSafeControlUpdate(self,"cost", bReadOnly, not (bID and not bMateria)) then bSection2 = true; end
 	else
-		if WindowManager.callSafeControlUpdate(self,"cost", bReadOnly, not bID and (nCostVisibility == 0) and not bMateria) then bSection2 = true; end
+		if WindowManager.callSafeControlUpdate(self,"cost", bReadOnly, not (bID and (nCostVisibility == 0) and not bMateria)) then bSection2 = true; end
 	end
-	if WindowManager.callSafeControlUpdate(self,"weight", bReadOnly, not bID and not bMateria) then bSection2 = true; end
+	if WindowManager.callSafeControlUpdate(self,"weight", bReadOnly, not (bID and not bMateria)) then bSection2 = true; end
 
 	-- Wand & Staff workaround for visible labeltop if no wand or staff. Hide Charges_Max dependant on number of charges left.
-	if WindowManager.callSafeControlUpdate(self,"charges", bReadOnly, not bID and (bStaff or bWand)) then
+	if WindowManager.callSafeControlUpdate(self,"charges", bReadOnly, not (bID and (bStaff or bWand))) then
 		charges_labeltop.setVisible(true);
 	else
 		charges_labeltop.setVisible(false);
 	end
 	if bReadOnly then
-		WindowManager.callSafeControlUpdate(self,"charges_max", bReadOnly, not bID and (bStaff or bWand) and nCharges > 0);
+		WindowManager.callSafeControlUpdate(self,"charges_max", bReadOnly, not (bID and (bStaff or bWand) and nCharges > 0));
 	else
-		WindowManager.callSafeControlUpdate(self,"charges_max", bReadOnly, not bID and (bStaff or bWand));
+		WindowManager.callSafeControlUpdate(self,"charges_max", bReadOnly, not (bID and (bStaff or bWand)));
 	end
 	
 	-- Weapon
-	WindowManager.callSafeControlUpdate(self,"damage", bReadOnly, not bID and (bWeapon or bMagicalWeapon));
-	WindowManager.callSafeControlUpdate(self,"damagetype", bReadOnly, not bID and (bWeapon or bMagicalWeapon));
-	WindowManager.callSafeControlUpdate(self,"critical", bReadOnly, not bID and (bWeapon or bMagicalWeapon));
-	WindowManager.callSafeControlUpdate(self,"range", bReadOnly, not bID and (bWeapon or bMagicalWeapon));
+	WindowManager.callSafeControlUpdate(self,"damage", bReadOnly, not (bID and (bWeapon or bMagicalWeapon)));
+	WindowManager.callSafeControlUpdate(self,"damagetype", bReadOnly, not (bID and (bWeapon or bMagicalWeapon)));
+	WindowManager.callSafeControlUpdate(self,"critical", bReadOnly, not (bID and (bWeapon or bMagicalWeapon)));
+	WindowManager.callSafeControlUpdate(self,"range", bReadOnly, not (bID and (bWeapon or bMagicalWeapon)));
 	
 	-- Armor
-	WindowManager.callSafeControlUpdate(self,"ac", bReadOnly, not bID and (bArmor or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"maxstatbonus", bReadOnly, not bID and (bArmor or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"checkpenalty", bReadOnly, not bID and (bArmor or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"spellfailure", bReadOnly, not bID and (bArmor or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"speed30", bReadOnly, not bID and (bArmor or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"speed20", bReadOnly, not bID and (bArmor or bMagicalArmor));
+	WindowManager.callSafeControlUpdate(self,"ac", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"maxstatbonus", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"checkpenalty", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"spellfailure", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"speed30", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"speed20", bReadOnly, not (bID and (bArmor or bMagicalArmor)));
 
-	WindowManager.callSafeControlUpdate(self,"properties", bReadOnly, not bID and (bWeapon or bArmor));
+	WindowManager.callSafeControlUpdate(self,"properties", bReadOnly, not (bID and (bWeapon or bArmor)));
 	
 	-- Magic Item
-	WindowManager.callSafeControlUpdate(self,"bonus", bReadOnly, not bID and (bMagicalWeapon or bMagicalArmor));
-	WindowManager.callSafeControlUpdate(self,"aura", bReadOnly, not bID and bMagicItem);
-	WindowManager.callSafeControlUpdate(self,"cl", bReadOnly, not bID and bMagicItem);
-	WindowManager.callSafeControlUpdate(self,"prerequisites", bReadOnly, not bID and bMagicItem and not bMateria);
-	WindowManager.callSafeControlUpdate(self,"activation", bReadOnly, not bID and (bMagicItem or bRoyalArms));
-	WindowManager.callSafeControlUpdate(self,"slot", bReadOnly, not bID and bMagicItem);
+	WindowManager.callSafeControlUpdate(self,"bonus", bReadOnly, not (bID and (bMagicalWeapon or bMagicalArmor)));
+	WindowManager.callSafeControlUpdate(self,"aura", bReadOnly, not (bID and bMagicItem));
+	WindowManager.callSafeControlUpdate(self,"cl", bReadOnly, not (bID and bMagicItem));
+	WindowManager.callSafeControlUpdate(self,"prerequisites", bReadOnly, not (bID and bMagicItem and not bMateria));
+	WindowManager.callSafeControlUpdate(self,"activation", bReadOnly, not (bID and (bMagicItem or bRoyalArms)));
+	WindowManager.callSafeControlUpdate(self,"slot", bReadOnly, not (bID and bMagicItem));
 
 	-- Materia
-	WindowManager.callSafeControlUpdate(self,"materia_type", bReadOnly, not bID and bMateria);
-	WindowManager.callSafeControlUpdate(self,"materia_rarity", bReadOnly, not bID and bMateria);
-	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl1", bReadOnly, not bID and bMateria);
-	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl2", bReadOnly, not bID and bMateria);
-	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl3", bReadOnly, not bID and bMateria);
-	WindowManager.callSafeControlUpdate(self,"materia_level", bReadOnly, not bID and (bMateriaRarity and bMateria));
-	WindowManager.callSafeControlUpdate(self,"mxp", bReadOnly, not bID and (bMateriaRarity and bMateria));
-	WindowManager.callSafeControlUpdate(self,"mxp_nlvl", bReadOnly, not bID and (bMateriaRarity and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_type", bReadOnly, not (bID and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_rarity", bReadOnly, not (bID and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl1", bReadOnly, not (bID and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl2", bReadOnly, not (bID and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_cost_lvl3", bReadOnly, not (bID and bMateria));
+	WindowManager.callSafeControlUpdate(self,"materia_level", bReadOnly, not (bID and (bMateriaRarity and bMateria)));
+	WindowManager.callSafeControlUpdate(self,"mxp", bReadOnly, not (bID and (bMateriaRarity and bMateria)));
+	WindowManager.callSafeControlUpdate(self,"mxp_nlvl", bReadOnly, not (bID and (bMateriaRarity and bMateria)));
 
 	-- Chocobo Food
-	WindowManager.callSafeControlUpdate(self,"apply", bReadOnly, not bID and bChocoboFood);
+	WindowManager.callSafeControlUpdate(self,"apply", bReadOnly, not (bID and bChocoboFood));
 
 	-- Cybertech
-	WindowManager.callSafeControlUpdate(self,"craftinstall", bReadOnly, not bID and bCybertech);
-	WindowManager.callSafeControlUpdate(self,"implantation", bReadOnly, not bID and bCybertech);
+	WindowManager.callSafeControlUpdate(self,"craftinstall", bReadOnly, not (bID and bCybertech));
+	WindowManager.callSafeControlUpdate(self,"implantation", bReadOnly, not (bID and bCybertech));
 
 	-- Firearms
-	WindowManager.callSafeControlUpdate(self,"ammo", bReadOnly, not bID and bFirearms);
-	WindowManager.callSafeControlUpdate(self,"rof", bReadOnly, not bID and bFirearms);
-	WindowManager.callSafeControlUpdate(self,"capacity", bReadOnly, not bID and (bFirearms or bGunArms));
-	WindowManager.callSafeControlUpdate(self,"size", bReadOnly, not bID and (bFirearms or bExplosives or bTechnologicalGear));
+	WindowManager.callSafeControlUpdate(self,"ammo", bReadOnly, not (bID and bFirearms));
+	WindowManager.callSafeControlUpdate(self,"rof", bReadOnly, not (bID and bFirearms));
+	WindowManager.callSafeControlUpdate(self,"capacity", bReadOnly, not (bID and (bFirearms or bGunArms)));
+	WindowManager.callSafeControlUpdate(self,"size", bReadOnly, not (bID and (bFirearms or bExplosives or bTechnologicalGear)));
 
 	-- Explosives
-	WindowManager.callSafeControlUpdate(self,"burstradius", bReadOnly, not bID and bExplosives);
-	WindowManager.callSafeControlUpdate(self,"reflexdc", bReadOnly, not bID and bExplosives);
-	WindowManager.callSafeControlUpdate(self,"craftdc", bReadOnly, not bID and bExplosives);
+	WindowManager.callSafeControlUpdate(self,"burstradius", bReadOnly, not (bID and bExplosives));
+	WindowManager.callSafeControlUpdate(self,"reflexdc", bReadOnly, not (bID and bExplosives));
+	WindowManager.callSafeControlUpdate(self,"craftdc", bReadOnly, not (bID and bExplosives));
 
 	-- Gun Arms
-	WindowManager.callSafeControlUpdate(self,"gdamage", bReadOnly, not bID and bGunArms);
-	WindowManager.callSafeControlUpdate(self,"gdamagetype", bReadOnly, not bID and bGunArms);
-	WindowManager.callSafeControlUpdate(self,"gcritical", bReadOnly, not bID and bGunArms);
+	WindowManager.callSafeControlUpdate(self,"gdamage", bReadOnly, not (bID and bGunArms));
+	WindowManager.callSafeControlUpdate(self,"gdamagetype", bReadOnly, not (bID and bGunArms));
+	WindowManager.callSafeControlUpdate(self,"gcritical", bReadOnly, not (bID and bGunArms));
 
 	-- Alchemical
-	WindowManager.callSafeControlUpdate(self,"usage", bReadOnly, not bID and bAlchemical);
+	WindowManager.callSafeControlUpdate(self,"usage", bReadOnly, not (bID and bAlchemical));
 
 	-- Royal Arms
-	WindowManager.callSafeControlUpdate(self,"royalarms_type", bReadOnly, not bID and bRoyalArms);
+	WindowManager.callSafeControlUpdate(self,"royalarms_type", bReadOnly, not (bID and bRoyalArms));
 
 	description.setVisible(bID);
 	description.setReadOnly(bReadOnly);
