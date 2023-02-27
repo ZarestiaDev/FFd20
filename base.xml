@@ -40,6 +40,7 @@
 
 	<!-- Desktop -->
 	<includefile source="desktop/desktop_classes.xml" />
+	<includefile source="desktop/template_desktop.xml" />
 
 	<!-- Utility -->
 	<includefile source="utility/utility_effects.xml" />
