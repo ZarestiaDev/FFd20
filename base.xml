@@ -9,8 +9,8 @@
 	- Many thanks to Kelrugem for letting me adapt parts of his extended automation extension
 -->
 
-<root version="3.0" release="0.81">
-	<announcement text="https://forge.fantasygrounds.com/shop/items/408/view \nFFd20 ruleset v0.81 (2023-January-11) for Fantasy Grounds, development by Zarestia" font="emotefont" />
+<root version="3.0" release="0.82">
+	<announcement text="https://forge.fantasygrounds.com/shop/items/408/view \nFFd20 ruleset v0.82 (2023-February-28) for Fantasy Grounds, development by Zarestia" font="emotefont" />
 
 	<!-- Attributes -->
 	<description>
@@ -127,6 +127,8 @@
 	<script name="PartyManager2" file="scripts/manager_ps2.lua" />
 	<script name="SpellManager" file="scripts/manager_spell.lua" />
 	<script name="TokenManager2" file="scripts/manager_token2.lua" />
+
+	<script name="WindowManagerFFd20" file="scripts/manager_window_FFd20.lua" />
 	
 	<script name="ActionAbility" file="scripts/manager_action_ability.lua" />
 	<script name="ActionAttack" file="scripts/manager_action_attack.lua" />
